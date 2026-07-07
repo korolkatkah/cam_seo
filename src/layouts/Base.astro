@@ -23,6 +23,15 @@ const {
 } = Astro.props;
 
 const siteName = 'EWO';
+
+const langLabels: Record<string, string> = {
+  en: 'English',
+  de: 'Deutsch',
+  ro: 'Română',
+  uk: 'Українська',
+  es: 'Español',
+};
+
 const nav = [
   { href: '/model-promotion', label: 'For Models' },
   { href: '/studio-traffic', label: 'For Studios' },
@@ -67,6 +76,28 @@ const nav = [
         <a href="/about#contact" class="btn-nav">Get Started</a>
       </nav>
     </header>
+
+    {hreflang.length > 1 && (
+      <div class="lang-switcher">
+        <div class="lang-switcher-inner">
+          <span class="lang-switcher-label">Language:</span>
+          <ul class="lang-list" role="list">
+            {hreflang.map(({ lang: l, url }) => (
+              <li>
+                <a
+                  href={url}
+                  class={`lang-link${l === lang ? ' lang-link--active' : ''}`}
+                  aria-current={l === lang ? 'page' : undefined}
+                  hreflang={l}
+                >
+                  {langLabels[l] ?? l}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    )}
 
     <main id="main-content">
       <slot />
@@ -363,6 +394,60 @@ const nav = [
   }
   @media (max-width: 480px) {
     .footer-nav { grid-template-columns: 1fr; }
+  }
+
+  /* ── Language Switcher ── */
+  .lang-switcher {
+    background: var(--bg-raised);
+    border-bottom: 1px solid var(--border);
+  }
+  .lang-switcher-inner {
+    max-width: var(--container);
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 2rem);
+    height: 40px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .lang-switcher-label {
+    font-family: var(--font-heading);
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+    white-space: nowrap;
+  }
+  .lang-list {
+    display: flex;
+    align-items: center;
+    gap: .25rem;
+    list-style: none;
+  }
+  .lang-link {
+    font-family: var(--font-heading);
+    font-size: .8125rem;
+    font-weight: 500;
+    color: var(--fg-muted);
+    padding: .25rem .625rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+    transition: color var(--transition), border-color var(--transition), background var(--transition);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .lang-link:hover {
+    color: var(--fg);
+    background: rgba(255,255,255,.05);
+  }
+  .lang-link--active {
+    color: var(--accent);
+    border-color: rgba(217,119,6,.35);
+    background: var(--accent-dim);
+  }
+  .lang-link--active:hover {
+    background: var(--accent-dim);
   }
 
   /* ── Focus ── */
