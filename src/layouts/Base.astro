@@ -14,6 +14,11 @@ const {
 } = Astro.props;
 
 const siteName = 'EWO';
+const nav = [
+  { href: '/model-promotion', label: 'For Models' },
+  { href: '/studio-traffic', label: 'For Studios' },
+  { href: '/about', label: 'About' },
+];
 ---
 
 <!doctype html>
@@ -30,40 +35,329 @@ const siteName = 'EWO';
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:type" content="website" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <header>
-      <nav>
-        <a href="/" class="logo">EWO</a>
-        <ul>
-          <li><a href="/model-promotion">For Models</a></li>
-          <li><a href="/studio-traffic">For Studios</a></li>
-          <li><a href="/about">About</a></li>
+    <header class="site-header">
+      <nav class="nav-inner">
+        <a href="/" class="logo" aria-label="EWO home">
+          <span class="logo-mark">E</span><span class="logo-text">WO</span>
+        </a>
+        <ul class="nav-links" role="list">
+          {nav.map(({ href, label }) => (
+            <li><a href={href} class="nav-link">{label}</a></li>
+          ))}
         </ul>
+        <a href="/about#contact" class="btn-nav">Get Started</a>
       </nav>
     </header>
-    <main>
+
+    <main id="main-content">
       <slot />
     </main>
-    <footer>
-      <p>&copy; {new Date().getFullYear()} EWO. All rights reserved.</p>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="logo-mark">E</span><span class="logo-text">WO</span>
+          <p class="footer-tagline">Legitimate audience growth for models & studios.</p>
+        </div>
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <div class="footer-col">
+            <p class="footer-col-title">Services</p>
+            <ul role="list">
+              <li><a href="/model-promotion">Model Promotion</a></li>
+              <li><a href="/studio-traffic">Studio Traffic</a></li>
+              <li><a href="/new-model-growth">New Model Growth</a></li>
+              <li><a href="/studio-scaling">Studio Scaling</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <p class="footer-col-title">Resources</p>
+            <ul role="list">
+              <li><a href="/why-low-viewers-webcam">Why Low Viewers</a></li>
+              <li><a href="/how-cam-algorithm-ranks-rooms">Algorithm Guide</a></li>
+              <li><a href="/best-streaming-times-by-region">Streaming Times</a></li>
+              <li><a href="/webcam-model-income-guide">Income Guide</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <p class="footer-col-title">Regions</p>
+            <ul role="list">
+              <li><a href="/model-promotion-usa">USA</a></li>
+              <li><a href="/model-promotion-germany">Germany</a></li>
+              <li><a href="/model-promotion-romania">Romania</a></li>
+              <li><a href="/model-promotion-ukraine">Ukraine</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; {new Date().getFullYear()} EWO. All rights reserved.</p>
+      </div>
     </footer>
   </body>
 </html>
 
 <style is:global>
+  /* ── Design Tokens ── */
+  :root {
+    --bg:        #0C0A09;
+    --bg-raised: #1C1917;
+    --bg-subtle: #171513;
+    --border:    rgba(255,255,255,0.08);
+    --fg:        #FAFAF9;
+    --fg-muted:  #A8A29E;
+    --fg-faint:  #57534E;
+    --accent:    #D97706;
+    --accent-hover: #F59E0B;
+    --accent-dim:   rgba(217,119,6,0.12);
+
+    --font-heading: 'Space Grotesk', system-ui, sans-serif;
+    --font-body:    'Inter', system-ui, sans-serif;
+
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+
+    --transition: 180ms ease;
+
+    --container: 1200px;
+    --container-text: 720px;
+  }
+
+  /* ── Reset ── */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: system-ui, sans-serif; line-height: 1.6; color: #111; }
-  header { padding: 1rem 2rem; border-bottom: 1px solid #eee; }
-  nav { display: flex; align-items: center; gap: 2rem; max-width: 1200px; margin: 0 auto; }
-  nav .logo { font-weight: 700; font-size: 1.5rem; text-decoration: none; color: #111; }
-  nav ul { display: flex; gap: 1.5rem; list-style: none; }
-  nav a { text-decoration: none; color: #444; }
-  nav a:hover { color: #000; }
-  main { max-width: 1200px; margin: 0 auto; padding: 2rem; }
-  footer { text-align: center; padding: 2rem; color: #666; border-top: 1px solid #eee; margin-top: 4rem; }
-  h1 { font-size: 2.5rem; margin-bottom: 1rem; }
-  h2 { font-size: 1.75rem; margin: 2rem 0 0.75rem; }
-  h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; }
-  p { margin-bottom: 1rem; color: #333; }
+  html { font-size: 16px; scroll-behavior: smooth; color-scheme: dark; }
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+  }
+  main { flex: 1; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  ul { list-style: none; }
+  button { cursor: pointer; font-family: inherit; }
+
+  /* ── Typography ── */
+  h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--fg);
+  }
+  h1 { font-size: clamp(2.5rem, 5vw, 4.5rem); }
+  h2 { font-size: clamp(1.75rem, 3vw, 2.75rem); }
+  h3 { font-size: clamp(1.25rem, 2vw, 1.5rem); font-weight: 600; }
+  p  { color: var(--fg-muted); line-height: 1.75; max-width: 65ch; }
+
+  /* ── Layout helpers ── */
+  .container {
+    max-width: var(--container);
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 2rem);
+  }
+  .section {
+    padding-block: clamp(4rem, 8vw, 7rem);
+  }
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── Buttons ── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    font-family: var(--font-heading);
+    font-size: .9375rem;
+    font-weight: 600;
+    letter-spacing: .01em;
+    padding: .75rem 1.75rem;
+    border-radius: var(--radius-md);
+    transition: background var(--transition), color var(--transition), box-shadow var(--transition);
+    cursor: pointer;
+    border: none;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #0C0A09;
+  }
+  .btn-primary:hover {
+    background: var(--accent-hover);
+    box-shadow: 0 0 24px rgba(217,119,6,.35);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--fg);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover {
+    border-color: var(--fg-muted);
+    background: rgba(255,255,255,.04);
+  }
+  .btn-nav {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-heading);
+    font-size: .875rem;
+    font-weight: 600;
+    padding: .5rem 1.25rem;
+    border-radius: var(--radius-md);
+    background: var(--accent);
+    color: #0C0A09;
+    transition: background var(--transition), box-shadow var(--transition);
+  }
+  .btn-nav:hover {
+    background: var(--accent-hover);
+    box-shadow: 0 0 16px rgba(217,119,6,.3);
+  }
+
+  /* ── Header ── */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(12,10,9,.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: var(--container);
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 2rem);
+    height: 64px;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+  .logo {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.375rem;
+    letter-spacing: -.03em;
+    display: flex;
+    align-items: center;
+    gap: .1em;
+    flex-shrink: 0;
+  }
+  .logo-mark { color: var(--accent); }
+  .logo-text  { color: var(--fg); }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: .25rem;
+    margin-left: auto;
+  }
+  .nav-link {
+    font-family: var(--font-heading);
+    font-size: .9rem;
+    font-weight: 500;
+    color: var(--fg-muted);
+    padding: .5rem .875rem;
+    border-radius: var(--radius-sm);
+    transition: color var(--transition), background var(--transition);
+  }
+  .nav-link:hover {
+    color: var(--fg);
+    background: rgba(255,255,255,.05);
+  }
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .nav-inner { gap: 1rem; }
+  }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    transition: border-color var(--transition), box-shadow var(--transition);
+  }
+  .card:hover {
+    border-color: rgba(217,119,6,.3);
+    box-shadow: 0 4px 32px rgba(0,0,0,.4);
+  }
+
+  /* ── Accent text ── */
+  .text-accent { color: var(--accent); }
+  .text-muted  { color: var(--fg-muted); }
+
+  /* ── Footer ── */
+  .site-footer {
+    border-top: 1px solid var(--border);
+    background: var(--bg-subtle);
+  }
+  .footer-inner {
+    max-width: var(--container);
+    margin-inline: auto;
+    padding: 4rem clamp(1.25rem, 4vw, 2rem) 3rem;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 4rem;
+  }
+  .footer-brand .logo-mark { color: var(--accent); font-family: var(--font-heading); font-weight: 700; font-size: 1.375rem; }
+  .footer-brand .logo-text { color: var(--fg); font-family: var(--font-heading); font-weight: 700; font-size: 1.375rem; }
+  .footer-tagline { color: var(--fg-faint); font-size: .875rem; margin-top: .75rem; max-width: 24ch; }
+  .footer-nav {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  .footer-col-title {
+    font-family: var(--font-heading);
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+    margin-bottom: 1rem;
+    max-width: none;
+  }
+  .footer-col ul { display: flex; flex-direction: column; gap: .5rem; }
+  .footer-col a {
+    font-size: .875rem;
+    color: var(--fg-muted);
+    transition: color var(--transition);
+  }
+  .footer-col a:hover { color: var(--fg); }
+  .footer-bottom {
+    border-top: 1px solid var(--border);
+    padding: 1.25rem clamp(1.25rem, 4vw, 2rem);
+    text-align: center;
+  }
+  .footer-bottom p { font-size: .8125rem; color: var(--fg-faint); max-width: none; }
+
+  @media (max-width: 768px) {
+    .footer-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .footer-nav { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .footer-nav { grid-template-columns: 1fr; }
+  }
+
+  /* ── Focus ── */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+  }
+
+  /* ── Reduced motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+  }
 </style>
