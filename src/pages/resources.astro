@@ -1,0 +1,120 @@
+---
+import Base from '@/layouts/Base.astro';
+
+const articles = [
+  {
+    href: '/why-low-viewers-webcam',
+    title: 'Why Your Webcam Room Has Low Viewers',
+    desc: '8 fixable reasons models struggle with visibility — and what to do about each one.',
+    tag: 'Models',
+  },
+  {
+    href: '/how-cam-algorithm-ranks-rooms',
+    title: 'How Cam Platform Algorithms Rank Rooms',
+    desc: 'What signals platforms weight and how to work with the algorithm, not against it.',
+    tag: 'Models & Studios',
+  },
+  {
+    href: '/best-streaming-times-by-region',
+    title: 'Best Streaming Times by Region',
+    desc: 'Peak viewer hours for USA, Germany, UK, Eastern Europe and more.',
+    tag: 'Models & Studios',
+  },
+  {
+    href: '/webcam-model-income-guide',
+    title: 'Webcam Model Income Guide',
+    desc: 'How earnings actually work, what affects income, and how to build toward consistency.',
+    tag: 'Models',
+  },
+  {
+    href: '/platforms-we-work-with',
+    title: 'Platforms We Work With',
+    desc: 'An overview of the major cam platforms and how our strategy differs for each.',
+    tag: 'Models & Studios',
+  },
+];
+---
+
+<Base
+  title="Resources — Webcam Model & Studio Guides"
+  description="Free guides for webcam models and studios: platform algorithms, streaming times, income strategy, and audience growth."
+>
+  <div class="page-content">
+    <div class="container">
+
+      <header class="page-header">
+        <p class="eyebrow">Free resources</p>
+        <h1>Guides & Articles</h1>
+        <p class="lead">Practical guides for webcam models and studios — no fluff, no upsell.</p>
+      </header>
+
+      <ul class="article-list" role="list">
+        {articles.map(({ href, title, desc, tag }) => (
+          <li>
+            <a href={href} class="article-card card">
+              <div class="article-meta">
+                <span class="article-tag">{tag}</span>
+              </div>
+              <h2>{title}</h2>
+              <p>{desc}</p>
+              <span class="card-link">Read article →</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+
+    </div>
+  </div>
+</Base>
+
+<style>
+  .page-content { padding-block: 3rem 5rem; }
+  .page-header { margin-bottom: 3rem; }
+  .eyebrow {
+    font-family: var(--font-heading);
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: .75rem;
+  }
+  .page-header h1 { margin-bottom: .75rem; }
+  .lead { font-size: 1.0625rem; }
+
+  .article-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .article-card {
+    display: flex;
+    flex-direction: column;
+    gap: .625rem;
+    text-decoration: none;
+  }
+  .article-card h2 {
+    font-size: 1.25rem;
+    transition: color var(--transition);
+  }
+  .article-card:hover h2 { color: var(--accent); }
+  .article-meta { display: flex; align-items: center; gap: .75rem; }
+  .article-tag {
+    font-family: var(--font-heading);
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+    border: 1px solid var(--border);
+    padding: .2rem .6rem;
+    border-radius: 100px;
+  }
+  .card-link {
+    font-family: var(--font-heading);
+    font-size: .875rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-top: .25rem;
+  }
+</style>
