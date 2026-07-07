@@ -1,0 +1,48 @@
+---
+import Base from '@/layouts/Base.astro';
+---
+
+<Base
+  title="Contact EWO"
+  description="Get in touch with EWO for a free profile audit and discussion of your audience growth goals."
+>
+  <article class="page-content">
+    <div class="container">
+      <header class="page-header">
+        <h1>Get in Touch</h1>
+        <p class="lead">
+          Tell us where you are and where you want to go. We'll review your current situation
+          and put together a plan before we take you on as a client.
+        </p>
+      </header>
+
+      <section>
+        <h2>What to Expect</h2>
+        <ul>
+          <li>Free profile audit — we review your current setup before any commitment</li>
+          <li>Response within 48 hours</li>
+          <li>No hard sell — if we can't genuinely help, we'll tell you</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Reach Out</h2>
+        <p>Email us at: <a href="mailto:hello@ewo.com">hello@ewo.com</a></p>
+      </section>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .page-content { padding-block: 3rem 5rem; }
+  .page-header { margin-bottom: 3rem; border-bottom: 1px solid var(--border); padding-bottom: 2rem; }
+  .page-header h1 { margin-bottom: 1.25rem; }
+  .lead { font-size: 1.125rem; max-width: 60ch; }
+  article section { margin-bottom: 2.5rem; }
+  article h2 { margin-bottom: 1rem; }
+  article p { margin-bottom: 0.875rem; }
+  article ul { margin: 0.75rem 0 0.875rem 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
+  article li { color: var(--fg-muted); }
+  article a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+  article a:hover { color: var(--accent-hover); }
+</style>
