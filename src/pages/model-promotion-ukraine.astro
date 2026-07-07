@@ -1,10 +1,16 @@
 ---
 import Base from '@/layouts/Base.astro';
+const site = 'https://ewo.com';
 ---
 
 <Base
   title="Webcam Model Promotion in Ukraine — International Audience Strategy"
   description="Promotion services for Ukrainian webcam models. Despite challenging circumstances, Ukrainian models can build strong international audiences with the right targeting strategy."
+  lang="en"
+  hreflang={[
+    { lang: 'en', url: `${site}/model-promotion-ukraine` },
+    { lang: 'uk', url: `${site}/uk/model-promotion-ukraine` },
+  ]}
 >
   <article class="page-content">
     <div class="container">

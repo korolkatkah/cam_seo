@@ -1,10 +1,16 @@
 ---
 import Base from '@/layouts/Base.astro';
+const site = 'https://ewo.com';
 ---
 
 <Base
   title="Webcam Model Promotion for German Audience — DACH Market Strategy"
   description="How to grow a loyal German-speaking viewer base. Germany is one of Europe's highest-value cam markets with distinct content preferences, loyalty patterns, and peak hours."
+  lang="en"
+  hreflang={[
+    { lang: 'en', url: `${site}/model-promotion-germany` },
+    { lang: 'de', url: `${site}/de/model-promotion-germany` },
+  ]}
 >
   <article class="page-content">
     <div class="container">

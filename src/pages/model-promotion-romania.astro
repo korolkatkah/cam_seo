@@ -1,10 +1,16 @@
 ---
 import Base from '@/layouts/Base.astro';
+const site = 'https://ewo.com';
 ---
 
 <Base
   title="Webcam Model Promotion in Romania — Standing Out in a High-Supply Market"
   description="Promotion strategies for Romanian webcam models and studios. Romania has one of the highest concentrations of cam performers in Europe — differentiation and Western audience targeting are essential."
+  lang="en"
+  hreflang={[
+    { lang: 'en', url: `${site}/model-promotion-romania` },
+    { lang: 'ro', url: `${site}/ro/model-promotion-romania` },
+  ]}
 >
   <article class="page-content">
     <div class="container">

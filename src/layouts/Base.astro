@@ -1,9 +1,16 @@
 ---
+interface HreflangEntry {
+  lang: string;
+  url: string;
+}
+
 interface Props {
   title: string;
   description: string;
   canonicalUrl?: string;
   noindex?: boolean;
+  hreflang?: HreflangEntry[];
+  lang?: string;
 }
 
 const {
@@ -11,6 +18,8 @@ const {
   description,
   canonicalUrl = Astro.url.href,
   noindex = false,
+  hreflang = [],
+  lang = 'en',
 } = Astro.props;
 
 const siteName = 'EWO';
@@ -23,7 +32,7 @@ const nav = [
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -36,6 +45,10 @@ const nav = [
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:type" content="website" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    {hreflang.map(({ lang: l, url }) => (
+      <link rel="alternate" hreflang={l} href={url} />
+    ))}
+    {hreflang.length > 0 && <link rel="alternate" hreflang="x-default" href={hreflang.find(h => h.lang === 'en')?.url ?? canonicalUrl} />}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -91,6 +104,8 @@ const nav = [
               <li><a href="/model-promotion-germany">Germany</a></li>
               <li><a href="/model-promotion-romania">Romania</a></li>
               <li><a href="/model-promotion-ukraine">Ukraine</a></li>
+              <li><a href="/model-promotion-colombia">Colombia</a></li>
+              <li><a href="/model-promotion-spain">Spain</a></li>
             </ul>
           </div>
         </nav>
