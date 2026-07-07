@@ -1,10 +1,21 @@
----
+﻿---
 import Base from '@/layouts/Base.astro';
+const site = 'https://ewo.com';
+const slug = 'contact';
 ---
 
 <Base
   title="Contact EWO"
   description="Get in touch with EWO for a free profile audit and discussion of your audience growth goals."
+  lang="en"
+  hreflang={[
+    { lang: 'en', url: `${site}/contact` },
+    { lang: 'de', url: `${site}/de/contact` },
+    { lang: 'es', url: `${site}/es/contact` },
+    { lang: 'ro', url: `${site}/ro/contact` },
+    { lang: 'uk', url: `${site}/uk/contact` },
+    { lang: 'ru', url: `${site}/ru/contact` },
+  ]}
 >
   <article class="page-content">
     <div class="container">

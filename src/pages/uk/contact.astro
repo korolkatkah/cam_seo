@@ -1,0 +1,60 @@
+---
+import Base from '@/layouts/Base.astro';
+const site = 'https://ewo.com';
+const slug = 'contact';
+---
+<Base
+  title="Контакт – EWO Webcam Promotion"
+  description="Зв'яжися з EWO. Розкажи нам про свою платформу, години стрімінгу, цільовий ринок та цілі зростання."
+  lang="uk"
+  hreflang={[
+    { lang: 'en', url: `${site}/${slug}` },
+    { lang: 'de', url: `${site}/de/${slug}` },
+    { lang: 'es', url: `${site}/es/${slug}` },
+    { lang: 'ro', url: `${site}/ro/${slug}` },
+    { lang: 'uk', url: `${site}/uk/${slug}` },
+    { lang: 'ru', url: `${site}/ru/${slug}` },
+  ]}
+>
+  <article class="page-content">
+    <div class="container">
+      <header class="page-header">
+        <p class="eyebrow">Контакт</p>
+        <h1>Напиши нам</h1>
+        <p class="lead">Ми відповідаємо на всі запити особисто. Чим більше ти розкажеш нам про свою ситуацію, тим конкретнішою може бути наша допомога.</p>
+      </header>
+
+      <section>
+        <h2>Що вказати у своєму повідомленні</h2>
+        <p>Щоб дати тобі корисну відповідь, нам допоможе така інформація:</p>
+        <ul>
+          <li><strong>Поточна платформа:</strong> На якій платформі ти зараз стрімиш? (Chaturbate, Stripchat, LiveJasmin тощо)</li>
+          <li><strong>Години стрімінгу:</strong> Скільки годин на тиждень ти зараз стрімиш?</li>
+          <li><strong>Цільовий ринок:</strong> Який регіон ти хочеш охопити переважно? (США, DACH, Велика Британія тощо)</li>
+          <li><strong>Поточна ситуація:</strong> Як довго ти вже активна і яка зараз твоя кількість глядачів?</li>
+          <li><strong>Цілі:</strong> Чого ти хочеш досягти за наступні 3–6 місяців?</li>
+          <li><strong>Для студій:</strong> Скільки у тебе зараз моделей і на яких платформах вони активні?</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Як зв'язатися з нами</h2>
+        <p>Напиши нам електронного листа на <a href="mailto:info@ewo.com">info@ewo.com</a>. Зазвичай відповідаємо протягом 24–48 годин.</p>
+        <p>Будь ласка, не надсилай запити на бот-сервіси або фейкові перегляди — це не наш бізнес і ми не можемо з цим допомогти.</p>
+      </section>
+
+      <section>
+        <h2>Що відбувається після</h2>
+        <p>Після твого запиту ми аналізуємо твою ситуацію та пропонуємо конкретні наступні кроки. Якщо ми вважаємо, що можемо допомогти тобі, обговорюємо деталі і пояснюємо, як виглядатиме співпраця.</p>
+        <p>Ми не приймаємо кожен випадок — ми працюємо лише з моделями та студіями, де можемо реально щось змінити.</p>
+      </section>
+
+      <section class="cta-section">
+        <h2>Готова до першого кроку?</h2>
+        <p>Напиши нам зараз — чим раніше розпочнеш, тим раніше побачиш результати.</p>
+        <p><a href="mailto:info@ewo.com">info@ewo.com →</a></p>
+      </section>
+    </div>
+  </article>
+</Base>
+<style>.page-content{padding-block:3rem 5rem}.page-header{margin-bottom:3rem;border-bottom:1px solid var(--border);padding-bottom:2rem}.eyebrow{font-family:var(--font-heading);font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.75rem}.page-header h1{margin-bottom:1.25rem}.lead{font-size:1.125rem;max-width:60ch}article section{margin-bottom:2.5rem}article h2{margin-bottom:1rem}article h3{margin-bottom:.5rem;margin-top:1.5rem}article p{margin-bottom:.875rem}article ol,article ul{margin:.75rem 0 .875rem 1.5rem;display:flex;flex-direction:column;gap:.5rem}article li{color:var(--fg-muted)}article a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}.faq-item{padding:1.5rem 0;border-top:1px solid var(--border)}.faq-item:last-child{border-bottom:1px solid var(--border)}.cta-section{background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2rem;margin-top:3rem}</style>

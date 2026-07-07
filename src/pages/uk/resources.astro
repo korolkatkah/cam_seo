@@ -1,0 +1,68 @@
+---
+import Base from '@/layouts/Base.astro';
+const site = 'https://ewo.com';
+const slug = 'resources';
+---
+<Base
+  title="Ресурси для вебкам-моделей – Путівники та поради | EWO"
+  description="Всі путівники EWO для вебкам-моделей одним поглядом: алгоритм, поради для глядачів, час стрімінгу, путівник з доходів та огляд платформ."
+  lang="uk"
+  hreflang={[
+    { lang: 'en', url: `${site}/${slug}` },
+    { lang: 'de', url: `${site}/de/${slug}` },
+    { lang: 'es', url: `${site}/es/${slug}` },
+    { lang: 'ro', url: `${site}/ro/${slug}` },
+    { lang: 'uk', url: `${site}/uk/${slug}` },
+    { lang: 'ru', url: `${site}/ru/${slug}` },
+  ]}
+>
+  <article class="page-content">
+    <div class="container">
+      <header class="page-header">
+        <p class="eyebrow">Ресурси</p>
+        <h1>Путівники та поради для вебкам-моделей</h1>
+        <p class="lead">Тут ти знайдеш всі путівники EWO — практичні знання про алгоритми, зростання аудиторії, планування часу та стратегію доходів.</p>
+      </header>
+
+      <section>
+        <h2>Зростання та просування</h2>
+
+        <h3><a href="/uk/new-model-growth">30-денна програма зростання для нових моделей</a></h3>
+        <p>Наша структурована програма для моделей, які тільки-но розпочали. Пояснює, як побудувати першу базу глядачів за перші 30 днів і прорвати цикл алгоритму.</p>
+
+        <h3><a href="/uk/studio-scaling">Масштабування вебкам-студії: вийти за межі 10 моделей</a></h3>
+        <p>Для власників студій, які хочуть рости за межі 5–10 моделей. Системи, планування, регіональна експансія та побудова бренду для професійних студій.</p>
+      </section>
+
+      <section>
+        <h2>Алгоритм та платформи</h2>
+
+        <h3><a href="/uk/why-low-viewers-webcam">8 причин мало глядачів – і як це виправити</a></h3>
+        <p>Неправильний час, погані теги, без плану, слабкий профіль — ось 8 найпоширеніших причин малої кількості глядачів і конкретні рішення для кожної.</p>
+
+        <h3><a href="/uk/how-cam-algorithm-ranks-rooms">Як кам-алгоритм ранжує кімнати</a></h3>
+        <p>Що реально важить у рейтингах кам-платформ: кількість глядачів, залученість, тривалість сесії, послідовність і теги. З легітимними методами покращення.</p>
+
+        <h3><a href="/uk/platforms-we-work-with">Платформи, з якими працює EWO</a></h3>
+        <p>Що відрізняє Chaturbate, Stripchat, LiveJasmin та BongaCams — і як відрізняється оптимальна стратегія залежно від платформи та цільової аудиторії.</p>
+      </section>
+
+      <section>
+        <h2>Час і доходи</h2>
+
+        <h3><a href="/uk/best-streaming-times-by-region">Найкращий час для стрімінгу за регіонами</a></h3>
+        <p>Конкретні години для США (20:00–02:00 ET), DACH (21:00–01:00 CET), Великобританії (20:00–00:00 GMT), Франції, Східної Європи та Колумбії — з порадами щодо планування.</p>
+
+        <h3><a href="/uk/webcam-model-income-guide">Посібник з доходів вебкам-моделей</a></h3>
+        <p>Що насправді визначає твій дохід: якість глядачів, комісія платформи, послідовність, постійні глядачі та регіональна орієнтація. З реалістичними очікуваннями.</p>
+      </section>
+
+      <section class="cta-section">
+        <h2>Готова до наступного кроку?</h2>
+        <p>Путівники дають тобі знання — ми даємо впровадження. Якщо шукаєш професійну підтримку для побудови своєї аудиторії, зв'яжись з нами.</p>
+        <p><a href="/uk/contact">Зв'язатися зараз →</a></p>
+      </section>
+    </div>
+  </article>
+</Base>
+<style>.page-content{padding-block:3rem 5rem}.page-header{margin-bottom:3rem;border-bottom:1px solid var(--border);padding-bottom:2rem}.eyebrow{font-family:var(--font-heading);font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.75rem}.page-header h1{margin-bottom:1.25rem}.lead{font-size:1.125rem;max-width:60ch}article section{margin-bottom:2.5rem}article h2{margin-bottom:1rem}article h3{margin-bottom:.5rem;margin-top:1.5rem}article p{margin-bottom:.875rem}article ol,article ul{margin:.75rem 0 .875rem 1.5rem;display:flex;flex-direction:column;gap:.5rem}article li{color:var(--fg-muted)}article a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}.faq-item{padding:1.5rem 0;border-top:1px solid var(--border)}.faq-item:last-child{border-bottom:1px solid var(--border)}.cta-section{background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2rem;margin-top:3rem}</style>

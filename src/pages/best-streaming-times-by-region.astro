@@ -1,10 +1,21 @@
----
+﻿---
 import Base from '@/layouts/Base.astro';
+const site = 'https://ewo.com';
+const slug = 'best-streaming-times-by-region';
 ---
 
 <Base
   title="Best Streaming Times for Webcam Models by Region — Peak Hour Guide"
   description="When should you go live on cam? Peak viewer hours vary significantly by country. This guide covers the best streaming times for USA, Canada, Germany, UK, France, Eastern Europe and more."
+  lang="en"
+  hreflang={[
+    { lang: 'en', url: `${site}/best-streaming-times-by-region` },
+    { lang: 'de', url: `${site}/de/best-streaming-times-by-region` },
+    { lang: 'es', url: `${site}/es/best-streaming-times-by-region` },
+    { lang: 'ro', url: `${site}/ro/best-streaming-times-by-region` },
+    { lang: 'uk', url: `${site}/uk/best-streaming-times-by-region` },
+    { lang: 'ru', url: `${site}/ru/best-streaming-times-by-region` },
+  ]}
 >
   <article class="page-content">
     <div class="container">

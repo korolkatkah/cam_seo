@@ -1,0 +1,60 @@
+---
+import Base from '@/layouts/Base.astro';
+const site = 'https://ewo.com';
+const slug = 'contact';
+---
+<Base
+  title="Contact – EWO Webcam Promotion"
+  description="Contactează EWO. Spune-ne despre platforma ta, orele de streaming, piața țintă și obiectivele de creștere."
+  lang="ro"
+  hreflang={[
+    { lang: 'en', url: `${site}/${slug}` },
+    { lang: 'de', url: `${site}/de/${slug}` },
+    { lang: 'es', url: `${site}/es/${slug}` },
+    { lang: 'ro', url: `${site}/ro/${slug}` },
+    { lang: 'uk', url: `${site}/uk/${slug}` },
+    { lang: 'ru', url: `${site}/ru/${slug}` },
+  ]}
+>
+  <article class="page-content">
+    <div class="container">
+      <header class="page-header">
+        <p class="eyebrow">Contact</p>
+        <h1>Scrie-ne</h1>
+        <p class="lead">Răspundem personal la toate solicitările. Cu cât ne spui mai multe despre situația ta, cu atât putem fi mai concreți în ajutorul nostru.</p>
+      </header>
+
+      <section>
+        <h2>Ce să incluzi în mesajul tău</h2>
+        <p>Pentru a-ți oferi un răspuns util, ne ajută următoarele informații:</p>
+        <ul>
+          <li><strong>Platforma actuală:</strong> Pe ce platformă transmiți în prezent? (Chaturbate, Stripchat, LiveJasmin, etc.)</li>
+          <li><strong>Ore de streaming:</strong> Câte ore pe săptămână transmiți în prezent?</li>
+          <li><strong>Piața țintă:</strong> Ce regiune dorești să vizezi în principal? (SUA, DACH, Marea Britanie, etc.)</li>
+          <li><strong>Situația actuală:</strong> De cât timp ești activă și care este numărul tău actual de spectatori?</li>
+          <li><strong>Obiective:</strong> Ce dorești să realizezi în următoarele 3–6 luni?</li>
+          <li><strong>Pentru studiouri:</strong> Câte modele ai în prezent și pe ce platforme sunt active?</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Cum ne contactezi</h2>
+        <p>Trimite-ne un email la <a href="mailto:info@ewo.com">info@ewo.com</a>. De obicei răspundem în 24–48 de ore.</p>
+        <p>Te rugăm să nu faci solicitări pentru servicii de boți sau vizualizări false — nu acesta este profilul nostru și nu putem ajuta cu asta.</p>
+      </section>
+
+      <section>
+        <h2>Ce se întâmplă după aceea</h2>
+        <p>După solicitarea ta, analizăm situația ta și propunem pași concreți următori. Dacă credem că te putem ajuta, discutăm detaliile și explicăm cum ar arăta colaborarea.</p>
+        <p>Nu acceptăm orice caz — lucrăm doar cu modele și studiouri unde putem face cu adevărat o diferență.</p>
+      </section>
+
+      <section class="cta-section">
+        <h2>Gata pentru primul pas?</h2>
+        <p>Scrie-ne acum — cu cât începi mai devreme, cu atât mai devreme vei vedea rezultate.</p>
+        <p><a href="mailto:info@ewo.com">info@ewo.com →</a></p>
+      </section>
+    </div>
+  </article>
+</Base>
+<style>.page-content{padding-block:3rem 5rem}.page-header{margin-bottom:3rem;border-bottom:1px solid var(--border);padding-bottom:2rem}.eyebrow{font-family:var(--font-heading);font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.75rem}.page-header h1{margin-bottom:1.25rem}.lead{font-size:1.125rem;max-width:60ch}article section{margin-bottom:2.5rem}article h2{margin-bottom:1rem}article h3{margin-bottom:.5rem;margin-top:1.5rem}article p{margin-bottom:.875rem}article ol,article ul{margin:.75rem 0 .875rem 1.5rem;display:flex;flex-direction:column;gap:.5rem}article li{color:var(--fg-muted)}article a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}.faq-item{padding:1.5rem 0;border-top:1px solid var(--border)}.faq-item:last-child{border-bottom:1px solid var(--border)}.cta-section{background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2rem;margin-top:3rem}</style>

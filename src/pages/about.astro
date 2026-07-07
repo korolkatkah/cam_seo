@@ -1,10 +1,21 @@
----
+﻿---
 import Base from '@/layouts/Base.astro';
+const site = 'https://ewo.com';
+const slug = 'about';
 ---
 
 <Base
   title="About EWO — Webcam Model & Studio Promotion Agency"
   description="EWO is a digital marketing agency specializing in audience growth for webcam models and studios across 13 countries. Legitimate strategies, real results."
+  lang="en"
+  hreflang={[
+    { lang: 'en', url: `${site}/about` },
+    { lang: 'de', url: `${site}/de/about` },
+    { lang: 'es', url: `${site}/es/about` },
+    { lang: 'ro', url: `${site}/ro/about` },
+    { lang: 'uk', url: `${site}/uk/about` },
+    { lang: 'ru', url: `${site}/ru/about` },
+  ]}
 >
   <article class="page-content">
     <div class="container">

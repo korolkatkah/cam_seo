@@ -1,10 +1,21 @@
 ---
 import Base from '@/layouts/Base.astro';
+const site = 'https://ewo.com';
+const slug = 'model-promotion-usa';
 ---
 
 <Base
   title="Webcam Model Promotion for US Audience — How to Grow American Viewers"
   description="Promotion strategies specifically for webcam models targeting North American viewers. The US is the largest cam market — here's how to compete effectively for American audiences."
+  lang="en"
+  hreflang={[
+    { lang: 'en', url: `${site}/${slug}` },
+    { lang: 'de', url: `${site}/de/${slug}` },
+    { lang: 'es', url: `${site}/es/${slug}` },
+    { lang: 'ro', url: `${site}/ro/${slug}` },
+    { lang: 'uk', url: `${site}/uk/${slug}` },
+    { lang: 'ru', url: `${site}/ru/${slug}` },
+  ]}
 >
   <article class="page-content">
     <div class="container">

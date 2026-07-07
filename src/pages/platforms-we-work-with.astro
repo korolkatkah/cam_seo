@@ -1,10 +1,21 @@
----
+﻿---
 import Base from '@/layouts/Base.astro';
+const site = 'https://ewo.com';
+const slug = 'platforms-we-work-with';
 ---
 
 <Base
   title="Webcam Platforms We Work With — Cam Site Strategy by Platform Type"
   description="EWO provides promotion and marketing services across all major adult live streaming platforms. Learn how our strategy differs by platform type and what we focus on for each."
+  lang="en"
+  hreflang={[
+    { lang: 'en', url: `${site}/platforms-we-work-with` },
+    { lang: 'de', url: `${site}/de/platforms-we-work-with` },
+    { lang: 'es', url: `${site}/es/platforms-we-work-with` },
+    { lang: 'ro', url: `${site}/ro/platforms-we-work-with` },
+    { lang: 'uk', url: `${site}/uk/platforms-we-work-with` },
+    { lang: 'ru', url: `${site}/ru/platforms-we-work-with` },
+  ]}
 >
   <article class="page-content">
     <div class="container">

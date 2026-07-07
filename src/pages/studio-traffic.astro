@@ -1,10 +1,21 @@
----
+﻿---
 import Base from '@/layouts/Base.astro';
+const site = 'https://ewo.com';
+const slug = 'studio-traffic';
 ---
 
 <Base
   title="Webcam Studio Traffic Growth — Audience Strategy for Cam Studios"
   description="Scalable traffic growth strategies for webcam studios and agencies. Multi-model scheduling, regional audience targeting, and SEO that works across your entire roster."
+  lang="en"
+  hreflang={[
+    { lang: 'en', url: `${site}/studio-traffic` },
+    { lang: 'de', url: `${site}/de/studio-traffic` },
+    { lang: 'es', url: `${site}/es/studio-traffic` },
+    { lang: 'ro', url: `${site}/ro/studio-traffic` },
+    { lang: 'uk', url: `${site}/uk/studio-traffic` },
+    { lang: 'ru', url: `${site}/ru/studio-traffic` },
+  ]}
 >
   <article class="page-content">
     <div class="container">

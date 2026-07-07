@@ -1,0 +1,85 @@
+---
+import Base from '@/layouts/Base.astro';
+const site = 'https://ewo.com';
+const slug = 'model-promotion';
+---
+<Base
+  title="Продвижение Вебкам-Моделей — Реальная и Устойчивая Аудитория"
+  description="EWO помогает вебкам-моделям строить реальный, устойчивый трафик через целевой маркетинг, стратегию роста аудитории и платформенное продвижение."
+  lang="ru"
+  hreflang={[
+    { lang: 'en', url: `${site}/${slug}` },
+    { lang: 'de', url: `${site}/de/${slug}` },
+    { lang: 'es', url: `${site}/es/${slug}` },
+    { lang: 'ro', url: `${site}/ro/${slug}` },
+    { lang: 'uk', url: `${site}/uk/${slug}` },
+    { lang: 'ru', url: `${site}/ru/${slug}` },
+  ]}
+>
+  <article class="page-content">
+    <div class="container">
+      <header class="page-header">
+        <h1>Услуги по Продвижению Вебкам-Моделей</h1>
+        <p class="lead">
+          Перестань гадать, почему в твоей комнате нет зрителей. EWO помогает вебкам-моделям строить
+          реальный, устойчивый трафик на платформах, где ты уже стримишь — через целевой маркетинг,
+          стратегию роста аудитории и платформенное продвижение.
+        </p>
+      </header>
+
+      <section>
+        <h2>Почему Модели Работают с Нами</h2>
+        <p>
+          Большинство новых и растущих моделей упираются в одну и ту же стену: хороший контент,
+          нулевая видимость. Алгоритмы платформ вознаграждают последовательность и существующий трафик —
+          именно то, что труднее всего получить на старте или при выходе в новый регион.
+        </p>
+        <p>Мы фокусируемся на трёх направлениях:</p>
+        <ul>
+          <li><strong>Стратегия роста аудитории</strong> — адаптированная под твою платформу, расписание и нишу</li>
+          <li><strong>Кросс-платформенная видимость</strong> — присутствие за пределами платформы (соцсети, поиск, рефералы)</li>
+          <li><strong>Устойчивые методы</strong> — ничего, что рискует статусом твоего аккаунта</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Как Это Работает</h2>
+        <ol>
+          <li><strong>Аудит профиля и ниши</strong> — анализируем текущую настройку, расписание и позиционирование</li>
+          <li><strong>План роста</strong> — стратегия продвижения под твою платформу и целевой регион</li>
+          <li><strong>Исполнение и отслеживание</strong> — постоянное продвижение с прозрачностью по результатам</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Для Кого Это</h2>
+        <ul>
+          <li>Новые модели, которые ещё не нашли первую стабильную аудиторию</li>
+          <li>Опытные модели, расширяющиеся в новые регионы или платформы</li>
+          <li>Модели, которым нужна профессиональная маркетинговая поддержка без самостоятельного управления</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Частые Вопросы</h2>
+        <div class="faq-item">
+          <h3>Сколько времени нужно чтобы увидеть результаты?</h3>
+          <p>Первые измеримые изменения видимости обычно появляются в течение 2–3 недель. Устойчиво растущая база постоянных зрителей формируется за 4–8 недель в зависимости от платформы и расписания.</p>
+        </div>
+        <div class="faq-item">
+          <h3>На каких платформах вы работаете?</h3>
+          <p>Поддерживаем моделей на всех основных платформах прямых трансляций. Смотри наш <a href="/platforms-we-work-with">полный обзор платформ</a> для деталей.</p>
+        </div>
+      </section>
+
+      <section class="cta-section">
+        <h2>Начать Сейчас</h2>
+        <p>Расскажи нам где стримишь и мы покажем как подойдём к твоему случаю.</p>
+        <p><a href="/contact">Запросить консультацию →</a></p>
+      </section>
+    </div>
+  </article>
+</Base>
+<style>
+  .page-content{padding-block:3rem 5rem}.page-header{margin-bottom:3rem;border-bottom:1px solid var(--border);padding-bottom:2rem}.page-header h1{margin-bottom:1.25rem}.lead{font-size:1.125rem;max-width:60ch}article section{margin-bottom:2.5rem}article h2{margin-bottom:1rem}article h3{margin-bottom:.5rem;margin-top:1.5rem}article p{margin-bottom:.875rem}article ol,article ul{margin:.75rem 0 .875rem 1.5rem;display:flex;flex-direction:column;gap:.5rem}article li{color:var(--fg-muted)}article a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}article a:hover{color:var(--accent-hover)}.faq-item{padding:1.5rem 0;border-top:1px solid var(--border)}.faq-item:last-child{border-bottom:1px solid var(--border)}.cta-section{background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2rem;margin-top:3rem}
+</style>

@@ -1,0 +1,64 @@
+---
+import Base from '@/layouts/Base.astro';
+const site = 'https://ewo.com';
+const slug = 'about';
+---
+<Base
+  title="Sobre EWO – Promoción para modelos webcam y estudios | EWO"
+  description="EWO es un servicio de promoción para modelos webcam y estudios. Ayudamos a crecer con una audiencia real — sin bots, sin vistas falsas."
+  lang="es"
+  hreflang={[
+    { lang: 'en', url: `${site}/${slug}` },
+    { lang: 'de', url: `${site}/de/${slug}` },
+    { lang: 'es', url: `${site}/es/${slug}` },
+    { lang: 'ro', url: `${site}/ro/${slug}` },
+    { lang: 'uk', url: `${site}/uk/${slug}` },
+    { lang: 'ru', url: `${site}/ru/${slug}` },
+  ]}
+>
+  <article class="page-content">
+    <div class="container">
+      <header class="page-header">
+        <p class="eyebrow">Sobre nosotros</p>
+        <h1>¿Qué es EWO?</h1>
+        <p class="lead">EWO es un servicio de promoción especializado para modelos webcam y estudios. Ayudamos a construir alcance real y orgánico — sin atajos que dañen a largo plazo.</p>
+      </header>
+
+      <section>
+        <h2>Nuestra filosofía</h2>
+        <p>El mercado webcam es competitivo. Los algoritmos de las plataformas favorecen a las modelos con tracción existente, lo que hace la vida difícil a las nuevas. Muchas recurren en esta situación a bots o vistas falsas — tentador a corto plazo, pero dañino a largo plazo.</p>
+        <p>EWO cree en un enfoque diferente: estrategias de promoción legítimas que atraen espectadores reales y ofrecen resultados sostenibles. Sin riesgos para tu cuenta, sin apariencias artificiales que eventualmente se descubren.</p>
+      </section>
+
+      <section>
+        <h2>Qué hacemos</h2>
+        <p>Trabajamos con modelos webcam y estudios en Europa y América Latina. Nuestro equipo combina conocimiento sobre algoritmos de plataformas, estrategia de promoción y dinámicas de mercado regional.</p>
+        <ul>
+          <li>Construcción de primera audiencia para nuevas modelos</li>
+          <li>Optimización de perfil, etiquetas y horarios de streaming</li>
+          <li>Promoción fuera de la plataforma en canales relevantes</li>
+          <li>Estrategias de escalado de estudio para operaciones en crecimiento</li>
+          <li>Orientación regional hacia mercados de Europa occidental y Norteamérica</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Lo que no somos</h2>
+        <p>No somos un proveedor de bots, un servicio de vistas falsas ni un proveedor que hace promesas poco realistas. No trabajamos con modelos que buscan atajos rápidos y arriesgados.</p>
+        <p>Nuestro servicio está dirigido a modelos y estudios que quieren invertir seriamente en un crecimiento sostenible y entienden que los buenos resultados requieren tiempo y estructura.</p>
+      </section>
+
+      <section>
+        <h2>Nuestro alcance</h2>
+        <p>Trabajamos con modelos y estudios en Rumanía, Ucrania, Alemania, España y América Latina — principalmente Colombia. Nuestras estrategias de promoción se dirigen a los mercados más solventes: EE.UU., DACH, Reino Unido y Francia.</p>
+      </section>
+
+      <section class="cta-section">
+        <h2>Trabajar con EWO</h2>
+        <p>Si buscas un socio serio para tu crecimiento en plataformas cam, estaremos encantados de recibir tu mensaje.</p>
+        <p><a href="/contact">Contactar ahora →</a></p>
+      </section>
+    </div>
+  </article>
+</Base>
+<style>.page-content{padding-block:3rem 5rem}.page-header{margin-bottom:3rem;border-bottom:1px solid var(--border);padding-bottom:2rem}.eyebrow{font-family:var(--font-heading);font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.75rem}.page-header h1{margin-bottom:1.25rem}.lead{font-size:1.125rem;max-width:60ch}article section{margin-bottom:2.5rem}article h2{margin-bottom:1rem}article h3{margin-bottom:.5rem;margin-top:1.5rem}article p{margin-bottom:.875rem}article ol,article ul{margin:.75rem 0 .875rem 1.5rem;display:flex;flex-direction:column;gap:.5rem}article li{color:var(--fg-muted)}article a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}.faq-item{padding:1.5rem 0;border-top:1px solid var(--border)}.faq-item:last-child{border-bottom:1px solid var(--border)}.cta-section{background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2rem;margin-top:3rem}</style>

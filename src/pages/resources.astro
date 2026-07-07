@@ -1,5 +1,7 @@
 ---
 import Base from '@/layouts/Base.astro';
+const site = 'https://ewo.com';
+const slug = 'resources';
 
 const articles = [
   {
@@ -38,6 +40,15 @@ const articles = [
 <Base
   title="Resources — Webcam Model & Studio Guides"
   description="Free guides for webcam models and studios: platform algorithms, streaming times, income strategy, and audience growth."
+  lang="en"
+  hreflang={[
+    { lang: 'en', url: `${site}/${slug}` },
+    { lang: 'de', url: `${site}/de/${slug}` },
+    { lang: 'es', url: `${site}/es/${slug}` },
+    { lang: 'ro', url: `${site}/ro/${slug}` },
+    { lang: 'uk', url: `${site}/uk/${slug}` },
+    { lang: 'ru', url: `${site}/ru/${slug}` },
+  ]}
 >
   <div class="page-content">
     <div class="container">

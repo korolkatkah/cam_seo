@@ -1,0 +1,64 @@
+---
+import Base from '@/layouts/Base.astro';
+const site = 'https://ewo.com';
+const slug = 'about';
+---
+<Base
+  title="О EWO – Продвижение для веб-кам моделей и студий | EWO"
+  description="EWO — это сервис продвижения для веб-кам моделей и студий. Помогаем расти с реальной аудиторией — без ботов, без фейковых просмотров."
+  lang="ru"
+  hreflang={[
+    { lang: 'en', url: `${site}/${slug}` },
+    { lang: 'de', url: `${site}/de/${slug}` },
+    { lang: 'es', url: `${site}/es/${slug}` },
+    { lang: 'ro', url: `${site}/ro/${slug}` },
+    { lang: 'uk', url: `${site}/uk/${slug}` },
+    { lang: 'ru', url: `${site}/ru/${slug}` },
+  ]}
+>
+  <article class="page-content">
+    <div class="container">
+      <header class="page-header">
+        <p class="eyebrow">О нас</p>
+        <h1>Что такое EWO?</h1>
+        <p class="lead">EWO — это специализированный сервис продвижения для веб-кам моделей и студий. Помогаем строить реальный, органический охват — без ярлыков, которые вредят в долгосрочной перспективе.</p>
+      </header>
+
+      <section>
+        <h2>Наша философия</h2>
+        <p>Рынок вебкам конкурентен. Алгоритмы платформ предпочитают модели с существующей тракцией, что усложняет жизнь новичкам. Многие в этой ситуации прибегают к ботам или фейковым просмотрам — заманчиво краткосрочно, но вредно долгосрочно.</p>
+        <p>EWO верит в другой подход: легитимные стратегии продвижения, которые привлекают реальных зрителей и обеспечивают устойчивые результаты. Никаких рисков для твоего аккаунта, никакой искусственной видимости, которая рано или поздно раскрывается.</p>
+      </section>
+
+      <section>
+        <h2>Что мы делаем</h2>
+        <p>Мы работаем с веб-кам моделями и студиями в Европе и Латинской Америке. Наша команда сочетает знания об алгоритмах платформ, стратегии продвижения и региональной рыночной динамике.</p>
+        <ul>
+          <li>Построение первой аудитории для новых моделей</li>
+          <li>Оптимизация профиля, тегов и времени стриминга</li>
+          <li>Продвижение вне платформы на релевантных каналах</li>
+          <li>Стратегии масштабирования студии для растущих операций</li>
+          <li>Региональная ориентация на рынки Западной Европы и Северной Америки</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Кем мы не являемся</h2>
+        <p>Мы не являемся поставщиком ботов, сервисом фейковых просмотров и не даём нереалистичных обещаний. Мы не работаем с моделями, ищущими быстрые рискованные ярлыки.</p>
+        <p>Наш сервис ориентирован на модели и студии, желающие серьёзно инвестировать в устойчивый рост и понимающих, что хорошие результаты требуют времени и структуры.</p>
+      </section>
+
+      <section>
+        <h2>Наш охват</h2>
+        <p>Мы работаем с моделями и студиями в Румынии, Украине, Германии, Испании и Латинской Америке — преимущественно Колумбии. Наши стратегии продвижения направлены на наиболее платёжеспособные рынки: США, DACH, Великобритания и Франция.</p>
+      </section>
+
+      <section class="cta-section">
+        <h2>Сотрудничество с EWO</h2>
+        <p>Если ищешь серьёзного партнёра для роста на кам-платформах, мы рады получить твоё сообщение.</p>
+        <p><a href="/contact">Связаться сейчас →</a></p>
+      </section>
+    </div>
+  </article>
+</Base>
+<style>.page-content{padding-block:3rem 5rem}.page-header{margin-bottom:3rem;border-bottom:1px solid var(--border);padding-bottom:2rem}.eyebrow{font-family:var(--font-heading);font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.75rem}.page-header h1{margin-bottom:1.25rem}.lead{font-size:1.125rem;max-width:60ch}article section{margin-bottom:2.5rem}article h2{margin-bottom:1rem}article h3{margin-bottom:.5rem;margin-top:1.5rem}article p{margin-bottom:.875rem}article ol,article ul{margin:.75rem 0 .875rem 1.5rem;display:flex;flex-direction:column;gap:.5rem}article li{color:var(--fg-muted)}article a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}.faq-item{padding:1.5rem 0;border-top:1px solid var(--border)}.faq-item:last-child{border-bottom:1px solid var(--border)}.cta-section{background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2rem;margin-top:3rem}</style>
