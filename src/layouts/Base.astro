@@ -71,13 +71,14 @@ const nav = [
     {hreflang.length > 0 && <link rel="alternate" hreflang="x-default" href={hreflang.find(h => h.lang === 'en')?.url ?? canonicalUrl} />}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   </head>
   <body>
     <header class="site-header">
       <nav class="nav-inner">
         <a href="/" class="logo" aria-label="EWO home">
-          <span class="logo-mark">E</span><span class="logo-text">WO</span>
+          <img src="/logo.png" alt="EWO" class="logo-img" onerror="this.style.display='none'">
+          <span class="logo-ewo">EWO</span><span class="logo-cam">.cam</span>
         </a>
         <ul class="nav-links" role="list">
           {nav.map(({ href, label }) => (
@@ -117,8 +118,11 @@ const nav = [
     <footer class="site-footer">
       <div class="footer-inner">
         <div class="footer-brand">
-          <span class="logo-mark">E</span><span class="logo-text">WO</span>
-          <p class="footer-tagline">Legitimate audience growth for models & studios.</p>
+          <div class="footer-logo">
+            <img src="/logo.png" alt="EWO" class="logo-img" onerror="this.style.display='none'">
+            <span class="logo-ewo">EWO</span><span class="logo-cam">.cam</span>
+          </div>
+          <p class="footer-tagline">Legitimate audience growth for webcam models & studios worldwide.</p>
         </div>
         <nav class="footer-nav" aria-label="Footer navigation">
           <div class="footer-col">
@@ -153,7 +157,7 @@ const nav = [
         </nav>
       </div>
       <div class="footer-bottom">
-        <p>&copy; {new Date().getFullYear()} EWO. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} EWO.cam · All rights reserved</p>
       </div>
     </footer>
   </body>
@@ -162,23 +166,23 @@ const nav = [
 <style is:global>
   /* ── Design Tokens ── */
   :root {
-    --bg:        #0C0A09;
-    --bg-raised: #1C1917;
-    --bg-subtle: #171513;
-    --border:    rgba(255,255,255,0.08);
-    --fg:        #FAFAF9;
-    --fg-muted:  #A8A29E;
-    --fg-faint:  #57534E;
-    --accent:    #D97706;
-    --accent-hover: #F59E0B;
-    --accent-dim:   rgba(217,119,6,0.12);
+    --bg:        #060918;
+    --bg-raised: #0d1030;
+    --bg-subtle: #080b1e;
+    --border:    rgba(255,255,255,0.07);
+    --fg:        #f0eeff;
+    --fg-muted:  #94a3b8;
+    --fg-faint:  #475569;
+    --accent:    #818cf8;
+    --accent-hover: #a78bfa;
+    --accent-dim:   rgba(99,102,241,0.15);
 
-    --font-heading: 'Space Grotesk', system-ui, sans-serif;
-    --font-body:    'Inter', system-ui, sans-serif;
+    --font-heading: 'Nunito', system-ui, sans-serif;
+    --font-body:    'Nunito', system-ui, sans-serif;
 
-    --radius-sm: 4px;
-    --radius-md: 8px;
-    --radius-lg: 12px;
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
 
     --transition: 180ms ease;
 
@@ -198,6 +202,7 @@ const nav = [
     min-height: 100dvh;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
   }
   main { flex: 1; }
   img { max-width: 100%; display: block; }
@@ -208,14 +213,14 @@ const nav = [
   /* ── Typography ── */
   h1, h2, h3, h4 {
     font-family: var(--font-heading);
-    font-weight: 700;
+    font-weight: 800;
     line-height: 1.15;
     letter-spacing: -0.02em;
     color: var(--fg);
   }
   h1 { font-size: clamp(2.5rem, 5vw, 4.5rem); }
   h2 { font-size: clamp(1.75rem, 3vw, 2.75rem); }
-  h3 { font-size: clamp(1.25rem, 2vw, 1.5rem); font-weight: 600; }
+  h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); font-weight: 700; }
   p  { color: var(--fg-muted); line-height: 1.75; max-width: 65ch; }
 
   /* ── Layout helpers ── */
@@ -239,47 +244,50 @@ const nav = [
     gap: .5rem;
     font-family: var(--font-heading);
     font-size: .9375rem;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: .01em;
     padding: .75rem 1.75rem;
     border-radius: var(--radius-md);
-    transition: background var(--transition), color var(--transition), box-shadow var(--transition);
+    transition: opacity var(--transition), transform var(--transition), box-shadow var(--transition);
     cursor: pointer;
     border: none;
     white-space: nowrap;
+    min-height: 48px;
   }
   .btn-primary {
-    background: var(--accent);
-    color: #0C0A09;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #fff;
   }
   .btn-primary:hover {
-    background: var(--accent-hover);
-    box-shadow: 0 0 24px rgba(217,119,6,.35);
+    opacity: 0.9;
+    box-shadow: 0 0 24px rgba(99,102,241,.4);
   }
   .btn-ghost {
     background: transparent;
-    color: var(--fg);
+    color: var(--fg-muted);
     border: 1px solid var(--border);
   }
   .btn-ghost:hover {
-    border-color: var(--fg-muted);
-    background: rgba(255,255,255,.04);
+    border-color: rgba(129,140,248,0.3);
+    background: rgba(129,140,248,0.05);
+    color: var(--fg);
   }
   .btn-nav {
     display: inline-flex;
     align-items: center;
     font-family: var(--font-heading);
     font-size: .875rem;
-    font-weight: 600;
+    font-weight: 700;
     padding: .5rem 1.25rem;
     border-radius: var(--radius-md);
-    background: var(--accent);
-    color: #0C0A09;
-    transition: background var(--transition), box-shadow var(--transition);
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #fff;
+    transition: opacity var(--transition), box-shadow var(--transition);
+    min-height: 40px;
   }
   .btn-nav:hover {
-    background: var(--accent-hover);
-    box-shadow: 0 0 16px rgba(217,119,6,.3);
+    opacity: 0.9;
+    box-shadow: 0 0 16px rgba(99,102,241,.4);
   }
 
   /* ── Header ── */
@@ -287,10 +295,10 @@ const nav = [
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(12,10,9,.85);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border);
+    background: rgba(6,9,24,.9);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
   }
   .nav-inner {
     max-width: var(--container);
@@ -302,17 +310,29 @@ const nav = [
     gap: 2rem;
   }
   .logo {
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: 1.375rem;
-    letter-spacing: -.03em;
     display: flex;
     align-items: center;
-    gap: .1em;
+    gap: .5rem;
     flex-shrink: 0;
+    text-decoration: none;
   }
-  .logo-mark { color: var(--accent); }
-  .logo-text  { color: var(--fg); }
+  .logo-img { width: 32px; height: 32px; }
+  .logo-ewo {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 1.25rem;
+    letter-spacing: -0.01em;
+    background: linear-gradient(135deg, #a78bfa, #6366f1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .logo-cam {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: rgba(255,255,255,0.4);
+  }
   .nav-links {
     display: flex;
     align-items: center;
@@ -322,7 +342,7 @@ const nav = [
   .nav-link {
     font-family: var(--font-heading);
     font-size: .9rem;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--fg-muted);
     padding: .5rem .875rem;
     border-radius: var(--radius-sm);
@@ -330,7 +350,7 @@ const nav = [
   }
   .nav-link:hover {
     color: var(--fg);
-    background: rgba(255,255,255,.05);
+    background: rgba(129,140,248,0.08);
   }
   @media (max-width: 640px) {
     .nav-links { display: none; }
@@ -339,14 +359,16 @@ const nav = [
 
   /* ── Cards ── */
   .card {
-    background: var(--bg-raised);
-    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
     border-radius: var(--radius-lg);
     padding: 2rem;
-    transition: border-color var(--transition), box-shadow var(--transition);
+    backdrop-filter: blur(12px);
+    transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
   }
   .card:hover {
-    border-color: rgba(217,119,6,.3);
+    border-color: rgba(129,140,248,0.3);
+    background: rgba(129,140,248,0.05);
     box-shadow: 0 4px 32px rgba(0,0,0,.4);
   }
 
@@ -356,7 +378,7 @@ const nav = [
 
   /* ── Footer ── */
   .site-footer {
-    border-top: 1px solid var(--border);
+    border-top: 1px solid rgba(255,255,255,0.05);
     background: var(--bg-subtle);
   }
   .footer-inner {
@@ -367,9 +389,13 @@ const nav = [
     grid-template-columns: 1fr 2fr;
     gap: 4rem;
   }
-  .footer-brand .logo-mark { color: var(--accent); font-family: var(--font-heading); font-weight: 700; font-size: 1.375rem; }
-  .footer-brand .logo-text { color: var(--fg); font-family: var(--font-heading); font-weight: 700; font-size: 1.375rem; }
-  .footer-tagline { color: var(--fg-faint); font-size: .875rem; margin-top: .75rem; max-width: 24ch; }
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    margin-bottom: .75rem;
+  }
+  .footer-tagline { color: var(--fg-faint); font-size: .875rem; margin-top: .25rem; max-width: 24ch; font-weight: 600; }
   .footer-nav {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -378,7 +404,7 @@ const nav = [
   .footer-col-title {
     font-family: var(--font-heading);
     font-size: .75rem;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: .1em;
     text-transform: uppercase;
     color: var(--fg-faint);
@@ -388,16 +414,17 @@ const nav = [
   .footer-col ul { display: flex; flex-direction: column; gap: .5rem; }
   .footer-col a {
     font-size: .875rem;
+    font-weight: 600;
     color: var(--fg-muted);
     transition: color var(--transition);
   }
   .footer-col a:hover { color: var(--fg); }
   .footer-bottom {
-    border-top: 1px solid var(--border);
+    border-top: 1px solid rgba(255,255,255,0.05);
     padding: 1.25rem clamp(1.25rem, 4vw, 2rem);
     text-align: center;
   }
-  .footer-bottom p { font-size: .8125rem; color: var(--fg-faint); max-width: none; }
+  .footer-bottom p { font-size: .8125rem; color: var(--fg-faint); max-width: none; font-weight: 600; }
 
   @media (max-width: 768px) {
     .footer-inner { grid-template-columns: 1fr; gap: 2.5rem; }
@@ -409,8 +436,8 @@ const nav = [
 
   /* ── Language Switcher ── */
   .lang-switcher {
-    background: var(--bg-raised);
-    border-bottom: 1px solid var(--border);
+    background: rgba(13,16,48,0.8);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
   }
   .lang-switcher-inner {
     max-width: var(--container);
@@ -453,12 +480,12 @@ const nav = [
     background: rgba(255,255,255,.05);
   }
   .lang-link--active {
-    color: var(--accent);
-    border-color: rgba(217,119,6,.35);
-    background: var(--accent-dim);
+    color: #a78bfa;
+    border-color: rgba(129,140,248,.35);
+    background: rgba(99,102,241,0.15);
   }
   .lang-link--active:hover {
-    background: var(--accent-dim);
+    background: rgba(99,102,241,0.15);
   }
 
   /* ── Page / hero images ── */
