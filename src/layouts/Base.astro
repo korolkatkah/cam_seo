@@ -33,11 +33,28 @@ const langLabels: Record<string, string> = {
   es: 'Español',
 };
 
+const langPrefix = lang === 'en' ? '' : `/${lang}`;
+
+const navLabels: Record<string, {models: string, studios: string, blog: string, about: string}> = {
+  en: { models: 'For Models', studios: 'For Studios', blog: 'Blog', about: 'About' },
+  de: { models: 'Für Models', studios: 'Für Studios', blog: 'Blog', about: 'Über uns' },
+  es: { models: 'Para Modelos', studios: 'Para Estudios', blog: 'Blog', about: 'Nosotros' },
+  ro: { models: 'Pentru Modele', studios: 'Pentru Studiouri', blog: 'Blog', about: 'Despre noi' },
+  uk: { models: 'Для Моделей', studios: 'Для Студій', blog: 'Блог', about: 'Про нас' },
+  ru: { models: 'Для Моделей', studios: 'Для Студий', blog: 'Блог', about: 'О нас' },
+};
+const nl = navLabels[lang] ?? navLabels.en;
+
+const ctaLabels: Record<string, string> = {
+  en: 'Get Started', de: 'Loslegen', es: 'Comenzar',
+  ro: 'Începe', uk: 'Почати', ru: 'Начать',
+};
+
 const nav = [
-  { href: '/model-promotion', label: 'For Models' },
-  { href: '/studio-traffic', label: 'For Studios' },
-  { href: '/resources', label: 'Resources' },
-  { href: '/about', label: 'About' },
+  { href: `${langPrefix}/model-promotion`, label: nl.models },
+  { href: `${langPrefix}/studio-traffic`, label: nl.studios },
+  { href: `${langPrefix}/blog`, label: nl.blog },
+  { href: `${langPrefix}/about`, label: nl.about },
 ];
 ---
 
@@ -85,31 +102,28 @@ const nav = [
             <li><a href={href} class="nav-link">{label}</a></li>
           ))}
         </ul>
-        <a href="/about#contact" class="btn-nav">Get Started</a>
+        {hreflang.length > 1 && (
+          <div class="lang-dropdown">
+            <button class="lang-drop-btn" aria-expanded="false" aria-haspopup="true" id="lang-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              <span>{langLabels[lang] ?? lang}</span>
+              <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <ul class="lang-menu" role="listbox" id="lang-menu">
+              {hreflang.map(({ lang: l, url }) => (
+                <li>
+                  <a href={url} class={`lang-opt${l === lang ? ' lang-opt--active' : ''}`} hreflang={l}>
+                    {langLabels[l] ?? l}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        <a href={`${langPrefix}/about#contact`} class="btn-nav">{ctaLabels[lang] ?? 'Get Started'}</a>
       </nav>
     </header>
 
-    {hreflang.length > 1 && (
-      <div class="lang-switcher">
-        <div class="lang-switcher-inner">
-          <span class="lang-switcher-label">Language:</span>
-          <ul class="lang-list" role="list">
-            {hreflang.map(({ lang: l, url }) => (
-              <li>
-                <a
-                  href={url}
-                  class={`lang-link${l === lang ? ' lang-link--active' : ''}`}
-                  aria-current={l === lang ? 'page' : undefined}
-                  hreflang={l}
-                >
-                  {langLabels[l] ?? l}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    )}
 
     <main id="main-content">
       <slot />
@@ -489,6 +503,42 @@ const nav = [
     background: rgba(99,102,241,0.15);
   }
 
+  /* ── Language Dropdown ── */
+  .lang-dropdown { position: relative; }
+  .lang-drop-btn {
+    display: flex; align-items: center; gap: .4rem;
+    font-family: var(--font-heading); font-size: .8125rem; font-weight: 600;
+    color: var(--fg-muted); background: transparent;
+    border: 1px solid var(--border);
+    padding: .45rem .875rem; border-radius: var(--radius-sm);
+    cursor: pointer; transition: color var(--transition), border-color var(--transition), background var(--transition);
+    white-space: nowrap;
+  }
+  .lang-drop-btn:hover,
+  .lang-drop-btn[aria-expanded="true"] {
+    color: var(--fg); border-color: rgba(129,140,248,.35);
+    background: rgba(129,140,248,0.08);
+  }
+  .lang-drop-btn[aria-expanded="true"] .chevron { transform: rotate(180deg); }
+  .chevron { transition: transform var(--transition); }
+  .lang-menu {
+    position: absolute; right: 0; top: calc(100% + .5rem);
+    background: var(--bg-raised); border: 1px solid var(--border);
+    border-radius: var(--radius-md); padding: .4rem;
+    min-width: 155px; z-index: 200;
+    display: none; flex-direction: column; gap: .15rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,.5);
+  }
+  .lang-menu.is-open { display: flex; }
+  .lang-opt {
+    display: block; padding: .5rem .875rem; border-radius: var(--radius-sm);
+    font-family: var(--font-heading); font-size: .875rem; font-weight: 600;
+    color: var(--fg-muted); transition: background var(--transition), color var(--transition);
+  }
+  .lang-opt:hover { background: rgba(129,140,248,0.08); color: var(--fg); }
+  .lang-opt--active { color: var(--accent); }
+  @media (max-width: 640px) { .lang-drop-btn span { display: none; } }
+
   /* ── Page / hero images ── */
   .page-hero-image {
     margin: 0 0 2.5rem;
@@ -528,3 +578,20 @@ const nav = [
     *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
   }
 </style>
+
+<script is:inline>
+  (function () {
+    var btn = document.getElementById('lang-btn');
+    var menu = document.getElementById('lang-menu');
+    if (!btn || !menu) return;
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var open = menu.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    document.addEventListener('click', function () {
+      menu.classList.remove('is-open');
+      btn.setAttribute('aria-expanded', 'false');
+    });
+  })();
+</script>

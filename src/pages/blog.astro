@@ -1,0 +1,101 @@
+---
+import Base from '@/layouts/Base.astro';
+const site = 'https://ewo.cam';
+
+const articles = [
+  {
+    href: '/why-low-viewers-webcam',
+    title: 'Why Your Webcam Room Has Low Viewers',
+    desc: '8 real reasons your viewer count is low and exactly what to do about each one.',
+    tag: 'Growth',
+    mins: '8 min read',
+  },
+  {
+    href: '/how-cam-algorithm-ranks-rooms',
+    title: 'How Cam Algorithms Rank Rooms',
+    desc: 'What actually determines your visibility on cam platforms and how to work with it.',
+    tag: 'Algorithm',
+    mins: '6 min read',
+  },
+  {
+    href: '/best-streaming-times-by-region',
+    title: 'Best Streaming Times by Region',
+    desc: 'Peak hour data by region — maximize your audience reach every single session.',
+    tag: 'Strategy',
+    mins: '5 min read',
+  },
+  {
+    href: '/webcam-model-income-guide',
+    title: 'Webcam Model Income Guide',
+    desc: 'A clear breakdown of how webcam earnings work, what affects your income, and how to grow it.',
+    tag: 'Income',
+    mins: '10 min read',
+  },
+  {
+    href: '/new-model-growth',
+    title: 'New Model Growth Strategy',
+    desc: 'How to build your first consistent audience from scratch as a new webcam model.',
+    tag: 'Beginner',
+    mins: '7 min read',
+  },
+];
+---
+
+<Base
+  title="Blog — Webcam Growth Guides & Strategies"
+  description="Expert guides for webcam models and studios. Learn how cam algorithms work, how to grow your audience, and maximize your earnings."
+  lang="en"
+  hreflang={[
+    { lang: 'en', url: `${site}/blog` },
+    { lang: 'de', url: `${site}/de/blog` },
+    { lang: 'es', url: `${site}/es/blog` },
+    { lang: 'ro', url: `${site}/ro/blog` },
+    { lang: 'uk', url: `${site}/uk/blog` },
+    { lang: 'ru', url: `${site}/ru/blog` },
+  ]}
+>
+  <article>
+    <div class="container page-top">
+      <div class="blog-header">
+        <p class="eyebrow">Blog</p>
+        <h1>Guides & Strategies</h1>
+        <p class="lead">Practical knowledge for webcam models and studios who want to grow — without fake traffic or shortcuts.</p>
+      </div>
+
+      <div class="blog-grid">
+        {articles.map(({ href, title, desc, tag, mins }) => (
+          <a href={href} class="blog-card">
+            <div class="blog-card-meta">
+              <span class="blog-tag">{tag}</span>
+              <span class="blog-mins">{mins}</span>
+            </div>
+            <h2>{title}</h2>
+            <p>{desc}</p>
+            <span class="blog-read">Read article →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .page-top { padding-block: clamp(4rem, 8vw, 7rem); }
+  .blog-header { max-width: 54ch; margin-bottom: 3.5rem; }
+  .eyebrow { font-family: var(--font-heading); font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: .75rem; max-width: none; }
+  .lead { font-size: 1.0625rem; color: var(--fg-muted); line-height: 1.75; margin-top: .75rem; }
+  .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.25rem; }
+  .blog-card {
+    display: flex; flex-direction: column; gap: .75rem;
+    background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.07);
+    border-radius: var(--radius-lg); padding: 1.75rem 2rem;
+    text-decoration: none; transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
+  }
+  .blog-card:hover { border-color: rgba(129,140,248,.3); background: rgba(129,140,248,.05); box-shadow: 0 4px 32px rgba(0,0,0,.4); }
+  .blog-card-meta { display: flex; align-items: center; gap: .75rem; }
+  .blog-tag { font-family: var(--font-heading); font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); background: rgba(99,102,241,.15); border: 1px solid rgba(129,140,248,.25); padding: .2rem .6rem; border-radius: 100px; }
+  .blog-mins { font-size: .8rem; color: var(--fg-faint); font-weight: 600; }
+  .blog-card h2 { font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 700; line-height: 1.25; color: var(--fg); margin: 0; }
+  .blog-card p { font-size: .9375rem; color: var(--fg-muted); line-height: 1.65; margin: 0; }
+  .blog-read { font-family: var(--font-heading); font-size: .875rem; font-weight: 600; color: var(--accent); margin-top: auto; padding-top: .25rem; }
+</style>

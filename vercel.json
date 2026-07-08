@@ -2,5 +2,12 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "installCommand": "npm install",
-  "framework": "astro"
+  "framework": "astro",
+  "redirects": [
+    { "source": "/", "has": [{ "type": "header", "key": "accept-language", "value": "^de" }], "destination": "/de", "permanent": false },
+    { "source": "/", "has": [{ "type": "header", "key": "accept-language", "value": "^es" }], "destination": "/es", "permanent": false },
+    { "source": "/", "has": [{ "type": "header", "key": "accept-language", "value": "^ro" }], "destination": "/ro", "permanent": false },
+    { "source": "/", "has": [{ "type": "header", "key": "accept-language", "value": "^ru" }], "destination": "/ru", "permanent": false },
+    { "source": "/", "has": [{ "type": "header", "key": "accept-language", "value": "^uk" }], "destination": "/uk", "permanent": false }
+  ]
 }
