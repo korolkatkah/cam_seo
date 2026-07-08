@@ -1,445 +1,525 @@
 ---
-import Base from '@/layouts/Base.astro';
 const site = 'https://ewo.cam';
+const title = 'EWO.cam — Webcam Model & Studio Promotion Platform';
+const description = 'EWO is a global service for webcam models and studios. Traffic growth, promotion, and full management. 1000+ clients, 10+ years experience, 20+ countries.';
+const hreflang = [
+  { lang: 'en', url: `${site}/` },
+  { lang: 'de', url: `${site}/de` },
+  { lang: 'es', url: `${site}/es` },
+  { lang: 'ro', url: `${site}/ro` },
+  { lang: 'uk', url: `${site}/uk` },
+  { lang: 'ru', url: `${site}/ru` },
+];
 ---
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6H89TM92EZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6H89TM92EZ');
+  </script>
 
-<Base
-  title="Webcam Model & Studio Global Service — Traffic, Promotion, Management"
-  description="EWO is a global webcam service for models and studios. Traffic growth, promotion, and full management. 1000+ clients, 10+ years experience, 20+ countries."
-  lang="en"
-  hreflang={[
-    { lang: 'en', url: `${site}/` },
-    { lang: 'de', url: `${site}/de` },
-    { lang: 'es', url: `${site}/es` },
-    { lang: 'ro', url: `${site}/ro` },
-    { lang: 'uk', url: `${site}/uk` },
-    { lang: 'ru', url: `${site}/ru` },
-  ]}
->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={site + '/'} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={site + '/'} />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  {hreflang.map(({ lang, url }) => (
+    <link rel="alternate" hreflang={lang} href={url} />
+  ))}
+  <link rel="alternate" hreflang="x-default" href={site + '/'} />
 
-  <!-- HERO -->
-  <section class="hero section">
-    <div class="container">
-      <div class="hero-eyebrow">
-        <span class="badge">Global Webcam Service</span>
-      </div>
-      <h1 class="hero-headline">
-        Traffic. Promotion.<br />
-        <em class="hero-accent">Management.</em>
-      </h1>
-      <p class="hero-sub">
-        EWO is a global service for webcam models and studios. We handle audience growth,
-        promotion, and full management — for independent performers and multi-model studios
-        worldwide.
-      </p>
-      <div class="hero-actions">
-        <a href="/model-promotion" class="btn btn-primary">For Models</a>
-        <a href="/studio-traffic" class="btn btn-ghost">For Studios</a>
-      </div>
-      <div class="hero-stats">
-        <div class="stat">
-          <span class="stat-number">1000+</span>
-          <span class="stat-label">Models & Studios</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <span class="stat-number">10+</span>
-          <span class="stat-label">Years on market</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <span class="stat-number">20+</span>
-          <span class="stat-label">Countries</span>
-        </div>
-      </div>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            night: '#060918',
+            'night-2': '#0d1030',
+            indigo: { 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5' },
+            violet: { 400: '#a78bfa', 500: '#8b5cf6' },
+          },
+          fontFamily: { sans: ['Nunito', 'Inter', 'system-ui', 'sans-serif'] },
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; }
+    body { background: #060918; color: #e2e8f0; font-family: 'Nunito', sans-serif; -webkit-tap-highlight-color: transparent; }
 
-      <figure class="hero-image">
-        <img src="/images/hero-webcam-model-studio-promotion-agency.svg" alt="Global webcam model and studio promotion agency dashboard illustration" width="640" height="360" loading="eager" />
-      </figure>
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: #060918; }
+    ::-webkit-scrollbar-thumb { background: rgba(129,140,248,0.3); border-radius: 4px; }
+
+    .glow-orb { position:absolute; border-radius:50%; filter:blur(80px); pointer-events:none; opacity:0.3; }
+
+    .card-glass {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      backdrop-filter: blur(12px);
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .card-glass:hover { border-color: rgba(129,140,248,0.3); background: rgba(129,140,248,0.05); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      transition: opacity 0.2s, transform 0.2s;
+      min-height: 48px; display: inline-flex; align-items: center; justify-content: center;
+    }
+    .btn-primary:active { opacity: 0.85; transform: scale(0.98); }
+
+    .btn-ghost {
+      border: 1px solid rgba(255,255,255,0.12);
+      transition: border-color 0.2s, background 0.2s;
+      min-height: 48px; display: inline-flex; align-items: center; justify-content: center;
+    }
+    .btn-ghost:active { background: rgba(129,140,248,0.08); }
+
+    .nav-blur { backdrop-filter: blur(20px); background: rgba(6,9,24,0.9); }
+
+    #mobile-menu {
+      display: none;
+      position: fixed; top: 64px; left: 0; right: 0;
+      background: rgba(6,9,24,0.98);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      z-index: 49;
+      padding: 16px 0 24px;
+    }
+    #mobile-menu.open { display: block; }
+    #mobile-menu a {
+      display: flex; align-items: center; padding: 14px 24px;
+      color: #94a3b8; font-size: 16px; font-weight: 600;
+      text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.04);
+      min-height: 52px;
+      transition: color 0.2s, background 0.2s;
+    }
+    #mobile-menu a:hover { color: #fff; background: rgba(129,140,248,0.06); }
+    #mobile-menu a:last-child { border-bottom: none; }
+
+    .bottom-nav {
+      display: none;
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
+      background: rgba(6,9,24,0.97);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-bottom: env(safe-area-inset-bottom, 0);
+    }
+    .bottom-nav-inner { display: flex; }
+    .bottom-nav-item {
+      flex: 1; display: flex; flex-direction: column; align-items: center;
+      justify-content: center; padding: 10px 4px 8px;
+      min-height: 56px; cursor: pointer; text-decoration: none;
+      color: #475569; transition: color 0.2s;
+      -webkit-tap-highlight-color: transparent;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; gap: 4px;
+    }
+    .bottom-nav-item.active { color: #818cf8; }
+    .bottom-nav-item svg { width: 22px; height: 22px; }
+
+    .stat-num { background: linear-gradient(135deg, #818cf8, #a78bfa); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+    .hero-grid-line {
+      position:absolute; inset:0;
+      background-image: linear-gradient(rgba(129,140,248,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(129,140,248,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+    }
+
+    .tag-pill {
+      background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3);
+      color: #a5b4fc; font-size: 11px; padding: 4px 12px;
+      border-radius: 99px; display: inline-flex; align-items: center; gap: 6px; font-weight: 600;
+    }
+
+    .live-dot { width:7px; height:7px; background:#34d399; border-radius:50%; animation:pulse-dot 2s infinite; flex-shrink:0; }
+    @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
+
+    .model-card { transition: transform 0.3s; cursor: pointer; }
+    .model-card:hover { transform: translateY(-4px); }
+    .model-card:active { transform: scale(0.98); }
+
+    .avatar-placeholder { background: linear-gradient(135deg,#1e1b4b,#312e81); border: 1px solid rgba(129,140,248,0.2); }
+
+    .divider { height:1px; background:linear-gradient(90deg,transparent,rgba(129,140,248,0.2),transparent); }
+
+    .scroll-x-mobile { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: 4px; }
+    .scroll-x-mobile::-webkit-scrollbar { display: none; }
+    .scroll-x-mobile .cards-row { display: flex; gap: 14px; width: max-content; }
+    .scroll-x-mobile .cards-row .model-card { width: 200px; flex-shrink: 0; }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; cursor: pointer; min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: #94a3b8; border-radius: 2px; transition: all 0.3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    @media (max-width: 767px) {
+      .hamburger { display: flex; }
+      .bottom-nav { display: block; }
+      body { padding-bottom: calc(56px + env(safe-area-inset-bottom, 0)); }
+    }
+
+    .features-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+    @media (min-width: 640px) { .features-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1024px) { .features-grid { grid-template-columns: 1fr 1fr 1fr; } }
+
+    .heading-xl { font-family:'Nunito',sans-serif; font-weight:900; font-size:clamp(40px,10vw,88px); line-height:1.0; letter-spacing:-0.02em; color:#f0eeff; }
+    .heading-lg { font-family:'Nunito',sans-serif; font-weight:900; font-size:clamp(26px,5vw,44px); color:#f0eeff; letter-spacing:-0.01em; }
+    .grad-text { background:linear-gradient(135deg,#a78bfa 0%,#6366f1 60%,#818cf8 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+    .section-pad { padding: 64px 20px; }
+    @media (min-width: 768px) { .section-pad { padding: 96px 24px; } }
+
+    .cta-box { padding: 40px 24px; }
+    @media (min-width: 768px) { .cta-box { padding: 56px 48px; } }
+  </style>
+</head>
+<body class="antialiased overflow-x-hidden">
+
+<!-- NAV -->
+<header class="fixed top-0 left-0 right-0 z-50 nav-blur border-b border-white/5">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-2 shrink-0">
+      <img src="/logo.png" alt="EWO" class="w-9 h-9" onerror="this.style.display='none'">
+      <span style="font-family:'Nunito',sans-serif;font-weight:900;font-size:21px;letter-spacing:-0.01em;background:linear-gradient(135deg,#a78bfa,#6366f1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">EWO</span><span style="font-family:'Nunito',sans-serif;font-weight:700;font-size:21px;color:rgba(255,255,255,0.45);">.cam</span>
+    </a>
+    <nav class="hidden md:flex items-center gap-8 text-sm text-slate-400 font-semibold">
+      <a href="/model-promotion" class="hover:text-white transition-colors">For Models</a>
+      <a href="/studio-traffic" class="hover:text-white transition-colors">For Studios</a>
+      <a href="/resources" class="hover:text-white transition-colors">Resources</a>
+      <a href="/platforms-we-work-with" class="hover:text-white transition-colors">Platforms</a>
+    </nav>
+    <div class="hidden md:flex items-center gap-3">
+      <a href="/about" class="btn-ghost text-sm text-slate-300 px-5 py-2 rounded-xl font-semibold">About</a>
+      <a href="/about#contact" class="btn-primary text-sm text-white px-5 py-2 rounded-xl font-bold">Get Started →</a>
     </div>
-  </section>
-
-  <hr class="divider" />
-
-  <!-- SERVICES -->
-  <section class="section">
-    <div class="container">
-      <div class="section-header">
-        <p class="eyebrow">What we do</p>
-        <h2>Three services.<br />One global team.</h2>
-        <p>Whether you're starting out or scaling a studio, EWO has a solution built for your stage.</p>
-      </div>
-      <div class="cards-grid-3">
-        <a href="/studio-traffic" class="card service-card">
-          <div class="service-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          </div>
-          <h3>Traffic Growth</h3>
-          <p>Viewer growth strategy for models and studios — scheduling, regional targeting, platform optimization.</p>
-          <span class="card-link">Learn more <span aria-hidden="true">→</span></span>
-        </a>
-        <a href="/model-promotion" class="card service-card">
-          <div class="service-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/><circle cx="12" cy="12" r="3"/></svg>
-          </div>
-          <h3>Promotion</h3>
-          <p>Profile optimization, off-platform presence, social growth, and SEO for cam profiles.</p>
-          <span class="card-link">Learn more <span aria-hidden="true">→</span></span>
-        </a>
-        <a href="/studio-scaling" class="card service-card">
-          <div class="service-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-          </div>
-          <h3>Management</h3>
-          <p>Full-service management for studios: roster coordination, compliance, scaling systems, and analytics.</p>
-          <span class="card-link">Learn more <span aria-hidden="true">→</span></span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <hr class="divider" />
-
-  <!-- TRUST -->
-  <section class="section trust-section">
-    <div class="container">
-      <div class="section-header">
-        <p class="eyebrow">Why EWO</p>
-        <h2>A decade of results<br />across 20+ markets.</h2>
-        <p>We've been in the webcam industry since before most current platforms existed. That experience translates directly into strategies that work.</p>
-      </div>
-      <div class="trust-grid">
-        <div class="trust-item">
-          <span class="trust-num">1000+</span>
-          <h3>Models & Studios</h3>
-          <p>More than 1000 models and studios have worked with EWO to grow their audiences.</p>
-        </div>
-        <div class="trust-item">
-          <span class="trust-num">10+</span>
-          <h3>Years on Market</h3>
-          <p>Over a decade in the webcam industry — we know what works and what gets accounts banned.</p>
-        </div>
-        <div class="trust-item">
-          <span class="trust-num">20+</span>
-          <h3>Countries</h3>
-          <p>Our clients stream from 20+ countries targeting viewers across all major global markets.</p>
-        </div>
-        <div class="trust-item">
-          <span class="trust-num">0</span>
-          <h3>Fake Viewers</h3>
-          <p>We work exclusively with legitimate audience growth. No bots, no inflated numbers, no risk to your account.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <hr class="divider" />
-
-  <!-- HOW IT WORKS -->
-  <section class="section">
-    <div class="container">
-      <div class="section-header">
-        <p class="eyebrow">Our approach</p>
-        <h2>Legitimate growth,<br />compounding results.</h2>
-        <p>Shortcuts get accounts banned. We build real audiences that stay — viewers who return, tip, and become loyal fans.</p>
-      </div>
-      <div class="steps">
-        <div class="step">
-          <span class="step-num">01</span>
-          <h3>Audit & Strategy</h3>
-          <p>We review your current profile, streaming schedule, and audience data to identify the highest-leverage improvements.</p>
-        </div>
-        <div class="step">
-          <span class="step-num">02</span>
-          <h3>Platform Optimization</h3>
-          <p>Profile, tags, category, and preview optimization — ensuring you appear in the right searches and convert browsers into viewers.</p>
-        </div>
-        <div class="step">
-          <span class="step-num">03</span>
-          <h3>Audience Development</h3>
-          <p>Off-platform social presence, scheduling strategy, and engagement techniques that build a loyal returning fan base.</p>
-        </div>
-        <div class="step">
-          <span class="step-num">04</span>
-          <h3>Measure & Iterate</h3>
-          <p>Regular performance review against real metrics — viewer retention, return rate, income growth — not vanity numbers.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <hr class="divider" />
-
-  <!-- RESOURCES -->
-  <section class="section">
-    <div class="container">
-      <div class="section-header">
-        <p class="eyebrow">Free resources</p>
-        <h2>Understand the game<br />before you play it.</h2>
-      </div>
-      <div class="cards-grid-3">
-        <a href="/why-low-viewers-webcam" class="card resource-card">
-          <h3>Why Your Room Has Low Viewers</h3>
-          <p>8 fixable reasons models struggle with visibility — and what to do about each.</p>
-          <span class="card-link">Read <span aria-hidden="true">→</span></span>
-        </a>
-        <a href="/how-cam-algorithm-ranks-rooms" class="card resource-card">
-          <h3>How Cam Algorithms Rank Rooms</h3>
-          <p>What signals platforms weight and how to work with the algorithm, not against it.</p>
-          <span class="card-link">Read <span aria-hidden="true">→</span></span>
-        </a>
-        <a href="/best-streaming-times-by-region" class="card resource-card">
-          <h3>Best Streaming Times by Region</h3>
-          <p>Peak viewer hours for USA, Germany, UK, Eastern Europe and more.</p>
-          <span class="card-link">Read <span aria-hidden="true">→</span></span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <hr class="divider" />
-
-  <!-- PLATFORMS -->
-  <section class="section">
-    <div class="container">
-      <div class="section-header">
-        <p class="eyebrow">Platforms we work with</p>
-        <h2>All major webcam platforms.<br />One team.</h2>
-        <p>EWO works with models and studios across all leading webcam platforms — wherever you stream, we know the algorithms, the rules, and what drives real growth there.</p>
-      </div>
-      <div class="platforms-grid">
-        <div class="platform-card">
-          <span class="platform-rank">#1</span>
-          <div class="platform-info">
-            <strong>Chaturbate</strong>
-            <span>Largest free cam platform globally. Tip-based model, massive organic traffic.</span>
-          </div>
-        </div>
-        <div class="platform-card">
-          <span class="platform-rank">#2</span>
-          <div class="platform-info">
-            <strong>Stripchat</strong>
-            <span>Fast-growing platform with VR rooms and token system. Strong EU and US base.</span>
-          </div>
-        </div>
-        <div class="platform-card">
-          <span class="platform-rank">#3</span>
-          <div class="platform-info">
-            <strong>BongaCams</strong>
-            <span>Dominant in Eastern Europe, growing worldwide. High tip volumes from loyal viewers.</span>
-          </div>
-        </div>
-        <div class="platform-card">
-          <span class="platform-rank">#4</span>
-          <div class="platform-info">
-            <strong>LiveJasmin</strong>
-            <span>Premium private-show platform. High-spending members, strict quality standards.</span>
-          </div>
-        </div>
-        <div class="platform-card">
-          <span class="platform-rank">#5</span>
-          <div class="platform-info">
-            <strong>MyFreeCams</strong>
-            <span>US-focused, female-only. Strong community culture and loyal returning viewer base.</span>
-          </div>
-        </div>
-        <div class="platform-card">
-          <span class="platform-rank">#6</span>
-          <div class="platform-info">
-            <strong>Cam4</strong>
-            <span>Global audience, inclusive content policy. Token-based with strong LGBTQ+ community.</span>
-          </div>
-        </div>
-        <div class="platform-card">
-          <span class="platform-rank">#7</span>
-          <div class="platform-info">
-            <strong>CamSoda</strong>
-            <span>Heavy US traffic with strong discovery tools — good for new models building an audience.</span>
-          </div>
-        </div>
-        <div class="platform-card">
-          <span class="platform-rank">#8</span>
-          <div class="platform-info">
-            <strong>Flirt4Free</strong>
-            <span>Premium private model with among the highest payout rates in the industry.</span>
-          </div>
-        </div>
-        <div class="platform-card">
-          <span class="platform-rank">#9</span>
-          <div class="platform-info">
-            <strong>xLoveCam</strong>
-            <span>European-focused. Strong French and Spanish-speaking audiences, rising UK presence.</span>
-          </div>
-        </div>
-        <div class="platform-card">
-          <span class="platform-rank">#10</span>
-          <div class="platform-info">
-            <strong>ImLive</strong>
-            <span>Private show focus with loyalty programs. Consistent mid-tier earners perform well.</span>
-          </div>
-        </div>
-        <div class="platform-card">
-          <span class="platform-rank">#11</span>
-          <div class="platform-info">
-            <strong>Streamate</strong>
-            <span>Subscription and pay-per-minute model. Stable US traffic, good for consistent schedules.</span>
-          </div>
-        </div>
-        <div class="platform-card">
-          <span class="platform-rank">#12</span>
-          <div class="platform-info">
-            <strong>Cams.com</strong>
-            <span>Niche community platform with dedicated fan base features and club memberships.</span>
-          </div>
-        </div>
-      </div>
-      <p class="platforms-note">Don't see your platform? <a href="/contact">Contact us</a> — we work with all major live streaming platforms.</p>
-    </div>
-  </section>
-
-  <!-- CTA BAND -->
-  <section class="cta-band">
-    <div class="container">
-      <h2>Ready to grow?</h2>
-      <p>Tell us where you are and where you want to go. We'll build the plan.</p>
-      <div class="cta-actions">
-        <a href="/contact" class="btn btn-primary">Get in Touch</a>
-        <a href="/platforms-we-work-with" class="btn btn-ghost">Platforms We Work With</a>
+    <div class="flex md:hidden items-center gap-2">
+      <a href="/about#contact" class="btn-primary text-sm text-white px-4 rounded-xl font-bold" style="min-height:40px;font-size:13px;">Get Started</a>
+      <div class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
       </div>
     </div>
-  </section>
+  </div>
+</header>
 
-</Base>
+<div id="mobile-menu">
+  <a href="/model-promotion">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="margin-right:12px;opacity:0.5"><circle cx="10" cy="8" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M3 18c0-3.9 3.1-7 7-7s7 3.1 7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    For Models
+  </a>
+  <a href="/studio-traffic">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="margin-right:12px;opacity:0.5"><rect x="2" y="4" width="16" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/></svg>
+    For Studios
+  </a>
+  <a href="/resources">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="margin-right:12px;opacity:0.5"><path d="M10 2l2 6h6l-5 3.6 1.9 6L10 14l-4.9 3.6L7 11.6 2 8h6L10 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+    Resources
+  </a>
+  <a href="/platforms-we-work-with">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="margin-right:12px;opacity:0.5"><rect x="2" y="2" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="11" y="2" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="2" y="11" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="11" y="11" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/></svg>
+    Platforms
+  </a>
+  <div style="margin:16px 24px 0;">
+    <a href="/about#contact" class="btn-primary rounded-xl text-white font-bold text-base w-full" style="width:100%;min-height:52px;font-size:15px;">Get Started Free</a>
+  </div>
+</div>
 
-<style>
-  .hero { padding-block: clamp(5rem, 12vw, 9rem); }
-  .hero-eyebrow { margin-bottom: 1.75rem; }
-  .badge {
-    display: inline-block;
-    font-family: var(--font-heading);
-    font-size: .75rem;
-    font-weight: 600;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--accent);
-    border: 1px solid rgba(217,119,6,.3);
-    background: var(--accent-dim);
-    padding: .35rem .875rem;
-    border-radius: 100px;
-  }
-  .hero-headline {
-    font-size: clamp(3rem, 7vw, 5.5rem);
-    font-weight: 700;
-    line-height: 1.05;
-    letter-spacing: -0.03em;
-    margin-bottom: 1.5rem;
-  }
-  .hero-accent { font-style: normal; color: var(--accent); }
-  .hero-sub {
-    font-size: 1.125rem;
-    color: var(--fg-muted);
-    max-width: 46ch;
-    line-height: 1.7;
-    margin-bottom: 2.5rem;
-  }
-  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 4rem; }
-  .hero-stats {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--border);
-    flex-wrap: wrap;
-  }
-  .stat { display: flex; flex-direction: column; gap: .2rem; }
-  .stat-number { font-family: var(--font-heading); font-size: 1.75rem; font-weight: 700; color: var(--fg); line-height: 1; }
-  .stat-label { font-size: .8rem; color: var(--fg-faint); letter-spacing: .04em; }
-  .stat-divider { width: 1px; height: 2.5rem; background: var(--border); }
+<!-- HERO -->
+<section class="relative min-h-dvh flex items-center justify-center overflow-hidden pt-16">
+  <div class="hero-grid-line"></div>
+  <div class="glow-orb w-80 h-80 bg-indigo-600 top-10 left-0 -translate-x-1/3"></div>
+  <div class="glow-orb w-72 h-72 bg-violet-600 top-20 right-0 translate-x-1/3"></div>
+  <div class="glow-orb w-64 h-64 bg-indigo-800 bottom-0 left-1/2 -translate-x-1/2 opacity-20"></div>
 
-  .section-header { margin-bottom: 3.5rem; max-width: 54ch; }
-  .eyebrow {
-    font-family: var(--font-heading);
-    font-size: .75rem;
-    font-weight: 600;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: .75rem;
-    max-width: none;
+  <svg class="absolute top-20 right-6 opacity-15 hidden sm:block" width="100" height="100" viewBox="0 0 120 120" fill="none">
+    <circle cx="60" cy="60" r="50" stroke="#818cf8" stroke-width="1" stroke-dasharray="4 8"/>
+    <circle cx="60" cy="60" r="30" stroke="#a78bfa" stroke-width="0.5" stroke-dasharray="2 6"/>
+    <line x1="60" y1="10" x2="60" y2="110" stroke="#818cf8" stroke-width="0.5" opacity="0.5"/>
+    <line x1="10" y1="60" x2="110" y2="60" stroke="#818cf8" stroke-width="0.5" opacity="0.5"/>
+  </svg>
+
+  <div class="relative z-10 text-center px-5 max-w-4xl mx-auto w-full">
+    <div class="tag-pill mb-5 sm:mb-7">
+      <span class="live-dot"></span>
+      Global webcam model &amp; studio service
+    </div>
+
+    <h1 class="heading-xl mb-5 sm:mb-6">
+      Traffic. Promotion.<br>
+      <span class="grad-text">Management.</span>
+    </h1>
+
+    <p class="text-base sm:text-lg text-slate-400 mb-8 max-w-md mx-auto leading-relaxed font-light">
+      EWO is a global service for webcam models and studios. We handle audience growth, promotion, and full management — for independent performers and multi-model studios worldwide.
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-3 justify-center max-w-sm sm:max-w-none mx-auto">
+      <a href="/model-promotion" class="btn-primary px-7 py-3.5 rounded-2xl text-white font-bold text-base w-full sm:w-auto">
+        For Models →
+      </a>
+      <a href="/studio-traffic" class="btn-ghost px-7 py-3.5 rounded-2xl text-slate-300 font-semibold text-base flex items-center gap-2 justify-center w-full sm:w-auto">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M6.5 5.5l4 2.5-4 2.5V5.5z" fill="currentColor"/></svg>
+        For Studios
+      </a>
+    </div>
+
+    <div class="mt-10 flex items-center justify-center gap-2 flex-wrap">
+      <div class="flex -space-x-2">
+        <div class="w-8 h-8 rounded-full avatar-placeholder"></div>
+        <div class="w-8 h-8 rounded-full avatar-placeholder" style="background:linear-gradient(135deg,#2d1b69,#4c1d95)"></div>
+        <div class="w-8 h-8 rounded-full avatar-placeholder" style="background:linear-gradient(135deg,#1e3a5f,#1e40af)"></div>
+        <div class="w-8 h-8 rounded-full avatar-placeholder" style="background:linear-gradient(135deg,#3b0764,#6b21a8)"></div>
+      </div>
+      <span class="text-sm text-slate-500">Trusted by <span class="text-slate-300 font-semibold">1000+</span> models & studios</span>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="divider"></div>
+<section class="section-pad">
+  <div class="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+    <div>
+      <div class="text-3xl sm:text-4xl font-black stat-num mb-1">1000+</div>
+      <div class="text-xs sm:text-sm text-slate-500 font-semibold">Models & Studios</div>
+    </div>
+    <div>
+      <div class="text-3xl sm:text-4xl font-black stat-num mb-1">10+</div>
+      <div class="text-xs sm:text-sm text-slate-500 font-semibold">Years on Market</div>
+    </div>
+    <div>
+      <div class="text-3xl sm:text-4xl font-black stat-num mb-1">20+</div>
+      <div class="text-xs sm:text-sm text-slate-500 font-semibold">Countries</div>
+    </div>
+    <div>
+      <div class="text-3xl sm:text-4xl font-black stat-num mb-1">0</div>
+      <div class="text-xs sm:text-sm text-slate-500 font-semibold">Fake Viewers</div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- SERVICES -->
+<section class="section-pad relative">
+  <div class="glow-orb w-96 h-96 bg-indigo-700 top-1/2 right-0 -translate-y-1/2 opacity-15"></div>
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-10 px-1">
+      <div class="tag-pill mb-4">What we do</div>
+      <h2 class="heading-lg mb-3">Three services. One global team.</h2>
+      <p class="text-slate-500 text-sm sm:text-base">Whether you're starting out or scaling a studio, EWO has a solution built for your stage.</p>
+    </div>
+
+    <div class="features-grid px-0 sm:px-6">
+      <a href="/studio-traffic" class="card-glass rounded-2xl p-5 sm:p-7 block" style="text-decoration:none;">
+        <div class="w-11 h-11 rounded-xl bg-indigo-500/15 border border-indigo-400/20 flex items-center justify-center mb-4">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <h3 class="text-white font-bold mb-2 text-base">Traffic Growth</h3>
+        <p class="text-slate-500 text-sm leading-relaxed">Viewer growth strategy — scheduling, regional targeting, platform optimization.</p>
+        <span class="text-indigo-400 text-sm font-semibold mt-3 inline-block">Learn more →</span>
+      </a>
+      <a href="/model-promotion" class="card-glass rounded-2xl p-5 sm:p-7 block" style="text-decoration:none;">
+        <div class="w-11 h-11 rounded-xl bg-violet-500/15 border border-violet-400/20 flex items-center justify-center mb-4">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <h3 class="text-white font-bold mb-2 text-base">Promotion</h3>
+        <p class="text-slate-500 text-sm leading-relaxed">Profile optimization, off-platform presence, social growth, and SEO for cam profiles.</p>
+        <span class="text-violet-400 text-sm font-semibold mt-3 inline-block">Learn more →</span>
+      </a>
+      <a href="/studio-scaling" class="card-glass rounded-2xl p-5 sm:p-7 block" style="text-decoration:none;">
+        <div class="w-11 h-11 rounded-xl bg-indigo-500/15 border border-indigo-400/20 flex items-center justify-center mb-4">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        </div>
+        <h3 class="text-white font-bold mb-2 text-base">Management</h3>
+        <p class="text-slate-500 text-sm leading-relaxed">Full-service management: roster coordination, compliance, scaling systems, and analytics.</p>
+        <span class="text-indigo-400 text-sm font-semibold mt-3 inline-block">Learn more →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WHY EWO -->
+<section class="section-pad relative">
+  <div class="glow-orb w-72 h-72 bg-violet-700 top-1/2 left-0 -translate-y-1/2 opacity-20"></div>
+  <div class="max-w-6xl mx-auto px-5 sm:px-6">
+    <div class="text-center mb-10">
+      <div class="tag-pill mb-4">Why EWO</div>
+      <h2 class="heading-lg mb-3">A decade of results across 20+ markets.</h2>
+      <p class="text-slate-500 text-sm sm:text-base max-w-lg mx-auto">We've been in the webcam industry since before most current platforms existed. That experience translates directly into strategies that work.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="card-glass rounded-2xl p-5 sm:p-7">
+        <div class="w-11 h-11 rounded-xl bg-indigo-500/15 border border-indigo-400/20 flex items-center justify-center mb-4">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2l2.5 5 5.5.8-4 3.9.9 5.5L10 14.7l-4.9 2.5.9-5.5L2 7.8l5.5-.8L10 2z" stroke="#818cf8" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        </div>
+        <h3 class="text-white font-bold mb-2 text-base">Legitimate Growth Only</h3>
+        <p class="text-slate-500 text-sm leading-relaxed">No bots, no inflated numbers, no risk to your account. Real audiences that return and tip.</p>
+      </div>
+      <div class="card-glass rounded-2xl p-5 sm:p-7">
+        <div class="w-11 h-11 rounded-xl bg-violet-500/15 border border-violet-400/20 flex items-center justify-center mb-4">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#a78bfa" stroke-width="1.5"/><path d="M10 6v4l3 3" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <h3 class="text-white font-bold mb-2 text-base">10+ Years Experience</h3>
+        <p class="text-slate-500 text-sm leading-relaxed">Over a decade in the webcam industry — we know what works and what gets accounts banned.</p>
+      </div>
+      <div class="card-glass rounded-2xl p-5 sm:p-7">
+        <div class="w-11 h-11 rounded-xl bg-indigo-500/15 border border-indigo-400/20 flex items-center justify-center mb-4">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 18s-7-4.5-7-9a7 7 0 0114 0c0 4.5-7 9-7 9z" stroke="#818cf8" stroke-width="1.5"/><circle cx="10" cy="9" r="2" stroke="#818cf8" stroke-width="1.5"/></svg>
+        </div>
+        <h3 class="text-white font-bold mb-2 text-base">20+ Countries</h3>
+        <p class="text-slate-500 text-sm leading-relaxed">Our clients stream from 20+ countries targeting viewers across all major global markets.</p>
+      </div>
+      <div class="card-glass rounded-2xl p-5 sm:p-7">
+        <div class="w-11 h-11 rounded-xl bg-violet-500/15 border border-violet-400/20 flex items-center justify-center mb-4">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="3" stroke="#a78bfa" stroke-width="1.5"/><path d="M7 10h6M10 7v6" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <h3 class="text-white font-bold mb-2 text-base">All Major Platforms</h3>
+        <p class="text-slate-500 text-sm leading-relaxed">Chaturbate, Stripchat, BongaCams, LiveJasmin, and 8+ more — wherever you stream, we know the algorithm.</p>
+      </div>
+      <div class="card-glass rounded-2xl p-5 sm:p-7">
+        <div class="w-11 h-11 rounded-xl bg-indigo-500/15 border border-indigo-400/20 flex items-center justify-center mb-4">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="5" width="16" height="11" rx="2" stroke="#818cf8" stroke-width="1.5"/><path d="M14 5V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v1" stroke="#818cf8" stroke-width="1.5"/></svg>
+        </div>
+        <h3 class="text-white font-bold mb-2 text-base">Full-Service Team</h3>
+        <p class="text-slate-500 text-sm leading-relaxed">Strategy, execution, and analytics — we handle everything so you can focus on streaming.</p>
+      </div>
+      <div class="card-glass rounded-2xl p-5 sm:p-7">
+        <div class="w-11 h-11 rounded-xl bg-violet-500/15 border border-violet-400/20 flex items-center justify-center mb-4">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#a78bfa" stroke-width="1.5"/><path d="M7 10l2 2 4-4" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3 class="text-white font-bold mb-2 text-base">Compounding Results</h3>
+        <p class="text-slate-500 text-sm leading-relaxed">Real audiences that stay — viewers who return, tip, and become loyal fans over time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section-pad relative">
+  <div class="glow-orb w-80 h-80 bg-indigo-600 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-25"></div>
+  <div class="max-w-2xl mx-auto px-5 sm:px-6 text-center relative z-10">
+    <div class="card-glass rounded-3xl cta-box border border-indigo-500/15">
+      <svg class="mx-auto mb-6 opacity-30" width="52" height="52" viewBox="0 0 60 60" fill="none">
+        <circle cx="30" cy="30" r="25" stroke="#818cf8" stroke-width="1" stroke-dasharray="4 6"/>
+        <circle cx="30" cy="30" r="12" stroke="#a78bfa" stroke-width="0.8"/>
+        <circle cx="30" cy="30" r="4" fill="#818cf8"/>
+      </svg>
+      <h2 class="heading-lg mb-4">Ready to grow?</h2>
+      <p class="text-slate-400 mb-8 text-sm sm:text-base max-w-sm mx-auto">Tell us where you are and where you want to go. We'll build the plan.</p>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <a href="/about#contact" class="btn-primary px-7 py-3.5 rounded-2xl text-white font-bold w-full sm:w-auto">Get in Touch</a>
+        <a href="/platforms-we-work-with" class="btn-ghost px-7 py-3.5 rounded-2xl text-slate-300 font-semibold w-full sm:w-auto">Platforms We Work With</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="border-t border-white/5 py-10 px-5 sm:px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+      <div>
+        <div class="flex items-center gap-2.5 mb-3">
+          <img src="/logo.png" alt="EWO" class="w-7 h-7 opacity-80" onerror="this.style.display='none'">
+          <span style="font-family:'Nunito',sans-serif;font-weight:900;font-size:18px;background:linear-gradient(135deg,#a78bfa,#6366f1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">EWO</span><span style="font-family:'Nunito',sans-serif;font-weight:700;font-size:18px;color:rgba(255,255,255,0.4);">.cam</span>
+        </div>
+        <p class="text-slate-600 text-sm font-semibold leading-relaxed">Legitimate audience growth for webcam models & studios worldwide.</p>
+      </div>
+      <div>
+        <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Services</p>
+        <ul class="space-y-2">
+          <li><a href="/model-promotion" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">Model Promotion</a></li>
+          <li><a href="/studio-traffic" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">Studio Traffic</a></li>
+          <li><a href="/new-model-growth" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">New Model Growth</a></li>
+          <li><a href="/studio-scaling" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">Studio Scaling</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Resources</p>
+        <ul class="space-y-2">
+          <li><a href="/why-low-viewers-webcam" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">Why Low Viewers</a></li>
+          <li><a href="/how-cam-algorithm-ranks-rooms" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">Algorithm Guide</a></li>
+          <li><a href="/best-streaming-times-by-region" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">Streaming Times</a></li>
+          <li><a href="/webcam-model-income-guide" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">Income Guide</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Regions</p>
+        <ul class="space-y-2">
+          <li><a href="/model-promotion-usa" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">USA</a></li>
+          <li><a href="/model-promotion-germany" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">Germany</a></li>
+          <li><a href="/model-promotion-romania" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">Romania</a></li>
+          <li><a href="/model-promotion-ukraine" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">Ukraine</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-white/5 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <nav class="flex flex-wrap gap-x-6 gap-y-2 justify-center text-sm text-slate-500 font-semibold">
+        <a href="#" class="hover:text-white transition-colors">Terms</a>
+        <a href="#" class="hover:text-white transition-colors">Privacy</a>
+        <a href="/about#contact" class="hover:text-white transition-colors">Support</a>
+        <a href="#" class="hover:text-white transition-colors">18+ Policy</a>
+      </nav>
+      <p class="text-slate-600 text-sm font-semibold">&copy; {new Date().getFullYear()} EWO.cam · All rights reserved</p>
+    </div>
+  </div>
+</footer>
+
+<!-- BOTTOM NAV (mobile) -->
+<nav class="bottom-nav">
+  <div class="bottom-nav-inner">
+    <a href="/" class="bottom-nav-item active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Home
+    </a>
+    <a href="/model-promotion" class="bottom-nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      Models
+    </a>
+    <a href="/studio-traffic" class="bottom-nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><polyline points="8 21 12 17 16 21"/></svg>
+      Studios
+    </a>
+    <a href="/about#contact" class="bottom-nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Contact
+    </a>
+  </div>
+</nav>
+
+<script>
+function toggleMenu() {
+  const menu = document.getElementById('mobile-menu');
+  const btn = document.getElementById('hamburger');
+  menu.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+document.addEventListener('click', function(e) {
+  const menu = document.getElementById('mobile-menu');
+  const btn = document.getElementById('hamburger');
+  if (menu && btn && menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) {
+    menu.classList.remove('open');
+    btn.classList.remove('open');
   }
-  .section-header h2 { margin-bottom: 1rem; }
-  .section-header p { font-size: 1.0625rem; }
+});
+</script>
 
-  .cards-grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem; }
-  .cards-grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; }
-
-  .service-card { display: flex; flex-direction: column; gap: 1rem; text-decoration: none; }
-  .service-icon {
-    width: 48px; height: 48px;
-    display: flex; align-items: center; justify-content: center;
-    border-radius: var(--radius-md);
-    background: var(--accent-dim);
-    color: var(--accent);
-    flex-shrink: 0;
-  }
-  .service-card h3 { margin-top: .25rem; }
-  .card-link {
-    font-family: var(--font-heading);
-    font-size: .875rem;
-    font-weight: 600;
-    color: var(--accent);
-    margin-top: auto;
-    display: inline-flex;
-    align-items: center;
-    gap: .35rem;
-    transition: gap var(--transition);
-  }
-  .service-card:hover .card-link { gap: .6rem; }
-
-  .trust-section {}
-  .trust-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 2rem;
-  }
-  .trust-item { display: flex; flex-direction: column; gap: .5rem; }
-  .trust-num {
-    font-family: var(--font-heading);
-    font-size: 3rem;
-    font-weight: 700;
-    color: var(--accent);
-    line-height: 1;
-    letter-spacing: -0.03em;
-  }
-  .trust-item h3 { margin-top: .25rem; }
-
-  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem 3rem; }
-  .step { display: flex; flex-direction: column; gap: .75rem; }
-  .step-num { font-family: var(--font-heading); font-size: .8125rem; font-weight: 600; letter-spacing: .1em; color: var(--accent); }
-
-  .resource-card { display: flex; flex-direction: column; gap: .75rem; text-decoration: none; }
-  .resource-card h3 { font-size: 1.125rem; }
-  .resource-card:hover .card-link { gap: .6rem; }
-
-  .cta-band {
-    background: var(--bg-raised);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    padding-block: clamp(4rem, 8vw, 6rem);
-    text-align: center;
-  }
-  .cta-band .container { display: flex; flex-direction: column; align-items: center; gap: 1.25rem; }
-  .cta-band h2 { font-size: clamp(2rem, 4vw, 3rem); }
-  .cta-band p { max-width: 40ch; }
-  .cta-actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: .5rem; }
-
-  .platforms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
-  .platform-card { display: flex; align-items: flex-start; gap: 1rem; background: var(--bg-raised); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.25rem 1.5rem; transition: border-color var(--transition); }
-  .platform-card:hover { border-color: rgba(217,119,6,.3); }
-  .platform-rank { font-family: var(--font-heading); font-size: .75rem; font-weight: 700; color: var(--accent); min-width: 2.5rem; padding-top: .15rem; letter-spacing: .04em; }
-  .platform-info { display: flex; flex-direction: column; gap: .3rem; }
-  .platform-info strong { color: var(--fg); font-weight: 600; font-size: 1rem; }
-  .platform-info span { font-size: .875rem; color: var(--fg-muted); line-height: 1.5; max-width: none; }
-  .platforms-note { margin-top: 2rem; font-size: .9375rem; color: var(--fg-muted); }
-  .platforms-note a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
-</style>
+</body>
+</html>
