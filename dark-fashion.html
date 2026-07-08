@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EWO.cam — Luxury Live</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: #0a0a0a; color: #d4d0c8; font-family: 'Jost', sans-serif; font-weight: 300; overflow-x: hidden; }
+
+  h1, h2, h3, .serif { font-family: 'Cormorant Garamond', serif; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 24px 48px; display: flex; align-items: center; justify-content: space-between; }
+  nav::before { content:''; position:absolute; inset:0; background: linear-gradient(180deg, rgba(10,10,10,0.9) 0%, transparent 100%); pointer-events:none; }
+  .nav-logo { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:400; letter-spacing:0.12em; color:#fff; text-decoration:none; position:relative; z-index:1; }
+  .nav-logo span { color:#9a7d4a; }
+  .nav-links { display:flex; gap:40px; position:relative; z-index:1; }
+  .nav-links a { color:#888; font-size:12px; letter-spacing:0.15em; text-transform:uppercase; text-decoration:none; transition:color .3s; }
+  .nav-links a:hover { color:#d4d0c8; }
+  .nav-cta { position:relative; z-index:1; border:1px solid rgba(154,125,74,0.5); color:#9a7d4a; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; padding:9px 22px; text-decoration:none; transition:all .3s; }
+  .nav-cta:hover { background:#9a7d4a; color:#0a0a0a; }
+
+  /* HERO */
+  .hero { position:relative; min-height:100vh; display:flex; align-items:flex-end; overflow:hidden; }
+  .hero-bg { position:absolute; inset:0; background: linear-gradient(160deg, #0f0a02 0%, #1a1008 30%, #0a0a0a 70%, #080610 100%); }
+  .hero-noise { position:absolute; inset:0; opacity:0.025; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+  /* gold horizontal lines decoration */
+  .hero-lines { position:absolute; top:0; left:0; right:0; bottom:0; overflow:hidden; }
+  .hero-lines::before { content:''; position:absolute; top:35%; left:0; right:0; height:1px; background:linear-gradient(90deg, transparent 0%, rgba(154,125,74,0.3) 30%, rgba(154,125,74,0.5) 50%, rgba(154,125,74,0.3) 70%, transparent 100%); }
+  .hero-lines::after { content:''; position:absolute; bottom:25%; left:0; right:0; height:1px; background:linear-gradient(90deg, transparent 20%, rgba(154,125,74,0.15) 50%, transparent 80%); }
+
+  .hero-content { position:relative; z-index:10; width:100%; padding:0 48px 80px; }
+  .hero-eyebrow { font-size:10px; letter-spacing:0.3em; text-transform:uppercase; color:#9a7d4a; margin-bottom:20px; display:flex; align-items:center; gap:14px; }
+  .hero-eyebrow::before { content:''; display:block; width:40px; height:1px; background:#9a7d4a; }
+  .hero h1 { font-size:clamp(52px, 9vw, 110px); font-weight:300; line-height:0.95; letter-spacing:-0.01em; color:#f5f0e8; margin-bottom:32px; }
+  .hero h1 em { font-style:italic; color:#9a7d4a; }
+  .hero-sub { font-size:14px; letter-spacing:0.05em; color:#666; max-width:360px; line-height:1.7; margin-bottom:40px; }
+  .hero-actions { display:flex; align-items:center; gap:32px; }
+  .btn-gold { background:#9a7d4a; color:#0a0a0a; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; padding:14px 32px; text-decoration:none; transition:all .3s; font-weight:500; display:inline-block; }
+  .btn-gold:hover { background:#b89a5f; }
+  .btn-line { font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:#555; text-decoration:none; transition:color .3s; display:flex; align-items:center; gap:10px; }
+  .btn-line::after { content:''; display:block; width:24px; height:1px; background:currentColor; transition:width .3s; }
+  .btn-line:hover { color:#9a7d4a; }
+  .btn-line:hover::after { width:40px; }
+
+  .hero-live-badge { position:absolute; top:140px; right:48px; z-index:10; text-align:right; }
+  .live-count { font-size:36px; font-weight:300; color:#f5f0e8; font-family:'Cormorant Garamond',serif; display:block; }
+  .live-label { font-size:10px; letter-spacing:0.25em; text-transform:uppercase; color:#555; display:flex; align-items:center; gap:8px; justify-content:flex-end; margin-top:4px; }
+  .dot-live { width:6px; height:6px; border-radius:50%; background:#4ade80; animation:pulse-live 2s infinite; }
+  @keyframes pulse-live { 0%,100%{opacity:1}50%{opacity:0.4} }
+
+  /* DIVIDER LINE */
+  .rule { height:1px; background:linear-gradient(90deg, transparent, rgba(154,125,74,0.25), transparent); margin:0 48px; }
+
+  /* MARQUEE */
+  .marquee-wrap { overflow:hidden; padding:20px 0; border-top:1px solid rgba(255,255,255,0.04); border-bottom:1px solid rgba(255,255,255,0.04); }
+  .marquee-inner { display:flex; gap:60px; animation:marquee 20s linear infinite; width:max-content; }
+  @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+  .marquee-item { font-size:11px; letter-spacing:0.25em; text-transform:uppercase; color:#3d3d3d; white-space:nowrap; display:flex; align-items:center; gap:20px; }
+  .marquee-item .dot { width:3px; height:3px; border-radius:50%; background:#9a7d4a; }
+
+  /* MODELS GRID */
+  .section { padding:100px 48px; }
+  .section-label { font-size:10px; letter-spacing:0.3em; text-transform:uppercase; color:#9a7d4a; margin-bottom:16px; display:flex; align-items:center; gap:14px; }
+  .section-label::before { content:''; display:block; width:30px; height:1px; background:#9a7d4a; }
+  .section-title { font-size:clamp(32px,5vw,56px); font-weight:300; color:#f5f0e8; line-height:1.1; margin-bottom:60px; }
+  .section-title em { font-style:italic; color:#9a7d4a; }
+
+  .models-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
+  .model-item { position:relative; overflow:hidden; cursor:pointer; aspect-ratio:3/4; background:#111; }
+  .model-item-bg { position:absolute; inset:0; transition:transform .6s ease; }
+  .model-item:hover .model-item-bg { transform:scale(1.04); }
+  .model-item-overlay { position:absolute; inset:0; background:linear-gradient(0deg, rgba(10,10,10,0.85) 0%, transparent 50%); }
+  .model-item-info { position:absolute; bottom:0; left:0; right:0; padding:24px; }
+  .model-name { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:300; color:#f5f0e8; display:block; margin-bottom:4px; }
+  .model-tag { font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#9a7d4a; }
+  .model-live { position:absolute; top:16px; left:16px; display:flex; align-items:center; gap:6px; background:rgba(0,0,0,0.5); padding:4px 10px; }
+  .model-live span { font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#f5f0e8; }
+
+  /* FEATURED LARGE -->
+  .featured-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; }
+  .featured-large { grid-row:span 2; }
+  .featured-item { position:relative; overflow:hidden; cursor:pointer; background:#111; }
+  .featured-large { aspect-ratio:3/4; }
+  .featured-item:not(.featured-large) { aspect-ratio:3/2; }
+  .featured-bg { position:absolute; inset:0; transition:transform .6s ease; }
+  .featured-item:hover .featured-bg { transform:scale(1.03); }
+  .featured-overlay { position:absolute; inset:0; background:linear-gradient(0deg, rgba(10,10,10,0.8) 0%, transparent 60%); }
+  .featured-info { position:absolute; bottom:0; left:0; right:0; padding:28px; }
+  .featured-name { font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:300; color:#f5f0e8; display:block; margin-bottom:6px; }
+  .featured-sub { font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:#9a7d4a; }
+
+  /* STATS -->
+  .stats-strip { background:#0f0e0b; border-top:1px solid rgba(154,125,74,0.12); border-bottom:1px solid rgba(154,125,74,0.12); padding:48px; display:grid; grid-template-columns:repeat(4,1fr); }
+  .stat-item { text-align:center; border-right:1px solid rgba(255,255,255,0.05); padding:0 24px; }
+  .stat-item:last-child { border-right:none; }
+  .stat-num { font-family:'Cormorant Garamond',serif; font-size:52px; font-weight:300; color:#9a7d4a; display:block; line-height:1; margin-bottom:8px; }
+  .stat-label { font-size:10px; letter-spacing:0.25em; text-transform:uppercase; color:#444; }
+
+  /* STUDIOS -->
+  .studios-list { display:flex; flex-direction:column; gap:1px; }
+  .studio-row { display:grid; grid-template-columns:60px 1fr auto; align-items:center; gap:24px; padding:20px 0; border-bottom:1px solid rgba(255,255,255,0.04); cursor:pointer; transition:background .2s; }
+  .studio-row:hover { background:rgba(154,125,74,0.03); }
+  .studio-num { font-family:'Cormorant Garamond',serif; font-size:18px; color:#333; }
+  .studio-info { }
+  .studio-name { font-size:15px; color:#d4d0c8; font-weight:400; margin-bottom:2px; }
+  .studio-tags { font-size:11px; color:#444; letter-spacing:0.08em; }
+  .studio-meta { text-align:right; }
+  .studio-models { font-family:'Cormorant Garamond',serif; font-size:20px; color:#9a7d4a; display:block; }
+  .studio-label { font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#333; }
+
+  /* CTA -->
+  .cta-section { padding:120px 48px; text-align:center; position:relative; overflow:hidden; }
+  .cta-section::before { content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:600px; height:600px; border-radius:50%; border:1px solid rgba(154,125,74,0.08); }
+  .cta-section::after { content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:350px; height:350px; border-radius:50%; border:1px solid rgba(154,125,74,0.12); }
+  .cta-tag { font-size:10px; letter-spacing:0.3em; text-transform:uppercase; color:#9a7d4a; margin-bottom:24px; display:block; }
+  .cta-title { font-family:'Cormorant Garamond',serif; font-size:clamp(40px,6vw,72px); font-weight:300; color:#f5f0e8; line-height:1.05; margin-bottom:40px; position:relative; z-index:1; }
+  .cta-title em { font-style:italic; }
+  .cta-actions { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; position:relative; z-index:1; }
+  .btn-ghost-gold { border:1px solid rgba(154,125,74,0.4); color:#9a7d4a; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; padding:13px 30px; text-decoration:none; transition:all .3s; display:inline-block; }
+  .btn-ghost-gold:hover { border-color:#9a7d4a; background:rgba(154,125,74,0.08); }
+
+  /* FOOTER -->
+  footer { border-top:1px solid rgba(255,255,255,0.05); padding:48px; display:flex; align-items:center; justify-content:space-between; }
+  .footer-logo { font-family:'Cormorant Garamond',serif; font-size:18px; letter-spacing:0.1em; color:#f5f0e8; }
+  .footer-logo span { color:#9a7d4a; }
+  .footer-links { display:flex; gap:32px; }
+  .footer-links a { font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#444; text-decoration:none; transition:color .3s; }
+  .footer-links a:hover { color:#9a7d4a; }
+  .footer-copy { font-size:11px; color:#2a2a2a; letter-spacing:0.08em; }
+
+  @media(max-width:768px) {
+    nav { padding:20px 24px; }
+    .nav-links { display:none; }
+    .hero-content { padding:0 24px 60px; }
+    .hero-live-badge { top:100px; right:24px; }
+    .section { padding:60px 24px; }
+    .models-grid { grid-template-columns:1fr 1fr; }
+    .featured-grid { grid-template-columns:1fr; }
+    .featured-large { grid-row:span 1; aspect-ratio:3/2; }
+    .stats-strip { padding:32px 24px; grid-template-columns:1fr 1fr; gap:32px; }
+    .stat-item { border-right:none; }
+    .cta-section { padding:80px 24px; }
+    footer { flex-direction:column; gap:24px; text-align:center; padding:32px 24px; }
+    .footer-links { flex-wrap:wrap; justify-content:center; }
+    .rule { margin:0 24px; }
+    .studios-list { padding:0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">EWO<span>.</span>cam</a>
+  <div class="nav-links">
+    <a href="#">Модели</a>
+    <a href="#">Студии</a>
+    <a href="#">Live</a>
+    <a href="#">О платформе</a>
+  </div>
+  <a href="#" class="nav-cta">Войти</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-noise"></div>
+  <div class="hero-lines"></div>
+
+  <div class="hero-live-badge">
+    <span class="live-count">2 418</span>
+    <div class="live-label">
+      <span class="dot-live"></span>
+      онлайн сейчас
+    </div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Премиум платформа</div>
+    <h1>Живое<br><em>искусство</em><br>общения</h1>
+    <p class="hero-sub">Тысячи уникальных исполнителей. Приватные шоу, прямые эфиры, эксклюзивные студии.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-gold">Смотреть сейчас</a>
+      <a href="#" class="btn-line">Стать партнёром</a>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-inner">
+    <div class="marquee-item">Премиум модели <span class="dot"></span></div>
+    <div class="marquee-item">HD Трансляции <span class="dot"></span></div>
+    <div class="marquee-item">Приватные шоу <span class="dot"></span></div>
+    <div class="marquee-item">500+ студий <span class="dot"></span></div>
+    <div class="marquee-item">15 000+ моделей <span class="dot"></span></div>
+    <div class="marquee-item">Безопасные платежи <span class="dot"></span></div>
+    <div class="marquee-item">24/7 Поддержка <span class="dot"></span></div>
+    <div class="marquee-item">Мобильная версия <span class="dot"></span></div>
+    <!-- repeat -->
+    <div class="marquee-item">Премиум модели <span class="dot"></span></div>
+    <div class="marquee-item">HD Трансляции <span class="dot"></span></div>
+    <div class="marquee-item">Приватные шоу <span class="dot"></span></div>
+    <div class="marquee-item">500+ студий <span class="dot"></span></div>
+    <div class="marquee-item">15 000+ моделей <span class="dot"></span></div>
+    <div class="marquee-item">Безопасные платежи <span class="dot"></span></div>
+    <div class="marquee-item">24/7 Поддержка <span class="dot"></span></div>
+    <div class="marquee-item">Мобильная версия <span class="dot"></span></div>
+  </div>
+</div>
+
+<!-- FEATURED GRID -->
+<section class="section">
+  <div class="section-label">Рекомендуем</div>
+  <h2 class="section-title">Избранные<br><em>исполнители</em></h2>
+
+  <div class="featured-grid">
+    <!-- large left -->
+    <div class="featured-item featured-large">
+      <div class="featured-bg" style="background:linear-gradient(160deg,#1a100a 0%,#2d1f0f 40%,#1a0e08 100%);"></div>
+      <div class="featured-overlay"></div>
+      <div class="model-live">
+        <span class="dot-live"></span>
+        <span>Live</span>
+      </div>
+      <div class="featured-info">
+        <span class="featured-name">Valentina R.</span>
+        <span class="featured-sub">Dance · Private · Premium</span>
+      </div>
+    </div>
+    <!-- right col -->
+    <div style="display:flex;flex-direction:column;gap:2px;">
+      <div class="featured-item">
+        <div class="featured-bg" style="background:linear-gradient(135deg,#0f1520 0%,#1a2540 100%);"></div>
+        <div class="featured-overlay"></div>
+        <div class="featured-info">
+          <span class="featured-name" style="font-size:22px;">Sofia M.</span>
+          <span class="featured-sub">Art · Talk</span>
+        </div>
+      </div>
+      <div class="featured-item">
+        <div class="featured-bg" style="background:linear-gradient(135deg,#150f20 0%,#251535 100%);"></div>
+        <div class="featured-overlay"></div>
+        <div class="model-live">
+          <span class="dot-live"></span>
+          <span>Live</span>
+        </div>
+        <div class="featured-info">
+          <span class="featured-name" style="font-size:22px;">Mia K.</span>
+          <span class="featured-sub">Music · Gaming</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stat-item">
+    <span class="stat-num">15K</span>
+    <span class="stat-label">Активных моделей</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">500+</span>
+    <span class="stat-label">Студий-партнёров</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">2.4K</span>
+    <span class="stat-label">Online сейчас</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">99%</span>
+    <span class="stat-label">Аптайм платформы</span>
+  </div>
+</div>
+
+<!-- STUDIOS -->
+<section class="section">
+  <div class="section-label">Партнёры</div>
+  <h2 class="section-title">Лучшие<br><em>студии</em></h2>
+
+  <div class="studios-list">
+    <div class="studio-row">
+      <span class="studio-num">01</span>
+      <div class="studio-info">
+        <div class="studio-name">Midnight Studio</div>
+        <div class="studio-tags">Moscow · Premium · Verified</div>
+      </div>
+      <div class="studio-meta">
+        <span class="studio-models">48</span>
+        <span class="studio-label">моделей</span>
+      </div>
+    </div>
+    <div class="studio-row">
+      <span class="studio-num">02</span>
+      <div class="studio-info">
+        <div class="studio-name">Velvet Productions</div>
+        <div class="studio-tags">Kyiv · Elite · Top rated</div>
+      </div>
+      <div class="studio-meta">
+        <span class="studio-models">62</span>
+        <span class="studio-label">моделей</span>
+      </div>
+    </div>
+    <div class="studio-row">
+      <span class="studio-num">03</span>
+      <div class="studio-info">
+        <div class="studio-name">Noir Agency</div>
+        <div class="studio-tags">Minsk · Gold · Featured</div>
+      </div>
+      <div class="studio-meta">
+        <span class="studio-models">35</span>
+        <span class="studio-label">моделей</span>
+      </div>
+    </div>
+    <div class="studio-row">
+      <span class="studio-num">04</span>
+      <div class="studio-info">
+        <div class="studio-name">Aurora Talent</div>
+        <div class="studio-tags">Tbilisi · Rising · New</div>
+      </div>
+      <div class="studio-meta">
+        <span class="studio-models">21</span>
+        <span class="studio-label">моделей</span>
+      </div>
+    </div>
+    <div class="studio-row">
+      <span class="studio-num">05</span>
+      <div class="studio-info">
+        <div class="studio-name">Obsidian Media</div>
+        <div class="studio-tags">Prague · Premium · Verified</div>
+      </div>
+      <div class="studio-meta">
+        <span class="studio-models">77</span>
+        <span class="studio-label">моделей</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <span class="cta-tag">Присоединяйтесь</span>
+  <h2 class="cta-title">Начните своё<br><em>путешествие</em><br>сегодня</h2>
+  <div class="cta-actions">
+    <a href="#" class="btn-gold">Зарегистрироваться бесплатно</a>
+    <a href="#" class="btn-ghost-gold">Стать моделью</a>
+    <a href="#" class="btn-ghost-gold">Открыть студию</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">EWO<span>.</span>cam</div>
+  <div class="footer-links">
+    <a href="#">Условия</a>
+    <a href="#">Конфиденциальность</a>
+    <a href="#">18+ Контент</a>
+    <a href="#">Поддержка</a>
+    <a href="#">Карьера</a>
+  </div>
+  <div class="footer-copy">© 2024 EWO.cam &nbsp;·&nbsp; 18+</div>
+</footer>
+
+</body>
+</html>
