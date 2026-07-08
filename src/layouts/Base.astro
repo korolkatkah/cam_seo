@@ -594,5 +594,10 @@ const nav = [
       menu.classList.remove('is-open');
       btn.setAttribute('aria-expanded', 'false');
     });
+    document.querySelectorAll('.lang-opt').forEach(function (a) {
+      a.addEventListener('click', function () {
+        try { localStorage.setItem('ewo-lang-set', '1'); } catch (e) {}
+      });
+    });
   })();
 </script>

@@ -15,7 +15,15 @@ const hreflang = [
 <html lang="en">
 <head>
   <script is:inline>
-    (function(){var l=(navigator.language||navigator.userLanguage||'').slice(0,2).toLowerCase();var m={de:'/de',es:'/es',ro:'/ro',ru:'/ru',uk:'/uk'};if(m[l])window.location.replace(m[l]);})();
+    (function(){
+      try { if (localStorage.getItem('ewo-lang-set')) return; } catch(e) {}
+      var l=(navigator.language||navigator.userLanguage||'').slice(0,2).toLowerCase();
+      var m={de:'/de',es:'/es',ro:'/ro',ru:'/ru',uk:'/uk'};
+      if(m[l]){
+        try { localStorage.setItem('ewo-lang-set','1'); } catch(e) {}
+        window.location.replace(m[l]);
+      }
+    })();
   </script>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-6H89TM92EZ"></script>
@@ -201,7 +209,7 @@ const hreflang = [
       <span style="font-family:'Nunito',sans-serif;font-weight:900;font-size:21px;letter-spacing:-0.01em;background:linear-gradient(135deg,#a78bfa,#6366f1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">EWO</span><span style="font-family:'Nunito',sans-serif;font-weight:700;font-size:21px;color:rgba(255,255,255,0.45);">.cam</span>
     </a>
     <nav class="hidden md:flex items-center gap-8 text-sm text-slate-400 font-semibold">
-      <a href="/model-promotion" class="hover:text-white transition-colors">For Models</a>
+      <a href="/for-models" class="hover:text-white transition-colors">For Models</a>
       <a href="/studio-traffic" class="hover:text-white transition-colors">For Studios</a>
       <a href="/resources" class="hover:text-white transition-colors">Resources</a>
       <a href="/platforms-we-work-with" class="hover:text-white transition-colors">Platforms</a>
@@ -220,7 +228,7 @@ const hreflang = [
 </header>
 
 <div id="mobile-menu">
-  <a href="/model-promotion">
+  <a href="/for-models">
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="margin-right:12px;opacity:0.5"><circle cx="10" cy="8" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M3 18c0-3.9 3.1-7 7-7s7 3.1 7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
     For Models
   </a>
@@ -271,7 +279,7 @@ const hreflang = [
     </p>
 
     <div class="flex flex-col sm:flex-row gap-3 justify-center max-w-sm sm:max-w-none mx-auto">
-      <a href="/model-promotion" class="btn-primary px-7 py-3.5 rounded-2xl text-white font-bold text-base w-full sm:w-auto">
+      <a href="/for-models" class="btn-primary px-7 py-3.5 rounded-2xl text-white font-bold text-base w-full sm:w-auto">
         For Models →
       </a>
       <a href="/studio-traffic" class="btn-ghost px-7 py-3.5 rounded-2xl text-slate-300 font-semibold text-base flex items-center gap-2 justify-center w-full sm:w-auto">
@@ -517,7 +525,7 @@ const hreflang = [
       <div>
         <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Services</p>
         <ul class="space-y-2">
-          <li><a href="/model-promotion" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">Model Promotion</a></li>
+          <li><a href="/for-models" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">For Models</a></li>
           <li><a href="/studio-traffic" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">Studio Traffic</a></li>
           <li><a href="/new-model-growth" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">New Model Growth</a></li>
           <li><a href="/studio-scaling" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">Studio Scaling</a></li>
@@ -526,6 +534,7 @@ const hreflang = [
       <div>
         <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Resources</p>
         <ul class="space-y-2">
+          <li><a href="/model-promotion" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">Model Promotion</a></li>
           <li><a href="/why-low-viewers-webcam" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">Why Low Viewers</a></li>
           <li><a href="/how-cam-algorithm-ranks-rooms" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">Algorithm Guide</a></li>
           <li><a href="/best-streaming-times-by-region" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">Streaming Times</a></li>
@@ -561,7 +570,7 @@ const hreflang = [
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
       Home
     </a>
-    <a href="/model-promotion" class="bottom-nav-item">
+    <a href="/for-models" class="bottom-nav-item">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       Models
     </a>
