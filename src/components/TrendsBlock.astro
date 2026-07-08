@@ -1,0 +1,226 @@
+---
+import trends from '../data/cb-trends.json';
+
+interface Props {
+  lang?: string;
+}
+const { lang = 'en' } = Astro.props;
+
+const STR: Record<string, Record<string, string>> = {
+  en: {
+    eyebrow: 'Live market data', heading: "What's working right now",
+    sub: 'Real viewer & tag data pulled from public Chaturbate rooms, refreshed automatically.',
+    hoursTitle: 'Best hours to stream', hoursUnit: 'viewers / room',
+    tagsTitle: 'Top-performing tags', tagsRoomsUnit: 'rooms',
+    updated: 'Updated', justNow: 'just now', minAgo: '{n} min ago', hAgo: '{n}h ago',
+    preliminary: 'Collecting the first 24h of data — numbers will stabilize soon.',
+    noData: 'Live data collection is starting soon — check back shortly.',
+    basedOn: 'Based on {snapshots} snapshots over {hours}h · {rooms} rooms tracked',
+  },
+  de: {
+    eyebrow: 'Live-Marktdaten', heading: 'Was gerade wirklich funktioniert',
+    sub: 'Echte Zuschauer- und Tag-Daten aus öffentlichen Chaturbate-Räumen, automatisch aktualisiert.',
+    hoursTitle: 'Beste Sendezeiten', hoursUnit: 'Zuschauer / Raum',
+    tagsTitle: 'Top-Tags', tagsRoomsUnit: 'Räume',
+    updated: 'Aktualisiert', justNow: 'gerade eben', minAgo: 'vor {n} Min.', hAgo: 'vor {n} Std.',
+    preliminary: 'Die ersten 24 Std. Daten werden gesammelt — die Zahlen stabilisieren sich bald.',
+    noData: 'Die Live-Datenerfassung startet in Kürze — schau bald wieder vorbei.',
+    basedOn: 'Basierend auf {snapshots} Messungen über {hours} Std. · {rooms} Räume erfasst',
+  },
+  es: {
+    eyebrow: 'Datos en vivo del mercado', heading: 'Lo que funciona ahora mismo',
+    sub: 'Datos reales de espectadores y tags de salas públicas de Chaturbate, actualizados automáticamente.',
+    hoursTitle: 'Mejores horas para transmitir', hoursUnit: 'espectadores / sala',
+    tagsTitle: 'Tags con mejor rendimiento', tagsRoomsUnit: 'salas',
+    updated: 'Actualizado', justNow: 'justo ahora', minAgo: 'hace {n} min', hAgo: 'hace {n} h',
+    preliminary: 'Recopilando las primeras 24h de datos — los números se estabilizarán pronto.',
+    noData: 'La recopilación de datos en vivo comenzará pronto — vuelve más tarde.',
+    basedOn: 'Basado en {snapshots} muestras en {hours}h · {rooms} salas rastreadas',
+  },
+  ro: {
+    eyebrow: 'Date live din piață', heading: 'Ce funcționează chiar acum',
+    sub: 'Date reale despre spectatori și taguri din camere publice Chaturbate, actualizate automat.',
+    hoursTitle: 'Cele mai bune ore de streaming', hoursUnit: 'spectatori / cameră',
+    tagsTitle: 'Cele mai performante taguri', tagsRoomsUnit: 'camere',
+    updated: 'Actualizat', justNow: 'chiar acum', minAgo: 'acum {n} min', hAgo: 'acum {n} h',
+    preliminary: 'Se colectează primele 24h de date — cifrele se vor stabiliza curând.',
+    noData: 'Colectarea datelor live începe în curând — revino mai târziu.',
+    basedOn: 'Bazat pe {snapshots} măsurători în {hours}h · {rooms} camere urmărite',
+  },
+  uk: {
+    eyebrow: 'Живі ринкові дані', heading: 'Що працює прямо зараз',
+    sub: 'Реальні дані про глядачів і теги з публічних кімнат Chaturbate, оновлюються автоматично.',
+    hoursTitle: 'Найкращі години для стріму', hoursUnit: 'глядачів / кімнату',
+    tagsTitle: 'Найефективніші теги', tagsRoomsUnit: 'кімнат',
+    updated: 'Оновлено', justNow: 'щойно', minAgo: '{n} хв тому', hAgo: '{n} год тому',
+    preliminary: 'Збираємо перші 24 год даних — цифри скоро стабілізуються.',
+    noData: 'Збір даних у реальному часі скоро розпочнеться — заглядайте пізніше.',
+    basedOn: 'На основі {snapshots} зрізів за {hours} год · {rooms} кімнат відстежено',
+  },
+  ru: {
+    eyebrow: 'Живые рыночные данные', heading: 'Что реально работает прямо сейчас',
+    sub: 'Реальные данные о зрителях и тегах из публичных комнат Chaturbate, обновляются автоматически.',
+    hoursTitle: 'Лучшие часы для стрима', hoursUnit: 'зрителей / комнату',
+    tagsTitle: 'Самые эффективные теги', tagsRoomsUnit: 'комнат',
+    updated: 'Обновлено', justNow: 'только что', minAgo: '{n} мин назад', hAgo: '{n} ч назад',
+    preliminary: 'Собираем первые 24 часа данных — цифры скоро стабилизируются.',
+    noData: 'Сбор данных в реальном времени скоро начнётся — загляните позже.',
+    basedOn: 'На основе {snapshots} срезов за {hours} ч · {rooms} комнат отслежено',
+  },
+};
+const t = STR[lang] ?? STR.en;
+
+const hasData = trends.best_hours_utc?.length > 0 || trends.top_tags?.length > 0;
+const bestHours = (trends.best_hours_utc ?? []).slice(0, 4);
+const topTags = (trends.top_tags ?? []).slice(0, 15);
+const maxScore = Math.max(1, ...bestHours.map((h: { score: number }) => h.score));
+
+const basedOn = t.basedOn
+  .replace('{snapshots}', String(trends.snapshots ?? 0))
+  .replace('{hours}', String(trends.hours_covered ?? 0))
+  .replace('{rooms}', String(trends.rooms_seen ?? 0));
+---
+
+<section class="trends-block">
+  <div class="trends-inner">
+    <div class="trends-head">
+      <span class="trends-eyebrow"><span class="live-dot"></span>{t.eyebrow}</span>
+      <h2 class="trends-heading">{t.heading}</h2>
+      <p class="trends-sub">{t.sub}</p>
+    </div>
+
+    {!hasData && (
+      <p class="trends-empty">{t.noData}</p>
+    )}
+
+    {hasData && (
+      <>
+        <div class="trends-grid">
+          <div class="trends-card">
+            <h3 class="trends-card-title">{t.hoursTitle}</h3>
+            <ul class="hours-list">
+              {bestHours.map((h: { hour: number; score: number }) => (
+                <li class="hours-row">
+                  <span class="hours-range">{String(h.hour).padStart(2, '0')}:00–{String((h.hour + 1) % 24).padStart(2, '0')}:00 UTC</span>
+                  <span class="hours-bar-track">
+                    <span class="hours-bar-fill" style={`width:${Math.round((h.score / maxScore) * 100)}%`}></span>
+                  </span>
+                  <span class="hours-score">{h.score} <small>{t.hoursUnit}</small></span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="trends-card">
+            <h3 class="trends-card-title">{t.tagsTitle}</h3>
+            <div class="tag-cloud">
+              {topTags.map((tag: { tag: string; avg_users: number; rooms: number }) => (
+                <span class="tag-chip" title={`~${tag.avg_users} ${t.hoursUnit.split(' / ')[0]} · ${tag.rooms} ${t.tagsRoomsUnit}`}>#{tag.tag}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <p class="trends-footnote" data-generated-at={trends.generated_at ?? ''} data-just-now={t.justNow} data-min-ago={t.minAgo} data-h-ago={t.hAgo} data-updated={t.updated}>
+          {basedOn}
+        </p>
+        {trends.preliminary && <p class="trends-preliminary">{t.preliminary}</p>}
+      </>
+    )}
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.trends-footnote[data-generated-at]').forEach((el) => {
+    const iso = el.dataset.generatedAt;
+    if (!iso) return;
+    const then = new Date(iso).getTime();
+    if (Number.isNaN(then)) return;
+    const mins = Math.max(0, Math.round((Date.now() - then) / 60000));
+    let label: string;
+    if (mins < 1) label = el.dataset.justNow ?? '';
+    else if (mins < 60) label = (el.dataset.minAgo ?? '').replace('{n}', String(mins));
+    else label = (el.dataset.hAgo ?? '').replace('{n}', String(Math.round(mins / 60)));
+    const prefix = el.dataset.updated ?? '';
+    el.insertAdjacentHTML('beforeend', ` · <strong>${prefix} ${label}</strong>`);
+  });
+</script>
+
+<style>
+  .trends-block {
+    padding: 3rem clamp(1.25rem, 4vw, 2rem) 3.5rem;
+    position: relative;
+  }
+  .trends-inner {
+    max-width: 1000px;
+    margin-inline: auto;
+  }
+  .trends-head { text-align: center; margin-bottom: 2rem; }
+  .trends-eyebrow {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3);
+    color: #a5b4fc; font-size: 11px; font-weight: 600; letter-spacing: 0.01em;
+    padding: 4px 12px; border-radius: 99px; margin-bottom: 14px;
+  }
+  .live-dot {
+    width: 7px; height: 7px; background: #34d399; border-radius: 50%;
+    animation: trends-pulse 2s infinite; flex-shrink: 0;
+  }
+  @keyframes trends-pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
+  .trends-heading {
+    font-family: 'Josefin Sans', system-ui, sans-serif;
+    font-weight: 700; font-style: italic;
+    font-size: clamp(1.5rem, 3vw, 2.1rem);
+    color: #f0eeff; margin-bottom: 0.6rem; letter-spacing: -0.01em;
+  }
+  .trends-sub { color: #94a3b8; font-size: 0.9375rem; max-width: 46ch; margin-inline: auto; }
+  .trends-empty { text-align: center; color: #64748b; font-size: 0.9375rem; padding: 1rem 0; }
+
+  .trends-grid {
+    display: grid; grid-template-columns: 1fr; gap: 1rem;
+  }
+  @media (min-width: 720px) {
+    .trends-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  .trends-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px;
+    padding: 1.5rem;
+  }
+  .trends-card-title {
+    font-family: 'Josefin Sans', system-ui, sans-serif;
+    font-style: italic; font-weight: 700; font-size: 1.05rem;
+    color: #f0eeff; margin-bottom: 1rem;
+  }
+
+  .hours-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+  .hours-row { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0.75rem; }
+  .hours-range { font-size: 0.8125rem; color: #cbd5e1; font-weight: 600; white-space: nowrap; }
+  .hours-bar-track {
+    height: 6px; border-radius: 99px; background: rgba(255,255,255,0.06); overflow: hidden;
+  }
+  .hours-bar-fill {
+    display: block; height: 100%; border-radius: 99px;
+    background: linear-gradient(90deg, #6366f1, #a78bfa);
+  }
+  .hours-score { font-size: 0.75rem; color: #a5b4fc; font-weight: 700; white-space: nowrap; }
+  .hours-score small { color: #64748b; font-weight: 600; }
+
+  .tag-cloud { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .tag-chip {
+    display: inline-flex; align-items: center;
+    background: rgba(129,140,248,0.08); border: 1px solid rgba(129,140,248,0.2);
+    color: #c7d2fe; font-size: 0.8125rem; font-weight: 600;
+    padding: 5px 12px; border-radius: 99px; cursor: default;
+  }
+
+  .trends-footnote {
+    text-align: center; color: #64748b; font-size: 0.8125rem; margin-top: 1.5rem; font-weight: 500;
+  }
+  .trends-footnote strong { color: #94a3b8; font-weight: 700; }
+  .trends-preliminary {
+    text-align: center; color: #fbbf24; font-size: 0.8125rem; margin-top: 0.5rem; font-weight: 600;
+  }
+</style>

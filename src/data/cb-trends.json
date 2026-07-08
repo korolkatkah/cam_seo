@@ -1,0 +1,53 @@
+{
+  "generated_at": "2026-07-08T21:00:00Z",
+  "gender": "f",
+  "hours_covered": 24.0,
+  "snapshots": 96,
+  "rooms_seen": 1840,
+  "preliminary": false,
+  "best_hours_utc": [
+    { "hour": 19, "score": 214 },
+    { "hour": 20, "score": 231 },
+    { "hour": 21, "score": 256 },
+    { "hour": 3, "score": 198 }
+  ],
+  "top_tags": [
+    { "tag": "lovense", "avg_users": 312, "rooms": 410 },
+    { "tag": "squirt", "avg_users": 289, "rooms": 220 },
+    { "tag": "young", "avg_users": 275, "rooms": 380 },
+    { "tag": "bigass", "avg_users": 260, "rooms": 300 },
+    { "tag": "anal", "avg_users": 248, "rooms": 190 },
+    { "tag": "feet", "avg_users": 233, "rooms": 150 },
+    { "tag": "natural", "avg_users": 221, "rooms": 260 },
+    { "tag": "office", "avg_users": 210, "rooms": 90 },
+    { "tag": "students", "avg_users": 205, "rooms": 130 },
+    { "tag": "redhead", "avg_users": 198, "rooms": 100 },
+    { "tag": "curvy", "avg_users": 190, "rooms": 210 },
+    { "tag": "smallboobs", "avg_users": 183, "rooms": 140 },
+    { "tag": "latina", "avg_users": 176, "rooms": 170 },
+    { "tag": "milf", "avg_users": 168, "rooms": 240 },
+    { "tag": "brunette", "avg_users": 161, "rooms": 320 }
+  ],
+  "top_titles": [
+    { "avg_users": 640, "subject": "Goal: naked dance [3000 tk] multi-goal every level = surprise" },
+    { "avg_users": 585, "subject": "Happy Friday! Goal: oil show [2500 tk] pvt open" }
+  ],
+  "economy": {
+    "goal_median": 3000,
+    "goal_p25": 2000,
+    "goal_p75": 5000,
+    "goal_samples": 64,
+    "top_patterns": [
+      { "value": 100, "count": 52 },
+      { "value": 50, "count": 41 },
+      { "value": 200, "count": 33 }
+    ],
+    "multi_goal_share": 0.34,
+    "with_goal_share": 0.55,
+    "with_price_share": 0.42
+  },
+  "recommendation": {
+    "tags": ["lovense", "squirt", "young", "bigass", "anal", "feet", "natural", "office", "students", "redhead"],
+    "low_competition_tag": "office"
+  }
+}
