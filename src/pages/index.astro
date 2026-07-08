@@ -10,6 +10,7 @@ const hreflang = [
   { lang: 'uk', url: `${site}/uk` },
   { lang: 'ru', url: `${site}/ru` },
 ];
+const langNames = { en: 'English', de: 'Deutsch', es: 'Español', ro: 'Română', uk: 'Українська', ru: 'Русский' };
 ---
 <!doctype html>
 <html lang="en">
@@ -19,10 +20,7 @@ const hreflang = [
       try { if (localStorage.getItem('ewo-lang-set')) return; } catch(e) {}
       var l=(navigator.language||navigator.userLanguage||'').slice(0,2).toLowerCase();
       var m={de:'/de',es:'/es',ro:'/ro',ru:'/ru',uk:'/uk'};
-      if(m[l]){
-        try { localStorage.setItem('ewo-lang-set','1'); } catch(e) {}
-        window.location.replace(m[l]);
-      }
+      if(m[l]) window.location.replace(m[l]);
     })();
   </script>
   <!-- Google tag (gtag.js) -->
@@ -215,6 +213,18 @@ const hreflang = [
       <a href="/platforms-we-work-with" class="hover:text-white transition-colors">Platforms</a>
     </nav>
     <div class="hidden md:flex items-center gap-3">
+      <div class="relative" id="lang-dropdown-root">
+        <button id="lang-btn-root" class="flex items-center gap-1.5 text-sm text-slate-400 font-semibold px-3.5 py-2 rounded-xl border border-white/10 hover:text-white hover:border-indigo-400/30 transition-colors" aria-expanded="false" aria-haspopup="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <span>English</span>
+          <svg id="lang-chevron-root" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transition:transform 180ms ease"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div id="lang-menu-root" class="hidden absolute right-0 top-full mt-2 min-w-[160px] rounded-xl border border-white/10 bg-night-2 p-1.5 shadow-xl z-50">
+          {hreflang.map(({ lang, url }) => (
+            <a href={url} class="lang-opt-root block px-3 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-white/5 transition-colors">{langNames[lang]}</a>
+          ))}
+        </div>
+      </div>
       <a href="/about" class="btn-ghost text-sm text-slate-300 px-5 py-2 rounded-xl font-semibold">About</a>
       <a href="https://t.me/+tBjfmjh9vHo1YzQy" target="_blank" rel="noopener" class="btn-primary text-sm text-white px-5 py-2 rounded-xl font-bold">Get Started →</a>
     </div>
@@ -244,7 +254,12 @@ const hreflang = [
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="margin-right:12px;opacity:0.5"><rect x="2" y="2" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="11" y="2" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="2" y="11" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="11" y="11" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/></svg>
     Platforms
   </a>
-  <div style="margin:16px 24px 0;">
+  <div style="margin:16px 24px 0;display:flex;flex-wrap:wrap;gap:8px;">
+    {hreflang.map(({ lang, url }) => (
+      <a href={url} class="lang-opt-root" style="flex:1 1 auto;text-align:center;padding:8px 10px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);color:#94a3b8;font-size:13px;font-weight:600;">{langNames[lang]}</a>
+    ))}
+  </div>
+  <div style="margin:12px 24px 0;">
     <a href="https://t.me/+tBjfmjh9vHo1YzQy" target="_blank" rel="noopener" class="btn-primary rounded-xl text-white font-bold text-base w-full" style="width:100%;min-height:52px;font-size:15px;">Get Started Free</a>
   </div>
 </div>
@@ -270,8 +285,8 @@ const hreflang = [
     </div>
 
     <h1 class="heading-xl mb-5 sm:mb-6">
-      Traffic. Promotion.<br>
-      <span class="grad-text">Management.</span>
+      Webcam Traffic.<br>
+      <span class="grad-text">Promotion. Management.</span>
     </h1>
 
     <p class="text-base sm:text-lg text-slate-400 mb-8 max-w-md mx-auto leading-relaxed font-light">
@@ -600,6 +615,30 @@ document.addEventListener('click', function(e) {
     btn.classList.remove('open');
   }
 });
+
+(function () {
+  var langBtn = document.getElementById('lang-btn-root');
+  var langMenu = document.getElementById('lang-menu-root');
+  var chevron = document.getElementById('lang-chevron-root');
+  if (langBtn && langMenu) {
+    langBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      langMenu.classList.toggle('hidden');
+      langBtn.setAttribute('aria-expanded', langMenu.classList.contains('hidden') ? 'false' : 'true');
+      if (chevron) chevron.style.transform = langMenu.classList.contains('hidden') ? '' : 'rotate(180deg)';
+    });
+    document.addEventListener('click', function () {
+      langMenu.classList.add('hidden');
+      langBtn.setAttribute('aria-expanded', 'false');
+      if (chevron) chevron.style.transform = '';
+    });
+  }
+  document.querySelectorAll('.lang-opt-root').forEach(function (a) {
+    a.addEventListener('click', function () {
+      try { localStorage.setItem('ewo-lang-set', '1'); } catch (e) {}
+    });
+  });
+})();
 </script>
 
 </body>
