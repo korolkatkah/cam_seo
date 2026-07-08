@@ -38,8 +38,8 @@ const hreflang = [
   ))}
   <link rel="alternate" hreflang="x-default" href={site + '/'} />
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
+  <script is:inline src="https://cdn.tailwindcss.com"></script>
+  <script is:inline>
     tailwind.config = {
       theme: {
         extend: {
@@ -504,7 +504,7 @@ const hreflang = [
   </div>
 </nav>
 
-<script>
+<script is:inline>
 function toggleMenu() {
   const menu = document.getElementById('mobile-menu');
   const btn = document.getElementById('hamburger');
