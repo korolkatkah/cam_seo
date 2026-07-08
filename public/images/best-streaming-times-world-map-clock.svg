@@ -1,0 +1,28 @@
+<svg viewBox="0 0 640 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Best streaming times by region — world map and peak viewer hours clock">
+  <!-- world dots map (abstract) -->
+  <g fill="#57534E" opacity="0.6">
+    <circle cx="90" cy="140" r="4"/><circle cx="110" cy="150" r="4"/><circle cx="130" cy="145" r="4"/>
+    <circle cx="150" cy="160" r="4"/><circle cx="170" cy="150" r="4"/><circle cx="200" cy="170" r="4"/>
+    <circle cx="230" cy="160" r="4"/><circle cx="260" cy="175" r="4"/><circle cx="300" cy="165" r="4"/>
+    <circle cx="330" cy="180" r="4"/><circle cx="370" cy="170" r="4"/><circle cx="400" cy="185" r="4"/>
+    <circle cx="440" cy="175" r="4"/><circle cx="470" cy="190" r="4"/><circle cx="500" cy="180" r="4"/>
+    <circle cx="530" cy="195" r="4"/><circle cx="120" cy="200" r="4"/><circle cx="180" cy="210" r="4"/>
+    <circle cx="260" cy="220" r="4"/><circle cx="340" cy="215" r="4"/><circle cx="420" cy="225" r="4"/>
+    <circle cx="490" cy="215" r="4"/>
+  </g>
+  <!-- highlighted peak-time regions -->
+  <circle cx="150" cy="160" r="7" fill="#D97706"/>
+  <circle cx="330" cy="180" r="7" fill="#F59E0B"/>
+  <circle cx="470" cy="190" r="7" fill="#D97706"/>
+  <!-- clock -->
+  <circle cx="320" cy="270" r="55" fill="#1C1917" stroke="#A8A29E" stroke-width="3"/>
+  <line x1="320" y1="270" x2="320" y2="235" stroke="#FAFAF9" stroke-width="4" stroke-linecap="round"/>
+  <line x1="320" y1="270" x2="348" y2="285" stroke="#D97706" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="320" cy="270" r="4" fill="#FAFAF9"/>
+  <g stroke="#57534E" stroke-width="2">
+    <line x1="320" y1="219" x2="320" y2="227"/>
+    <line x1="320" y1="313" x2="320" y2="321"/>
+    <line x1="271" y1="270" x2="279" y2="270"/>
+    <line x1="361" y1="270" x2="369" y2="270"/>
+  </g>
+</svg>

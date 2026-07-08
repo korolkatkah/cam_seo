@@ -1,0 +1,27 @@
+<svg viewBox="0 0 640 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="New webcam model audience growth from first stream to paying members">
+  <!-- baseline -->
+  <line x1="90" y1="290" x2="560" y2="290" stroke="#292420" stroke-width="2"/>
+  <!-- ascending bars -->
+  <rect x="120" y="260" width="34" height="30" rx="4" fill="#57534E"/>
+  <rect x="180" y="230" width="34" height="60" rx="4" fill="#78716C"/>
+  <rect x="240" y="195" width="34" height="95" rx="4" fill="#D97706" opacity="0.75"/>
+  <rect x="300" y="155" width="34" height="135" rx="4" fill="#D97706" opacity="0.9"/>
+  <rect x="360" y="110" width="34" height="180" rx="4" fill="#F59E0B"/>
+  <!-- sprout on first bar -->
+  <g stroke="#FAFAF9" stroke-width="3.5" fill="none" stroke-linecap="round">
+    <path d="M137 260 C137 240 120 236 112 222"/>
+    <path d="M137 260 C137 240 154 236 162 222"/>
+    <line x1="137" y1="260" x2="137" y2="245"/>
+  </g>
+  <!-- trend line across the tops -->
+  <path d="M137 258 L197 228 L257 193 L317 153 L377 108" fill="none" stroke="#FAFAF9" stroke-width="3" stroke-linecap="round" stroke-dasharray="1 10"/>
+  <!-- arrow at end -->
+  <path d="M420 70 L460 40" fill="none" stroke="#F59E0B" stroke-width="5" stroke-linecap="round"/>
+  <path d="M430 38 L462 40 L458 70" fill="none" stroke="#F59E0B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- paying members dots gathering at top right -->
+  <g fill="#FAFAF9">
+    <circle cx="500" cy="90" r="6" opacity="0.9"/>
+    <circle cx="520" cy="70" r="6" opacity="0.7"/>
+    <circle cx="540" cy="95" r="6" opacity="0.5"/>
+  </g>
+</svg>

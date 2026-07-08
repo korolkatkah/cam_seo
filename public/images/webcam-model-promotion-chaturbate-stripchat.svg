@@ -1,0 +1,28 @@
+<svg viewBox="0 0 640 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Webcam model promotion strategy for Chaturbate and Stripchat audience growth">
+  <!-- ring light -->
+  <circle cx="320" cy="175" r="118" fill="none" stroke="#D97706" stroke-width="10" stroke-dasharray="14 10" opacity="0.85"/>
+  <circle cx="320" cy="175" r="118" fill="none" stroke="#57534E" stroke-width="1" opacity="0.4"/>
+  <!-- model avatar (abstract, non-explicit) -->
+  <circle cx="320" cy="140" r="34" fill="none" stroke="#FAFAF9" stroke-width="4"/>
+  <path d="M256 250c0-38 28.6-58 64-58s64 20 64 58" fill="none" stroke="#FAFAF9" stroke-width="4" stroke-linecap="round"/>
+  <!-- camera lens on tripod, facing model -->
+  <g stroke="#A8A29E" stroke-width="3" fill="none" stroke-linecap="round">
+    <circle cx="120" cy="230" r="20"/>
+    <circle cx="120" cy="230" r="9"/>
+    <line x1="120" y1="250" x2="120" y2="300"/>
+    <line x1="120" y1="300" x2="95" y2="330"/>
+    <line x1="120" y1="300" x2="120" y2="330"/>
+    <line x1="120" y1="300" x2="145" y2="330"/>
+  </g>
+  <!-- growth arrow -->
+  <path d="M470 260 L520 210 L560 250 L610 190" fill="none" stroke="#F59E0B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M580 186 L612 190 L606 222" fill="none" stroke="#F59E0B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- audience / paying members dots -->
+  <g fill="#D97706">
+    <circle cx="470" cy="300" r="7"/>
+    <circle cx="500" cy="310" r="7"/>
+    <circle cx="530" cy="300" r="7"/>
+    <circle cx="560" cy="312" r="7"/>
+    <circle cx="590" cy="298" r="7"/>
+  </g>
+</svg>

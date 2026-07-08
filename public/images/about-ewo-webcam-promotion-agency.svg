@@ -1,0 +1,23 @@
+<svg viewBox="0 0 640 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="About EWO webcam model and studio promotion agency, global team across countries">
+  <!-- globe -->
+  <circle cx="320" cy="175" r="110" fill="none" stroke="#57534E" stroke-width="2.5"/>
+  <ellipse cx="320" cy="175" rx="110" ry="45" fill="none" stroke="#57534E" stroke-width="1.5" opacity="0.7"/>
+  <ellipse cx="320" cy="175" rx="55" ry="110" fill="none" stroke="#57534E" stroke-width="1.5" opacity="0.7"/>
+  <line x1="210" y1="175" x2="430" y2="175" stroke="#57534E" stroke-width="1.5" opacity="0.7"/>
+  <!-- region markers -->
+  <g fill="#D97706">
+    <circle cx="260" cy="120" r="7"/>
+    <circle cx="380" cy="130" r="7"/>
+    <circle cx="240" cy="220" r="7"/>
+    <circle cx="390" cy="230" r="7"/>
+    <circle cx="320" cy="90" r="7"/>
+  </g>
+  <g stroke="#F59E0B" stroke-width="1.5" opacity="0.6">
+    <line x1="260" y1="120" x2="320" y2="90"/>
+    <line x1="380" y1="130" x2="320" y2="90"/>
+    <line x1="240" y1="220" x2="390" y2="230"/>
+  </g>
+  <!-- trust badge -->
+  <circle cx="500" cy="270" r="40" fill="#1C1917" stroke="#D97706" stroke-width="3"/>
+  <path d="M482 270 L495 283 L520 255" fill="none" stroke="#D97706" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

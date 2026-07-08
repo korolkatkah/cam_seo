@@ -1,0 +1,20 @@
+<svg viewBox="0 0 640 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="How the cam platform algorithm ranks rooms — ranking signals and podium">
+  <!-- podium -->
+  <rect x="230" y="200" width="80" height="90" fill="#57534E" opacity="0.5"/>
+  <rect x="140" y="230" width="80" height="60" fill="#78716C" opacity="0.5"/>
+  <rect x="320" y="170" width="80" height="120" fill="#D97706"/>
+  <text x="360" y="240" font-family="sans-serif" font-size="28" fill="#0C0A09" font-weight="700" text-anchor="middle">1</text>
+  <text x="270" y="255" font-family="sans-serif" font-size="24" fill="#FAFAF9" font-weight="700" text-anchor="middle" opacity="0.8">2</text>
+  <text x="180" y="270" font-family="sans-serif" font-size="24" fill="#FAFAF9" font-weight="700" text-anchor="middle" opacity="0.6">3</text>
+  <!-- signal / ranking waves above -->
+  <g stroke="#F59E0B" stroke-width="3" fill="none" stroke-linecap="round">
+    <path d="M330 120 a30 30 0 0 1 60 0"/>
+    <path d="M320 100 a50 50 0 0 1 80 0"/>
+  </g>
+  <circle cx="360" cy="140" r="8" fill="#F59E0B"/>
+  <!-- magnifier / search signal -->
+  <circle cx="480" cy="150" r="30" fill="none" stroke="#FAFAF9" stroke-width="3.5"/>
+  <line x1="502" y1="172" x2="530" y2="200" stroke="#FAFAF9" stroke-width="4" stroke-linecap="round"/>
+  <!-- baseline -->
+  <line x1="90" y1="290" x2="560" y2="290" stroke="#292420" stroke-width="2"/>
+</svg>

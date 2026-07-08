@@ -1,27 +1,36 @@
 ---
 import Base from '@/layouts/Base.astro';
+const site = 'https://ewo.cam';
 ---
 
 <Base
-  title="Webcam Model & Studio Promotion"
-  description="EWO helps webcam models and studios grow their audience through legitimate digital marketing — SEO, social, and platform optimization."
+  title="Webcam Model & Studio Global Service — Traffic, Promotion, Management"
+  description="EWO is a global webcam service for models and studios. Traffic growth, promotion, and full management. 1000+ clients, 10+ years experience, 20+ countries."
+  lang="en"
+  hreflang={[
+    { lang: 'en', url: `${site}/` },
+    { lang: 'de', url: `${site}/de` },
+    { lang: 'es', url: `${site}/es` },
+    { lang: 'ro', url: `${site}/ro` },
+    { lang: 'uk', url: `${site}/uk` },
+    { lang: 'ru', url: `${site}/ru` },
+  ]}
 >
 
-  <!-- ── HERO ── -->
+  <!-- HERO -->
   <section class="hero section">
     <div class="container">
       <div class="hero-eyebrow">
-        <span class="badge">Audience Growth Agency</span>
+        <span class="badge">Global Webcam Service</span>
       </div>
       <h1 class="hero-headline">
-        Grow your<br />
-        <em class="hero-accent">cam audience</em><br />
-        the right way.
+        Traffic. Promotion.<br />
+        <em class="hero-accent">Management.</em>
       </h1>
       <p class="hero-sub">
-        EWO provides promotion and digital marketing services for webcam models and studios on
-        Chaturbate, Stripchat, and other major platforms — real traffic, real viewers, real paying
-        members. No shortcuts, no inflated promo numbers.
+        EWO is a global service for webcam models and studios. We handle audience growth,
+        promotion, and full management — for independent performers and multi-model studios
+        worldwide.
       </p>
       <div class="hero-actions">
         <a href="/model-promotion" class="btn btn-primary">For Models</a>
@@ -29,18 +38,18 @@ import Base from '@/layouts/Base.astro';
       </div>
       <div class="hero-stats">
         <div class="stat">
-          <span class="stat-number">13</span>
+          <span class="stat-number">1000+</span>
+          <span class="stat-label">Models & Studios</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-number">10+</span>
+          <span class="stat-label">Years on market</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-number">20+</span>
           <span class="stat-label">Countries</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <span class="stat-number">2</span>
-          <span class="stat-label">Audiences</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <span class="stat-number">0</span>
-          <span class="stat-label">Fake viewers</span>
         </div>
       </div>
     </div>
@@ -48,29 +57,37 @@ import Base from '@/layouts/Base.astro';
 
   <hr class="divider" />
 
-  <!-- ── VALUE PROPS ── -->
+  <!-- SERVICES -->
   <section class="section">
     <div class="container">
       <div class="section-header">
         <p class="eyebrow">What we do</p>
-        <h2>Two audiences.<br />One focus.</h2>
-        <p>Whether you're an independent model or a multi-model studio, we build strategies that work for your specific situation.</p>
+        <h2>Three services.<br />One global team.</h2>
+        <p>Whether you're starting out or scaling a studio, EWO has a solution built for your stage.</p>
       </div>
-      <div class="cards-grid-2">
-        <a href="/model-promotion" class="card service-card">
+      <div class="cards-grid-3">
+        <a href="/studio-traffic" class="card service-card">
           <div class="service-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
           </div>
-          <h3>Model Promotion</h3>
-          <p>Profile optimization, scheduling strategy, and off-platform growth for independent performers.</p>
+          <h3>Traffic Growth</h3>
+          <p>Viewer growth strategy for models and studios — scheduling, regional targeting, platform optimization.</p>
           <span class="card-link">Learn more <span aria-hidden="true">→</span></span>
         </a>
-        <a href="/studio-traffic" class="card service-card">
+        <a href="/model-promotion" class="card service-card">
+          <div class="service-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <h3>Promotion</h3>
+          <p>Profile optimization, off-platform presence, social growth, and SEO for cam profiles.</p>
+          <span class="card-link">Learn more <span aria-hidden="true">→</span></span>
+        </a>
+        <a href="/studio-scaling" class="card service-card">
           <div class="service-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
           </div>
-          <h3>Studio Traffic Growth</h3>
-          <p>Multi-model scheduling, regional targeting, and scalable traffic systems for studios and agencies.</p>
+          <h3>Management</h3>
+          <p>Full-service management for studios: roster coordination, compliance, scaling systems, and analytics.</p>
           <span class="card-link">Learn more <span aria-hidden="true">→</span></span>
         </a>
       </div>
@@ -79,7 +96,42 @@ import Base from '@/layouts/Base.astro';
 
   <hr class="divider" />
 
-  <!-- ── HOW IT WORKS ── -->
+  <!-- TRUST -->
+  <section class="section trust-section">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow">Why EWO</p>
+        <h2>A decade of results<br />across 20+ markets.</h2>
+        <p>We've been in the webcam industry since before most current platforms existed. That experience translates directly into strategies that work.</p>
+      </div>
+      <div class="trust-grid">
+        <div class="trust-item">
+          <span class="trust-num">1000+</span>
+          <h3>Models & Studios</h3>
+          <p>More than 1000 models and studios have worked with EWO to grow their audiences.</p>
+        </div>
+        <div class="trust-item">
+          <span class="trust-num">10+</span>
+          <h3>Years on Market</h3>
+          <p>Over a decade in the webcam industry — we know what works and what gets accounts banned.</p>
+        </div>
+        <div class="trust-item">
+          <span class="trust-num">20+</span>
+          <h3>Countries</h3>
+          <p>Our clients stream from 20+ countries targeting viewers across all major global markets.</p>
+        </div>
+        <div class="trust-item">
+          <span class="trust-num">0</span>
+          <h3>Fake Viewers</h3>
+          <p>We work exclusively with legitimate audience growth. No bots, no inflated numbers, no risk to your account.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- HOW IT WORKS -->
   <section class="section">
     <div class="container">
       <div class="section-header">
@@ -114,7 +166,7 @@ import Base from '@/layouts/Base.astro';
 
   <hr class="divider" />
 
-  <!-- ── RESOURCES ── -->
+  <!-- RESOURCES -->
   <section class="section">
     <div class="container">
       <div class="section-header">
@@ -141,13 +193,13 @@ import Base from '@/layouts/Base.astro';
     </div>
   </section>
 
-  <!-- ── CTA BAND ── -->
+  <!-- CTA BAND -->
   <section class="cta-band">
     <div class="container">
       <h2>Ready to grow?</h2>
       <p>Tell us where you are and where you want to go. We'll build the plan.</p>
       <div class="cta-actions">
-        <a href="/about#contact" class="btn btn-primary">Get in Touch</a>
+        <a href="/contact" class="btn btn-primary">Get in Touch</a>
         <a href="/platforms-we-work-with" class="btn btn-ghost">Platforms We Work With</a>
       </div>
     </div>
@@ -156,7 +208,6 @@ import Base from '@/layouts/Base.astro';
 </Base>
 
 <style>
-  /* ── Hero ── */
   .hero { padding-block: clamp(5rem, 12vw, 9rem); }
   .hero-eyebrow { margin-bottom: 1.75rem; }
   .badge {
@@ -179,43 +230,28 @@ import Base from '@/layouts/Base.astro';
     letter-spacing: -0.03em;
     margin-bottom: 1.5rem;
   }
-  .hero-accent {
-    font-style: normal;
-    color: var(--accent);
-  }
+  .hero-accent { font-style: normal; color: var(--accent); }
   .hero-sub {
     font-size: 1.125rem;
     color: var(--fg-muted);
-    max-width: 44ch;
+    max-width: 46ch;
     line-height: 1.7;
     margin-bottom: 2.5rem;
   }
-  .hero-actions {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-bottom: 4rem;
-  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 4rem; }
   .hero-stats {
     display: flex;
     align-items: center;
     gap: 2rem;
     padding-top: 2rem;
     border-top: 1px solid var(--border);
-    max-width: 400px;
+    flex-wrap: wrap;
   }
   .stat { display: flex; flex-direction: column; gap: .2rem; }
-  .stat-number {
-    font-family: var(--font-heading);
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: var(--fg);
-    line-height: 1;
-  }
+  .stat-number { font-family: var(--font-heading); font-size: 1.75rem; font-weight: 700; color: var(--fg); line-height: 1; }
   .stat-label { font-size: .8rem; color: var(--fg-faint); letter-spacing: .04em; }
   .stat-divider { width: 1px; height: 2.5rem; background: var(--border); }
 
-  /* ── Section header ── */
   .section-header { margin-bottom: 3.5rem; max-width: 54ch; }
   .eyebrow {
     font-family: var(--font-heading);
@@ -230,12 +266,9 @@ import Base from '@/layouts/Base.astro';
   .section-header h2 { margin-bottom: 1rem; }
   .section-header p { font-size: 1.0625rem; }
 
-  /* ── Service cards ── */
-  .cards-grid-2 {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.25rem;
-  }
+  .cards-grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem; }
+  .cards-grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; }
+
   .service-card { display: flex; flex-direction: column; gap: 1rem; text-decoration: none; }
   .service-icon {
     width: 48px; height: 48px;
@@ -259,32 +292,31 @@ import Base from '@/layouts/Base.astro';
   }
   .service-card:hover .card-link { gap: .6rem; }
 
-  /* ── Steps ── */
-  .steps {
+  .trust-section {}
+  .trust-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 2rem 3rem;
+    gap: 2rem;
   }
-  .step { display: flex; flex-direction: column; gap: .75rem; }
-  .step-num {
+  .trust-item { display: flex; flex-direction: column; gap: .5rem; }
+  .trust-num {
     font-family: var(--font-heading);
-    font-size: .8125rem;
-    font-weight: 600;
-    letter-spacing: .1em;
+    font-size: 3rem;
+    font-weight: 700;
     color: var(--accent);
+    line-height: 1;
+    letter-spacing: -0.03em;
   }
+  .trust-item h3 { margin-top: .25rem; }
 
-  /* ── Resource cards ── */
-  .cards-grid-3 {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.25rem;
-  }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem 3rem; }
+  .step { display: flex; flex-direction: column; gap: .75rem; }
+  .step-num { font-family: var(--font-heading); font-size: .8125rem; font-weight: 600; letter-spacing: .1em; color: var(--accent); }
+
   .resource-card { display: flex; flex-direction: column; gap: .75rem; text-decoration: none; }
   .resource-card h3 { font-size: 1.125rem; }
   .resource-card:hover .card-link { gap: .6rem; }
 
-  /* ── CTA band ── */
   .cta-band {
     background: var(--bg-raised);
     border-top: 1px solid var(--border);
