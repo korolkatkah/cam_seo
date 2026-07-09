@@ -35,13 +35,13 @@ const langLabels: Record<string, string> = {
 
 const langPrefix = lang === 'en' ? '' : `/${lang}`;
 
-const navLabels: Record<string, {models: string, studios: string, blog: string, about: string}> = {
-  en: { models: 'For Models', studios: 'For Studios', blog: 'Blog', about: 'About' },
-  de: { models: 'Für Models', studios: 'Für Studios', blog: 'Blog', about: 'Über uns' },
-  es: { models: 'Para Modelos', studios: 'Para Estudios', blog: 'Blog', about: 'Nosotros' },
-  ro: { models: 'Pentru Modele', studios: 'Pentru Studiouri', blog: 'Blog', about: 'Despre noi' },
-  uk: { models: 'Для Моделей', studios: 'Для Студій', blog: 'Блог', about: 'Про нас' },
-  ru: { models: 'Для Моделей', studios: 'Для Студий', blog: 'Блог', about: 'О нас' },
+const navLabels: Record<string, {models: string, studios: string, blog: string}> = {
+  en: { models: 'For Models', studios: 'For Studios', blog: 'Blog' },
+  de: { models: 'Für Models', studios: 'Für Studios', blog: 'Blog' },
+  es: { models: 'Para Modelos', studios: 'Para Estudios', blog: 'Blog' },
+  ro: { models: 'Pentru Modele', studios: 'Pentru Studiouri', blog: 'Blog' },
+  uk: { models: 'Для Моделей', studios: 'Для Студій', blog: 'Блог' },
+  ru: { models: 'Для Моделей', studios: 'Для Студий', blog: 'Блог' },
 };
 const nl = navLabels[lang] ?? navLabels.en;
 
@@ -54,7 +54,6 @@ const nav = [
   { href: `${langPrefix}/for-models`, label: nl.models },
   { href: `${langPrefix}/studio-traffic`, label: nl.studios },
   { href: `${langPrefix}/blog`, label: nl.blog },
-  { href: `${langPrefix}/about`, label: nl.about },
 ];
 ---
 
