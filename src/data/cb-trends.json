@@ -1,14 +1,18 @@
 {
-  "generated_at": "2026-07-09T00:20:25Z",
+  "generated_at": "2026-07-09T04:29:42Z",
   "gender": "f",
-  "hours_covered": 3.7,
-  "snapshots": 4,
-  "rooms_seen": 10213,
+  "hours_covered": 7.9,
+  "snapshots": 5,
+  "rooms_seen": 14322,
   "preliminary": true,
   "best_hours_utc": [
     {
       "hour": 0,
       "score": 104
+    },
+    {
+      "hour": 4,
+      "score": 107
     },
     {
       "hour": 20,
@@ -17,260 +21,296 @@
     {
       "hour": 21,
       "score": 103
-    },
-    {
-      "hour": 23,
-      "score": 101
     }
   ],
   "top_tags": [
     {
+      "tag": "perky",
+      "avg_users": 7894,
+      "rooms": 5,
+      "avg_price": 909,
+      "price_samples": 4
+    },
+    {
       "tag": "elegant",
-      "avg_users": 5258,
-      "rooms": 12
+      "avg_users": 5680,
+      "rooms": 16,
+      "avg_price": 1889,
+      "price_samples": 17
     },
     {
       "tag": "hotwife",
-      "avg_users": 3360,
-      "rooms": 6
+      "avg_users": 2758,
+      "rooms": 8,
+      "avg_price": 1542,
+      "price_samples": 7
+    },
+    {
+      "tag": "bigbutt",
+      "avg_users": 2030,
+      "rooms": 10,
+      "avg_price": null,
+      "price_samples": 0
+    },
+    {
+      "tag": "asmr",
+      "avg_users": 1987,
+      "rooms": 11,
+      "avg_price": 1086,
+      "price_samples": 3
     },
     {
       "tag": "creampie",
-      "avg_users": 1737,
-      "rooms": 13
+      "avg_users": 1460,
+      "rooms": 18,
+      "avg_price": 1336,
+      "price_samples": 20
+    },
+    {
+      "tag": "multisquirt",
+      "avg_users": 1441,
+      "rooms": 10,
+      "avg_price": 656,
+      "price_samples": 2
     },
     {
       "tag": "muscles",
-      "avg_users": 1649,
-      "rooms": 8
+      "avg_users": 1415,
+      "rooms": 10,
+      "avg_price": 1118,
+      "price_samples": 18
     },
     {
       "tag": "19",
-      "avg_users": 1466,
-      "rooms": 12
+      "avg_users": 1349,
+      "rooms": 14,
+      "avg_price": 1654,
+      "price_samples": 10
     },
     {
       "tag": "yoga",
-      "avg_users": 1352,
-      "rooms": 8
+      "avg_users": 1224,
+      "rooms": 10,
+      "avg_price": 372,
+      "price_samples": 6
     },
     {
       "tag": "brazilian",
       "avg_users": 638,
-      "rooms": 7
-    },
-    {
-      "tag": "bbc",
-      "avg_users": 594,
-      "rooms": 64
-    },
-    {
-      "tag": "pawg",
-      "avg_users": 586,
-      "rooms": 48
-    },
-    {
-      "tag": "horny",
-      "avg_users": 445,
-      "rooms": 39
-    },
-    {
-      "tag": "erotic",
-      "avg_users": 403,
-      "rooms": 78
-    },
-    {
-      "tag": "twerk",
-      "avg_users": 346,
-      "rooms": 151
-    },
-    {
-      "tag": "smallboobs",
-      "avg_users": 345,
-      "rooms": 46
+      "rooms": 7,
+      "avg_price": 1338,
+      "price_samples": 8
     },
     {
       "tag": "smile",
-      "avg_users": 339,
-      "rooms": 50
+      "avg_users": 551,
+      "rooms": 60,
+      "avg_price": 559,
+      "price_samples": 51
+    },
+    {
+      "tag": "pawg",
+      "avg_users": 496,
+      "rooms": 62,
+      "avg_price": 539,
+      "price_samples": 47
+    },
+    {
+      "tag": "bbc",
+      "avg_users": 490,
+      "rooms": 89,
+      "avg_price": 637,
+      "price_samples": 80
+    },
+    {
+      "tag": "twerk",
+      "avg_users": 484,
+      "rooms": 207,
+      "avg_price": 557,
+      "price_samples": 202
+    },
+    {
+      "tag": "fuck",
+      "avg_users": 413,
+      "rooms": 14,
+      "avg_price": 1631,
+      "price_samples": 7
+    },
+    {
+      "tag": "horny",
+      "avg_users": 372,
+      "rooms": 51,
+      "avg_price": 617,
+      "price_samples": 37
+    },
+    {
+      "tag": "erotic",
+      "avg_users": 353,
+      "rooms": 97,
+      "avg_price": 910,
+      "price_samples": 80
+    },
+    {
+      "tag": "smallboobs",
+      "avg_users": 297,
+      "rooms": 56,
+      "avg_price": 817,
+      "price_samples": 44
     },
     {
       "tag": "ahegao",
-      "avg_users": 338,
-      "rooms": 264
-    },
-    {
-      "tag": "cute",
-      "avg_users": 297,
-      "rooms": 428
-    },
-    {
-      "tag": "innocent",
-      "avg_users": 267,
-      "rooms": 5
-    },
-    {
-      "tag": "teen",
-      "avg_users": 262,
-      "rooms": 1210
-    },
-    {
-      "tag": "flexible",
-      "avg_users": 259,
-      "rooms": 48
-    },
-    {
-      "tag": "dance",
-      "avg_users": 254,
-      "rooms": 132
+      "avg_users": 287,
+      "rooms": 355,
+      "avg_price": 745,
+      "price_samples": 234
     }
   ],
   "top_titles": [
     {
-      "avg_users": 36708,
+      "avg_users": 29372,
+      "subject": "🎟 Ticket Show » [ 💰 Price: 199 tks ▪ 💚 Fanclub: 99 tks ] ~ Goal: Appreciation for the show »  [ 20296 tokens left ] ~ #e"
+    },
+    {
+      "avg_users": 29366,
       "subject": "💦SQUIRT+ 100 SEC MAX SPEED💦 [1474 tokens left] Moni come back! 5 days without squirt! Try to make me  squirt now!  #squi"
     },
     {
-      "avg_users": 28642,
+      "avg_users": 22914,
       "subject": "Spin the wheel tokens 100"
     },
     {
-      "avg_users": 26108,
-      "subject": "Happy Wednesday!✨ ~ Goal: Feather and a wheel with spikes »  [ 2080 tokens left ] ~ #elegant  #twerk  #heels  #natural  "
-    },
-    {
-      "avg_users": 24072,
+      "avg_users": 19257,
       "subject": "GOAL: Turn on fuck machine💗 ❤️ Hello #anal #cum #feet #teen #young"
     },
     {
-      "avg_users": 23842,
+      "avg_users": 19073,
       "subject": "🔥For only $3 my OF subscription with new BG videos 🔥 links in bio 🖇️ #deepthroat #ahegao #bigass #bigboobs #latina"
     },
     {
-      "avg_users": 20963,
+      "avg_users": 16770,
       "subject": "heyy i'm back! ready to have some fun?? 😘😘 #new #young #blonde #natural #bigboobs"
     },
     {
-      "avg_users": 19315,
+      "avg_users": 15452,
       "subject": "Welcome to my room! - Goal: 2 Finger in Pussy and Finger in Ass [1225 tokens left ] #18 #blonde #teen #daddysgirl #loven"
     },
     {
-      "avg_users": 18675,
+      "avg_users": 14940,
       "subject": "Toy start work from 5tk / GOAL: spank my ass #18 #shy #teen #bigboobs #skinny [0 tokens remaining]"
     },
     {
-      "avg_users": 17055,
+      "avg_users": 13644,
       "subject": "fountain squirt all over me@goal😈 [10899 tokens left] my fav vibes 55,222,333,500,777(NEW)❤ #bigboobs #bigass #squirt #l"
     },
     {
-      "avg_users": 16725,
+      "avg_users": 13380,
       "subject": "hey  ♡cum at goal | spin the wheel - 99 Tks | snap - 444 tks | join saint or sinners club | read my bio  ♡"
     },
     {
-      "avg_users": 16670,
+      "avg_users": 13336,
       "subject": "make me cum [4841 tokens remaining]"
     },
     {
-      "avg_users": 13763,
+      "avg_users": 12062,
+      "subject": "GOAL: Lick my nipples [0 tokens remaining] Hi everyone! Im Kira! <3 Happy to See You ♥ My fav vibrations 77|160|222|333|"
+    },
+    {
+      "avg_users": 11010,
       "subject": "Hellooo ~did you miss me? Make me wet & cum for you. Check /menu to have fun with me! #lovense #petite #natural #young #"
     },
     {
-      "avg_users": 13382,
+      "avg_users": 10705,
       "subject": "^-^ Cumshow ^-^ [256 tokens left] #pawg #bigboobs #creampie  #bbc"
     },
     {
-      "avg_users": 10533,
+      "avg_users": 8427,
       "subject": "🥛fav patterns 55 111 222 333 - Goal is : CUM WITH DILDO #18 #anal #ahegao #cute #cosplay"
     },
     {
-      "avg_users": 9200,
+      "avg_users": 7990,
+      "subject": "NOT Home alone   ;) my great vibes 77, 111, 222 , 444, 1111  #teen #lovense #new  //  finger myself  ...  .. ❤︎ [6451 to"
+    },
+    {
+      "avg_users": 7540,
+      "subject": "✨ #lovense #latina #twerk #bigass #bigtits"
+    },
+    {
+      "avg_users": 7360,
       "subject": "sweet face, dirty mind 💋 FAV LVL111 333 777"
     },
     {
-      "avg_users": 9173,
+      "avg_users": 7354,
+      "subject": "Monika_reed1's room"
+    },
+    {
+      "avg_users": 7338,
       "subject": "about to get hot💋"
-    },
-    {
-      "avg_users": 8886,
-      "subject": "Click to watch me ❤ // My favourite patterns 120, 160, 222, 301 // #new #lovense #teen #natural #18"
-    },
-    {
-      "avg_users": 8450,
-      "subject": "goal: make me cum for you ♡ »  [ All goals completed! ] 🍑  #bigass #teen #ahegao #natural #cute"
-    },
-    {
-      "avg_users": 8448,
-      "subject": "Chill with me :P /menu @goal: change clothes #erotic #smile #natural #dance"
-    },
-    {
-      "avg_users": 8306,
-      "subject": "I’m very flexible 😉 [0 tokens remaining] i'm #19 years old and #new here #bigass #asian #daddysgirl"
     }
   ],
   "economy": {
-    "goal_median": 605,
-    "goal_p25": 266,
-    "goal_p75": 1111,
-    "goal_samples": 2573,
+    "goal_median": 634,
+    "goal_p25": 273,
+    "goal_p75": 1220,
+    "goal_samples": 3820,
     "top_patterns": [
       {
         "value": 111,
-        "count": 84
+        "count": 119
       },
       {
         "value": 222,
-        "count": 78
+        "count": 110
       },
       {
         "value": 100,
-        "count": 72
+        "count": 107
       },
       {
         "value": 99,
-        "count": 67
-      },
-      {
-        "value": 55,
-        "count": 60
+        "count": 76
       },
       {
         "value": 25,
-        "count": 53
+        "count": 73
       },
       {
-        "value": 50,
-        "count": 46
-      },
-      {
-        "value": 38,
-        "count": 45
-      },
-      {
-        "value": 33,
-        "count": 44
+        "value": 55,
+        "count": 70
       },
       {
         "value": 333,
-        "count": 43
+        "count": 67
+      },
+      {
+        "value": 38,
+        "count": 61
+      },
+      {
+        "value": 200,
+        "count": 57
+      },
+      {
+        "value": 50,
+        "count": 57
       }
     ],
-    "multi_goal_share": 0.072,
-    "with_goal_share": 0.539,
-    "with_price_share": 0.688
+    "multi_goal_share": 0.07,
+    "with_goal_share": 0.529,
+    "with_price_share": 0.683
   },
   "recommendation": {
     "tags": [
+      "perky",
       "elegant",
       "hotwife",
+      "bigbutt",
+      "asmr",
       "creampie",
+      "multisquirt",
       "muscles",
-      "19",
       "yoga",
-      "brazilian",
-      "innocent",
-      "naturalbigboobs",
-      "pawg"
+      "19"
     ],
-    "low_competition_tag": "brazilian"
+    "low_competition_tag": "multisquirt"
   }
 }
