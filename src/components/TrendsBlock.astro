@@ -19,7 +19,7 @@ const STR: Record<string, Record<string, string>> = {
     titlesCaption: "Real room titles today's top-earning models are using",
     pricesTitle: 'Average prices today', goalPriceLabel: 'Typical goal price',
     pricesCaption: 'Use this data to set competitive prices',
-    rangeWord: 'typical range', tkUnit: 'tk', pricesByCategory: 'By category',
+    rangeWord: 'typical range', tkUnit: 'tk', patternsLabel: 'Common tip-menu prices',
     noData: 'Live data collection is starting soon — check back shortly.',
     platformCb: 'Chaturbate', platformSc: 'Stripchat',
     stripchatSoon: "Stripchat data collection is launching soon — check back here once it's live.",
@@ -36,7 +36,7 @@ const STR: Record<string, Record<string, string>> = {
     titlesCaption: 'Echte Raum-Titel, die heutige Top-Verdienerinnen verwenden',
     pricesTitle: 'Durchschnittspreise heute', goalPriceLabel: 'Typischer Goal-Preis',
     pricesCaption: 'Nutze diese Daten, um wettbewerbsfähige Preise festzulegen',
-    rangeWord: 'typischer Bereich', tkUnit: 'tk', pricesByCategory: 'Nach Kategorie',
+    rangeWord: 'typischer Bereich', tkUnit: 'tk', patternsLabel: 'Häufige Tip-Menü-Preise',
     noData: 'Die Live-Datenerfassung startet in Kürze — schau bald wieder vorbei.',
     platformCb: 'Chaturbate', platformSc: 'Stripchat',
     stripchatSoon: 'Die Datenerfassung für Stripchat startet in Kürze — schau bald wieder vorbei.',
@@ -53,7 +53,7 @@ const STR: Record<string, Record<string, string>> = {
     titlesCaption: 'Títulos reales que usan hoy las modelos que más ganan',
     pricesTitle: 'Precios promedio hoy', goalPriceLabel: 'Precio de meta típico',
     pricesCaption: 'Usa estos datos para fijar precios competitivos',
-    rangeWord: 'rango típico', tkUnit: 'tk', pricesByCategory: 'Por categoría',
+    rangeWord: 'rango típico', tkUnit: 'tk', patternsLabel: 'Precios comunes del menú de propinas',
     noData: 'La recopilación de datos en vivo comenzará pronto — vuelve más tarde.',
     platformCb: 'Chaturbate', platformSc: 'Stripchat',
     stripchatSoon: 'La recopilación de datos de Stripchat se lanzará pronto — vuelve a consultar cuando esté activa.',
@@ -70,7 +70,7 @@ const STR: Record<string, Record<string, string>> = {
     titlesCaption: 'Titluri reale folosite azi de modelele cu cele mai mari câștiguri',
     pricesTitle: 'Prețuri medii astăzi', goalPriceLabel: 'Preț obiectiv tipic',
     pricesCaption: 'Folosește aceste date pentru a stabili prețuri competitive',
-    rangeWord: 'interval tipic', tkUnit: 'tk', pricesByCategory: 'Pe categorie',
+    rangeWord: 'interval tipic', tkUnit: 'tk', patternsLabel: 'Prețuri comune din meniul de tips',
     noData: 'Colectarea datelor live începe în curând — revino mai târziu.',
     platformCb: 'Chaturbate', platformSc: 'Stripchat',
     stripchatSoon: 'Colectarea datelor pentru Stripchat va fi lansată în curând — revino când va fi activă.',
@@ -87,7 +87,7 @@ const STR: Record<string, Record<string, string>> = {
     titlesCaption: 'Реальні заголовки кімнат, які сьогодні використовують топ-моделі',
     pricesTitle: 'Середні ціни сьогодні', goalPriceLabel: 'Типова ціна цілі',
     pricesCaption: 'Використовуй ці дані, щоб встановити конкурентні ціни',
-    rangeWord: 'типовий діапазон', tkUnit: 'tk', pricesByCategory: 'За категорією',
+    rangeWord: 'типовий діапазон', tkUnit: 'tk', patternsLabel: 'Поширені ціни в тип-меню',
     noData: 'Збір даних у реальному часі скоро розпочнеться — заглядайте пізніше.',
     platformCb: 'Chaturbate', platformSc: 'Stripchat',
     stripchatSoon: 'Збір даних для Stripchat скоро запуститься — заглядай сюди, коли він запрацює.',
@@ -104,7 +104,7 @@ const STR: Record<string, Record<string, string>> = {
     titlesCaption: 'Реальные заголовки комнат, которые сегодня используют топ-модели',
     pricesTitle: 'Средние цены сегодня', goalPriceLabel: 'Типичная цена цели',
     pricesCaption: 'Используйте эти данные, чтобы выставить конкурентные цены',
-    rangeWord: 'типичный диапазон', tkUnit: 'ток', pricesByCategory: 'По категориям',
+    rangeWord: 'типичный диапазон', tkUnit: 'ток', patternsLabel: 'Частые цены в тип-меню',
     noData: 'Сбор данных в реальном времени скоро начнётся — загляните позже.',
     platformCb: 'Chaturbate', platformSc: 'Stripchat',
     stripchatSoon: 'Сбор данных по Stripchat скоро запустится — загляните сюда, когда он заработает.',
@@ -123,7 +123,7 @@ const hasData = trends.best_hours_utc?.length > 0 || trends.top_tags?.length > 0
 const bestHours = (trends.best_hours_utc ?? []).slice(0, 4);
 const topTags = (trends.top_tags ?? []).slice(0, 15);
 const topTitles = (trends.top_titles ?? []).slice(0, 6);
-const priceTags = (trends.top_tags ?? []).filter((tg: { avg_price: number | null }) => tg.avg_price != null).slice(0, 15);
+const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
 const maxScore = Math.max(1, ...bestHours.map((h: { score: number }) => h.score));
 ---
 
@@ -190,7 +190,7 @@ const maxScore = Math.max(1, ...bestHours.map((h: { score: number }) => h.score)
           </div>
         )}
 
-        {(trends.economy?.goal_median || priceTags.length > 0) && (
+        {(trends.economy?.goal_median || topPatterns.length > 0) && (
           <div class="trends-card trends-card-wide">
             <h3 class="trends-card-title">{t.pricesTitle}</h3>
             <p class="prices-caption">{t.pricesCaption}</p>
@@ -202,15 +202,15 @@ const maxScore = Math.max(1, ...bestHours.map((h: { score: number }) => h.score)
                 )}
               </p>
             )}
-            {priceTags.length > 0 && (
+            {topPatterns.length > 0 && (
               <>
-                <p class="price-by-category-label">{t.pricesByCategory}</p>
+                <p class="price-by-category-label">{t.patternsLabel}</p>
                 <ul class="price-list">
-                  {priceTags.map((tag: { tag: string; avg_price: number; price_samples: number }) => (
+                  {topPatterns.map((p: { value: number; count: number }) => (
                     <li class="price-row">
-                      <span class="price-tag">#{tag.tag}</span>
+                      <span class="price-tag">~{p.value} {t.tkUnit}</span>
                       <span class="price-dots"></span>
-                      <span class="price-value">~{tag.avg_price} {t.tkUnit}</span>
+                      <span class="price-value">×{p.count}</span>
                     </li>
                   ))}
                 </ul>
