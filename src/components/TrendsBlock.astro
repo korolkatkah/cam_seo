@@ -9,95 +9,141 @@ const { lang = 'en' } = Astro.props;
 const STR: Record<string, Record<string, string>> = {
   en: {
     eyebrow: 'Live market data', heading: "What's working right now",
-    sub: 'Real viewer & tag data pulled from public Chaturbate rooms, refreshed automatically.',
-    hoursTitle: 'Best hours to stream', hoursUnit: 'viewers / room',
-    tagsTitle: 'Top-performing tags', tagsRoomsUnit: 'rooms',
-    updated: 'Updated', justNow: 'just now', minAgo: '{n} min ago', hAgo: '{n}h ago',
-    preliminary: 'Collecting the first 24h of data — numbers will stabilize soon.',
+    sub: 'We use this real-time data every day to drive traffic and grow our models\' earnings — pulled from public Chaturbate rooms, refreshed automatically.',
+    hoursTitle: 'Best hours to stream this week', hoursUnit: 'viewers / room',
+    hoursCaption: 'Avg. viewers per broadcasting room',
+    tagsTitle: 'Top-performing tags today', tagsRoomsUnit: 'rooms',
+    tagsCaption: 'Tags used by the rooms with the most viewers right now',
+    titlesTitle: 'Top-performing titles today', viewersWord: 'viewers',
+    titlesCaption: "Real room titles today's top-earning models are using",
+    pricesTitle: 'Average prices today', goalPriceLabel: 'Typical goal price',
+    pricesCaption: 'Use this data to set competitive prices',
+    rangeWord: 'typical range', tkUnit: 'tk', pricesByCategory: 'By category',
     noData: 'Live data collection is starting soon — check back shortly.',
-    basedOn: 'Based on {snapshots} snapshots over {hours}h · {rooms} rooms tracked',
+    platformCb: 'Chaturbate', platformSc: 'Stripchat',
+    stripchatSoon: "Stripchat data collection is launching soon — check back here once it's live.",
   },
   de: {
     eyebrow: 'Live-Marktdaten', heading: 'Was gerade wirklich funktioniert',
-    sub: 'Echte Zuschauer- und Tag-Daten aus öffentlichen Chaturbate-Räumen, automatisch aktualisiert.',
-    hoursTitle: 'Beste Sendezeiten', hoursUnit: 'Zuschauer / Raum',
-    tagsTitle: 'Top-Tags', tagsRoomsUnit: 'Räume',
-    updated: 'Aktualisiert', justNow: 'gerade eben', minAgo: 'vor {n} Min.', hAgo: 'vor {n} Std.',
-    preliminary: 'Die ersten 24 Std. Daten werden gesammelt — die Zahlen stabilisieren sich bald.',
+    sub: 'Wir nutzen diese Echtzeitdaten täglich, um Traffic zu treiben und die Einnahmen unserer Models zu steigern — aus öffentlichen Chaturbate-Räumen, automatisch aktualisiert.',
+    hoursTitle: 'Beste Sendezeiten diese Woche', hoursUnit: 'Zuschauer / Raum',
+    hoursCaption: 'Durchschn. Zuschauer pro sendendem Raum',
+    tagsTitle: 'Top-Tags heute', tagsRoomsUnit: 'Räume',
+    tagsCaption: 'Tags, die Räume mit den meisten Zuschauern gerade verwenden',
+    titlesTitle: 'Top-Titel heute', viewersWord: 'Zuschauer',
+    titlesCaption: 'Echte Raum-Titel, die heutige Top-Verdienerinnen verwenden',
+    pricesTitle: 'Durchschnittspreise heute', goalPriceLabel: 'Typischer Goal-Preis',
+    pricesCaption: 'Nutze diese Daten, um wettbewerbsfähige Preise festzulegen',
+    rangeWord: 'typischer Bereich', tkUnit: 'tk', pricesByCategory: 'Nach Kategorie',
     noData: 'Die Live-Datenerfassung startet in Kürze — schau bald wieder vorbei.',
-    basedOn: 'Basierend auf {snapshots} Messungen über {hours} Std. · {rooms} Räume erfasst',
+    platformCb: 'Chaturbate', platformSc: 'Stripchat',
+    stripchatSoon: 'Die Datenerfassung für Stripchat startet in Kürze — schau bald wieder vorbei.',
   },
   es: {
     eyebrow: 'Datos en vivo del mercado', heading: 'Lo que funciona ahora mismo',
-    sub: 'Datos reales de espectadores y tags de salas públicas de Chaturbate, actualizados automáticamente.',
-    hoursTitle: 'Mejores horas para transmitir', hoursUnit: 'espectadores / sala',
-    tagsTitle: 'Tags con mejor rendimiento', tagsRoomsUnit: 'salas',
-    updated: 'Actualizado', justNow: 'justo ahora', minAgo: 'hace {n} min', hAgo: 'hace {n} h',
-    preliminary: 'Recopilando las primeras 24h de datos — los números se estabilizarán pronto.',
+    sub: 'Usamos estos datos en tiempo real cada día para generar tráfico y aumentar los ingresos de nuestras modelos — de salas públicas de Chaturbate, actualizados automáticamente.',
+    hoursTitle: 'Mejores horas para transmitir esta semana', hoursUnit: 'espectadores / sala',
+    hoursCaption: 'Espectadores prom. por sala en emisión',
+    tagsTitle: 'Tags con mejor rendimiento hoy', tagsRoomsUnit: 'salas',
+    tagsCaption: 'Tags que usan ahora mismo las salas con más espectadores',
+    titlesTitle: 'Mejores títulos hoy', viewersWord: 'espectadores',
+    titlesCaption: 'Títulos reales que usan hoy las modelos que más ganan',
+    pricesTitle: 'Precios promedio hoy', goalPriceLabel: 'Precio de meta típico',
+    pricesCaption: 'Usa estos datos para fijar precios competitivos',
+    rangeWord: 'rango típico', tkUnit: 'tk', pricesByCategory: 'Por categoría',
     noData: 'La recopilación de datos en vivo comenzará pronto — vuelve más tarde.',
-    basedOn: 'Basado en {snapshots} muestras en {hours}h · {rooms} salas rastreadas',
+    platformCb: 'Chaturbate', platformSc: 'Stripchat',
+    stripchatSoon: 'La recopilación de datos de Stripchat se lanzará pronto — vuelve a consultar cuando esté activa.',
   },
   ro: {
     eyebrow: 'Date live din piață', heading: 'Ce funcționează chiar acum',
-    sub: 'Date reale despre spectatori și taguri din camere publice Chaturbate, actualizate automat.',
-    hoursTitle: 'Cele mai bune ore de streaming', hoursUnit: 'spectatori / cameră',
-    tagsTitle: 'Cele mai performante taguri', tagsRoomsUnit: 'camere',
-    updated: 'Actualizat', justNow: 'chiar acum', minAgo: 'acum {n} min', hAgo: 'acum {n} h',
-    preliminary: 'Se colectează primele 24h de date — cifrele se vor stabiliza curând.',
+    sub: 'Folosim aceste date în timp real zilnic pentru a genera trafic și a crește veniturile modelelor noastre — din camere publice Chaturbate, actualizate automat.',
+    hoursTitle: 'Cele mai bune ore de streaming săptămâna aceasta', hoursUnit: 'spectatori / cameră',
+    hoursCaption: 'Spectatori medii per cameră activă',
+    tagsTitle: 'Cele mai performante taguri astăzi', tagsRoomsUnit: 'camere',
+    tagsCaption: 'Taguri folosite chiar acum de camerele cu cei mai mulți spectatori',
+    titlesTitle: 'Cele mai bune titluri astăzi', viewersWord: 'spectatori',
+    titlesCaption: 'Titluri reale folosite azi de modelele cu cele mai mari câștiguri',
+    pricesTitle: 'Prețuri medii astăzi', goalPriceLabel: 'Preț obiectiv tipic',
+    pricesCaption: 'Folosește aceste date pentru a stabili prețuri competitive',
+    rangeWord: 'interval tipic', tkUnit: 'tk', pricesByCategory: 'Pe categorie',
     noData: 'Colectarea datelor live începe în curând — revino mai târziu.',
-    basedOn: 'Bazat pe {snapshots} măsurători în {hours}h · {rooms} camere urmărite',
+    platformCb: 'Chaturbate', platformSc: 'Stripchat',
+    stripchatSoon: 'Colectarea datelor pentru Stripchat va fi lansată în curând — revino când va fi activă.',
   },
   uk: {
     eyebrow: 'Живі ринкові дані', heading: 'Що працює прямо зараз',
-    sub: 'Реальні дані про глядачів і теги з публічних кімнат Chaturbate, оновлюються автоматично.',
-    hoursTitle: 'Найкращі години для стріму', hoursUnit: 'глядачів / кімнату',
-    tagsTitle: 'Найефективніші теги', tagsRoomsUnit: 'кімнат',
-    updated: 'Оновлено', justNow: 'щойно', minAgo: '{n} хв тому', hAgo: '{n} год тому',
-    preliminary: 'Збираємо перші 24 год даних — цифри скоро стабілізуються.',
+    sub: 'Ми використовуємо ці дані в реальному часі щодня, щоб залучати трафік і збільшувати дохід наших моделей — з публічних кімнат Chaturbate, оновлюються автоматично.',
+    hoursTitle: 'Найкращі години для стріму цього тижня', hoursUnit: 'глядачів / кімнату',
+    hoursCaption: 'Середня к-сть глядачів на одну активну кімнату',
+    tagsTitle: 'Найефективніші теги сьогодні', tagsRoomsUnit: 'кімнат',
+    tagsCaption: 'Теги, які зараз використовують кімнати з найбільшою кількістю глядачів',
+    titlesTitle: 'Найкращі заголовки сьогодні', viewersWord: 'глядачів',
+    titlesCaption: 'Реальні заголовки кімнат, які сьогодні використовують топ-моделі',
+    pricesTitle: 'Середні ціни сьогодні', goalPriceLabel: 'Типова ціна цілі',
+    pricesCaption: 'Використовуй ці дані, щоб встановити конкурентні ціни',
+    rangeWord: 'типовий діапазон', tkUnit: 'tk', pricesByCategory: 'За категорією',
     noData: 'Збір даних у реальному часі скоро розпочнеться — заглядайте пізніше.',
-    basedOn: 'На основі {snapshots} зрізів за {hours} год · {rooms} кімнат відстежено',
+    platformCb: 'Chaturbate', platformSc: 'Stripchat',
+    stripchatSoon: 'Збір даних для Stripchat скоро запуститься — заглядай сюди, коли він запрацює.',
   },
   ru: {
     eyebrow: 'Живые рыночные данные', heading: 'Что реально работает прямо сейчас',
-    sub: 'Реальные данные о зрителях и тегах из публичных комнат Chaturbate, обновляются автоматически.',
-    hoursTitle: 'Лучшие часы для стрима', hoursUnit: 'зрителей / комнату',
-    tagsTitle: 'Самые эффективные теги', tagsRoomsUnit: 'комнат',
-    updated: 'Обновлено', justNow: 'только что', minAgo: '{n} мин назад', hAgo: '{n} ч назад',
-    preliminary: 'Собираем первые 24 часа данных — цифры скоро стабилизируются.',
+    sub: 'Мы используем эти данные в реальном времени каждый день, чтобы привлекать трафик и увеличивать доход наших моделей — из публичных комнат Chaturbate, обновляются автоматически.',
+    hoursTitle: 'Лучшие часы для стрима на этой неделе', hoursUnit: 'зрителей / комнату',
+    hoursCaption: 'Среднее число зрителей на одну вещающую комнату',
+    tagsTitle: 'Самые эффективные теги сегодня', tagsRoomsUnit: 'комнат',
+    tagsCaption: 'Теги, которые сейчас используют комнаты с наибольшим числом зрителей',
+    titlesTitle: 'Лучшие заголовки сегодня', viewersWord: 'зрителей',
+    titlesCaption: 'Реальные заголовки комнат, которые сегодня используют топ-модели',
+    pricesTitle: 'Средние цены сегодня', goalPriceLabel: 'Типичная цена цели',
+    pricesCaption: 'Используйте эти данные, чтобы выставить конкурентные цены',
+    rangeWord: 'типичный диапазон', tkUnit: 'ток', pricesByCategory: 'По категориям',
     noData: 'Сбор данных в реальном времени скоро начнётся — загляните позже.',
-    basedOn: 'На основе {snapshots} срезов за {hours} ч · {rooms} комнат отслежено',
+    platformCb: 'Chaturbate', platformSc: 'Stripchat',
+    stripchatSoon: 'Сбор данных по Stripchat скоро запустится — загляните сюда, когда он заработает.',
   },
 };
 const t = STR[lang] ?? STR.en;
 
+const LOCALE_MAP: Record<string, string> = {
+  en: 'en-US', de: 'de-DE', es: 'es-ES', ro: 'ro-RO', uk: 'uk-UA', ru: 'ru-RU',
+};
+const headingDate = new Intl.DateTimeFormat(LOCALE_MAP[lang] ?? 'en-US', {
+  day: 'numeric', month: 'long', timeZone: 'UTC',
+}).format(trends.generated_at ? new Date(trends.generated_at) : new Date());
+
 const hasData = trends.best_hours_utc?.length > 0 || trends.top_tags?.length > 0;
 const bestHours = (trends.best_hours_utc ?? []).slice(0, 4);
 const topTags = (trends.top_tags ?? []).slice(0, 15);
+const topTitles = (trends.top_titles ?? []).slice(0, 6);
+const priceTags = (trends.top_tags ?? []).filter((tg: { avg_price: number | null }) => tg.avg_price != null).slice(0, 15);
 const maxScore = Math.max(1, ...bestHours.map((h: { score: number }) => h.score));
-
-const basedOn = t.basedOn
-  .replace('{snapshots}', String(trends.snapshots ?? 0))
-  .replace('{hours}', String(trends.hours_covered ?? 0))
-  .replace('{rooms}', String(trends.rooms_seen ?? 0));
 ---
 
 <section class="trends-block">
   <div class="trends-inner">
     <div class="trends-head">
       <span class="trends-eyebrow"><span class="live-dot"></span>{t.eyebrow}</span>
-      <h2 class="trends-heading">{t.heading}</h2>
+      <h2 class="trends-heading">{t.heading} — {headingDate}</h2>
       <p class="trends-sub">{t.sub}</p>
+      <div class="platform-tabs" role="tablist">
+        <button type="button" class="platform-tab is-active" data-platform="cb" role="tab" aria-selected="true">{t.platformCb}</button>
+        <button type="button" class="platform-tab" data-platform="sc" role="tab" aria-selected="false">{t.platformSc}</button>
+      </div>
     </div>
 
-    {!hasData && (
-      <p class="trends-empty">{t.noData}</p>
-    )}
+    <div class="platform-panel" data-panel="cb">
+      {!hasData && (
+        <p class="trends-empty">{t.noData}</p>
+      )}
 
-    {hasData && (
-      <>
+      {hasData && (
+        <>
         <div class="trends-grid">
           <div class="trends-card">
             <h3 class="trends-card-title">{t.hoursTitle}</h3>
+            <p class="hours-caption">{t.hoursCaption}</p>
             <ul class="hours-list">
               {bestHours.map((h: { hour: number; score: number }) => (
                 <li class="hours-row">
@@ -113,6 +159,7 @@ const basedOn = t.basedOn
 
           <div class="trends-card">
             <h3 class="trends-card-title">{t.tagsTitle}</h3>
+            <p class="tags-caption">{t.tagsCaption}</p>
             <div class="tag-cloud">
               {topTags.map((tag: { tag: string; avg_users: number; rooms: number }) => (
                 <span class="tag-chip" title={`~${tag.avg_users} ${t.hoursUnit.split(' / ')[0]} · ${tag.rooms} ${t.tagsRoomsUnit}`}>#{tag.tag}</span>
@@ -121,28 +168,75 @@ const basedOn = t.basedOn
           </div>
         </div>
 
-        <p class="trends-footnote" data-generated-at={trends.generated_at ?? ''} data-just-now={t.justNow} data-min-ago={t.minAgo} data-h-ago={t.hAgo} data-updated={t.updated}>
-          {basedOn}
-        </p>
-        {trends.preliminary && <p class="trends-preliminary">{t.preliminary}</p>}
-      </>
-    )}
+        {topTitles.length > 0 && (
+          <div class="trends-card trends-card-wide">
+            <h3 class="trends-card-title">{t.titlesTitle}</h3>
+            <p class="titles-caption">{t.titlesCaption}</p>
+            <ol class="titles-list">
+              {topTitles.map((tt: { avg_users: number; subject: string }) => (
+                <li class="titles-row">
+                  <span class="titles-viewers">~{tt.avg_users} <small>{t.viewersWord}</small></span>
+                  <span class="titles-subject">{tt.subject}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        )}
+
+        {(trends.economy?.goal_median || priceTags.length > 0) && (
+          <div class="trends-card trends-card-wide">
+            <h3 class="trends-card-title">{t.pricesTitle}</h3>
+            <p class="prices-caption">{t.pricesCaption}</p>
+            {trends.economy?.goal_median && (
+              <p class="price-summary">
+                {t.goalPriceLabel}: <strong>~{trends.economy.goal_median} {t.tkUnit}</strong>
+                {trends.economy.goal_p25 && trends.economy.goal_p75 && (
+                  <span class="price-range"> ({t.rangeWord} {trends.economy.goal_p25}–{trends.economy.goal_p75} {t.tkUnit})</span>
+                )}
+              </p>
+            )}
+            {priceTags.length > 0 && (
+              <>
+                <p class="price-by-category-label">{t.pricesByCategory}</p>
+                <ul class="price-list">
+                  {priceTags.map((tag: { tag: string; avg_price: number; price_samples: number }) => (
+                    <li class="price-row">
+                      <span class="price-tag">#{tag.tag}</span>
+                      <span class="price-dots"></span>
+                      <span class="price-value">~{tag.avg_price} {t.tkUnit}</span>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </div>
+        )}
+
+        </>
+      )}
+    </div>
+
+    <div class="platform-panel" data-panel="sc" hidden>
+      <p class="trends-empty">{t.stripchatSoon}</p>
+    </div>
   </div>
 </section>
 
 <script>
-  document.querySelectorAll<HTMLElement>('.trends-footnote[data-generated-at]').forEach((el) => {
-    const iso = el.dataset.generatedAt;
-    if (!iso) return;
-    const then = new Date(iso).getTime();
-    if (Number.isNaN(then)) return;
-    const mins = Math.max(0, Math.round((Date.now() - then) / 60000));
-    let label: string;
-    if (mins < 1) label = el.dataset.justNow ?? '';
-    else if (mins < 60) label = (el.dataset.minAgo ?? '').replace('{n}', String(mins));
-    else label = (el.dataset.hAgo ?? '').replace('{n}', String(Math.round(mins / 60)));
-    const prefix = el.dataset.updated ?? '';
-    el.insertAdjacentHTML('beforeend', ` · <strong>${prefix} ${label}</strong>`);
+  document.querySelectorAll<HTMLElement>('.trends-block').forEach((block) => {
+    const tabs = block.querySelectorAll<HTMLButtonElement>('.platform-tab');
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const platform = tab.dataset.platform;
+        tabs.forEach((tb) => {
+          tb.classList.toggle('is-active', tb === tab);
+          tb.setAttribute('aria-selected', tb === tab ? 'true' : 'false');
+        });
+        block.querySelectorAll<HTMLElement>('.platform-panel').forEach((panel) => {
+          panel.hidden = panel.dataset.panel !== platform;
+        });
+      });
+    });
   });
 </script>
 
@@ -174,6 +268,23 @@ const basedOn = t.basedOn
     color: #f0eeff; margin-bottom: 0.6rem; letter-spacing: -0.01em;
   }
   .trends-sub { color: #94a3b8; font-size: 0.9375rem; max-width: 46ch; margin-inline: auto; }
+
+  .platform-tabs {
+    display: inline-flex; gap: 0.25rem; margin-top: 1.25rem;
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 99px; padding: 4px;
+  }
+  .platform-tab {
+    font-family: 'Josefin Sans', system-ui, sans-serif;
+    font-size: 0.8125rem; font-weight: 700;
+    color: #64748b; background: transparent; border: none;
+    padding: 0.45rem 1.1rem; border-radius: 99px; cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .platform-tab:hover { color: #cbd5e1; }
+  .platform-tab.is-active {
+    color: #fff; background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  }
   .trends-empty { text-align: center; color: #64748b; font-size: 0.9375rem; padding: 1rem 0; }
 
   .trends-grid {
@@ -195,6 +306,7 @@ const basedOn = t.basedOn
     color: #f0eeff; margin-bottom: 1rem;
   }
 
+  .hours-caption { font-size: 0.75rem; color: #64748b; margin-bottom: 0.85rem; }
   .hours-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
   .hours-row { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0.75rem; }
   .hours-range { font-size: 0.8125rem; color: #cbd5e1; font-weight: 600; white-space: nowrap; }
@@ -208,6 +320,38 @@ const basedOn = t.basedOn
   .hours-score { font-size: 0.75rem; color: #a5b4fc; font-weight: 700; white-space: nowrap; }
   .hours-score small { color: #64748b; font-weight: 600; }
 
+  .trends-card-wide { margin-top: 1rem; }
+
+  .titles-caption { font-size: 0.75rem; color: #64748b; margin-bottom: 0.85rem; }
+  .titles-list { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+  .titles-row {
+    display: grid; grid-template-columns: auto 1fr; align-items: baseline; gap: 0.5rem 0.75rem;
+    padding-bottom: 0.65rem; border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .titles-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .titles-viewers {
+    font-size: 0.75rem; font-weight: 700; color: #a5b4fc; white-space: nowrap;
+  }
+  .titles-viewers small { color: #64748b; font-weight: 600; }
+  .titles-subject { font-size: 0.875rem; color: #cbd5e1; line-height: 1.5; }
+
+  .prices-caption { font-size: 0.75rem; color: #64748b; margin-bottom: 0.85rem; }
+  .price-summary { font-size: 0.9375rem; color: #cbd5e1; margin-bottom: 1rem; }
+  .price-summary strong { color: #f0eeff; }
+  .price-range { color: #64748b; font-size: 0.8125rem; }
+  .price-by-category-label {
+    font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    color: #64748b; margin-bottom: 0.6rem;
+  }
+  .price-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  .price-row { display: flex; align-items: baseline; gap: 0.5rem; font-size: 0.875rem; }
+  .price-tag { color: #c7d2fe; font-weight: 600; white-space: nowrap; }
+  .price-dots {
+    flex: 1; border-bottom: 1px dotted rgba(255,255,255,0.15); margin-bottom: 0.3rem;
+  }
+  .price-value { color: #a5b4fc; font-weight: 700; white-space: nowrap; }
+
+  .tags-caption { font-size: 0.75rem; color: #64748b; margin-bottom: 0.85rem; }
   .tag-cloud { display: flex; flex-wrap: wrap; gap: 0.5rem; }
   .tag-chip {
     display: inline-flex; align-items: center;
@@ -216,11 +360,4 @@ const basedOn = t.basedOn
     padding: 5px 12px; border-radius: 99px; cursor: default;
   }
 
-  .trends-footnote {
-    text-align: center; color: #64748b; font-size: 0.8125rem; margin-top: 1.5rem; font-weight: 500;
-  }
-  .trends-footnote strong { color: #94a3b8; font-weight: 700; }
-  .trends-preliminary {
-    text-align: center; color: #fbbf24; font-size: 0.8125rem; margin-top: 0.5rem; font-weight: 600;
-  }
 </style>

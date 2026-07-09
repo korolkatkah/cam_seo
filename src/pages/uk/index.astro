@@ -154,7 +154,7 @@ const langNames = { en: 'English', de: 'Deutsch', es: 'Español', ro: 'Română'
     .model-card:hover { transform: translateY(-4px); }
     .model-card:active { transform: scale(0.98); }
 
-    .avatar-placeholder { background: linear-gradient(135deg,#1e1b4b,#312e81); border: 1px solid rgba(129,140,248,0.2); }
+    .avatar-placeholder { background: linear-gradient(135deg,#1e1b4b,#312e81); border: 1px solid rgba(129,140,248,0.2); display:flex; align-items:center; justify-content:center; }
 
     .divider { height:1px; background:linear-gradient(90deg,transparent,rgba(129,140,248,0.2),transparent); }
 
@@ -278,8 +278,8 @@ const langNames = { en: 'English', de: 'Deutsch', es: 'Español', ro: 'Română'
     </div>
 
     <h1 class="heading-xl mb-5 sm:mb-6">
-      Вебкам-Трафік.<br>
-      <span class="grad-text">Просування. Менеджмент.</span>
+      Трафік. Менеджмент.<br>
+      <span class="grad-text">Для вебкам-моделей.</span>
     </h1>
 
     <p class="text-base sm:text-lg text-slate-400 mb-8 max-w-md mx-auto leading-relaxed font-light">
@@ -298,10 +298,10 @@ const langNames = { en: 'English', de: 'Deutsch', es: 'Español', ro: 'Română'
 
     <div class="mt-10 flex items-center justify-center gap-2 flex-wrap">
       <div class="flex -space-x-2">
-        <div class="w-8 h-8 rounded-full avatar-placeholder"></div>
-        <div class="w-8 h-8 rounded-full avatar-placeholder" style="background:linear-gradient(135deg,#2d1b69,#4c1d95)"></div>
-        <div class="w-8 h-8 rounded-full avatar-placeholder" style="background:linear-gradient(135deg,#1e3a5f,#1e40af)"></div>
-        <div class="w-8 h-8 rounded-full avatar-placeholder" style="background:linear-gradient(135deg,#3b0764,#6b21a8)"></div>
+        <div class="w-8 h-8 rounded-full avatar-placeholder"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="opacity:.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></div>
+        <div class="w-8 h-8 rounded-full avatar-placeholder" style="background:linear-gradient(135deg,#2d1b69,#4c1d95)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="opacity:.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></div>
+        <div class="w-8 h-8 rounded-full avatar-placeholder" style="background:linear-gradient(135deg,#1e3a5f,#1e40af)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="opacity:.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></div>
+        <div class="w-8 h-8 rounded-full avatar-placeholder" style="background:linear-gradient(135deg,#3b0764,#6b21a8)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="opacity:.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></div>
       </div>
       <span class="text-sm text-slate-500">Нам довіряють <span class="text-slate-300 font-semibold">1000+</span> моделей і студій</span>
     </div>
@@ -310,28 +310,6 @@ const langNames = { en: 'English', de: 'Deutsch', es: 'Español', ro: 'Română'
 
 <TrendsBlock lang="uk" />
 
-<!-- STATS -->
-<div class="divider"></div>
-<section class="section-pad">
-  <div class="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-    <div>
-      <div class="text-3xl sm:text-4xl font-black stat-num mb-1">1000+</div>
-      <div class="text-xs sm:text-sm text-slate-500 font-semibold">Моделей і Студій</div>
-    </div>
-    <div>
-      <div class="text-3xl sm:text-4xl font-black stat-num mb-1">10+</div>
-      <div class="text-xs sm:text-sm text-slate-500 font-semibold">Років на Ринку</div>
-    </div>
-    <div>
-      <div class="text-3xl sm:text-4xl font-black stat-num mb-1">20+</div>
-      <div class="text-xs sm:text-sm text-slate-500 font-semibold">Країн</div>
-    </div>
-    <div>
-      <div class="text-3xl sm:text-4xl font-black stat-num mb-1">0</div>
-      <div class="text-xs sm:text-sm text-slate-500 font-semibold">Фейкових Глядачів</div>
-    </div>
-  </div>
-</section>
 <div class="divider"></div>
 
 <!-- SERVICES -->

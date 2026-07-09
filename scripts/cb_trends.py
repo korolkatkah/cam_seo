@@ -53,6 +53,19 @@ TK_RE = re.compile(r"\b(\d{2,6})\s*(?:tk|tokens?)\b", re.I)
 MULTI_RE = re.compile(r"multi[- ]?goal", re.I)
 
 
+def extract_price(subject):
+    """Best-effort single goal price (in tokens) parsed from a room subject."""
+    if not subject:
+        return None
+    m = LEFT_RE.search(subject)
+    if m:
+        v = int(m.group(1))
+        if 100 <= v <= 100000:
+            return v
+    big = [int(x) for x in TK_RE.findall(subject) if 500 <= int(x) <= 100000]
+    return max(big) if big else None
+
+
 def fetch_all():
     rooms, offset = [], 0
     while True:
@@ -114,13 +127,16 @@ def build_summary(rows, now_ts):
     score = {h: demand[h] / max(len(supply[h]), 1) for h in demand}
     best_hours = sorted(score, key=score.get, reverse=True)[:4]
 
-    tag_users, tag_rooms = defaultdict(list), defaultdict(set)
+    tag_users, tag_rooms, tag_prices = defaultdict(list), defaultdict(set), defaultdict(list)
     for r in public_rows:
+        price = extract_price(r.get("room_subject"))
         for t in r.get("tags") or []:
             t = t.strip().lower()
             if t:
                 tag_users[t].append(r.get("num_users") or 0)
                 tag_rooms[t].add(r["username"])
+                if price is not None:
+                    tag_prices[t].append(price)
     top_tags = sorted(
         (t for t in tag_users if len(tag_rooms[t]) >= 5),
         key=lambda t: statistics.mean(tag_users[t]), reverse=True)[:20]
@@ -176,7 +192,13 @@ def build_summary(rows, now_ts):
         "preliminary": hours_covered < 20,
         "best_hours_utc": [{"hour": h, "score": round(score[h])} for h in sorted(best_hours)],
         "top_tags": [
-            {"tag": t, "avg_users": round(statistics.mean(tag_users[t])), "rooms": len(tag_rooms[t])}
+            {
+                "tag": t,
+                "avg_users": round(statistics.mean(tag_users[t])),
+                "rooms": len(tag_rooms[t]),
+                "avg_price": round(statistics.mean(tag_prices[t])) if tag_prices[t] else None,
+                "price_samples": len(tag_prices[t]),
+            }
             for t in top_tags
         ],
         "top_titles": [
