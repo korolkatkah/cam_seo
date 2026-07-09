@@ -1,7 +1,8 @@
 ---
+import Base from '@/layouts/Base.astro';
 import TrendsBlock from '@/components/TrendsBlock.astro';
 const site = 'https://ewo.cam';
-const title = 'EWO.cam — Plataforma de Promoción para Modelos Webcam y Estudios';
+const title = 'Plataforma de Promoción para Modelos y Estudios Webcam';
 const description = 'EWO es un servicio global para modelos webcam y estudios. Crecimiento de tráfico, promoción y gestión completa. 1000+ clientes, 10+ años de experiencia, 20+ países.';
 const hreflang = [
   { lang: 'en', url: `${site}/` },
@@ -11,517 +12,244 @@ const hreflang = [
   { lang: 'uk', url: `${site}/uk` },
   { lang: 'ru', url: `${site}/ru` },
 ];
-const langNames = { en: 'English', de: 'Deutsch', es: 'Español', ro: 'Română', uk: 'Українська', ru: 'Русский' };
 ---
-<!doctype html>
-<html lang="es">
-<head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6H89TM92EZ"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-6H89TM92EZ');
-  </script>
-
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{title}</title>
-  <meta name="description" content={description} />
-  <link rel="canonical" href={site + '/es'} />
-  <meta property="og:title" content={title} />
-  <meta property="og:description" content={description} />
-  <meta property="og:url" content={site + '/es'} />
-  <meta property="og:type" content="website" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  {hreflang.map(({ lang, url }) => (
-    <link rel="alternate" hreflang={lang} href={url} />
-  ))}
-  <link rel="alternate" hreflang="x-default" href={site + '/'} />
-
-  <script is:inline src="https://cdn.tailwindcss.com"></script>
-  <script is:inline>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            night: '#060918',
-            'night-2': '#0d1030',
-            indigo: { 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5' },
-            violet: { 400: '#a78bfa', 500: '#8b5cf6' },
-          },
-          fontFamily: { sans: ['Nunito', 'Inter', 'system-ui', 'sans-serif'] },
+<Base title={title} description={description} lang="es" hreflang={hreflang}>
+  <Fragment slot="head">
+    <script is:inline src="https://cdn.tailwindcss.com"></script>
+    <script is:inline>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              night: '#060918',
+              'night-2': '#0d1030',
+              indigo: { 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5' },
+              violet: { 400: '#a78bfa', 500: '#8b5cf6' },
+            },
+            fontFamily: { sans: ['Nunito', 'Inter', 'system-ui', 'sans-serif'] },
+          }
         }
       }
-    }
-  </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@1,300;1,400;1,600;1,700&family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <style>
-    * { box-sizing: border-box; }
-    body { background: #060918; color: #e2e8f0; font-family: 'Nunito', sans-serif; -webkit-tap-highlight-color: transparent; }
+    </script>
+    <style>
+      .glow-orb { position:absolute; border-radius:50%; filter:blur(80px); pointer-events:none; opacity:0.3; }
 
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: #060918; }
-    ::-webkit-scrollbar-thumb { background: rgba(129,140,248,0.3); border-radius: 4px; }
+      .card-glass {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.07);
+        backdrop-filter: blur(12px);
+        transition: border-color 0.3s, background 0.3s;
+      }
+      .card-glass:hover { border-color: rgba(129,140,248,0.3); background: rgba(129,140,248,0.05); }
 
-    .glow-orb { position:absolute; border-radius:50%; filter:blur(80px); pointer-events:none; opacity:0.3; }
+      .btn-primary {
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        transition: opacity 0.2s, transform 0.2s;
+        min-height: 48px; display: inline-flex; align-items: center; justify-content: center;
+      }
+      .btn-primary:active { opacity: 0.85; transform: scale(0.98); }
 
-    .card-glass {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.07);
-      backdrop-filter: blur(12px);
-      transition: border-color 0.3s, background 0.3s;
-    }
-    .card-glass:hover { border-color: rgba(129,140,248,0.3); background: rgba(129,140,248,0.05); }
+      .btn-ghost {
+        border: 1px solid rgba(255,255,255,0.12);
+        transition: border-color 0.2s, background 0.2s;
+        min-height: 48px; display: inline-flex; align-items: center; justify-content: center;
+      }
+      .btn-ghost:active { background: rgba(129,140,248,0.08); }
 
-    .btn-primary {
-      background: linear-gradient(135deg, #6366f1, #8b5cf6);
-      transition: opacity 0.2s, transform 0.2s;
-      min-height: 48px; display: inline-flex; align-items: center; justify-content: center;
-    }
-    .btn-primary:active { opacity: 0.85; transform: scale(0.98); }
+      .stat-num { background: linear-gradient(135deg, #818cf8, #a78bfa); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 
-    .btn-ghost {
-      border: 1px solid rgba(255,255,255,0.12);
-      transition: border-color 0.2s, background 0.2s;
-      min-height: 48px; display: inline-flex; align-items: center; justify-content: center;
-    }
-    .btn-ghost:active { background: rgba(129,140,248,0.08); }
+      .hero-grid-line {
+        position:absolute; inset:0;
+        background-image: linear-gradient(rgba(129,140,248,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(129,140,248,0.04) 1px, transparent 1px);
+        background-size: 60px 60px;
+        mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+      }
 
-    .nav-blur { backdrop-filter: blur(20px); background: rgba(6,9,24,0.9); }
+      .tag-pill {
+        background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3);
+        color: #a5b4fc; font-size: 11px; padding: 4px 12px;
+        border-radius: 99px; display: inline-flex; align-items: center; gap: 6px; font-weight: 600;
+      }
 
-    #mobile-menu {
-      display: none;
-      position: fixed; top: 64px; left: 0; right: 0;
-      background: rgba(6,9,24,0.98);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      z-index: 49;
-      padding: 16px 0 24px;
-    }
-    #mobile-menu.open { display: block; }
-    #mobile-menu a {
-      display: flex; align-items: center; padding: 14px 24px;
-      color: #94a3b8; font-size: 16px; font-weight: 600;
-      text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.04);
-      min-height: 52px;
-      transition: color 0.2s, background 0.2s;
-    }
-    #mobile-menu a:hover { color: #fff; background: rgba(129,140,248,0.06); }
-    #mobile-menu a:last-child { border-bottom: none; }
+      .live-dot { width:7px; height:7px; background:#34d399; border-radius:50%; animation:pulse-dot 2s infinite; flex-shrink:0; }
+      @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
 
-    .bottom-nav {
-      display: none;
-      position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
-      background: rgba(6,9,24,0.97);
-      backdrop-filter: blur(20px);
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding-bottom: env(safe-area-inset-bottom, 0);
-    }
-    .bottom-nav-inner { display: flex; }
-    .bottom-nav-item {
-      flex: 1; display: flex; flex-direction: column; align-items: center;
-      justify-content: center; padding: 10px 4px 8px;
-      min-height: 56px; cursor: pointer; text-decoration: none;
-      color: #475569; transition: color 0.2s;
-      -webkit-tap-highlight-color: transparent;
-      font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; gap: 4px;
-    }
-    .bottom-nav-item.active { color: #818cf8; }
-    .bottom-nav-item svg { width: 22px; height: 22px; }
+      .avatar-placeholder { background: linear-gradient(135deg,#1e1b4b,#312e81); border: 1px solid rgba(129,140,248,0.2); display:flex; align-items:center; justify-content:center; }
 
-    .stat-num { background: linear-gradient(135deg, #818cf8, #a78bfa); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+      .divider { height:1px; background:linear-gradient(90deg,transparent,rgba(129,140,248,0.2),transparent); }
 
-    .hero-grid-line {
-      position:absolute; inset:0;
-      background-image: linear-gradient(rgba(129,140,248,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(129,140,248,0.04) 1px, transparent 1px);
-      background-size: 60px 60px;
-      mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
-    }
+      .features-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+      @media (min-width: 640px) { .features-grid { grid-template-columns: 1fr 1fr; } }
+      @media (min-width: 1024px) { .features-grid { grid-template-columns: 1fr 1fr 1fr; } }
 
-    .tag-pill {
-      background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3);
-      color: #a5b4fc; font-size: 11px; padding: 4px 12px;
-      border-radius: 99px; display: inline-flex; align-items: center; gap: 6px; font-weight: 600;
-    }
+      .heading-xl { font-family:'Josefin Sans',sans-serif; font-weight:700; font-style:italic; font-size:clamp(40px,10vw,88px); line-height:1.05; letter-spacing:-0.01em; color:#f0eeff; }
+      .heading-lg { font-family:'Josefin Sans',sans-serif; font-weight:700; font-style:italic; font-size:clamp(26px,5vw,44px); color:#f0eeff; letter-spacing:-0.01em; }
+      .grad-text { background:linear-gradient(135deg,#a78bfa 0%,#6366f1 60%,#818cf8 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 
-    .live-dot { width:7px; height:7px; background:#34d399; border-radius:50%; animation:pulse-dot 2s infinite; flex-shrink:0; }
-    @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
+      .section-pad { padding: 64px 20px; }
+      @media (min-width: 768px) { .section-pad { padding: 96px 24px; } }
 
-    .model-card { transition: transform 0.3s; cursor: pointer; }
-    .model-card:hover { transform: translateY(-4px); }
-    .model-card:active { transform: scale(0.98); }
+      .cta-box { padding: 40px 24px; }
+      @media (min-width: 768px) { .cta-box { padding: 56px 48px; } }
 
-    .avatar-placeholder { background: linear-gradient(135deg,#1e1b4b,#312e81); border: 1px solid rgba(129,140,248,0.2); display:flex; align-items:center; justify-content:center; }
+      body { background: #060918; }
+    </style>
+  </Fragment>
 
-    .divider { height:1px; background:linear-gradient(90deg,transparent,rgba(129,140,248,0.2),transparent); }
+  <!-- HERO -->
+  <section class="relative min-h-[85dvh] flex items-center justify-center overflow-hidden">
+    <div class="hero-grid-line"></div>
+    <div class="glow-orb w-80 h-80 bg-indigo-600 top-10 left-0 -translate-x-1/3"></div>
+    <div class="glow-orb w-72 h-72 bg-violet-600 top-20 right-0 translate-x-1/3"></div>
+    <div class="glow-orb w-64 h-64 bg-indigo-800 bottom-0 left-1/2 -translate-x-1/2 opacity-20"></div>
 
-    .scroll-x-mobile { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: 4px; }
-    .scroll-x-mobile::-webkit-scrollbar { display: none; }
-    .scroll-x-mobile .cards-row { display: flex; gap: 14px; width: max-content; }
-    .scroll-x-mobile .cards-row .model-card { width: 200px; flex-shrink: 0; }
+    <svg class="absolute top-20 right-6 opacity-15 hidden sm:block" width="100" height="100" viewBox="0 0 120 120" fill="none">
+      <circle cx="60" cy="60" r="50" stroke="#818cf8" stroke-width="1" stroke-dasharray="4 8"/>
+      <circle cx="60" cy="60" r="30" stroke="#a78bfa" stroke-width="0.5" stroke-dasharray="2 6"/>
+      <line x1="60" y1="10" x2="60" y2="110" stroke="#818cf8" stroke-width="0.5" opacity="0.5"/>
+      <line x1="10" y1="60" x2="110" y2="60" stroke="#818cf8" stroke-width="0.5" opacity="0.5"/>
+    </svg>
 
-    .hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; cursor: pointer; min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
-    .hamburger span { display: block; width: 22px; height: 2px; background: #94a3b8; border-radius: 2px; transition: all 0.3s; }
-    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    <div class="relative z-10 text-center px-5 max-w-4xl mx-auto w-full py-16">
+      <div class="tag-pill mb-5 sm:mb-7">
+        <span class="live-dot"></span>
+        Servicio global para modelos webcam y estudios
+      </div>
 
-    @media (max-width: 767px) {
-      .hamburger { display: flex; }
-      .bottom-nav { display: block; }
-      body { padding-bottom: calc(56px + env(safe-area-inset-bottom, 0)); }
-    }
+      <h1 class="heading-xl mb-5 sm:mb-6">
+        TRÁFICO. GESTIÓN.<br>
+        <span class="grad-text">PARA MODELOS WEBCAM.</span>
+      </h1>
 
-    .features-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
-    @media (min-width: 640px) { .features-grid { grid-template-columns: 1fr 1fr; } }
-    @media (min-width: 1024px) { .features-grid { grid-template-columns: 1fr 1fr 1fr; } }
+      <p class="text-base sm:text-lg text-slate-400 mb-8 max-w-md mx-auto leading-relaxed font-light">
+        EWO es un servicio global para modelos webcam y estudios. Gestionamos el crecimiento de audiencia, la promoción y la gestión completa — para modelos independientes y estudios multi-modelo en todo el mundo.
+      </p>
 
-    .heading-xl { font-family:'Josefin Sans',sans-serif; font-weight:700; font-style:italic; font-size:clamp(40px,10vw,88px); line-height:1.05; letter-spacing:-0.01em; color:#f0eeff; }
-    .heading-lg { font-family:'Josefin Sans',sans-serif; font-weight:700; font-style:italic; font-size:clamp(26px,5vw,44px); color:#f0eeff; letter-spacing:-0.01em; }
-    .grad-text { background:linear-gradient(135deg,#a78bfa 0%,#6366f1 60%,#818cf8 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+      <div class="flex flex-col sm:flex-row gap-3 justify-center max-w-sm sm:max-w-none mx-auto">
+        <a href="/es/for-models" class="btn-primary px-7 py-3.5 rounded-2xl text-white font-bold text-base w-full sm:w-auto">
+          Para Modelos →
+        </a>
+        <a href="/es/studio-traffic" class="btn-ghost px-7 py-3.5 rounded-2xl text-slate-300 font-semibold text-base flex items-center gap-2 justify-center w-full sm:w-auto">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M6.5 5.5l4 2.5-4 2.5V5.5z" fill="currentColor"/></svg>
+          Para Estudios
+        </a>
+      </div>
 
-    .section-pad { padding: 64px 20px; }
-    @media (min-width: 768px) { .section-pad { padding: 96px 24px; } }
-
-    .cta-box { padding: 40px 24px; }
-    @media (min-width: 768px) { .cta-box { padding: 56px 48px; } }
-  </style>
-</head>
-<body class="antialiased overflow-x-hidden">
-
-<!-- NAV -->
-<header class="fixed top-0 left-0 right-0 z-50 nav-blur border-b border-white/5">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-    <a href="/es" class="flex items-center gap-2 shrink-0">
-      <img src="/logo.svg" alt="EWO" class="w-9 h-9">
-      <span style="font-family:'Nunito',sans-serif;font-weight:900;font-size:21px;letter-spacing:-0.01em;background:linear-gradient(135deg,#a78bfa,#6366f1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">EWO</span><span style="font-family:'Nunito',sans-serif;font-weight:700;font-size:21px;color:rgba(255,255,255,0.45);">.cam</span>
-    </a>
-    <nav class="hidden md:flex items-center gap-8 text-sm text-slate-400 font-semibold">
-      <a href="/es/for-models" class="hover:text-white transition-colors">Para Modelos</a>
-      <a href="/es/studio-traffic" class="hover:text-white transition-colors">Para Estudios</a>
-      <a href="/es/blog" class="hover:text-white transition-colors">Blog</a>
-    </nav>
-    <div class="hidden md:flex items-center gap-3">
-      <div class="relative" id="lang-dropdown-root">
-        <button id="lang-btn-root" class="flex items-center gap-1.5 text-sm text-slate-400 font-semibold px-3.5 py-2 rounded-xl border border-white/10 hover:text-white hover:border-indigo-400/30 transition-colors" aria-expanded="false" aria-haspopup="true">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-          <span>Español</span>
-          <svg id="lang-chevron-root" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transition:transform 180ms ease"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div id="lang-menu-root" class="hidden absolute right-0 top-full mt-2 min-w-[160px] rounded-xl border border-white/10 bg-night-2 p-1.5 shadow-xl z-50">
-          {hreflang.map(({ lang, url }) => (
-            <a href={url} class="lang-opt-root block px-3 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-white/5 transition-colors">{langNames[lang]}</a>
-          ))}
+      <div class="mt-10 flex items-center justify-center gap-2 flex-wrap">
+        <div class="flex -space-x-2">
+          <div class="w-8 h-8 rounded-full avatar-placeholder"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="opacity:.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></div>
+          <div class="w-8 h-8 rounded-full avatar-placeholder" style="background:linear-gradient(135deg,#2d1b69,#4c1d95)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="opacity:.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></div>
+          <div class="w-8 h-8 rounded-full avatar-placeholder" style="background:linear-gradient(135deg,#1e3a5f,#1e40af)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="opacity:.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></div>
+          <div class="w-8 h-8 rounded-full avatar-placeholder" style="background:linear-gradient(135deg,#3b0764,#6b21a8)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="opacity:.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></div>
         </div>
-      </div>
-      <a href="/es/about" class="btn-ghost text-sm text-slate-300 px-5 py-2 rounded-xl font-semibold">Nosotros</a>
-      <a href="https://t.me/+tBjfmjh9vHo1YzQy" target="_blank" rel="noopener" class="btn-primary text-sm text-white px-5 py-2 rounded-xl font-bold">Comenzar →</a>
-    </div>
-    <div class="flex md:hidden items-center gap-2">
-      <a href="https://t.me/+tBjfmjh9vHo1YzQy" target="_blank" rel="noopener" class="btn-primary text-sm text-white px-4 rounded-xl font-bold" style="min-height:40px;font-size:13px;">Comenzar</a>
-      <div class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
-        <span></span><span></span><span></span>
+        <span class="text-sm text-slate-500">Con la confianza de <span class="text-slate-300 font-semibold">1000+</span> modelos y estudios</span>
       </div>
     </div>
-  </div>
-</header>
+  </section>
 
-<div id="mobile-menu">
-  <a href="/es/for-models">
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="margin-right:12px;opacity:0.5"><circle cx="10" cy="8" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M3 18c0-3.9 3.1-7 7-7s7 3.1 7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-    Para Modelos
-  </a>
-  <a href="/es/studio-traffic">
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="margin-right:12px;opacity:0.5"><rect x="2" y="4" width="16" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/></svg>
-    Para Estudios
-  </a>
-  <a href="/es/blog">
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="margin-right:12px;opacity:0.5"><path d="M10 2l2 6h6l-5 3.6 1.9 6L10 14l-4.9 3.6L7 11.6 2 8h6L10 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
-    Blog
-  </a>
-  <div style="margin:16px 24px 0;display:flex;flex-wrap:wrap;gap:8px;">
-    {hreflang.map(({ lang, url }) => (
-      <a href={url} class="lang-opt-root" style="flex:1 1 auto;text-align:center;padding:8px 10px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);color:#94a3b8;font-size:13px;font-weight:600;">{langNames[lang]}</a>
-    ))}
-  </div>
-  <div style="margin:12px 24px 0;">
-    <a href="https://t.me/+tBjfmjh9vHo1YzQy" target="_blank" rel="noopener" class="btn-primary rounded-xl text-white font-bold text-base w-full" style="width:100%;min-height:52px;font-size:15px;">Empieza Gratis</a>
-  </div>
-</div>
+  <TrendsBlock lang="es" />
 
-<!-- HERO -->
-<section class="relative min-h-dvh flex items-center justify-center overflow-hidden pt-16">
-  <div class="hero-grid-line"></div>
-  <div class="glow-orb w-80 h-80 bg-indigo-600 top-10 left-0 -translate-x-1/3"></div>
-  <div class="glow-orb w-72 h-72 bg-violet-600 top-20 right-0 translate-x-1/3"></div>
-  <div class="glow-orb w-64 h-64 bg-indigo-800 bottom-0 left-1/2 -translate-x-1/2 opacity-20"></div>
+  <div class="divider"></div>
 
-  <svg class="absolute top-20 right-6 opacity-15 hidden sm:block" width="100" height="100" viewBox="0 0 120 120" fill="none">
-    <circle cx="60" cy="60" r="50" stroke="#818cf8" stroke-width="1" stroke-dasharray="4 8"/>
-    <circle cx="60" cy="60" r="30" stroke="#a78bfa" stroke-width="0.5" stroke-dasharray="2 6"/>
-    <line x1="60" y1="10" x2="60" y2="110" stroke="#818cf8" stroke-width="0.5" opacity="0.5"/>
-    <line x1="10" y1="60" x2="110" y2="60" stroke="#818cf8" stroke-width="0.5" opacity="0.5"/>
-  </svg>
+  <!-- POPULAR SERVICES -->
+  <section class="section-pad relative">
+    <div class="max-w-6xl mx-auto px-5 sm:px-6">
+      <div class="text-center mb-10 px-1">
+        <div class="tag-pill mb-4">Servicios populares</div>
+        <h2 class="heading-lg mb-3">Tendencia este mes</h2>
+        <p class="text-slate-500 text-sm sm:text-base max-w-lg mx-auto">El servicio de promoción que más preguntan nuestros clientes este mes.</p>
+      </div>
 
-  <div class="relative z-10 text-center px-5 max-w-4xl mx-auto w-full">
-    <div class="tag-pill mb-5 sm:mb-7">
-      <span class="live-dot"></span>
-      Servicio global para modelos webcam y estudios
-    </div>
-
-    <h1 class="heading-xl mb-5 sm:mb-6">
-      TRÁFICO. GESTIÓN.<br>
-      <span class="grad-text">PARA MODELOS WEBCAM.</span>
-    </h1>
-
-    <p class="text-base sm:text-lg text-slate-400 mb-8 max-w-md mx-auto leading-relaxed font-light">
-      EWO es un servicio global para modelos webcam y estudios. Gestionamos el crecimiento de audiencia, la promoción y la gestión completa — para modelos independientes y estudios multi-modelo en todo el mundo.
-    </p>
-
-    <div class="flex flex-col sm:flex-row gap-3 justify-center max-w-sm sm:max-w-none mx-auto">
-      <a href="/es/for-models" class="btn-primary px-7 py-3.5 rounded-2xl text-white font-bold text-base w-full sm:w-auto">
-        Para Modelos →
-      </a>
-      <a href="/es/studio-traffic" class="btn-ghost px-7 py-3.5 rounded-2xl text-slate-300 font-semibold text-base flex items-center gap-2 justify-center w-full sm:w-auto">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M6.5 5.5l4 2.5-4 2.5V5.5z" fill="currentColor"/></svg>
-        Para Estudios
+      <a href="/es/stripchat_promo" class="card-glass rounded-2xl overflow-hidden flex flex-col md:flex-row items-stretch" style="text-decoration:none;">
+        <div class="md:w-2/5 shrink-0" style="min-height:220px;">
+          <img src="/images/stripchat-traffic-promo-banner.webp" alt="Stripchat traffic promo — consigue más viewers y sube tu stripscore" class="w-full h-full object-cover" loading="lazy">
+        </div>
+        <div class="p-6 sm:p-8 flex flex-col justify-center md:w-3/5">
+          <span class="tag-pill mb-4 w-fit">Stripchat</span>
+          <h3 class="text-white font-bold text-xl sm:text-2xl mb-3">Stripchat Traffic Promo</h3>
+          <p class="text-slate-500 text-sm sm:text-base leading-relaxed mb-5">Coloca tu sala en la categoría Popular de Stripchat, sube tu stripscore y consigue viewers reales. Mira cómo funciona la promoción, el precio y el plan para sacarle el máximo provecho.</p>
+          <span class="text-indigo-400 text-sm font-semibold inline-flex items-center gap-1">Leer la reseña completa →</span>
+        </div>
       </a>
     </div>
+  </section>
 
-    <div class="mt-10 flex items-center justify-center gap-2 flex-wrap">
-      <div class="flex -space-x-2">
-        <div class="w-8 h-8 rounded-full avatar-placeholder"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="opacity:.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></div>
-        <div class="w-8 h-8 rounded-full avatar-placeholder" style="background:linear-gradient(135deg,#2d1b69,#4c1d95)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="opacity:.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></div>
-        <div class="w-8 h-8 rounded-full avatar-placeholder" style="background:linear-gradient(135deg,#1e3a5f,#1e40af)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="opacity:.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></div>
-        <div class="w-8 h-8 rounded-full avatar-placeholder" style="background:linear-gradient(135deg,#3b0764,#6b21a8)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="opacity:.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></div>
+  <div class="divider"></div>
+
+  <!-- WHY EWO -->
+  <section class="section-pad relative">
+    <div class="glow-orb w-72 h-72 bg-violet-700 top-1/2 left-0 -translate-y-1/2 opacity-20"></div>
+    <div class="max-w-6xl mx-auto px-5 sm:px-6">
+      <div class="text-center mb-10">
+        <div class="tag-pill mb-4">Por qué EWO</div>
+        <h2 class="heading-lg mb-3">Una década de resultados en 20+ mercados.</h2>
+        <p class="text-slate-500 text-sm sm:text-base max-w-lg mx-auto">Llevamos en la industria webcam desde antes de que existieran la mayoría de las plataformas actuales. Esa experiencia se traduce directamente en estrategias que funcionan.</p>
       </div>
-      <span class="text-sm text-slate-500">Con la confianza de <span class="text-slate-300 font-semibold">1000+</span> modelos y estudios</span>
-    </div>
-  </div>
-</section>
 
-<TrendsBlock lang="es" />
-
-<div class="divider"></div>
-
-<!-- POPULAR SERVICES -->
-<section class="section-pad relative">
-  <div class="max-w-6xl mx-auto px-5 sm:px-6">
-    <div class="text-center mb-10 px-1">
-      <div class="tag-pill mb-4">Servicios populares</div>
-      <h2 class="heading-lg mb-3">Tendencia este mes</h2>
-      <p class="text-slate-500 text-sm sm:text-base max-w-lg mx-auto">El servicio de promoción que más preguntan nuestros clientes este mes.</p>
-    </div>
-
-    <a href="/es/stripchat_promo" class="card-glass rounded-2xl overflow-hidden flex flex-col md:flex-row items-stretch" style="text-decoration:none;">
-      <div class="md:w-2/5 shrink-0" style="min-height:220px;">
-        <img src="/images/stripchat-traffic-promo-banner.webp" alt="Stripchat traffic promo — consigue más viewers y sube tu stripscore" class="w-full h-full object-cover" loading="lazy">
-      </div>
-      <div class="p-6 sm:p-8 flex flex-col justify-center md:w-3/5">
-        <span class="tag-pill mb-4 w-fit">Stripchat</span>
-        <h3 class="text-white font-bold text-xl sm:text-2xl mb-3">Stripchat Traffic Promo</h3>
-        <p class="text-slate-500 text-sm sm:text-base leading-relaxed mb-5">Coloca tu sala en la categoría Popular de Stripchat, sube tu stripscore y consigue viewers reales. Mira cómo funciona la promoción, el precio y el plan para sacarle el máximo provecho.</p>
-        <span class="text-indigo-400 text-sm font-semibold inline-flex items-center gap-1">Leer la reseña completa →</span>
-      </div>
-    </a>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- WHY EWO -->
-<section class="section-pad relative">
-  <div class="glow-orb w-72 h-72 bg-violet-700 top-1/2 left-0 -translate-y-1/2 opacity-20"></div>
-  <div class="max-w-6xl mx-auto px-5 sm:px-6">
-    <div class="text-center mb-10">
-      <div class="tag-pill mb-4">Por qué EWO</div>
-      <h2 class="heading-lg mb-3">Una década de resultados en 20+ mercados.</h2>
-      <p class="text-slate-500 text-sm sm:text-base max-w-lg mx-auto">Llevamos en la industria webcam desde antes de que existieran la mayoría de las plataformas actuales. Esa experiencia se traduce directamente en estrategias que funcionan.</p>
-    </div>
-
-    <div class="features-grid">
-      <div class="card-glass rounded-2xl p-5 sm:p-7">
-        <div class="w-11 h-11 rounded-xl bg-indigo-500/15 border border-indigo-400/20 flex items-center justify-center mb-4">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2l2.5 5 5.5.8-4 3.9.9 5.5L10 14.7l-4.9 2.5.9-5.5L2 7.8l5.5-.8L10 2z" stroke="#818cf8" stroke-width="1.5" stroke-linejoin="round"/></svg>
+      <div class="features-grid">
+        <div class="card-glass rounded-2xl p-5 sm:p-7">
+          <div class="w-11 h-11 rounded-xl bg-indigo-500/15 border border-indigo-400/20 flex items-center justify-center mb-4">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2l2.5 5 5.5.8-4 3.9.9 5.5L10 14.7l-4.9 2.5.9-5.5L2 7.8l5.5-.8L10 2z" stroke="#818cf8" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 class="text-white font-bold mb-2 text-base">Solo Crecimiento Legítimo</h3>
+          <p class="text-slate-500 text-sm leading-relaxed">Sin bots, sin cifras infladas, sin riesgo para tu cuenta. Audiencias reales que regresan y dan propinas.</p>
         </div>
-        <h3 class="text-white font-bold mb-2 text-base">Solo Crecimiento Legítimo</h3>
-        <p class="text-slate-500 text-sm leading-relaxed">Sin bots, sin cifras infladas, sin riesgo para tu cuenta. Audiencias reales que regresan y dan propinas.</p>
-      </div>
-      <div class="card-glass rounded-2xl p-5 sm:p-7">
-        <div class="w-11 h-11 rounded-xl bg-violet-500/15 border border-violet-400/20 flex items-center justify-center mb-4">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#a78bfa" stroke-width="1.5"/><path d="M10 6v4l3 3" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <div class="card-glass rounded-2xl p-5 sm:p-7">
+          <div class="w-11 h-11 rounded-xl bg-violet-500/15 border border-violet-400/20 flex items-center justify-center mb-4">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#a78bfa" stroke-width="1.5"/><path d="M10 6v4l3 3" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <h3 class="text-white font-bold mb-2 text-base">10+ Años de Experiencia</h3>
+          <p class="text-slate-500 text-sm leading-relaxed">Más de una década en la industria webcam — sabemos qué funciona y qué lleva a suspensiones de cuenta.</p>
         </div>
-        <h3 class="text-white font-bold mb-2 text-base">10+ Años de Experiencia</h3>
-        <p class="text-slate-500 text-sm leading-relaxed">Más de una década en la industria webcam — sabemos qué funciona y qué lleva a suspensiones de cuenta.</p>
-      </div>
-      <div class="card-glass rounded-2xl p-5 sm:p-7">
-        <div class="w-11 h-11 rounded-xl bg-indigo-500/15 border border-indigo-400/20 flex items-center justify-center mb-4">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 18s-7-4.5-7-9a7 7 0 0114 0c0 4.5-7 9-7 9z" stroke="#818cf8" stroke-width="1.5"/><circle cx="10" cy="9" r="2" stroke="#818cf8" stroke-width="1.5"/></svg>
+        <div class="card-glass rounded-2xl p-5 sm:p-7">
+          <div class="w-11 h-11 rounded-xl bg-indigo-500/15 border border-indigo-400/20 flex items-center justify-center mb-4">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 18s-7-4.5-7-9a7 7 0 0114 0c0 4.5-7 9-7 9z" stroke="#818cf8" stroke-width="1.5"/><circle cx="10" cy="9" r="2" stroke="#818cf8" stroke-width="1.5"/></svg>
+          </div>
+          <h3 class="text-white font-bold mb-2 text-base">20+ Países</h3>
+          <p class="text-slate-500 text-sm leading-relaxed">Nuestros clientes modelos y estudios de 20+ países.</p>
         </div>
-        <h3 class="text-white font-bold mb-2 text-base">20+ Países</h3>
-        <p class="text-slate-500 text-sm leading-relaxed">Nuestros clientes modelos y estudios de 20+ países.</p>
-      </div>
-      <div class="card-glass rounded-2xl p-5 sm:p-7">
-        <div class="w-11 h-11 rounded-xl bg-violet-500/15 border border-violet-400/20 flex items-center justify-center mb-4">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="3" stroke="#a78bfa" stroke-width="1.5"/><path d="M7 10h6M10 7v6" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <div class="card-glass rounded-2xl p-5 sm:p-7">
+          <div class="w-11 h-11 rounded-xl bg-violet-500/15 border border-violet-400/20 flex items-center justify-center mb-4">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="3" stroke="#a78bfa" stroke-width="1.5"/><path d="M7 10h6M10 7v6" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <h3 class="text-white font-bold mb-2 text-base">Todas las Plataformas Principales</h3>
+          <p class="text-slate-500 text-sm leading-relaxed">Chaturbate, Stripchat, BongaCams, LiveJasmin y 8+ más — donde sea que transmitas, conocemos el algoritmo.</p>
         </div>
-        <h3 class="text-white font-bold mb-2 text-base">Todas las Plataformas Principales</h3>
-        <p class="text-slate-500 text-sm leading-relaxed">Chaturbate, Stripchat, BongaCams, LiveJasmin y 8+ más — donde sea que transmitas, conocemos el algoritmo.</p>
-      </div>
-      <div class="card-glass rounded-2xl p-5 sm:p-7">
-        <div class="w-11 h-11 rounded-xl bg-indigo-500/15 border border-indigo-400/20 flex items-center justify-center mb-4">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="5" width="16" height="11" rx="2" stroke="#818cf8" stroke-width="1.5"/><path d="M14 5V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v1" stroke="#818cf8" stroke-width="1.5"/></svg>
+        <div class="card-glass rounded-2xl p-5 sm:p-7">
+          <div class="w-11 h-11 rounded-xl bg-indigo-500/15 border border-indigo-400/20 flex items-center justify-center mb-4">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="5" width="16" height="11" rx="2" stroke="#818cf8" stroke-width="1.5"/><path d="M14 5V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v1" stroke="#818cf8" stroke-width="1.5"/></svg>
+          </div>
+          <h3 class="text-white font-bold mb-2 text-base">Equipo de Servicio Completo</h3>
+          <p class="text-slate-500 text-sm leading-relaxed">Estrategia, ejecución y análisis — nos encargamos de todo para que te enfoques en transmitir.</p>
         </div>
-        <h3 class="text-white font-bold mb-2 text-base">Equipo de Servicio Completo</h3>
-        <p class="text-slate-500 text-sm leading-relaxed">Estrategia, ejecución y análisis — nos encargamos de todo para que te enfoques en transmitir.</p>
-      </div>
-      <div class="card-glass rounded-2xl p-5 sm:p-7">
-        <div class="w-11 h-11 rounded-xl bg-violet-500/15 border border-violet-400/20 flex items-center justify-center mb-4">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#a78bfa" stroke-width="1.5"/><path d="M7 10l2 2 4-4" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="card-glass rounded-2xl p-5 sm:p-7">
+          <div class="w-11 h-11 rounded-xl bg-violet-500/15 border border-violet-400/20 flex items-center justify-center mb-4">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#a78bfa" stroke-width="1.5"/><path d="M7 10l2 2 4-4" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 class="text-white font-bold mb-2 text-base">Resultados Acumulativos</h3>
+          <p class="text-slate-500 text-sm leading-relaxed">Audiencias reales que se quedan — espectadores que regresan, dan propinas y se vuelven fans leales con el tiempo.</p>
         </div>
-        <h3 class="text-white font-bold mb-2 text-base">Resultados Acumulativos</h3>
-        <p class="text-slate-500 text-sm leading-relaxed">Audiencias reales que se quedan — espectadores que regresan, dan propinas y se vuelven fans leales con el tiempo.</p>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- CTA -->
-<section class="section-pad relative">
-  <div class="glow-orb w-80 h-80 bg-indigo-600 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-25"></div>
-  <div class="max-w-2xl mx-auto px-5 sm:px-6 text-center relative z-10">
-    <div class="card-glass rounded-3xl cta-box border border-indigo-500/15">
-      <svg class="mx-auto mb-6 opacity-30" width="52" height="52" viewBox="0 0 60 60" fill="none">
-        <circle cx="30" cy="30" r="25" stroke="#818cf8" stroke-width="1" stroke-dasharray="4 6"/>
-        <circle cx="30" cy="30" r="12" stroke="#a78bfa" stroke-width="0.8"/>
-        <circle cx="30" cy="30" r="4" fill="#818cf8"/>
-      </svg>
-      <h2 class="heading-lg mb-4">¿Lista para crecer?</h2>
-      <p class="text-slate-400 mb-8 text-sm sm:text-base max-w-sm mx-auto">Cuéntanos dónde estás y a dónde quieres llegar. Construiremos el plan.</p>
-      <div class="flex flex-col sm:flex-row gap-3 justify-center">
-        <a href="https://t.me/+tBjfmjh9vHo1YzQy" target="_blank" rel="noopener" class="btn-primary px-7 py-3.5 rounded-2xl text-white font-bold w-full sm:w-auto">Contactar</a>
-        <a href="/es/platforms-we-work-with" class="btn-ghost px-7 py-3.5 rounded-2xl text-slate-300 font-semibold w-full sm:w-auto">Plataformas con las que Trabajamos</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="border-t border-white/5 py-10 px-5 sm:px-6">
-  <div class="max-w-6xl mx-auto">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
-      <div>
-        <div class="flex items-center gap-2.5 mb-3">
-          <img src="/logo.svg" alt="EWO" class="w-7 h-7 opacity-80">
-          <span style="font-family:'Nunito',sans-serif;font-weight:900;font-size:18px;background:linear-gradient(135deg,#a78bfa,#6366f1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">EWO</span><span style="font-family:'Nunito',sans-serif;font-weight:700;font-size:18px;color:rgba(255,255,255,0.4);">.cam</span>
+  <!-- CTA -->
+  <section class="section-pad relative">
+    <div class="glow-orb w-80 h-80 bg-indigo-600 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-25"></div>
+    <div class="max-w-2xl mx-auto px-5 sm:px-6 text-center relative z-10">
+      <div class="card-glass rounded-3xl cta-box border border-indigo-500/15">
+        <svg class="mx-auto mb-6 opacity-30" width="52" height="52" viewBox="0 0 60 60" fill="none">
+          <circle cx="30" cy="30" r="25" stroke="#818cf8" stroke-width="1" stroke-dasharray="4 6"/>
+          <circle cx="30" cy="30" r="12" stroke="#a78bfa" stroke-width="0.8"/>
+          <circle cx="30" cy="30" r="4" fill="#818cf8"/>
+        </svg>
+        <h2 class="heading-lg mb-4">¿Lista para crecer?</h2>
+        <p class="text-slate-400 mb-8 text-sm sm:text-base max-w-sm mx-auto">Cuéntanos dónde estás y a dónde quieres llegar. Construiremos el plan.</p>
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <a href="https://t.me/+tBjfmjh9vHo1YzQy" target="_blank" rel="noopener" class="btn-primary px-7 py-3.5 rounded-2xl text-white font-bold w-full sm:w-auto">Contactar</a>
+          <a href="/es/platforms-we-work-with" class="btn-ghost px-7 py-3.5 rounded-2xl text-slate-300 font-semibold w-full sm:w-auto">Plataformas con las que Trabajamos</a>
         </div>
-        <p class="text-slate-600 text-sm font-semibold leading-relaxed">Crecimiento de audiencia legítimo para modelos webcam y estudios en todo el mundo.</p>
-      </div>
-      <div>
-        <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Servicios</p>
-        <ul class="space-y-2">
-          <li><a href="/es/for-models" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">Para Modelos</a></li>
-          <li><a href="/es/studio-traffic" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">Tráfico de Estudio</a></li>
-          <li><a href="/es/new-model-growth" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">Crecimiento para Modelos Nuevas</a></li>
-          <li><a href="/es/studio-scaling" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">Escalado de Estudio</a></li>
-        </ul>
-      </div>
-      <div>
-        <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Recursos</p>
-        <ul class="space-y-2">
-          <li><a href="/es/model-promotion" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">Promoción de Modelos</a></li>
-          <li><a href="/es/why-low-viewers-webcam" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">Pocos Espectadores</a></li>
-          <li><a href="/es/how-cam-algorithm-ranks-rooms" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">Guía del Algoritmo</a></li>
-          <li><a href="/es/best-streaming-times-by-region" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">Horarios de Streaming</a></li>
-          <li><a href="/es/webcam-model-income-guide" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">Guía de Ingresos</a></li>
-        </ul>
-      </div>
-      <div>
-        <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Regiones</p>
-        <ul class="space-y-2">
-          <li><a href="/es/model-promotion-spain" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">España</a></li>
-          <li><a href="/es/model-promotion-colombia" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">Colombia</a></li>
-          <li><a href="/es/about" class="text-slate-500 hover:text-white text-sm font-semibold transition-colors">Todas las Regiones</a></li>
-        </ul>
       </div>
     </div>
-    <div class="border-t border-white/5 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
-      <nav class="flex flex-wrap gap-x-6 gap-y-2 justify-center text-sm text-slate-500 font-semibold">
-        <a href="#" class="hover:text-white transition-colors">Términos</a>
-        <a href="#" class="hover:text-white transition-colors">Privacidad</a>
-        <a href="https://t.me/+tBjfmjh9vHo1YzQy" target="_blank" rel="noopener" class="hover:text-white transition-colors">Soporte</a>
-        <a href="#" class="hover:text-white transition-colors">Política 18+</a>
-      </nav>
-      <p class="text-slate-600 text-sm font-semibold">&copy; {new Date().getFullYear()} EWO.cam · Todos los derechos reservados</p>
-    </div>
-  </div>
-</footer>
-
-<!-- BOTTOM NAV (mobile) -->
-<nav class="bottom-nav">
-  <div class="bottom-nav-inner">
-    <a href="/es" class="bottom-nav-item active">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      Inicio
-    </a>
-    <a href="/es/for-models" class="bottom-nav-item">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      Modelos
-    </a>
-    <a href="/es/studio-traffic" class="bottom-nav-item">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><polyline points="8 21 12 17 16 21"/></svg>
-      Estudios
-    </a>
-    <a href="https://t.me/+tBjfmjh9vHo1YzQy" target="_blank" rel="noopener" class="bottom-nav-item">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      Contacto
-    </a>
-  </div>
-</nav>
-
-<script is:inline>
-function toggleMenu() {
-  const menu = document.getElementById('mobile-menu');
-  const btn = document.getElementById('hamburger');
-  menu.classList.toggle('open');
-  btn.classList.toggle('open');
-}
-document.addEventListener('click', function(e) {
-  const menu = document.getElementById('mobile-menu');
-  const btn = document.getElementById('hamburger');
-  if (menu && btn && menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) {
-    menu.classList.remove('open');
-    btn.classList.remove('open');
-  }
-});
-
-(function () {
-  var langBtn = document.getElementById('lang-btn-root');
-  var langMenu = document.getElementById('lang-menu-root');
-  var chevron = document.getElementById('lang-chevron-root');
-  if (langBtn && langMenu) {
-    langBtn.addEventListener('click', function (e) {
-      e.stopPropagation();
-      langMenu.classList.toggle('hidden');
-      langBtn.setAttribute('aria-expanded', langMenu.classList.contains('hidden') ? 'false' : 'true');
-      if (chevron) chevron.style.transform = langMenu.classList.contains('hidden') ? '' : 'rotate(180deg)';
-    });
-    document.addEventListener('click', function () {
-      langMenu.classList.add('hidden');
-      langBtn.setAttribute('aria-expanded', 'false');
-      if (chevron) chevron.style.transform = '';
-    });
-  }
-  document.querySelectorAll('.lang-opt-root').forEach(function (a) {
-    a.addEventListener('click', function () {
-      try { localStorage.setItem('ewo-lang-set', '1'); } catch (e) {}
-    });
-  });
-})();
-</script>
-
-</body>
-</html>
+  </section>
+</Base>
