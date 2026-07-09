@@ -13,6 +13,7 @@ const STR: Record<string, Record<string, string>> = {
     sub: 'We use this real-time data every day to drive traffic and grow our models\' earnings — pulled from public Chaturbate rooms, refreshed automatically.',
     hoursTitle: 'Best hours to stream on Chaturbate', hoursUnit: 'viewers / room',
     hoursCaption: 'Avg. viewers per broadcasting room',
+    hoursLocalNote: 'Times shown in your local time zone',
     tagsTitle: 'Top-performing tags today on Chaturbate', tagsRoomsUnit: 'rooms',
     tagsCaption: 'Tags used by the rooms with the most viewers right now',
     titlesTitle: 'Top-performing titles today on Chaturbate', viewersWord: 'viewers',
@@ -31,6 +32,7 @@ const STR: Record<string, Record<string, string>> = {
     sub: 'Wir nutzen diese Echtzeitdaten täglich, um Traffic zu treiben und die Einnahmen unserer Models zu steigern — aus öffentlichen Chaturbate-Räumen, automatisch aktualisiert.',
     hoursTitle: 'Beste Sendezeiten auf Chaturbate', hoursUnit: 'Zuschauer / Raum',
     hoursCaption: 'Durchschn. Zuschauer pro sendendem Raum',
+    hoursLocalNote: 'Zeiten in deiner lokalen Zeitzone angezeigt',
     tagsTitle: 'Top-Tags heute auf Chaturbate', tagsRoomsUnit: 'Räume',
     tagsCaption: 'Tags, die Räume mit den meisten Zuschauern gerade verwenden',
     titlesTitle: 'Top-Titel heute auf Chaturbate', viewersWord: 'Zuschauer',
@@ -49,6 +51,7 @@ const STR: Record<string, Record<string, string>> = {
     sub: 'Usamos estos datos en tiempo real cada día para generar tráfico y aumentar los ingresos de nuestras modelos — de salas públicas de Chaturbate, actualizados automáticamente.',
     hoursTitle: 'Mejores horas para transmitir en Chaturbate', hoursUnit: 'espectadores / sala',
     hoursCaption: 'Espectadores prom. por sala en emisión',
+    hoursLocalNote: 'Horas mostradas en tu zona horaria local',
     tagsTitle: 'Tags con mejor rendimiento hoy en Chaturbate', tagsRoomsUnit: 'salas',
     tagsCaption: 'Tags que usan ahora mismo las salas con más espectadores',
     titlesTitle: 'Mejores títulos hoy en Chaturbate', viewersWord: 'espectadores',
@@ -67,6 +70,7 @@ const STR: Record<string, Record<string, string>> = {
     sub: 'Folosim aceste date în timp real zilnic pentru a genera trafic și a crește veniturile modelelor noastre — din camere publice Chaturbate, actualizate automat.',
     hoursTitle: 'Cele mai bune ore de streaming pe Chaturbate', hoursUnit: 'spectatori / cameră',
     hoursCaption: 'Spectatori medii per cameră activă',
+    hoursLocalNote: 'Orele sunt afișate în fusul tău orar local',
     tagsTitle: 'Cele mai performante taguri astăzi pe Chaturbate', tagsRoomsUnit: 'camere',
     tagsCaption: 'Taguri folosite chiar acum de camerele cu cei mai mulți spectatori',
     titlesTitle: 'Cele mai bune titluri astăzi pe Chaturbate', viewersWord: 'spectatori',
@@ -85,6 +89,7 @@ const STR: Record<string, Record<string, string>> = {
     sub: 'Ми використовуємо ці дані в реальному часі щодня, щоб залучати трафік і збільшувати дохід наших моделей — з публічних кімнат Chaturbate, оновлюються автоматично.',
     hoursTitle: 'Найкращі години для стріму на Chaturbate', hoursUnit: 'глядачів / кімнату',
     hoursCaption: 'Середня к-сть глядачів на одну активну кімнату',
+    hoursLocalNote: 'Час показано у твоєму місцевому часовому поясі',
     tagsTitle: 'Найефективніші теги сьогодні на Chaturbate', tagsRoomsUnit: 'кімнат',
     tagsCaption: 'Теги, які зараз використовують кімнати з найбільшою кількістю глядачів',
     titlesTitle: 'Найкращі заголовки сьогодні на Chaturbate', viewersWord: 'глядачів',
@@ -103,6 +108,7 @@ const STR: Record<string, Record<string, string>> = {
     sub: 'Мы используем эти данные в реальном времени каждый день, чтобы привлекать трафик и увеличивать доход наших моделей — из публичных комнат Chaturbate, обновляются автоматически.',
     hoursTitle: 'Лучшие часы для стрима на Chaturbate', hoursUnit: 'зрителей / комнату',
     hoursCaption: 'Среднее число зрителей на одну вещающую комнату',
+    hoursLocalNote: 'Время показано в твоём локальном часовом поясе',
     tagsTitle: 'Самые эффективные теги сегодня на Chaturbate', tagsRoomsUnit: 'комнат',
     tagsCaption: 'Теги, которые сейчас используют комнаты с наибольшим числом зрителей',
     titlesTitle: 'Лучшие заголовки сегодня на Chaturbate', viewersWord: 'зрителей',
@@ -160,10 +166,11 @@ const bestHourSet = new Set(
         <div class="trends-card trends-card-wide">
           <h3 class="trends-card-title">{t.hoursTitle}</h3>
           <p class="hours-caption">{t.hoursCaption}</p>
+          <p class="hours-local-note" data-hours-local-note hidden>{t.hoursLocalNote}</p>
           <ul class="hours-list">
             {bestHours.map((h: { hour: number; score: number }) => (
               <li class={`hours-row${bestHourSet.has(h.hour) ? ' is-best' : ''}`}>
-                <span class="hours-range">{String(h.hour).padStart(2, '0')}:00–{String((h.hour + 1) % 24).padStart(2, '0')}:00 UTC</span>
+                <span class="hours-range" data-utc-hour={h.hour}>{String(h.hour).padStart(2, '0')}:00–{String((h.hour + 1) % 24).padStart(2, '0')}:00 UTC</span>
                 <span class="hours-bar-track">
                   <span class="hours-bar-fill" style={`width:${Math.round((h.score / maxScore) * 100)}%`}></span>
                 </span>
@@ -256,6 +263,25 @@ const bestHourSet = new Set(
       });
     });
   });
+
+  function pad(n: number): string {
+    return String(n).padStart(2, '0');
+  }
+
+  const tzOffsetMin = new Date().getTimezoneOffset(); // (UTC - local) in minutes
+
+  document.querySelectorAll<HTMLElement>('.hours-range[data-utc-hour]').forEach((el) => {
+    const utcHour = Number(el.dataset.utcHour);
+    if (Number.isNaN(utcHour)) return;
+    const startTotal = (((utcHour * 60 - tzOffsetMin) % 1440) + 1440) % 1440;
+    const endTotal = (startTotal + 60) % 1440;
+    const fmt = (totalMin: number) => `${pad(Math.floor(totalMin / 60))}:${pad(totalMin % 60)}`;
+    el.textContent = `${fmt(startTotal)}–${fmt(endTotal)}`;
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-hours-local-note]').forEach((el) => {
+    el.hidden = false;
+  });
 </script>
 
 <style>
@@ -319,6 +345,7 @@ const bestHourSet = new Set(
   }
 
   .hours-caption { font-size: 0.75rem; color: #64748b; margin-bottom: 0.85rem; }
+  .hours-local-note { font-size: 0.75rem; color: #a5b4fc; font-weight: 600; margin: -0.5rem 0 0.85rem; font-style: italic; }
   .hours-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
   .hours-row { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0.75rem; }
   .hours-range { font-size: 0.8125rem; color: #cbd5e1; font-weight: 600; white-space: nowrap; }
