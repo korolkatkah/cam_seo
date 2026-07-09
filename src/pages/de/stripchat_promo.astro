@@ -1,0 +1,444 @@
+---
+import Base from '@/layouts/Base.astro';
+const site = 'https://ewo.cam';
+const slug = 'stripchat_promo';
+
+const botMenu = [
+  { title: 'Bestellung erstellen', desc: 'Ein Promotion-Fenster für ein bestimmtes Model/Zimmer buchen', icon: 'plus' },
+  { title: 'Empfehlungssystem', desc: 'Guthaben verdienen, indem du andere Models oder Käufer einlädst', icon: 'users' },
+  { title: 'Einzahlung', desc: 'Guthaben per Krypto aufladen', icon: 'wallet' },
+  { title: 'Bestellverlauf', desc: 'Bevorstehende, aktive, stornierte und abgeschlossene Promotions verfolgen', icon: 'clock' },
+  { title: 'Profil', desc: 'Guthaben und Kontodetails einsehen', icon: 'user' },
+];
+
+const flowSteps = [
+  { n: '01', title: 'Slot buchen', desc: 'Benutzername, Datum, Startzeit und Dauer im Bot eingeben.' },
+  { n: '02', title: 'Zimmer wird platziert', desc: 'Zur geplanten Zeit hebt das System dein Zimmer in die Popular-Kategorie.' },
+  { n: '03', title: 'Echte Zuschauer kommen', desc: 'Echte Stripchat-Nutzer, die diese Seite durchstöbern, entdecken dein Zimmer.' },
+];
+
+const pricingTiers = [
+  { label: 'Standard', rate: '$10', note: 'pro Stunde', bonus: null, highlight: false },
+  { label: 'Einzahlung ab $50', rate: '$9', note: 'pro Stunde', bonus: '10% Bonus', highlight: false },
+  { label: 'Einzahlung ab $200', rate: '$8', note: 'pro Stunde', bonus: '20% Bonus', highlight: true },
+];
+
+const playbook = [
+  { n: 1, title: '10–15 Minuten früher live gehen', desc: 'Das System braucht das Zimmer bereits live, wenn die Promotion startet.' },
+  { n: 2, title: 'Die erste Stunde als Aufwärmphase behandeln', desc: 'Das Ranking beginnt nach etwa 10 Minuten zu steigen — frühe Zuschauer setzen die Dynamik.' },
+  { n: 3, title: 'Die ganze Zeit über engagiert bleiben', desc: 'Zimmer, die Aufmerksamkeit halten, behalten mehr vom gesendeten Traffic — schwacher Content verliert Position selbst während der Promotion.' },
+  { n: 4, title: 'Erst die Grundlagen fixen', desc: 'Stabile Verbindung, Kamera und Beleuchtung. Kein Traffic gleicht Zuschauer aus, die sofort wieder wegklicken.' },
+  { n: 5, title: 'Prüfen, ob die Promotion aktiv ist', desc: 'Länderblockaden deaktivieren und mit Strg+F deinen Benutzernamen auf stripchat.com/girls/popular suchen.' },
+];
+
+const earnMore = [
+  { title: 'Promotion in Stoßzeiten bündeln', desc: 'Stunden in der Zeitzone deiner Zielgruppe zur Hauptzeit buchen statt über tote Zeiten verteilt.', icon: 'trend' },
+  { title: 'Einnahmen in weitere Stunden reinvestieren', desc: 'Die Einzahlungsstufen senken die Kosten bei $50 und $200 — mehr Einsatz senkt deinen effektiven Satz.', icon: 'wallet' },
+  { title: 'Das Empfehlungssystem nutzen', desc: 'Andere Models oder Käufer in den Bot bringen bringt Guthaben, das deine eigenen Kosten senkt.', icon: 'users' },
+  { title: 'Promotion mit deinem besten Content kombinieren', desc: 'Die Promotion bringt Blicke — die Show entscheidet, ob daraus Follower und Tokens werden.', icon: 'star' },
+];
+
+const icons: Record<string, string> = {
+  plus: '<path d="M12 5v14M5 12h14"/>',
+  users: '<circle cx="9" cy="8" r="3.2"/><path d="M2.5 19c0-3.6 2.9-6.5 6.5-6.5s6.5 2.9 6.5 6.5"/><circle cx="17" cy="9" r="2.6"/><path d="M15 12.7c2.8.4 5 2.7 5 6.3"/>',
+  wallet: '<rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><circle cx="16.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/>',
+  user: '<circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/>',
+  trend: '<polyline points="3 17 9 11 13 15 21 6"/><polyline points="14 6 21 6 21 13"/>',
+  star: '<path d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3-5.8 3 1.1-6.5-4.7-4.6 6.5-.9z"/>',
+};
+---
+
+<Base
+  title="Stripchat Traffic Bot Review: Mehr Zuschauer, höherer Stripscore, mehr Einnahmen"
+  description="Ein ehrlicher Test von Stripchat_traffic_bot, einem Telegram-Promotion-Tool, das dein Zimmer in Stripchats Popular-Kategorie platziert. So funktioniert's, was es kostet und wie du das Beste rausholst."
+  lang="de"
+  hreflang={[
+    { lang: 'en', url: `${site}/${slug}` },
+    { lang: 'de', url: `${site}/de/${slug}` },
+    { lang: 'es', url: `${site}/es/${slug}` },
+    { lang: 'ro', url: `${site}/ro/${slug}` },
+    { lang: 'uk', url: `${site}/uk/${slug}` },
+    { lang: 'ru', url: `${site}/ru/${slug}` },
+  ]}
+>
+  <article class="page-content">
+    <div class="container">
+
+      <header class="page-header">
+        <p class="eyebrow">Review</p>
+        <h1>Stripchat Traffic Bot Review: Mehr Zuschauer, höherer Stripscore, mehr Einnahmen</h1>
+        <p class="lead">
+          Die Stripchat-"Popular"-Seite wird von Zimmern dominiert, die bereits riesige Follower-Zahlen und
+          hohen Stripscore haben. Ohne Anschub werden neue Streams selten gesehen — und ohne Views gibt es
+          kein Stripscore-Wachstum und keine Tips. Dieser Test behandelt Stripchat_traffic_bot, ein
+          Telegram-basiertes Promotion-Tool, das genau dieses Sichtbarkeitsproblem lösen soll.
+        </p>
+        <div class="stat-row">
+          <div class="stat-chip"><span class="stat-num">$10</span><span class="stat-label">Startpreis / Stunde</span></div>
+          <div class="stat-chip"><span class="stat-num">~10 Min</span><span class="stat-label">bis Ranking-Bewegung</span></div>
+          <div class="stat-chip"><span class="stat-num">20%</span><span class="stat-label">Bonus ab $200 Einzahlung</span></div>
+        </div>
+      </header>
+
+      <figure class="page-hero-image">
+        <img src="/images/stripchat-traffic-bot-popular-placement.svg" alt="Traffic-Bot platziert ein Zimmer in Stripchats Popular-Kategorie mit steigendem Zuschauer-Trend" width="640" height="360" loading="lazy" />
+      </figure>
+
+      <section>
+        <h2>Was ist Stripchat_traffic_bot?</h2>
+        <p>
+          <a href="https://t.me/Stripchat_traffic_bot" target="_blank" rel="noopener">Stripchat_traffic_bot</a>
+          ist ein Self-Service-Bestellbot für Stripchat-Model-Promotion auf Telegram. Statt einer Agentur zu
+          schreiben und auf ein manuelles Angebot zu warten, öffnest du den Bot, buchst einen Promotion-Slot
+          für dein Zimmer, und das System platziert deinen Stream für die gebuchte Dauer in Stripchats
+          Popular-Kategorie (stripchat.com/girls/popular). Das ist die Kategorie, wo der Großteil des
+          organischen Stripchat-Suchtraffics landet — ein Zimmer dort zu platzieren, auch nur vorübergehend,
+          ist ein bedeutender Hebel für Zuschauerwachstum.
+        </p>
+        <p>Das Bot-Interface ist bewusst einfach gehalten:</p>
+        <ul>
+          <li><strong>Bestellung erstellen</strong> — ein Promotion-Fenster für ein bestimmtes Model/Zimmer buchen</li>
+          <li><strong>Empfehlungssystem</strong> — Guthaben für das Einladen anderer Models oder Käufer verdienen</li>
+          <li><strong>Einzahlung</strong> — Guthaben per Krypto aufladen</li>
+          <li><strong>Bestellverlauf</strong> — bevorstehende, aktive, stornierte und abgeschlossene Promotions verfolgen</li>
+          <li><strong>Profil</strong> — Guthaben und Kontodetails einsehen</li>
+        </ul>
+
+        <div class="feature-grid">
+          {botMenu.map(({ title, desc, icon }) => (
+            <div class="feature-card">
+              <div class="icon-badge" set:html={`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${icons[icon]}</svg>`} />
+              <h3>{title}</h3>
+              <p>{desc}</p>
+            </div>
+          ))}
+        </div>
+
+        <p>
+          Alles läuft über ein übersichtliches Bestellformular: Benutzername eingeben, Datum wählen, Startzeit
+          (in deiner lokalen Zeitzone angezeigt) und Dauer in Stunden festlegen. Die Promotion startet dann
+          automatisch zur geplanten Zeit.
+        </p>
+      </section>
+
+      <section>
+        <h2>Wie die Promotion tatsächlich funktioniert</h2>
+
+        <div class="flow-steps">
+          {flowSteps.map(({ n, title, desc }, i) => (
+            <>
+              <div class="flow-step">
+                <span class="flow-num">{n}</span>
+                <h3>{title}</h3>
+                <p>{desc}</p>
+              </div>
+              {i < flowSteps.length - 1 && <span class="flow-arrow" aria-hidden="true">→</span>}
+            </>
+          ))}
+        </div>
+
+        <p>
+          Mit anderen Worten: Der Bot fälscht keine Tips oder Follower — er verschafft dem Zimmer einen Platz
+          in der Kategorie, wo bereits echter Traffic fließt. Was danach passiert, hängt komplett von der
+          Streamqualität des Models ab. Das ist eine bewusst ehrliche Einschränkung, die man vor der Buchung
+          verstehen sollte:
+        </p>
+
+        <div class="pros-cons">
+          <div class="pros-col">
+            <p class="pros-cons-label">Was es kann</p>
+            <ul class="check-list check-list--yes">
+              <li>Dein Zimmer vor echten Stripchat-Traffic bringen</li>
+              <li>Dein Zimmer in die höchstfrequentierte Listing-Seite pushen</li>
+              <li>Deinen Stripscore innerhalb von Minuten in Bewegung bringen</li>
+            </ul>
+          </div>
+          <div class="cons-col">
+            <p class="pros-cons-label">Was es nicht kann</p>
+            <ul class="check-list check-list--no">
+              <li>Zuschauer zum Bleiben, Interagieren oder Zahlen zwingen</li>
+              <li>Einen schwachen Stream oder schlechte Produktionsqualität ausgleichen</li>
+              <li>Den Ranking-Gewinn über die bezahlten Stunden hinaus erhalten</li>
+            </ul>
+          </div>
+        </div>
+        <p>
+          Wenn du diesen oder einen ähnlichen Promotion-Service bewertest, ist dieser Unterschied — Traffic-
+          Platzierung vs. garantiertes Einkommen — die ehrliche Art, darüber nachzudenken.
+        </p>
+      </section>
+
+      <section>
+        <h2>Preise: Was eine Stripchat-Promotion kostet</h2>
+        <p>Die Preise sind klar und skalieren mit dem Volumen:</p>
+
+        <div class="pricing-grid">
+          {pricingTiers.map(({ label, rate, note, bonus, highlight }) => (
+            <div class={`pricing-card${highlight ? ' pricing-card--best' : ''}`}>
+              {highlight && <span class="pricing-badge">Bester Satz</span>}
+              <p class="pricing-label">{label}</p>
+              <p class="pricing-rate">{rate}<span>/{note.replace('pro ', '')}</span></p>
+              {bonus && <p class="pricing-bonus">{bonus}</p>}
+            </div>
+          ))}
+        </div>
+
+        <p>
+          Du kannst Promotions für beliebig viele Models gleichzeitig laufen lassen, und nicht genutztes
+          Guthaben bleibt für zukünftige Bestellungen auf deinem Konto. Die Zahlung erfolgt per Krypto-Einzahlung
+          direkt im Bot, und das Stornieren eines Slots vor Start erstattet die Mittel auf dein Guthaben, statt
+          sie zu verlieren — wichtig, wenn sich der Zeitplan eines Models kurzfristig ändert.
+        </p>
+      </section>
+
+      <section>
+        <h2>So erhöhst du deinen Stripscore mit diesem Bot</h2>
+        <p>
+          Stripscore ist Stripchats interne Ranking-Metrik und der Türsteher dafür, wo dein Zimmer auf der
+          Seite erscheint. Ihn zu erhöhen bedeutet nicht nur, einen Promotion-Slot zu kaufen — Timing und
+          Showqualität zählen genauso. Basierend auf den eigenen Betriebsrichtlinien des Bots hier das
+          praktische Playbook:
+        </p>
+
+        <div class="step-list">
+          {playbook.map(({ n, title, desc }) => (
+            <div class="step-card">
+              <span class="step-num">{n}</span>
+              <div>
+                <h3>{title}</h3>
+                <p>{desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <p>
+          Models, die dieser Reihenfolge folgen — vorwärmen, starker Einstieg, durchgehende Energie —
+          holen aus jeder bezahlten Stunde konsequent mehr raus als jene, die die Promotion einfach anschalten
+          und hoffen.
+        </p>
+      </section>
+
+      <section>
+        <h2>So verdienst du mehr auf Stripchat mit Traffic-Promotion</h2>
+        <p>
+          Das eigentliche Ziel der meisten Models, die eine Promotion buchen, ist nicht die Stripscore-Zahl
+          selbst — es sind die Tips, Follower und wiederkehrenden Zuschauer, die mit besserer Sichtbarkeit
+          kommen. Einige Wege, wie Nutzer dieses Bots die Ergebnisse weiter ausbauen:
+        </p>
+
+        <div class="feature-grid">
+          {earnMore.map(({ title, desc, icon }) => (
+            <div class="feature-card">
+              <div class="icon-badge icon-badge--violet" set:html={`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${icons[icon]}</svg>`} />
+              <h3>{title}</h3>
+              <p>{desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="verdict-section">
+        <h2>Lohnt es sich?</h2>
+        <div class="callout-block">
+          <p>
+            Für Models, die bereits eine solide Show haben, aber auf Seite 3 der Suchergebnisse feststecken,
+            löst so ein Traffic-Push ein reales, spezifisches Problem: gesehen zu werden. Er ersetzt keine
+            Streamqualität und fixt kein Zimmer, in dem niemand bleiben will — aber als Weg, echten
+            Stripchat-Suchtraffic während eines geplanten Fensters auf dein Zimmer zu lenken, tut er, was er
+            verspricht. Die Preise sind transparent, Bestellungen sind selbstständig und nachvollziehbar, und
+            Slots können bei Planänderungen storniert und erstattet werden.
+          </p>
+        </div>
+      </section>
+
+      <section class="faq">
+        <h2>Häufig gestellte Fragen</h2>
+
+        <div class="faq-item">
+          <h3>Was bedeutet "Promotion" bei diesem Bot?</h3>
+          <p>
+            Es platziert dein Zimmer in Stripchats Popular-Kategorie (stripchat.com/girls/popular), der
+            höchstfrequentierten Listing-Seite der Plattform, für die gebuchten Stunden.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Wie schnell wirkt es?</h3>
+          <p>Das Ranking beginnt typischerweise nach etwa 10 Minuten nach Start der Promotion zu steigen.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Sind die Zuschauer echt?</h3>
+          <p>Jeder Zuschauer, der über die Popular-Kategorie ankommt, nachdem dein Zimmer dort platziert wurde, ist ein echter Stripchat-Nutzer.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Kann ich einen gebuchten Slot stornieren?</h3>
+          <p>Ja — Stornierung vor der Startzeit erstattet den Betrag auf dein Bot-Guthaben.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Wie bezahle ich?</h3>
+          <p>Einzahlungen erfolgen per Krypto direkt über die Deposit-Option des Bots.</p>
+        </div>
+      </section>
+
+      <section class="cta-section">
+        <div class="cta-icon" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        </div>
+        <h2>Stripchat_traffic_bot ausprobieren</h2>
+        <p>Buche einen Promotion-Slot direkt über den Bot auf Telegram.</p>
+        <p><a href="https://t.me/Stripchat_traffic_bot" target="_blank" rel="noopener" class="cta-link">@Stripchat_traffic_bot öffnen →</a></p>
+      </section>
+
+      <section class="related-articles">
+        <h2>Verwandte Artikel</h2>
+        <ul>
+          <li><a href="/de/how-cam-algorithm-ranks-rooms">Wie der Cam-Algorithmus Zimmer rankt</a></li>
+          <li><a href="/de/why-low-viewers-webcam">Warum dein Webcam-Zimmer wenig Zuschauer hat</a></li>
+          <li><a href="/de/best-streaming-times-by-region">Beste Streaming-Zeiten nach Region</a></li>
+          <li><a href="/de/model-promotion">Model-Promotion-Services</a></li>
+          <li><a href="/de/platforms-we-work-with">Plattformen, mit denen wir arbeiten</a></li>
+        </ul>
+      </section>
+
+      <p class="source-note">
+        Dieser Test basiert auf dem öffentlichen Telegram-Eintrag des Bots, seinem In-App-Bestellablauf und
+        seiner offiziellen FAQ, veröffentlicht unter
+        <a href="https://teletype.in/@webcamtraffic/stripchat-traffic-bot" target="_blank" rel="noopener">teletype.in/@webcamtraffic/stripchat-traffic-bot</a>.
+      </p>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .page-content { padding-block: 3rem 5rem; }
+  .page-header { margin-bottom: 3rem; border-bottom: 1px solid var(--border); padding-bottom: 2rem; }
+  .eyebrow { font-family: var(--font-heading); font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: .75rem; }
+  .page-header h1 { margin-bottom: 1.25rem; }
+  .lead { font-size: 1.125rem; max-width: 60ch; margin-bottom: 1.75rem; }
+
+  .stat-row { display: flex; flex-wrap: wrap; gap: .875rem; }
+  .stat-chip {
+    display: flex; flex-direction: column; gap: .2rem;
+    background: rgba(255,255,255,.03); border: 1px solid var(--border);
+    border-radius: var(--radius-md); padding: .75rem 1.25rem; min-width: 160px;
+  }
+  .stat-num { font-family: var(--font-heading); font-weight: 700; font-style: italic; font-size: 1.4rem; background: linear-gradient(135deg, #818cf8, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .stat-label { font-size: .75rem; color: var(--fg-faint); font-weight: 600; }
+
+  article section { margin-bottom: 2.5rem; }
+  article h2 { margin-bottom: 1rem; }
+  article h3 { margin-bottom: .5rem; margin-top: 0; }
+  article p { margin-bottom: .875rem; }
+  article ul, article ol { margin: .75rem 0 .875rem 1.5rem; display: flex; flex-direction: column; gap: .5rem; }
+  article li { color: var(--fg-muted); }
+  article a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+  article a:hover { color: var(--accent-hover); }
+
+  .feature-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; margin: 1.25rem 0 1.5rem; }
+  .feature-card {
+    background: rgba(255,255,255,.03); border: 1px solid var(--border); border-radius: var(--radius-lg);
+    padding: 1.5rem; transition: border-color var(--transition), background var(--transition);
+  }
+  .feature-card:hover { border-color: rgba(129,140,248,.3); background: rgba(129,140,248,.05); }
+  .feature-card h3 { font-size: 1.05rem; }
+  .feature-card p { font-size: .9rem; margin-bottom: 0; }
+  .icon-badge {
+    width: 42px; height: 42px; border-radius: var(--radius-md);
+    background: rgba(99,102,241,.15); border: 1px solid rgba(129,140,248,.25);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--accent); margin-bottom: .875rem;
+  }
+  .icon-badge--violet { background: rgba(139,92,246,.15); border-color: rgba(167,139,250,.3); color: #a78bfa; }
+
+  .flow-steps { display: flex; align-items: stretch; gap: 1rem; margin: 1.25rem 0 1.5rem; flex-wrap: wrap; }
+  .flow-step {
+    flex: 1 1 200px; background: rgba(255,255,255,.03); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 1.5rem;
+  }
+  .flow-step h3 { font-size: 1.05rem; }
+  .flow-step p { font-size: .9rem; margin-bottom: 0; }
+  .flow-num {
+    display: inline-block; font-family: var(--font-heading); font-weight: 700; font-style: italic;
+    font-size: 1.1rem; color: var(--accent); margin-bottom: .5rem;
+  }
+  .flow-arrow { display: flex; align-items: center; justify-content: center; color: var(--fg-faint); font-size: 1.25rem; flex: 0 0 auto; }
+  @media (max-width: 700px) { .flow-arrow { display: none; } }
+
+  .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.25rem 0 1.5rem; }
+  @media (max-width: 600px) { .pros-cons { grid-template-columns: 1fr; } }
+  .pros-col, .cons-col { border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; background: rgba(255,255,255,.03); }
+  .pros-cons-label { font-family: var(--font-heading); font-size: .8rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--fg-faint); margin-bottom: .75rem; }
+  .check-list { margin: 0 !important; list-style: none; display: flex; flex-direction: column; gap: .625rem; }
+  .check-list li { position: relative; padding-left: 1.6rem; font-size: .9375rem; }
+  .check-list--yes li::before { content: '✓'; position: absolute; left: 0; color: #34d399; font-weight: 700; }
+  .check-list--no li::before { content: '✕'; position: absolute; left: 0; color: #fb7185; font-weight: 700; }
+
+  .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin: 1.25rem 0 1.5rem; }
+  .pricing-card {
+    position: relative; border: 1px solid var(--border); border-radius: var(--radius-lg);
+    padding: 1.75rem 1.5rem; text-align: center; background: rgba(255,255,255,.03);
+  }
+  .pricing-card--best { border-color: rgba(129,140,248,.4); background: rgba(99,102,241,.08); }
+  .pricing-badge {
+    position: absolute; top: -.65rem; left: 50%; transform: translateX(-50%);
+    font-family: var(--font-heading); font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff; padding: .25rem .75rem; border-radius: 100px;
+    white-space: nowrap;
+  }
+  .pricing-label { font-size: .875rem; color: var(--fg-muted); font-weight: 600; margin-bottom: .5rem; }
+  .pricing-rate { font-family: var(--font-heading); font-weight: 700; font-style: italic; font-size: 2rem; color: var(--fg); margin-bottom: .25rem; }
+  .pricing-rate span { font-size: 1rem; font-weight: 600; font-style: normal; color: var(--fg-faint); }
+  .pricing-bonus { font-size: .8125rem; color: #a78bfa; font-weight: 700; margin-bottom: 0; }
+
+  .step-list { display: flex; flex-direction: column; gap: .875rem; margin: 1.25rem 0 1.5rem; }
+  .step-card {
+    display: flex; gap: 1.25rem; align-items: flex-start;
+    border: 1px solid var(--border); border-radius: var(--radius-lg);
+    padding: 1.25rem 1.5rem; background: rgba(255,255,255,.03);
+  }
+  .step-num {
+    flex: 0 0 auto; width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-heading); font-weight: 700; font-size: .9375rem;
+  }
+  .step-card h3 { font-size: 1rem; }
+  .step-card p { font-size: .9rem; margin-bottom: 0; }
+
+  .callout-block {
+    border-left: 3px solid var(--accent); background: rgba(129,140,248,.06);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0; padding: 1.5rem 1.75rem;
+  }
+  .callout-block p { margin-bottom: 0; }
+
+  .faq { display: flex; flex-direction: column; gap: 0; }
+  .faq h2 { margin-bottom: 1.5rem; }
+  .faq-item { padding: 1.5rem 0; border-top: 1px solid var(--border); }
+  .faq-item:last-child { border-bottom: 1px solid var(--border); }
+
+  .cta-section {
+    background: var(--bg-raised); border: 1px solid var(--border); border-radius: var(--radius-lg);
+    padding: 2.5rem 2rem; margin-top: 3rem; text-align: center;
+  }
+  .cta-icon {
+    width: 56px; height: 56px; border-radius: 50%; margin: 0 auto 1.25rem;
+    background: rgba(99,102,241,.15); border: 1px solid rgba(129,140,248,.25);
+    color: var(--accent); display: flex; align-items: center; justify-content: center;
+  }
+  .cta-section h2 { margin-bottom: .5rem; }
+  .cta-section p { margin-inline: auto; }
+  .cta-link {
+    display: inline-flex; align-items: center; gap: .5rem; margin-top: .5rem;
+    font-family: var(--font-heading); font-weight: 700; font-size: .9375rem;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff !important;
+    padding: .75rem 1.75rem; border-radius: var(--radius-md); text-decoration: none !important;
+  }
+  .cta-link:hover { opacity: .9; }
+
+  .source-note { font-size: .8125rem; color: var(--fg-faint); border-top: 1px solid var(--border); padding-top: 1.5rem; max-width: none; }
+</style>

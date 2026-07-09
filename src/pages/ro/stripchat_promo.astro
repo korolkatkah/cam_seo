@@ -1,0 +1,445 @@
+---
+import Base from '@/layouts/Base.astro';
+const site = 'https://ewo.cam';
+const slug = 'stripchat_promo';
+
+const botMenu = [
+  { title: 'Creează comandă', desc: 'Rezervă o fereastră de promovare pentru un model/o cameră anume', icon: 'plus' },
+  { title: 'Sistem de recomandare', desc: 'Câștigă credit aducând alte modele sau cumpărători', icon: 'users' },
+  { title: 'Depunere', desc: 'Alimentează-ți soldul prin cripto', icon: 'wallet' },
+  { title: 'Istoric comenzi', desc: 'Urmărește promovările viitoare, active, anulate și finalizate', icon: 'clock' },
+  { title: 'Profil', desc: 'Verifică soldul și detaliile contului', icon: 'user' },
+];
+
+const flowSteps = [
+  { n: '01', title: 'Rezervă un interval', desc: 'Introdu username-ul, alege data, ora de start și durata în bot.' },
+  { n: '02', title: 'Camera este plasată', desc: 'La ora programată, sistemul urcă camera ta în categoria Popular.' },
+  { n: '03', title: 'Sosesc viewerii reali', desc: 'Utilizatori reali Stripchat care răsfoiesc acea pagină îți descoperă camera.' },
+];
+
+const pricingTiers = [
+  { label: 'Standard', rate: '$10', note: 'pe oră', bonus: null, highlight: false },
+  { label: 'Depunere $50+', rate: '$9', note: 'pe oră', bonus: 'bonus 10%', highlight: false },
+  { label: 'Depunere $200+', rate: '$8', note: 'pe oră', bonus: 'bonus 20%', highlight: true },
+];
+
+const playbook = [
+  { n: 1, title: 'Intră live cu 10–15 minute mai devreme', desc: 'Sistemul are nevoie ca sala să fie deja live când pornește promovarea.' },
+  { n: 2, title: 'Tratează prima oră ca încălzire', desc: 'Clasamentul începe să urce în aproximativ 10 minute, iar primii viewer stabilesc ritmul restului sesiunii.' },
+  { n: 3, title: 'Menține showul captivant tot timpul', desc: 'Camerele care rețin atenția păstrează mai mult din traficul trimis — un conținut slab pierde poziție chiar și în timpul promovării.' },
+  { n: 4, title: 'Rezolvă mai întâi elementele de bază', desc: 'Conexiune stabilă, cameră decentă și iluminare bună. Niciun trafic nu compensează viewerii care pleacă imediat.' },
+  { n: 5, title: 'Verifică dacă promovarea e activă', desc: 'Dezactivează blocajele de țară și caută username-ul tău cu Ctrl+F pe stripchat.com/girls/popular.' },
+];
+
+const earnMore = [
+  { title: 'Concentrează orele de promovare la ore de vârf', desc: 'Rulează ore în fusul orar de vârf al publicului țintă, nu împrăștiate în ore moarte.', icon: 'trend' },
+  { title: 'Reinvestește câștigurile în mai multe ore', desc: 'Nivelurile de depunere reduc costul la $50 și $200 — cheltuind mai mult obții o rată efectivă mai mică.', icon: 'wallet' },
+  { title: 'Folosește sistemul de recomandare', desc: 'Aducerea altor modele sau cumpărători în bot îți aduce credit care compensează cheltuiala proprie.', icon: 'users' },
+  { title: 'Combină promovarea cu cel mai bun conținut', desc: 'Promovarea aduce priviri — showul decide dacă acestea devin urmăritori și tokeni.', icon: 'star' },
+];
+
+const icons: Record<string, string> = {
+  plus: '<path d="M12 5v14M5 12h14"/>',
+  users: '<circle cx="9" cy="8" r="3.2"/><path d="M2.5 19c0-3.6 2.9-6.5 6.5-6.5s6.5 2.9 6.5 6.5"/><circle cx="17" cy="9" r="2.6"/><path d="M15 12.7c2.8.4 5 2.7 5 6.3"/>',
+  wallet: '<rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><circle cx="16.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/>',
+  user: '<circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/>',
+  trend: '<polyline points="3 17 9 11 13 15 21 6"/><polyline points="14 6 21 6 21 13"/>',
+  star: '<path d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3-5.8 3 1.1-6.5-4.7-4.6 6.5-.9z"/>',
+};
+---
+
+<Base
+  title="Recenzie Stripchat Traffic Bot: Mai mulți viewer, stripscore mai mare, câștiguri mai mari"
+  description="O recenzie sinceră a Stripchat_traffic_bot, un instrument de promovare pe Telegram care plasează camera ta în categoria Popular de pe Stripchat. Cum funcționează, cât costă și cum să obții maximum din el."
+  lang="ro"
+  hreflang={[
+    { lang: 'en', url: `${site}/${slug}` },
+    { lang: 'de', url: `${site}/de/${slug}` },
+    { lang: 'es', url: `${site}/es/${slug}` },
+    { lang: 'ro', url: `${site}/ro/${slug}` },
+    { lang: 'uk', url: `${site}/uk/${slug}` },
+    { lang: 'ru', url: `${site}/ru/${slug}` },
+  ]}
+>
+  <article class="page-content">
+    <div class="container">
+
+      <header class="page-header">
+        <p class="eyebrow">Recenzie</p>
+        <h1>Recenzie Stripchat Traffic Bot: Mai mulți viewer, stripscore mai mare, câștiguri mai mari</h1>
+        <p class="lead">
+          Pagina "Popular" de pe Stripchat este dominată de camere care au deja număr uriaș de urmăritori și
+          stripscore ridicat. Fără un impuls, stream-urile noi rareori sunt văzute — și fără vizionări, nu
+          există creștere de stripscore și nici bacșișuri. Această recenzie acoperă Stripchat_traffic_bot, un
+          instrument de promovare bazat pe Telegram creat pentru a rezolva exact această problemă de
+          vizibilitate.
+        </p>
+        <div class="stat-row">
+          <div class="stat-chip"><span class="stat-num">$10</span><span class="stat-label">tarif de start / oră</span></div>
+          <div class="stat-chip"><span class="stat-num">~10 min</span><span class="stat-label">până la mișcare în clasament</span></div>
+          <div class="stat-chip"><span class="stat-num">20%</span><span class="stat-label">bonus la depunere de $200+</span></div>
+        </div>
+      </header>
+
+      <figure class="page-hero-image">
+        <img src="/images/stripchat-traffic-bot-popular-placement.svg" alt="Bot de trafic plasând o cameră în categoria Popular de pe Stripchat cu o tendință de creștere a viewerilor" width="640" height="360" loading="lazy" />
+      </figure>
+
+      <section>
+        <h2>Ce este Stripchat_traffic_bot?</h2>
+        <p>
+          <a href="https://t.me/Stripchat_traffic_bot" target="_blank" rel="noopener">Stripchat_traffic_bot</a>
+          este un bot de comenzi self-service pentru promovarea modelelor Stripchat, pe Telegram. În loc să
+          scrii unei agenții și să aștepți o ofertă manuală, deschizi botul, rezervi un interval de promovare
+          pentru camera ta, iar sistemul plasează stream-ul tău în categoria cea mai populară de pe Stripchat
+          (stripchat.com/girls/popular) pe durata rezervată. Aceea este categoria unde ajunge cea mai mare
+          parte a traficului organic de căutare al Stripchat, deci a pune o cameră în fața ei — chiar și
+          temporar — este o pârghie importantă pentru creșterea viewerilor.
+        </p>
+        <p>Interfața botului este simplă în mod deliberat:</p>
+        <ul>
+          <li><strong>Creează comandă</strong> — rezervă o fereastră de promovare pentru un model/o cameră anume</li>
+          <li><strong>Sistem de recomandare</strong> — câștigă credit aducând alte modele sau cumpărători</li>
+          <li><strong>Depunere</strong> — alimentează-ți soldul prin cripto</li>
+          <li><strong>Istoric comenzi</strong> — urmărește promovările viitoare, active, anulate și finalizate</li>
+          <li><strong>Profil</strong> — verifică soldul și detaliile contului</li>
+        </ul>
+
+        <div class="feature-grid">
+          {botMenu.map(({ title, desc, icon }) => (
+            <div class="feature-card">
+              <div class="icon-badge" set:html={`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${icons[icon]}</svg>`} />
+              <h3>{title}</h3>
+              <p>{desc}</p>
+            </div>
+          ))}
+        </div>
+
+        <p>
+          Totul se desfășoară printr-un formular de comandă simplu: introduci username-ul modelului, alegi o
+          dată, ora de start (afișată în fusul tău orar) și durata în ore. Promovarea pornește apoi automat la
+          ora programată.
+        </p>
+      </section>
+
+      <section>
+        <h2>Cum funcționează de fapt promovarea</h2>
+
+        <div class="flow-steps">
+          {flowSteps.map(({ n, title, desc }, i) => (
+            <>
+              <div class="flow-step">
+                <span class="flow-num">{n}</span>
+                <h3>{title}</h3>
+                <p>{desc}</p>
+              </div>
+              {i < flowSteps.length - 1 && <span class="flow-arrow" aria-hidden="true">→</span>}
+            </>
+          ))}
+        </div>
+
+        <p>
+          Cu alte cuvinte: botul nu fabrică bacșișuri sau urmăritori falși — obține pentru cameră un loc în
+          categoria unde deja curge trafic real. Ce se întâmplă după depinde în totalitate de calitatea
+          stream-ului modelului. Aceasta este o limitare în mod deliberat sinceră, care merită înțeleasă
+          înainte de rezervare:
+        </p>
+
+        <div class="pros-cons">
+          <div class="pros-col">
+            <p class="pros-cons-label">Ce poate face</p>
+            <ul class="check-list check-list--yes">
+              <li>Pune camera ta în fața traficului real Stripchat</li>
+              <li>Împinge camera ta în pagina cu cel mai mare trafic</li>
+              <li>Începe să miște stripscore-ul tău în câteva minute</li>
+            </ul>
+          </div>
+          <div class="cons-col">
+            <p class="pros-cons-label">Ce nu poate face</p>
+            <ul class="check-list check-list--no">
+              <li>Forța viewerii să rămână, să interacționeze sau să trimită tokeni</li>
+              <li>Repara un stream slab sau o calitate de producție proastă</li>
+              <li>Face ca avansul în clasament să dureze mai mult decât orele plătite</li>
+            </ul>
+          </div>
+        </div>
+        <p>
+          Dacă evaluezi acest serviciu sau unul similar, această distincție — plasare de trafic vs. venit
+          garantat — este modul sincer de a gândi despre asta.
+        </p>
+      </section>
+
+      <section>
+        <h2>Prețuri: cât costă o promovare Stripchat</h2>
+        <p>Prețurile sunt clare și cresc pe măsura volumului:</p>
+
+        <div class="pricing-grid">
+          {pricingTiers.map(({ label, rate, note, bonus, highlight }) => (
+            <div class={`pricing-card${highlight ? ' pricing-card--best' : ''}`}>
+              {highlight && <span class="pricing-badge">Cel mai bun tarif</span>}
+              <p class="pricing-label">{label}</p>
+              <p class="pricing-rate">{rate}<span>/{note.replace('pe ', '')}</span></p>
+              {bonus && <p class="pricing-bonus">{bonus}</p>}
+            </div>
+          ))}
+        </div>
+
+        <p>
+          Poți rula promovări pentru orice număr de modele simultan, iar soldul nefolosit rămâne în contul tău
+          pentru comenzi viitoare. Plata se face prin depunere în cripto direct în bot, iar anularea unui
+          interval înainte de start returnează fondurile în soldul tău în loc să le pierzi — important dacă
+          programul unui model se schimbă în ultimul moment.
+        </p>
+      </section>
+
+      <section>
+        <h2>Cum îți crești stripscore-ul cu acest bot</h2>
+        <p>
+          Stripscore este metrica internă de clasament a Stripchat și este cea care decide unde apare camera
+          ta pe site. Creșterea lui nu înseamnă doar cumpărarea unui interval de promovare — timing-ul și
+          calitatea showului contează la fel de mult. Pe baza propriilor recomandări operaționale ale botului,
+          iată planul practic:
+        </p>
+
+        <div class="step-list">
+          {playbook.map(({ n, title, desc }) => (
+            <div class="step-card">
+              <span class="step-num">{n}</span>
+              <div>
+                <h3>{title}</h3>
+                <p>{desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <p>
+          Modelele care urmează această secvență — încălzire, început puternic, energie constantă pe tot
+          parcursul — obțin constant mai mult din fiecare oră plătită decât cele care doar pornesc promovarea
+          și speră.
+        </p>
+      </section>
+
+      <section>
+        <h2>Cum câștigi mai mult pe Stripchat folosind promovarea de trafic</h2>
+        <p>
+          Obiectivul final pentru majoritatea modelelor care rezervă o promovare nu este cifra stripscore în
+          sine — sunt bacșișurile, urmăritorii și viewerii care revin, care vin odată cu o vizibilitate mai
+          bună. Câteva moduri prin care utilizatorii acestui bot raportează că obțin rezultate mai bune:
+        </p>
+
+        <div class="feature-grid">
+          {earnMore.map(({ title, desc, icon }) => (
+            <div class="feature-card">
+              <div class="icon-badge icon-badge--violet" set:html={`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${icons[icon]}</svg>`} />
+              <h3>{title}</h3>
+              <p>{desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="verdict-section">
+        <h2>Merită?</h2>
+        <div class="callout-block">
+          <p>
+            Pentru modelele care au deja un show solid, dar sunt blocate pe pagina 3 a rezultatelor de căutare,
+            un astfel de impuls de trafic rezolvă o problemă reală și specifică: să fii văzut. Nu înlocuiește
+            calitatea stream-ului și nu repară o cameră în care nimeni nu vrea să rămână — dar ca mod de a
+            aduce trafic real de căutare Stripchat spre camera ta într-o fereastră programată, face exact ce
+            promite. Prețurile sunt transparente, comenzile sunt self-service și urmăribile, iar intervalele
+            pot fi anulate și rambursate dacă se schimbă planurile.
+          </p>
+        </div>
+      </section>
+
+      <section class="faq">
+        <h2>Întrebări frecvente</h2>
+
+        <div class="faq-item">
+          <h3>Ce înseamnă "promovare" la acest bot?</h3>
+          <p>
+            Plasează camera ta în categoria cea mai populară de pe Stripchat (stripchat.com/girls/popular),
+            pagina cu cel mai mare trafic de pe platformă, pentru orele rezervate.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Cât de repede începe să funcționeze?</h3>
+          <p>Clasamentul începe de obicei să urce în aproximativ 10 minute de la începerea promovării.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Viewerii sunt reali?</h3>
+          <p>Fiecare viewer care ajunge prin categoria populară după ce camera ta este plasată acolo este un utilizator real Stripchat.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Pot anula un interval rezervat?</h3>
+          <p>Da — anularea înainte de ora de start returnează suma în soldul tău din bot.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Cum plătesc?</h3>
+          <p>Depunerile se fac în cripto direct prin opțiunea Deposit a botului.</p>
+        </div>
+      </section>
+
+      <section class="cta-section">
+        <div class="cta-icon" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        </div>
+        <h2>Încearcă Stripchat_traffic_bot</h2>
+        <p>Rezervă un interval de promovare direct prin bot, pe Telegram.</p>
+        <p><a href="https://t.me/Stripchat_traffic_bot" target="_blank" rel="noopener" class="cta-link">Deschide @Stripchat_traffic_bot →</a></p>
+      </section>
+
+      <section class="related-articles">
+        <h2>Articole similare</h2>
+        <ul>
+          <li><a href="/ro/how-cam-algorithm-ranks-rooms">Cum clasifică algoritmul cam camerele</a></li>
+          <li><a href="/ro/why-low-viewers-webcam">De ce camera ta de webcam are puțini viewer</a></li>
+          <li><a href="/ro/best-streaming-times-by-region">Cele mai bune ore de streaming pe regiune</a></li>
+          <li><a href="/ro/model-promotion">Servicii de promovare a modelelor</a></li>
+          <li><a href="/ro/platforms-we-work-with">Platforme cu care lucrăm</a></li>
+        </ul>
+      </section>
+
+      <p class="source-note">
+        Această recenzie se bazează pe anunțul public de Telegram al botului, fluxul său de comandă din
+        aplicație și FAQ-ul oficial publicat la
+        <a href="https://teletype.in/@webcamtraffic/stripchat-traffic-bot" target="_blank" rel="noopener">teletype.in/@webcamtraffic/stripchat-traffic-bot</a>.
+      </p>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .page-content { padding-block: 3rem 5rem; }
+  .page-header { margin-bottom: 3rem; border-bottom: 1px solid var(--border); padding-bottom: 2rem; }
+  .eyebrow { font-family: var(--font-heading); font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: .75rem; }
+  .page-header h1 { margin-bottom: 1.25rem; }
+  .lead { font-size: 1.125rem; max-width: 60ch; margin-bottom: 1.75rem; }
+
+  .stat-row { display: flex; flex-wrap: wrap; gap: .875rem; }
+  .stat-chip {
+    display: flex; flex-direction: column; gap: .2rem;
+    background: rgba(255,255,255,.03); border: 1px solid var(--border);
+    border-radius: var(--radius-md); padding: .75rem 1.25rem; min-width: 160px;
+  }
+  .stat-num { font-family: var(--font-heading); font-weight: 700; font-style: italic; font-size: 1.4rem; background: linear-gradient(135deg, #818cf8, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .stat-label { font-size: .75rem; color: var(--fg-faint); font-weight: 600; }
+
+  article section { margin-bottom: 2.5rem; }
+  article h2 { margin-bottom: 1rem; }
+  article h3 { margin-bottom: .5rem; margin-top: 0; }
+  article p { margin-bottom: .875rem; }
+  article ul, article ol { margin: .75rem 0 .875rem 1.5rem; display: flex; flex-direction: column; gap: .5rem; }
+  article li { color: var(--fg-muted); }
+  article a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+  article a:hover { color: var(--accent-hover); }
+
+  .feature-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; margin: 1.25rem 0 1.5rem; }
+  .feature-card {
+    background: rgba(255,255,255,.03); border: 1px solid var(--border); border-radius: var(--radius-lg);
+    padding: 1.5rem; transition: border-color var(--transition), background var(--transition);
+  }
+  .feature-card:hover { border-color: rgba(129,140,248,.3); background: rgba(129,140,248,.05); }
+  .feature-card h3 { font-size: 1.05rem; }
+  .feature-card p { font-size: .9rem; margin-bottom: 0; }
+  .icon-badge {
+    width: 42px; height: 42px; border-radius: var(--radius-md);
+    background: rgba(99,102,241,.15); border: 1px solid rgba(129,140,248,.25);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--accent); margin-bottom: .875rem;
+  }
+  .icon-badge--violet { background: rgba(139,92,246,.15); border-color: rgba(167,139,250,.3); color: #a78bfa; }
+
+  .flow-steps { display: flex; align-items: stretch; gap: 1rem; margin: 1.25rem 0 1.5rem; flex-wrap: wrap; }
+  .flow-step {
+    flex: 1 1 200px; background: rgba(255,255,255,.03); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 1.5rem;
+  }
+  .flow-step h3 { font-size: 1.05rem; }
+  .flow-step p { font-size: .9rem; margin-bottom: 0; }
+  .flow-num {
+    display: inline-block; font-family: var(--font-heading); font-weight: 700; font-style: italic;
+    font-size: 1.1rem; color: var(--accent); margin-bottom: .5rem;
+  }
+  .flow-arrow { display: flex; align-items: center; justify-content: center; color: var(--fg-faint); font-size: 1.25rem; flex: 0 0 auto; }
+  @media (max-width: 700px) { .flow-arrow { display: none; } }
+
+  .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.25rem 0 1.5rem; }
+  @media (max-width: 600px) { .pros-cons { grid-template-columns: 1fr; } }
+  .pros-col, .cons-col { border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; background: rgba(255,255,255,.03); }
+  .pros-cons-label { font-family: var(--font-heading); font-size: .8rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--fg-faint); margin-bottom: .75rem; }
+  .check-list { margin: 0 !important; list-style: none; display: flex; flex-direction: column; gap: .625rem; }
+  .check-list li { position: relative; padding-left: 1.6rem; font-size: .9375rem; }
+  .check-list--yes li::before { content: '✓'; position: absolute; left: 0; color: #34d399; font-weight: 700; }
+  .check-list--no li::before { content: '✕'; position: absolute; left: 0; color: #fb7185; font-weight: 700; }
+
+  .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin: 1.25rem 0 1.5rem; }
+  .pricing-card {
+    position: relative; border: 1px solid var(--border); border-radius: var(--radius-lg);
+    padding: 1.75rem 1.5rem; text-align: center; background: rgba(255,255,255,.03);
+  }
+  .pricing-card--best { border-color: rgba(129,140,248,.4); background: rgba(99,102,241,.08); }
+  .pricing-badge {
+    position: absolute; top: -.65rem; left: 50%; transform: translateX(-50%);
+    font-family: var(--font-heading); font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff; padding: .25rem .75rem; border-radius: 100px;
+    white-space: nowrap;
+  }
+  .pricing-label { font-size: .875rem; color: var(--fg-muted); font-weight: 600; margin-bottom: .5rem; }
+  .pricing-rate { font-family: var(--font-heading); font-weight: 700; font-style: italic; font-size: 2rem; color: var(--fg); margin-bottom: .25rem; }
+  .pricing-rate span { font-size: 1rem; font-weight: 600; font-style: normal; color: var(--fg-faint); }
+  .pricing-bonus { font-size: .8125rem; color: #a78bfa; font-weight: 700; margin-bottom: 0; }
+
+  .step-list { display: flex; flex-direction: column; gap: .875rem; margin: 1.25rem 0 1.5rem; }
+  .step-card {
+    display: flex; gap: 1.25rem; align-items: flex-start;
+    border: 1px solid var(--border); border-radius: var(--radius-lg);
+    padding: 1.25rem 1.5rem; background: rgba(255,255,255,.03);
+  }
+  .step-num {
+    flex: 0 0 auto; width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-heading); font-weight: 700; font-size: .9375rem;
+  }
+  .step-card h3 { font-size: 1rem; }
+  .step-card p { font-size: .9rem; margin-bottom: 0; }
+
+  .callout-block {
+    border-left: 3px solid var(--accent); background: rgba(129,140,248,.06);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0; padding: 1.5rem 1.75rem;
+  }
+  .callout-block p { margin-bottom: 0; }
+
+  .faq { display: flex; flex-direction: column; gap: 0; }
+  .faq h2 { margin-bottom: 1.5rem; }
+  .faq-item { padding: 1.5rem 0; border-top: 1px solid var(--border); }
+  .faq-item:last-child { border-bottom: 1px solid var(--border); }
+
+  .cta-section {
+    background: var(--bg-raised); border: 1px solid var(--border); border-radius: var(--radius-lg);
+    padding: 2.5rem 2rem; margin-top: 3rem; text-align: center;
+  }
+  .cta-icon {
+    width: 56px; height: 56px; border-radius: 50%; margin: 0 auto 1.25rem;
+    background: rgba(99,102,241,.15); border: 1px solid rgba(129,140,248,.25);
+    color: var(--accent); display: flex; align-items: center; justify-content: center;
+  }
+  .cta-section h2 { margin-bottom: .5rem; }
+  .cta-section p { margin-inline: auto; }
+  .cta-link {
+    display: inline-flex; align-items: center; gap: .5rem; margin-top: .5rem;
+    font-family: var(--font-heading); font-weight: 700; font-size: .9375rem;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff !important;
+    padding: .75rem 1.75rem; border-radius: var(--radius-md); text-decoration: none !important;
+  }
+  .cta-link:hover { opacity: .9; }
+
+  .source-note { font-size: .8125rem; color: var(--fg-faint); border-top: 1px solid var(--border); padding-top: 1.5rem; max-width: none; }
+</style>
