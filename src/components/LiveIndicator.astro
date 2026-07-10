@@ -10,32 +10,32 @@ const STR: Record<string, Record<string, string>> = {
   en: {
     good: 'Great time to start stream right now', average: 'Average demand right now',
     low: 'Low demand right now — consider waiting',
-    basedOn: 'Based on viewer traffic and model competition in the last hour',
+    basedOn: 'Average viewers per room',
   },
   de: {
     good: 'Gerade ein guter Zeitpunkt, um den Stream zu starten', average: 'Gerade durchschnittliche Nachfrage',
     low: 'Gerade geringe Nachfrage — evtl. warten',
-    basedOn: 'Basierend auf Zuschauerverkehr und Model-Konkurrenz in der letzten Stunde',
+    basedOn: 'Durchschnittliche Zuschauer pro Raum',
   },
   es: {
     good: 'Buen momento para empezar el stream ahora', average: 'Demanda media ahora mismo',
     low: 'Poca demanda ahora — considera esperar',
-    basedOn: 'Basado en el tráfico de espectadores y la competencia de modelos en la última hora',
+    basedOn: 'Espectadores promedio por sala',
   },
   ro: {
     good: 'Moment bun să începi streamul acum', average: 'Cerere medie chiar acum',
     low: 'Cerere scăzută acum — ia în calcul să aștepți',
-    basedOn: 'Pe baza traficului de spectatori și a concurenței dintre modele în ultima oră',
+    basedOn: 'Spectatori medii per cameră',
   },
   uk: {
     good: 'Зараз гарний час почати стрім', average: 'Зараз середній попит',
     low: 'Зараз низький попит — варто почекати',
-    basedOn: 'На основі трафіку глядачів і конкуренції моделей за останню годину',
+    basedOn: 'Середня кількість глядачів на кімнату',
   },
   ru: {
     good: 'Сейчас хорошее время начать стрим', average: 'Сейчас средний спрос',
     low: 'Сейчас низкий спрос — возможно, стоит подождать',
-    basedOn: 'На основе трафика зрителей и конкуренции моделей за последний час',
+    basedOn: 'Среднее количество зрителей на комнату',
   },
 };
 const t = STR[lang] ?? STR.en;

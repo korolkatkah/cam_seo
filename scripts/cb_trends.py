@@ -106,12 +106,22 @@ def build_summary(rows, now_ts):
     hours_covered = (ts_all[-1] - ts_all[0]) / 3600 if len(ts_all) > 1 else 0
     n_snaps = len(ts_all)
 
-    demand, supply = defaultdict(int), defaultdict(set)
+    # Average the viewers-per-room ratio *within each snapshot* first, then
+    # average those ratios across snapshots per hour. Summing raw viewer
+    # counts across snapshots (old approach) inflates the score for hours
+    # that happen to have more snapshots, since the same rooms keep getting
+    # re-counted while the unique-room denominator barely grows.
+    by_ts = defaultdict(list)
     for r in public_rows:
-        h = datetime.fromtimestamp(r["ts"], tz=timezone.utc).hour
-        demand[h] += r.get("num_users") or 0
-        supply[h].add(r["username"])
-    score = {h: demand[h] / max(len(supply[h]), 1) for h in demand}
+        by_ts[r["ts"]].append(r)
+    snap_ratios = defaultdict(list)
+    for ts, snap_rows in by_ts.items():
+        h = datetime.fromtimestamp(ts, tz=timezone.utc).hour
+        total_users = sum(r.get("num_users") or 0 for r in snap_rows)
+        n_rooms = len({r["username"] for r in snap_rows})
+        if n_rooms:
+            snap_ratios[h].append(total_users / n_rooms)
+    score = {h: statistics.mean(v) for h, v in snap_ratios.items()}
     best_hours = sorted(score, key=score.get, reverse=True)
 
     tag_users, tag_rooms = defaultdict(list), defaultdict(set)
