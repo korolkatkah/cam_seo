@@ -8,34 +8,34 @@ const { lang = 'en' } = Astro.props;
 
 const STR: Record<string, Record<string, string>> = {
   en: {
-    good: 'Great time to start stream right now', average: 'Average competition on the site',
-    low: 'Low demand right now — consider waiting',
-    basedOn: 'Average viewers per room',
+    good: 'Great time to start stream on Chaturbate right now', average: 'Average competition on Chaturbate',
+    low: 'Low demand on Chaturbate right now — consider waiting',
+    basedOn: 'Average viewers per room on Chaturbate',
   },
   de: {
-    good: 'Gerade ein guter Zeitpunkt, um den Stream zu starten', average: 'Durchschnittliche Konkurrenz auf der Seite',
-    low: 'Gerade geringe Nachfrage — evtl. warten',
-    basedOn: 'Durchschnittliche Zuschauer pro Raum',
+    good: 'Gerade ein guter Zeitpunkt, um den Stream auf Chaturbate zu starten', average: 'Durchschnittliche Konkurrenz auf Chaturbate',
+    low: 'Gerade geringe Nachfrage auf Chaturbate — evtl. warten',
+    basedOn: 'Durchschnittliche Zuschauer pro Raum auf Chaturbate',
   },
   es: {
-    good: 'Buen momento para empezar el stream ahora', average: 'Competencia media en el sitio',
-    low: 'Poca demanda ahora — considera esperar',
-    basedOn: 'Espectadores promedio por sala',
+    good: 'Buen momento para empezar el stream en Chaturbate ahora', average: 'Competencia media en Chaturbate',
+    low: 'Poca demanda en Chaturbate ahora — considera esperar',
+    basedOn: 'Espectadores promedio por sala en Chaturbate',
   },
   ro: {
-    good: 'Moment bun să începi streamul acum', average: 'Concurență medie pe site',
-    low: 'Cerere scăzută acum — ia în calcul să aștepți',
-    basedOn: 'Spectatori medii per cameră',
+    good: 'Moment bun să începi streamul pe Chaturbate acum', average: 'Concurență medie pe Chaturbate',
+    low: 'Cerere scăzută pe Chaturbate acum — ia în calcul să aștepți',
+    basedOn: 'Spectatori medii per cameră pe Chaturbate',
   },
   uk: {
-    good: 'Зараз гарний час почати стрім', average: 'Середня конкуренція на сайті',
-    low: 'Зараз низький попит — варто почекати',
-    basedOn: 'Середня кількість глядачів на кімнату',
+    good: 'Зараз гарний час почати стрім на Chaturbate', average: 'Середня конкуренція на Chaturbate',
+    low: 'Зараз низький попит на Chaturbate — варто почекати',
+    basedOn: 'Середня кількість глядачів на кімнату на Chaturbate',
   },
   ru: {
-    good: 'Сейчас хорошее время начать стрим', average: 'Средняя конкуренция на сайте',
-    low: 'Сейчас низкий спрос — возможно, стоит подождать',
-    basedOn: 'Среднее количество зрителей на комнату',
+    good: 'Сейчас хорошее время начать стрим на Chaturbate', average: 'Средняя конкуренция на Chaturbate',
+    low: 'Сейчас низкий спрос на Chaturbate — возможно, стоит подождать',
+    basedOn: 'Среднее количество зрителей на комнату на Chaturbate',
   },
 };
 const t = STR[lang] ?? STR.en;
