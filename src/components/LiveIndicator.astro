@@ -1,0 +1,131 @@
+---
+import trends from '../data/cb-trends.json';
+
+interface Props {
+  lang?: string;
+}
+const { lang = 'en' } = Astro.props;
+
+const STR: Record<string, Record<string, string>> = {
+  en: {
+    good: 'Great time to go live right now', average: 'Average demand right now',
+    low: 'Low demand right now — consider waiting',
+    basedOn: 'Based on data from the last 24 hours',
+  },
+  de: {
+    good: 'Gerade ein guter Zeitpunkt zum Live-Gehen', average: 'Gerade durchschnittliche Nachfrage',
+    low: 'Gerade geringe Nachfrage — evtl. warten',
+    basedOn: 'Basierend auf Daten der letzten 24 Stunden',
+  },
+  es: {
+    good: 'Buen momento para salir en vivo ahora', average: 'Demanda media ahora mismo',
+    low: 'Poca demanda ahora — considera esperar',
+    basedOn: 'Basado en datos de las últimas 24 horas',
+  },
+  ro: {
+    good: 'Moment bun să intri live acum', average: 'Cerere medie chiar acum',
+    low: 'Cerere scăzută acum — ia în calcul să aștepți',
+    basedOn: 'Pe baza datelor din ultimele 24 de ore',
+  },
+  uk: {
+    good: 'Зараз гарний час виходити в ефір', average: 'Зараз середній попит',
+    low: 'Зараз низький попит — варто почекати',
+    basedOn: 'На основі даних за останні 24 години',
+  },
+  ru: {
+    good: 'Сейчас хорошее время выходить в эфир', average: 'Сейчас средний спрос',
+    low: 'Сейчас низкий спрос — возможно, стоит подождать',
+    basedOn: 'На основе данных за последние 24 часа',
+  },
+};
+const t = STR[lang] ?? STR.en;
+
+const allHours = trends.best_hours_utc ?? [];
+---
+
+{allHours.length > 0 && (
+  <div class="live-indicator-wrap" data-live-indicator-wrap hidden>
+    <div
+      class="live-indicator"
+      data-live-indicator
+      data-hours={JSON.stringify(allHours)}
+      data-good={t.good}
+      data-average={t.average}
+      data-low={t.low}
+    >
+      <span class="live-indicator-dot"></span>
+      <span class="live-indicator-text"></span>
+    </div>
+    <p class="live-indicator-caption">{t.basedOn}</p>
+  </div>
+)}
+
+<script>
+  function pad(n: number): string {
+    return String(n).padStart(2, '0');
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-live-indicator]').forEach((el) => {
+    let hours: { hour: number; score: number }[] = [];
+    try {
+      hours = JSON.parse(el.dataset.hours || '[]');
+    } catch {
+      hours = [];
+    }
+    if (!hours.length) return;
+
+    // Base the read on the last fully-completed hour, not the in-progress one —
+    // simpler and avoids ever describing "now" using a neighboring hour's data.
+    const prevHour = (new Date().getUTCHours() + 23) % 24;
+    const entry = hours.find((h) => h.hour === prevHour);
+    if (!entry) return;
+
+    const sorted = [...hours].sort((a, b) => b.score - a.score);
+    const rank = sorted.findIndex((h) => h.hour === prevHour);
+    const third = Math.max(1, Math.ceil(sorted.length / 3));
+    const status: 'good' | 'average' | 'low' = rank < third ? 'good' : rank < third * 2 ? 'average' : 'low';
+
+    const tzOffsetMin = new Date().getTimezoneOffset();
+    const startTotal = (((prevHour * 60 - tzOffsetMin) % 1440) + 1440) % 1440;
+    const endTotal = (startTotal + 60) % 1440;
+    const fmt = (totalMin: number) => `${pad(Math.floor(totalMin / 60))}:${pad(totalMin % 60)}`;
+    const timeRange = `${fmt(startTotal)}–${fmt(endTotal)}`;
+
+    const textEl = el.querySelector<HTMLElement>('.live-indicator-text');
+    if (textEl) textEl.textContent = `${el.dataset[status] ?? ''} (${timeRange})`;
+    el.dataset.status = status;
+
+    const wrap = el.closest<HTMLElement>('[data-live-indicator-wrap]');
+    if (wrap) wrap.hidden = false;
+  });
+</script>
+
+<style>
+  .live-indicator-wrap {
+    display: inline-flex; flex-direction: column; align-items: center; gap: 6px;
+  }
+  .live-indicator-caption {
+    font-size: 0.6875rem; color: #64748b; font-weight: 600;
+  }
+  .live-indicator {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 7px 16px; border-radius: 99px;
+    font-size: 0.8125rem; font-weight: 700;
+  }
+  .live-indicator-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .live-indicator[data-status="good"] {
+    background: rgba(52,211,153,0.12); border: 1px solid rgba(52,211,153,0.35); color: #34d399;
+  }
+  .live-indicator[data-status="good"] .live-indicator-dot {
+    background: #34d399; animation: live-indicator-pulse 2s infinite;
+  }
+  @keyframes live-indicator-pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
+  .live-indicator[data-status="average"] {
+    background: rgba(251,191,36,0.12); border: 1px solid rgba(251,191,36,0.35); color: #fbbf24;
+  }
+  .live-indicator[data-status="average"] .live-indicator-dot { background: #fbbf24; }
+  .live-indicator[data-status="low"] {
+    background: rgba(248,113,113,0.12); border: 1px solid rgba(248,113,113,0.35); color: #f87171;
+  }
+  .live-indicator[data-status="low"] .live-indicator-dot { background: #f87171; }
+</style>

@@ -112,7 +112,7 @@ def build_summary(rows, now_ts):
         demand[h] += r.get("num_users") or 0
         supply[h].add(r["username"])
     score = {h: demand[h] / max(len(supply[h]), 1) for h in demand}
-    best_hours = sorted(score, key=score.get, reverse=True)[:10]
+    best_hours = sorted(score, key=score.get, reverse=True)
 
     tag_users, tag_rooms = defaultdict(list), defaultdict(set)
     for r in public_rows:

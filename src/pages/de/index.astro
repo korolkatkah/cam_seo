@@ -1,6 +1,7 @@
 ---
 import Base from '@/layouts/Base.astro';
 import TrendsBlock from '@/components/TrendsBlock.astro';
+import LiveIndicator from '@/components/LiveIndicator.astro';
 const site = 'https://ewo.cam';
 const title = 'Webcam-Model & Studio Promotion Plattform';
 const description = 'EWO ist ein globaler Service für Webcam-Models und Studios. Traffic-Wachstum, Promotion und vollständiges Management. 1000+ Kunden, 10+ Jahre Erfahrung, 20+ Länder.';
@@ -133,6 +134,10 @@ const hreflang = [
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M6.5 5.5l4 2.5-4 2.5V5.5z" fill="currentColor"/></svg>
           Für Studios
         </a>
+      </div>
+
+      <div class="mt-4 flex justify-center">
+        <LiveIndicator lang="de" />
       </div>
 
       <div class="mt-10 flex items-center justify-center gap-2 flex-wrap">

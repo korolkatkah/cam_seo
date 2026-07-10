@@ -1,6 +1,7 @@
 ---
 import Base from '@/layouts/Base.astro';
 import TrendsBlock from '@/components/TrendsBlock.astro';
+import LiveIndicator from '@/components/LiveIndicator.astro';
 const site = 'https://ewo.cam';
 const title = 'Webcam Model & Studio Promotion Platform';
 const description = 'EWO is a global service for webcam models and studios. Traffic growth, promotion, and full management. 1000+ clients, 10+ years experience, 20+ countries.';
@@ -141,6 +142,10 @@ const hreflang = [
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M6.5 5.5l4 2.5-4 2.5V5.5z" fill="currentColor"/></svg>
           For Studios
         </a>
+      </div>
+
+      <div class="mt-4 flex justify-center">
+        <LiveIndicator lang="en" />
       </div>
 
       <div class="mt-10 flex items-center justify-center gap-2 flex-wrap">

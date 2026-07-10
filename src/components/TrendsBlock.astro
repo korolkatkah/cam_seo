@@ -132,7 +132,11 @@ const headingDate = new Intl.DateTimeFormat(LOCALE_MAP[lang] ?? 'en-US', {
 }).format(trends.generated_at ? new Date(trends.generated_at) : new Date());
 
 const hasData = trends.best_hours_utc?.length > 0 || trends.top_tags?.length > 0;
-const bestHours = (trends.best_hours_utc ?? []).slice(0, 10);
+const allHours = trends.best_hours_utc ?? [];
+const bestHours = [...allHours]
+  .sort((a: { score: number }, b: { score: number }) => b.score - a.score)
+  .slice(0, 10)
+  .sort((a: { hour: number }, b: { hour: number }) => a.hour - b.hour);
 const topTags = (trends.top_tags ?? []).slice(0, 30);
 const topTitles = (trends.top_titles ?? []).slice(0, 6);
 const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
