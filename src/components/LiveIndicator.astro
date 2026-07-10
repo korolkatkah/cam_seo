@@ -8,34 +8,34 @@ const { lang = 'en' } = Astro.props;
 
 const STR: Record<string, Record<string, string>> = {
   en: {
-    good: 'Great time to go live right now', average: 'Average demand right now',
+    good: 'Great time to start stream right now', average: 'Average demand right now',
     low: 'Low demand right now — consider waiting',
-    basedOn: 'Based on data from the last 24 hours',
+    basedOn: 'Based on viewer traffic and model competition in the last hour',
   },
   de: {
-    good: 'Gerade ein guter Zeitpunkt zum Live-Gehen', average: 'Gerade durchschnittliche Nachfrage',
+    good: 'Gerade ein guter Zeitpunkt, um den Stream zu starten', average: 'Gerade durchschnittliche Nachfrage',
     low: 'Gerade geringe Nachfrage — evtl. warten',
-    basedOn: 'Basierend auf Daten der letzten 24 Stunden',
+    basedOn: 'Basierend auf Zuschauerverkehr und Model-Konkurrenz in der letzten Stunde',
   },
   es: {
-    good: 'Buen momento para salir en vivo ahora', average: 'Demanda media ahora mismo',
+    good: 'Buen momento para empezar el stream ahora', average: 'Demanda media ahora mismo',
     low: 'Poca demanda ahora — considera esperar',
-    basedOn: 'Basado en datos de las últimas 24 horas',
+    basedOn: 'Basado en el tráfico de espectadores y la competencia de modelos en la última hora',
   },
   ro: {
-    good: 'Moment bun să intri live acum', average: 'Cerere medie chiar acum',
+    good: 'Moment bun să începi streamul acum', average: 'Cerere medie chiar acum',
     low: 'Cerere scăzută acum — ia în calcul să aștepți',
-    basedOn: 'Pe baza datelor din ultimele 24 de ore',
+    basedOn: 'Pe baza traficului de spectatori și a concurenței dintre modele în ultima oră',
   },
   uk: {
-    good: 'Зараз гарний час виходити в ефір', average: 'Зараз середній попит',
+    good: 'Зараз гарний час почати стрім', average: 'Зараз середній попит',
     low: 'Зараз низький попит — варто почекати',
-    basedOn: 'На основі даних за останні 24 години',
+    basedOn: 'На основі трафіку глядачів і конкуренції моделей за останню годину',
   },
   ru: {
-    good: 'Сейчас хорошее время выходить в эфир', average: 'Сейчас средний спрос',
+    good: 'Сейчас хорошее время начать стрим', average: 'Сейчас средний спрос',
     low: 'Сейчас низкий спрос — возможно, стоит подождать',
-    basedOn: 'На основе данных за последние 24 часа',
+    basedOn: 'На основе трафика зрителей и конкуренции моделей за последний час',
   },
 };
 const t = STR[lang] ?? STR.en;
