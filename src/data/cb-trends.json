@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-07-15T11:02:03Z",
+  "generated_at": "2026-07-15T11:16:21Z",
   "gender": "f",
-  "hours_covered": 23.8,
+  "hours_covered": 23.7,
   "snapshots": 110,
-  "rooms_seen": 29772,
+  "rooms_seen": 29782,
   "preliminary": false,
   "best_hours_utc": [
     {
@@ -52,7 +52,7 @@
     },
     {
       "hour": 11,
-      "score": 127
+      "score": 129
     },
     {
       "hour": 12,
@@ -106,12 +106,12 @@
   "top_tags": [
     {
       "tag": "hush",
-      "avg_users": 6859,
-      "rooms": 16
+      "avg_users": 6914,
+      "rooms": 15
     },
     {
       "tag": "tatted",
-      "avg_users": 5250,
+      "avg_users": 5168,
       "rooms": 7
     },
     {
@@ -121,23 +121,23 @@
     },
     {
       "tag": "suck",
-      "avg_users": 2745,
+      "avg_users": 2755,
       "rooms": 19
     },
     {
       "tag": "sloppyblowjobs",
-      "avg_users": 2275,
+      "avg_users": 2271,
       "rooms": 13
     },
     {
       "tag": "riding",
-      "avg_users": 1940,
+      "avg_users": 1920,
       "rooms": 6
     },
     {
       "tag": "privateopen",
-      "avg_users": 1868,
-      "rooms": 15
+      "avg_users": 1879,
+      "rooms": 14
     },
     {
       "tag": "brazilian",
@@ -146,17 +146,17 @@
     },
     {
       "tag": "athletic",
-      "avg_users": 1569,
+      "avg_users": 1554,
       "rooms": 21
     },
     {
       "tag": "solo",
-      "avg_users": 1379,
+      "avg_users": 1376,
       "rooms": 7
     },
     {
       "tag": "gym",
-      "avg_users": 1321,
+      "avg_users": 1327,
       "rooms": 16
     },
     {
@@ -171,17 +171,17 @@
     },
     {
       "tag": "multisquirt",
-      "avg_users": 966,
+      "avg_users": 965,
       "rooms": 25
     },
     {
       "tag": "cb15",
-      "avg_users": 953,
+      "avg_users": 950,
       "rooms": 17
     },
     {
       "tag": "kiss",
-      "avg_users": 828,
+      "avg_users": 821,
       "rooms": 9
     },
     {
@@ -190,13 +190,8 @@
       "rooms": 8
     },
     {
-      "tag": "toes",
-      "avg_users": 524,
-      "rooms": 25
-    },
-    {
       "tag": "sensual",
-      "avg_users": 512,
+      "avg_users": 510,
       "rooms": 105
     },
     {
@@ -206,52 +201,57 @@
     },
     {
       "tag": "erotic",
-      "avg_users": 468,
+      "avg_users": 467,
       "rooms": 200
     },
     {
+      "tag": "toes",
+      "avg_users": 442,
+      "rooms": 25
+    },
+    {
       "tag": "fuck",
-      "avg_users": 434,
-      "rooms": 45
+      "avg_users": 396,
+      "rooms": 44
     },
     {
       "tag": "bigdildo",
-      "avg_users": 397,
+      "avg_users": 396,
       "rooms": 35
     },
     {
       "tag": "fit",
       "avg_users": 346,
-      "rooms": 309
+      "rooms": 308
     },
     {
       "tag": "innocent",
-      "avg_users": 335,
+      "avg_users": 333,
       "rooms": 18
     },
     {
       "tag": "english",
-      "avg_users": 315,
+      "avg_users": 316,
       "rooms": 14
     },
     {
       "tag": "19",
-      "avg_users": 266,
-      "rooms": 36
+      "avg_users": 265,
+      "rooms": 35
     },
     {
       "tag": "strip",
-      "avg_users": 262,
-      "rooms": 24
+      "avg_users": 261,
+      "rooms": 23
     },
     {
       "tag": "tease",
       "avg_users": 261,
-      "rooms": 883
+      "rooms": 884
     },
     {
       "tag": "double",
-      "avg_users": 257,
+      "avg_users": 258,
       "rooms": 9
     }
   ],
@@ -273,7 +273,7 @@
       "subject": "hi♡ - All Goals reached! Thanks to all tippers! #bigboobs #erotic #fit #sensual"
     },
     {
-      "avg_users": 6861,
+      "avg_users": 6908,
       "subject": "Hot toy ride in ticket aftr goal ✨ Tip 555/1234/3333 ;) for pleasurable time [21852 tokens remaining]"
     },
     {
@@ -329,8 +329,8 @@
       "subject": "OF in bio"
     },
     {
-      "avg_users": 5134,
-      "subject": "Touch tits close [331 tokens left] #new #daddysgirl #18 #young #teen"
+      "avg_users": 5140,
+      "subject": "Touch tits close [297 tokens left] #new #daddysgirl #18 #young #teen"
     },
     {
       "avg_users": 5101,
@@ -339,13 +339,13 @@
   ],
   "economy": {
     "goal_median": 582,
-    "goal_p25": 249,
-    "goal_p75": 1091,
-    "goal_samples": 7839,
+    "goal_p25": 248,
+    "goal_p75": 1090,
+    "goal_samples": 7860,
     "top_patterns": [
       {
         "value": 111,
-        "count": 254
+        "count": 258
       },
       {
         "value": 222,
@@ -353,23 +353,23 @@
       },
       {
         "value": 100,
-        "count": 193
+        "count": 195
       },
       {
         "value": 25,
-        "count": 168
+        "count": 174
       },
       {
         "value": 55,
-        "count": 161
+        "count": 164
       },
       {
         "value": 333,
-        "count": 160
+        "count": 162
       },
       {
         "value": 99,
-        "count": 131
+        "count": 130
       },
       {
         "value": 33,
@@ -381,7 +381,7 @@
       },
       {
         "value": 50,
-        "count": 105
+        "count": 109
       }
     ],
     "multi_goal_share": 0.065,
