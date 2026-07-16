@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-07-16T05:31:52Z",
+  "generated_at": "2026-07-16T05:46:23Z",
   "gender": "f",
   "hours_covered": 23.8,
   "snapshots": 111,
-  "rooms_seen": 30632,
+  "rooms_seen": 30665,
   "preliminary": false,
   "best_hours_utc": [
     {
@@ -28,7 +28,7 @@
     },
     {
       "hour": 5,
-      "score": 104
+      "score": 105
     },
     {
       "hour": 6,
@@ -111,7 +111,7 @@
     },
     {
       "tag": "brazilian",
-      "avg_users": 2661,
+      "avg_users": 2660,
       "rooms": 6
     },
     {
@@ -121,32 +121,32 @@
     },
     {
       "tag": "goal",
-      "avg_users": 2270,
-      "rooms": 12
+      "avg_users": 2206,
+      "rooms": 13
     },
     {
       "tag": "cb15",
-      "avg_users": 2128,
+      "avg_users": 2127,
       "rooms": 20
     },
     {
       "tag": "muscles",
-      "avg_users": 1817,
+      "avg_users": 1807,
       "rooms": 41
     },
     {
       "tag": "bikini",
-      "avg_users": 1346,
+      "avg_users": 1332,
       "rooms": 8
     },
     {
       "tag": "hotwife",
-      "avg_users": 903,
+      "avg_users": 907,
       "rooms": 16
     },
     {
       "tag": "nude",
-      "avg_users": 755,
+      "avg_users": 753,
       "rooms": 68
     },
     {
@@ -156,33 +156,38 @@
     },
     {
       "tag": "assfuck",
-      "avg_users": 631,
+      "avg_users": 636,
       "rooms": 9
     },
     {
       "tag": "sloppyblowjobs",
-      "avg_users": 569,
+      "avg_users": 575,
       "rooms": 8
     },
     {
       "tag": "teasing",
-      "avg_users": 563,
+      "avg_users": 566,
       "rooms": 37
     },
     {
       "tag": "suck",
-      "avg_users": 553,
+      "avg_users": 551,
       "rooms": 14
     },
     {
       "tag": "blond",
-      "avg_users": 541,
+      "avg_users": 543,
       "rooms": 48
     },
     {
       "tag": "gym",
-      "avg_users": 400,
+      "avg_users": 398,
       "rooms": 19
+    },
+    {
+      "tag": "fuck",
+      "avg_users": 380,
+      "rooms": 44
     },
     {
       "tag": "shower",
@@ -191,23 +196,18 @@
     },
     {
       "tag": "multisquirt",
-      "avg_users": 365,
+      "avg_users": 366,
       "rooms": 25
     },
     {
       "tag": "bj",
-      "avg_users": 339,
+      "avg_users": 338,
       "rooms": 42
     },
     {
-      "tag": "fuck",
-      "avg_users": 324,
-      "rooms": 45
-    },
-    {
       "tag": "goddess",
-      "avg_users": 251,
-      "rooms": 168
+      "avg_users": 250,
+      "rooms": 166
     },
     {
       "tag": "smile",
@@ -216,43 +216,43 @@
     },
     {
       "tag": "blonde",
-      "avg_users": 235,
+      "avg_users": 234,
       "rooms": 1492
     },
     {
       "tag": "erotic",
       "avg_users": 225,
-      "rooms": 218
-    },
-    {
-      "tag": "young",
-      "avg_users": 210,
-      "rooms": 3075
+      "rooms": 217
     },
     {
       "tag": "sexy",
-      "avg_users": 209,
-      "rooms": 895
+      "avg_users": 217,
+      "rooms": 897
+    },
+    {
+      "tag": "young",
+      "avg_users": 211,
+      "rooms": 3075
     },
     {
       "tag": "cute",
-      "avg_users": 202,
-      "rooms": 1597
+      "avg_users": 203,
+      "rooms": 1603
     },
     {
       "tag": "teen",
-      "avg_users": 201,
-      "rooms": 4033
+      "avg_users": 200,
+      "rooms": 4042
     },
     {
       "tag": "18",
       "avg_users": 200,
-      "rooms": 4542
+      "rooms": 4549
     },
     {
       "tag": "tease",
-      "avg_users": 197,
-      "rooms": 865
+      "avg_users": 194,
+      "rooms": 867
     }
   ],
   "top_titles": [
@@ -265,7 +265,7 @@
       "subject": "Lets get naughty together  <3 #petite #young #muscles #cute #feet [3791 tokens remaining]"
     },
     {
-      "avg_users": 8245,
+      "avg_users": 8253,
       "subject": "let's make today unforgettable 😘 #new #teen #young #blonde"
     },
     {
@@ -285,7 +285,7 @@
       "subject": "i'm backk! 😘 join to have some fun!! #blonde #bigboobs #skinny #young"
     },
     {
-      "avg_users": 6833,
+      "avg_users": 6826,
       "subject": "Hot toy ride in ticket aftr goal ✨ Tip 555/1234/3333 ;) for pleasurable time [21648 tokens remaining]"
     },
     {
@@ -338,46 +338,46 @@
     }
   ],
   "economy": {
-    "goal_median": 590,
-    "goal_p25": 243,
-    "goal_p75": 1090,
-    "goal_samples": 8023,
+    "goal_median": 585,
+    "goal_p25": 244,
+    "goal_p75": 1081,
+    "goal_samples": 8029,
     "top_patterns": [
       {
         "value": 111,
-        "count": 292
+        "count": 283
       },
       {
         "value": 222,
-        "count": 235
+        "count": 229
       },
       {
         "value": 100,
-        "count": 213
+        "count": 214
       },
       {
         "value": 25,
-        "count": 177
+        "count": 172
       },
       {
         "value": 55,
-        "count": 168
-      },
-      {
-        "value": 99,
-        "count": 163
+        "count": 169
       },
       {
         "value": 333,
-        "count": 159
+        "count": 158
+      },
+      {
+        "value": 99,
+        "count": 153
       },
       {
         "value": 200,
-        "count": 117
+        "count": 116
       },
       {
         "value": 33,
-        "count": 114
+        "count": 115
       },
       {
         "value": 38,
@@ -385,8 +385,8 @@
       }
     ],
     "multi_goal_share": 0.066,
-    "with_goal_share": 0.529,
-    "with_price_share": 0.687
+    "with_goal_share": 0.528,
+    "with_price_share": 0.686
   },
   "recommendation": {
     "tags": [
