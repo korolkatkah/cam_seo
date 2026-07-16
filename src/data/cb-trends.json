@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-07-16T06:02:10Z",
+  "generated_at": "2026-07-16T06:16:20Z",
   "gender": "f",
-  "hours_covered": 23.8,
+  "hours_covered": 23.7,
   "snapshots": 110,
   "rooms_seen": 30660,
   "preliminary": false,
@@ -32,7 +32,7 @@
     },
     {
       "hour": 6,
-      "score": 103
+      "score": 106
     },
     {
       "hour": 7,
@@ -111,7 +111,7 @@
     },
     {
       "tag": "brazilian",
-      "avg_users": 2701,
+      "avg_users": 2700,
       "rooms": 6
     },
     {
@@ -121,22 +121,22 @@
     },
     {
       "tag": "goal",
-      "avg_users": 2177,
+      "avg_users": 2150,
       "rooms": 13
     },
     {
       "tag": "cb15",
-      "avg_users": 2134,
+      "avg_users": 2140,
       "rooms": 20
     },
     {
       "tag": "muscles",
-      "avg_users": 1801,
+      "avg_users": 1791,
       "rooms": 41
     },
     {
       "tag": "bikini",
-      "avg_users": 1317,
+      "avg_users": 1304,
       "rooms": 8
     },
     {
@@ -146,7 +146,7 @@
     },
     {
       "tag": "nude",
-      "avg_users": 757,
+      "avg_users": 759,
       "rooms": 69
     },
     {
@@ -161,28 +161,28 @@
     },
     {
       "tag": "sloppyblowjobs",
-      "avg_users": 581,
+      "avg_users": 584,
       "rooms": 8
     },
     {
       "tag": "teasing",
-      "avg_users": 575,
+      "avg_users": 577,
       "rooms": 36
     },
     {
       "tag": "blond",
-      "avg_users": 549,
+      "avg_users": 547,
       "rooms": 48
     },
     {
       "tag": "suck",
-      "avg_users": 548,
+      "avg_users": 545,
       "rooms": 14
     },
     {
       "tag": "fuck",
-      "avg_users": 442,
-      "rooms": 43
+      "avg_users": 501,
+      "rooms": 42
     },
     {
       "tag": "gym",
@@ -196,28 +196,28 @@
     },
     {
       "tag": "multisquirt",
-      "avg_users": 373,
+      "avg_users": 377,
       "rooms": 25
     },
     {
       "tag": "bj",
-      "avg_users": 339,
-      "rooms": 42
+      "avg_users": 338,
+      "rooms": 43
     },
     {
       "tag": "goddess",
-      "avg_users": 251,
-      "rooms": 166
+      "avg_users": 250,
+      "rooms": 165
     },
     {
       "tag": "smile",
-      "avg_users": 242,
-      "rooms": 135
+      "avg_users": 243,
+      "rooms": 137
     },
     {
       "tag": "blonde",
-      "avg_users": 236,
-      "rooms": 1494
+      "avg_users": 240,
+      "rooms": 1498
     },
     {
       "tag": "erotic",
@@ -226,33 +226,33 @@
     },
     {
       "tag": "sexy",
-      "avg_users": 221,
-      "rooms": 901
+      "avg_users": 222,
+      "rooms": 905
     },
     {
       "tag": "young",
-      "avg_users": 213,
-      "rooms": 3072
-    },
-    {
-      "tag": "cute",
-      "avg_users": 199,
-      "rooms": 1606
-    },
-    {
-      "tag": "teen",
-      "avg_users": 198,
-      "rooms": 4035
-    },
-    {
-      "tag": "18",
-      "avg_users": 198,
-      "rooms": 4557
+      "avg_users": 214,
+      "rooms": 3074
     },
     {
       "tag": "tease",
-      "avg_users": 197,
+      "avg_users": 199,
       "rooms": 863
+    },
+    {
+      "tag": "teen",
+      "avg_users": 197,
+      "rooms": 4046
+    },
+    {
+      "tag": "cute",
+      "avg_users": 197,
+      "rooms": 1608
+    },
+    {
+      "tag": "18",
+      "avg_users": 197,
+      "rooms": 4558
     }
   ],
   "top_titles": [
@@ -265,7 +265,7 @@
       "subject": "Lets get naughty together  <3 #petite #young #muscles #cute #feet [3791 tokens remaining]"
     },
     {
-      "avg_users": 8562,
+      "avg_users": 8825,
       "subject": "let's make today unforgettable 😘 #new #teen #young #blonde"
     },
     {
@@ -285,7 +285,7 @@
       "subject": "i'm backk! 😘 join to have some fun!! #blonde #bigboobs #skinny #young"
     },
     {
-      "avg_users": 6869,
+      "avg_users": 6864,
       "subject": "Hot toy ride in ticket aftr goal ✨ Tip 555/1234/3333 ;) for pleasurable time [21648 tokens remaining]"
     },
     {
@@ -338,55 +338,55 @@
     }
   ],
   "economy": {
-    "goal_median": 588,
+    "goal_median": 591,
     "goal_p25": 247,
-    "goal_p75": 1080,
-    "goal_samples": 8009,
+    "goal_p75": 1081,
+    "goal_samples": 7993,
     "top_patterns": [
       {
         "value": 111,
-        "count": 290
+        "count": 286
       },
       {
         "value": 222,
-        "count": 232
+        "count": 236
       },
       {
         "value": 100,
-        "count": 209
+        "count": 212
       },
       {
         "value": 25,
-        "count": 178
-      },
-      {
-        "value": 55,
-        "count": 165
+        "count": 177
       },
       {
         "value": 333,
-        "count": 158
+        "count": 160
+      },
+      {
+        "value": 55,
+        "count": 160
       },
       {
         "value": 99,
-        "count": 153
+        "count": 152
       },
       {
         "value": 33,
         "count": 116
       },
       {
-        "value": 50,
-        "count": 115
+        "value": 200,
+        "count": 112
       },
       {
-        "value": 200,
-        "count": 115
+        "value": 38,
+        "count": 111
       }
     ],
-    "multi_goal_share": 0.066,
+    "multi_goal_share": 0.065,
     "with_goal_share": 0.528,
-    "with_price_share": 0.687
+    "with_price_share": 0.686
   },
   "recommendation": {
     "tags": [
