@@ -6,6 +6,25 @@ Running log of daily/session-based SEO & promotion action plans. Newest entry on
 
 ## 2026-07-19
 
+### Shipped: "What Is Stripscore? Cam Rank Explained" article (all 6 languages)
+Published item #5 from the 10-topic backlog: a terminology/glossary explainer for "stripscore" and
+"cam rank" — the two query terms already getting real impressions in Search Console (stripscore at
+position 4.1, cam rank at position 52.5). Deliberately scoped as a definitional/comparison piece
+(what the terms mean, how the concept maps across Chaturbate/Stripchat/BongaCams/LiveJasmin) rather
+than duplicating the existing `/how-cam-algorithm-ranks-rooms` (full signal breakdown) or
+`/raise-your-room-ranking-score` (legitimate playbook) — this avoids the keyword-cannibalization
+pattern already found once (homepage vs `/stripchat_promo` competing for the same query). Shipped as
+`/stripscore-cam-rank-explained` + 5 locales, cross-linked from both existing algorithm pages and
+`/stripchat_promo`.
+
+**Note**: while translating, found that all locale versions had been linking (or would have linked)
+to `/raise-your-room-ranking-score` using locale-prefixed URLs (`/de/raise-your-room-ranking-score`
+etc.) — but that page is still English-only (the Priority 1 gap flagged 2026-07-10, not yet fixed).
+Fixed by pointing all new cross-links to the English URL instead of a 404. The underlying gap
+(translating that page into all 5 locales) is still open and remains Priority 1.
+
+Build verified clean (121 pages, up from 115).
+
 ### Shipped: "Webcam Earnings by Platform" article (all 6 languages)
 Published item #2 from the 10-topic content backlog (2026-07-10 plan): a Chaturbate vs Stripchat vs
 BongaCams vs LiveJasmin payout comparison, grounded in real researched payout data (Chaturbate flat
