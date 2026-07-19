@@ -7,5 +7,6 @@ node_modules/
 .DS_Store
 .cache/
 __pycache__/
+.secrets/
 
 .vercel
