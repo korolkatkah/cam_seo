@@ -95,7 +95,7 @@ const nav = [
       <nav class="nav-inner">
         <a href="/" class="logo" aria-label="EWO home">
           <img src="/logo.svg" alt="EWO" class="logo-img">
-          <span class="logo-ewo">EWO</span><span class="logo-cam">.cam</span>
+          <span class="logo-ewo">EWO<span class="logo-hub">hub</span></span>
         </a>
         <ul class="nav-links" role="list">
           {nav.map(({ href, label }) => (
@@ -134,7 +134,7 @@ const nav = [
         <div class="footer-brand">
           <div class="footer-logo">
             <img src="/logo.svg" alt="EWO" class="logo-img">
-            <span class="logo-ewo">EWO</span><span class="logo-cam">.cam</span>
+            <span class="logo-ewo">EWO<span class="logo-hub">hub</span></span>
           </div>
           <p class="footer-tagline">Legitimate audience growth for webcam models & studios worldwide.</p>
         </div>
@@ -171,7 +171,7 @@ const nav = [
         </nav>
       </div>
       <div class="footer-bottom">
-        <p>&copy; {new Date().getFullYear()} EWO.cam · All rights reserved</p>
+        <p>&copy; {new Date().getFullYear()} EWOhub · All rights reserved</p>
       </div>
     </footer>
   </body>
@@ -342,11 +342,10 @@ const nav = [
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-  .logo-cam {
-    font-family: 'Nunito', sans-serif;
-    font-weight: 700;
-    font-size: 1.25rem;
-    color: rgba(255,255,255,0.4);
+  .logo-hub {
+    font-weight: 500;
+    opacity: 0.55;
+    letter-spacing: 0;
   }
   .nav-links {
     display: flex;

@@ -1,24 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-  <!-- Black circle background -->
-  <circle cx="100" cy="100" r="100" fill="#000"/>
-  <!-- Cat head outline: two pointed ears, rounded face -->
-  <path d="
-    M55 130
-    C55 152 74 168 100 168
-    C126 168 145 152 145 130
-    L145 95
-    C145 88 140 82 133 80
-    L120 48
-    L108 78
-    C105 77 102 76 100 76
-    C98 76 95 77 92 78
-    L80 48
-    L67 80
-    C60 82 55 88 55 95
-    Z"
-    fill="none"
-    stroke="white"
-    stroke-width="7"
-    stroke-linejoin="round"
-    stroke-linecap="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <filter id="glow-outer" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="blur1"/>
+      <feColorMatrix in="blur1" type="matrix"
+        values="0 0 0 0 0.2
+                0 0 0 0 0.5
+                0 0 0 0 1
+                0 0 0 1 0" result="blueGlow"/>
+      <feMerge>
+        <feMergeNode in="blueGlow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glow-inner" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Outer blue glow path -->
+  <path d="M55 130 C55 152 74 168 100 168 C126 168 145 152 145 130 L145 95 C145 88 140 82 133 80 L120 48 L108 78 C105 77 102 76 100 76 C98 76 95 77 92 78 L80 48 L67 80 C60 82 55 88 55 95 Z"
+    fill="none" stroke="#3b82f6" stroke-width="14" stroke-linejoin="round" stroke-linecap="round" opacity="0.35" filter="url(#glow-outer)"/>
+  <!-- Mid blue glow -->
+  <path d="M55 130 C55 152 74 168 100 168 C126 168 145 152 145 130 L145 95 C145 88 140 82 133 80 L120 48 L108 78 C105 77 102 76 100 76 C98 76 95 77 92 78 L80 48 L67 80 C60 82 55 88 55 95 Z"
+    fill="none" stroke="#60a5fa" stroke-width="8" stroke-linejoin="round" stroke-linecap="round" opacity="0.6" filter="url(#glow-inner)"/>
+  <!-- White core -->
+  <path d="M55 130 C55 152 74 168 100 168 C126 168 145 152 145 130 L145 95 C145 88 140 82 133 80 L120 48 L108 78 C105 77 102 76 100 76 C98 76 95 77 92 78 L80 48 L67 80 C60 82 55 88 55 95 Z"
+    fill="none" stroke="white" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
 </svg>

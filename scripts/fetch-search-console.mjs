@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-// Pulls Search Analytics data from Google Search Console for ewo.cam.
+// Pulls Search Analytics data from Google Search Console for ewohub.com.
 // Requires a service-account JSON key at .secrets/gsc-service-account.json
-// (added as a user on the ewo.cam property in Search Console).
+// (added as a user on the ewohub.com property in Search Console).
 //
 // Usage: node scripts/fetch-search-console.mjs [days]
 // Prints JSON to stdout: top queries and top pages by clicks over the window.
@@ -43,11 +43,11 @@ function dateNDaysAgo(n) {
 async function resolveSiteUrl() {
   const res = await searchconsole.sites.list();
   const sites = res.data.siteEntry ?? [];
-  const match = sites.find(s => s.siteUrl?.includes('ewo.cam'));
+  const match = sites.find(s => s.siteUrl?.includes('ewohub.com'));
   if (!match) {
     throw new Error(
-      `Service account has no access to any ewo.cam property. Sites it can see: ${sites.map(s => s.siteUrl).join(', ') || '(none)'}. ` +
-      `Add the service account email as a user on the ewo.cam property in Search Console.`
+      `Service account has no access to any ewohub.com property. Sites it can see: ${sites.map(s => s.siteUrl).join(', ') || '(none)'}. ` +
+      `Add the service account email as a user on the ewohub.com property in Search Console.`
     );
   }
   return match.siteUrl;
@@ -97,7 +97,7 @@ try {
   console.error(JSON.stringify({
     error: 'query_failed',
     message: err?.message ?? String(err),
-    hint: 'Check that the service account email was added as a user on the ewo.cam property in Search Console, and that the Search Console API is enabled on the GCP project.',
+    hint: 'Check that the service account email was added as a user on the ewohub.com property in Search Console, and that the Search Console API is enabled on the GCP project.',
   }));
   process.exit(1);
 }
