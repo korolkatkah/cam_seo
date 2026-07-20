@@ -7,6 +7,7 @@ const site = 'https://ewohub.com';
   title="Why Your Webcam Room Has Low Viewers — 8 Real Reasons (and Fixes)"
   description="Low viewer counts on cam platforms are frustrating but almost always fixable. Here are the 8 most common reasons webcam models get low viewers — and what to do about each one."
   lang="en"
+  bodyClass="theme-wine"
   hreflang={[
     { lang: 'en', url: `${site}/why-low-viewers-webcam` },
     { lang: 'de', url: `${site}/de/why-low-viewers-webcam` },
@@ -380,17 +381,20 @@ const site = 'https://ewohub.com';
 
 <style is:global>
 /* ── PAGE DARK OVERRIDE — Deep Wine ── */
-body { background: #0f0609 !important; }
-.site-header { background: rgba(15,6,9,0.95) !important; backdrop-filter: blur(20px) !important; border-bottom: 1px solid rgba(232,121,160,0.08) !important; }
-.site-header a, .site-header button, .site-header span { color: #fce7f3 !important; }
-.site-footer { background: #0a0407 !important; border-top: 1px solid rgba(232,121,160,0.08) !important; }
-.site-footer, .site-footer a, .site-footer p, .site-footer span { color: #9ca3af !important; }
-.site-footer a:hover { color: #e879a0 !important; }
-.logo-ewo { color: #fce7f3 !important; }
-.logo-cam { color: #e879a0 !important; }
-.lang-dropdown { background: #190812 !important; border: 1px solid rgba(232,121,160,0.15) !important; }
-.lang-dropdown a { color: #fce7f3 !important; }
-.btn-cta { background: linear-gradient(135deg,#be185d,#e879a0) !important; color: #fff !important; }
+body.theme-wine { background: #0f0609 !important; }
+body.theme-wine .site-header { background: rgba(15,6,9,0.95) !important; backdrop-filter: blur(20px) !important; border-bottom: 1px solid rgba(232,121,160,0.08) !important; }
+body.theme-wine .site-header a, body.theme-wine .site-header button, body.theme-wine .site-header span { color: #fce7f3 !important; }
+body.theme-wine .site-footer { background: #0a0407 !important; border-top: 1px solid rgba(232,121,160,0.08) !important; }
+body.theme-wine .site-footer, body.theme-wine .site-footer a, body.theme-wine .site-footer p, body.theme-wine .site-footer span { color: #9ca3af !important; }
+body.theme-wine .site-footer a:hover { color: #e879a0 !important; }
+body.theme-wine .logo-ewo { color: #fce7f3 !important; }
+body.theme-wine .logo-hub { color: #e879a0 !important; }
+body.theme-wine .lang-dropdown { background: #190812 !important; border: 1px solid rgba(232,121,160,0.15) !important; }
+body.theme-wine .lang-dropdown a { color: #fce7f3 !important; }
+body.theme-wine .btn-nav { background: linear-gradient(135deg,#be185d,#e879a0) !important; color: #fff !important; }
+
+/* ── RESET BASE ITALIC ── */
+body.theme-wine h1, body.theme-wine h2, body.theme-wine h3, body.theme-wine h4 { font-style: normal !important; }
 
 /* ── HERO ── */
 .art-hero {

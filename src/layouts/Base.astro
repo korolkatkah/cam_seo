@@ -20,6 +20,7 @@ const {
   noindex = false,
   hreflang = [],
   lang = 'en',
+  bodyClass = '',
 } = Astro.props;
 
 const siteName = 'EWO';
@@ -90,7 +91,7 @@ const nav = [
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@1,300;1,400;1,600;1,700&family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   </head>
-  <body>
+  <body class={bodyClass}>
     <header class="site-header">
       <nav class="nav-inner">
         <a href="/" class="logo" aria-label="EWO home">
