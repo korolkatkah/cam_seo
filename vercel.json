@@ -4,6 +4,8 @@
   "installCommand": "npm install",
   "framework": "astro",
   "redirects": [
+    { "source": "/:path*", "has": [{ "type": "host", "value": "ewo.cam" }], "destination": "https://ewohub.com/:path*", "permanent": true },
+    { "source": "/:path*", "has": [{ "type": "host", "value": "www.ewo.cam" }], "destination": "https://ewohub.com/:path*", "permanent": true },
     { "source": "/", "has": [{ "type": "header", "key": "accept-language", "value": "^de" }], "destination": "/de", "permanent": false },
     { "source": "/", "has": [{ "type": "header", "key": "accept-language", "value": "^es" }], "destination": "/es", "permanent": false },
     { "source": "/", "has": [{ "type": "header", "key": "accept-language", "value": "^ro" }], "destination": "/ro", "permanent": false },

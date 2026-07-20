@@ -2,7 +2,7 @@
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://ewo.cam',
+  site: 'https://ewohub.com',
   trailingSlash: 'never',
   integrations: [sitemap()],
 });
