@@ -14,6 +14,9 @@ const STR: Record<string, Record<string, string>> = {
     hoursTitle: 'Best hours to stream on Chaturbate', hoursUnit: 'viewers / room',
     hoursCaption: 'Avg. viewers per broadcasting room',
     hoursLocalNote: 'Times shown in your local time zone',
+    hoursNowNote: '↓ below is history from yesterday',
+    hoursHistoryBtn: 'Show history yesterday',
+    hoursHistoryLabel: '↓ data from yesterday',
     tagsTitle: 'Top-performing tags today on Chaturbate', tagsRoomsUnit: 'rooms',
     tagsCaption: 'Tags used by the rooms with the most viewers right now',
     titlesTitle: 'Top-performing titles today on Chaturbate', viewersWord: 'viewers',
@@ -33,6 +36,9 @@ const STR: Record<string, Record<string, string>> = {
     hoursTitle: 'Beste Sendezeiten auf Chaturbate', hoursUnit: 'Zuschauer / Raum',
     hoursCaption: 'Durchschn. Zuschauer pro sendendem Raum',
     hoursLocalNote: 'Zeiten in deiner lokalen Zeitzone angezeigt',
+    hoursNowNote: '↓ Unten sind die Daten von gestern',
+    hoursHistoryBtn: 'Verlauf von gestern anzeigen',
+    hoursHistoryLabel: '↓ Daten von gestern',
     tagsTitle: 'Top-Tags heute auf Chaturbate', tagsRoomsUnit: 'Räume',
     tagsCaption: 'Tags, die Räume mit den meisten Zuschauern gerade verwenden',
     titlesTitle: 'Top-Titel heute auf Chaturbate', viewersWord: 'Zuschauer',
@@ -52,6 +58,9 @@ const STR: Record<string, Record<string, string>> = {
     hoursTitle: 'Mejores horas para transmitir en Chaturbate', hoursUnit: 'espectadores / sala',
     hoursCaption: 'Espectadores prom. por sala en emisión',
     hoursLocalNote: 'Horas mostradas en tu zona horaria local',
+    hoursNowNote: '↓ Abajo está el historial de ayer',
+    hoursHistoryBtn: 'Ver historial de ayer',
+    hoursHistoryLabel: '↓ Datos de ayer',
     tagsTitle: 'Tags con mejor rendimiento hoy en Chaturbate', tagsRoomsUnit: 'salas',
     tagsCaption: 'Tags que usan ahora mismo las salas con más espectadores',
     titlesTitle: 'Mejores títulos hoy en Chaturbate', viewersWord: 'espectadores',
@@ -71,6 +80,9 @@ const STR: Record<string, Record<string, string>> = {
     hoursTitle: 'Cele mai bune ore de streaming pe Chaturbate', hoursUnit: 'spectatori / cameră',
     hoursCaption: 'Spectatori medii per cameră activă',
     hoursLocalNote: 'Orele sunt afișate în fusul tău orar local',
+    hoursNowNote: '↓ Mai jos este istoricul de ieri',
+    hoursHistoryBtn: 'Arată istoricul de ieri',
+    hoursHistoryLabel: '↓ Date de ieri',
     tagsTitle: 'Cele mai performante taguri astăzi pe Chaturbate', tagsRoomsUnit: 'camere',
     tagsCaption: 'Taguri folosite chiar acum de camerele cu cei mai mulți spectatori',
     titlesTitle: 'Cele mai bune titluri astăzi pe Chaturbate', viewersWord: 'spectatori',
@@ -90,6 +102,9 @@ const STR: Record<string, Record<string, string>> = {
     hoursTitle: 'Найкращі години для стріму на Chaturbate', hoursUnit: 'глядачів / кімнату',
     hoursCaption: 'Середня к-сть глядачів на одну активну кімнату',
     hoursLocalNote: 'Час показано у твоєму місцевому часовому поясі',
+    hoursNowNote: '↓ Нижче — дані за вчора',
+    hoursHistoryBtn: 'Показати історію за вчора',
+    hoursHistoryLabel: '↓ Дані за вчора',
     tagsTitle: 'Найефективніші теги сьогодні на Chaturbate', tagsRoomsUnit: 'кімнат',
     tagsCaption: 'Теги, які зараз використовують кімнати з найбільшою кількістю глядачів',
     titlesTitle: 'Найкращі заголовки сьогодні на Chaturbate', viewersWord: 'глядачів',
@@ -109,6 +124,9 @@ const STR: Record<string, Record<string, string>> = {
     hoursTitle: 'Лучшие часы для стрима на Chaturbate', hoursUnit: 'зрителей / комнату',
     hoursCaption: 'Среднее число зрителей на одну вещающую комнату',
     hoursLocalNote: 'Время показано в твоём локальном часовом поясе',
+    hoursNowNote: '↓ Ниже — данные за вчера',
+    hoursHistoryBtn: 'Показать историю за вчера',
+    hoursHistoryLabel: '↓ Данные за вчера',
     tagsTitle: 'Самые эффективные теги сегодня на Chaturbate', tagsRoomsUnit: 'комнат',
     tagsCaption: 'Теги, которые сейчас используют комнаты с наибольшим числом зрителей',
     titlesTitle: 'Лучшие заголовки сегодня на Chaturbate', viewersWord: 'зрителей',
@@ -179,6 +197,18 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
               );
             })}
           </ul>
+          <p class="hours-yesterday-note" hidden>{t.hoursNowNote}</p>
+          <div class="hours-history-wrap" hidden>
+            <button class="hours-history-btn" aria-expanded="false">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><polyline points="12 7 12 12 15 15"/></svg>
+              <span>{t.hoursHistoryBtn}</span>
+              <svg class="hist-chevron" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="hours-history-panel" hidden>
+              <p class="hours-history-label" data-history-label={t.hoursHistoryLabel}></p>
+              <ul class="hours-list hours-list--history"></ul>
+            </div>
+          </div>
         </div>
 
         <div class="trends-card trends-card-wide">
@@ -272,24 +302,61 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
   const tzOffsetMin = new Date().getTimezoneOffset();
   const localNowHour = new Date().getHours();
 
-  document.querySelectorAll<HTMLElement>('.hours-row[data-utc-hour]').forEach((row) => {
-    const utcHour = Number(row.dataset.utcHour);
-    if (Number.isNaN(utcHour)) return;
-    const startTotal = (((utcHour * 60 - tzOffsetMin) % 1440) + 1440) % 1440;
-    const endTotal = (startTotal + 60) % 1440;
-    const fmt = (totalMin: number) => `${pad(Math.floor(totalMin / 60))}:${pad(totalMin % 60)}`;
-    const localStartHour = Math.floor(startTotal / 60);
+  document.querySelectorAll<HTMLElement>('.trends-block').forEach((block) => {
+    const list = block.querySelector<HTMLElement>('.hours-list');
+    if (!list) return;
 
-    const rangeEl = row.querySelector<HTMLElement>('.hours-range');
-    if (rangeEl) rangeEl.textContent = `${fmt(startTotal)}–${fmt(endTotal)}`;
+    const rows = Array.from(list.querySelectorAll<HTMLElement>('.hours-row[data-utc-hour]'));
+    const historyRows: HTMLElement[] = [];
+    let nowRow: HTMLElement | null = null;
 
-    if (localStartHour === localNowHour) {
-      row.classList.add('is-current');
-      if (rangeEl) rangeEl.innerHTML += '<span class="now-badge">now</span>';
-      const note = document.createElement('div');
-      note.className = 'hours-yesterday-note';
-      note.textContent = '↓ data from yesterday at this hour';
-      row.after(note);
+    rows.forEach((row) => {
+      const utcHour = Number(row.dataset.utcHour);
+      if (Number.isNaN(utcHour)) return;
+      const startTotal = (((utcHour * 60 - tzOffsetMin) % 1440) + 1440) % 1440;
+      const endTotal = (startTotal + 60) % 1440;
+      const fmt = (m: number) => `${pad(Math.floor(m / 60))}:${pad(m % 60)}`;
+      const localStartHour = Math.floor(startTotal / 60);
+
+      const rangeEl = row.querySelector<HTMLElement>('.hours-range');
+      if (rangeEl) rangeEl.textContent = `${fmt(startTotal)}–${fmt(endTotal)}`;
+
+      if (localStartHour === localNowHour) {
+        nowRow = row;
+        row.classList.add('is-current');
+        if (rangeEl) rangeEl.innerHTML += '<span class="now-badge">now</span>';
+      } else if (localStartHour < localNowHour) {
+        historyRows.push(row);
+      }
+    });
+
+    // Insert "now note" after current row
+    if (nowRow && historyRows.length > 0) {
+      const nowNote = block.querySelector<HTMLElement>('.hours-yesterday-note');
+      if (nowNote) { nowNote.hidden = false; }
+    }
+
+    // Move past rows into history panel
+    const historyWrap = block.querySelector<HTMLElement>('.hours-history-wrap');
+    const historyPanel = block.querySelector<HTMLElement>('.hours-history-panel');
+    const historyList = block.querySelector<HTMLElement>('.hours-list--history');
+    const historyLabelEl = block.querySelector<HTMLElement>('[data-history-label]');
+
+    if (historyRows.length > 0 && historyWrap && historyPanel && historyList && historyLabelEl) {
+      historyRows.forEach(r => historyList.appendChild(r));
+      if (historyLabelEl) historyLabelEl.textContent = historyLabelEl.dataset.historyLabel ?? '';
+      historyWrap.hidden = false;
+
+      const histBtn = historyWrap.querySelector<HTMLButtonElement>('.hours-history-btn');
+      if (histBtn) {
+        histBtn.addEventListener('click', () => {
+          const open = historyPanel.hidden;
+          historyPanel.hidden = !open;
+          histBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+          const chev = histBtn.querySelector<HTMLElement>('.hist-chevron');
+          if (chev) chev.style.transform = open ? 'rotate(180deg)' : '';
+        });
+      }
     }
   });
 
@@ -392,8 +459,19 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
   }
   .hours-yesterday-note {
     font-size: 11px; color: #475569; font-style: italic;
-    padding-left: 122px; margin-top: -2px; margin-bottom: 3px;
+    margin-top: 2px; margin-bottom: 6px;
   }
+  .hours-history-btn {
+    display: flex; align-items: center; gap: 8px; width: 100%;
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px; padding: 10px 14px; margin-top: 6px;
+    cursor: pointer; font-size: 0.8125rem; color: #64748b;
+    font-family: var(--font-body); transition: background 0.15s, color 0.15s;
+  }
+  .hours-history-btn:hover { background: rgba(255,255,255,0.06); color: #94a3b8; }
+  .hist-chevron { margin-left: auto; transition: transform 0.2s; }
+  .hours-history-panel { margin-top: 6px; }
+  .hours-history-label { font-size: 11px; color: #475569; font-style: italic; margin-bottom: 6px; }
 
   .trends-card-wide { margin-top: 1rem; }
 
