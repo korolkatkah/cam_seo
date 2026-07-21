@@ -1,8 +1,9 @@
-﻿---
+---
 import Base from '@/layouts/Base.astro';
 const site = 'https://ewohub.com';
 const slug = 'about';
 ---
+
 <Base
   title="Про EWO – Просування для вебкам-моделей та студій | EWO"
   description="EWO — це сервіс просування для вебкам-моделей та студій. Ми допомагаємо зростати з реальною аудиторією — без ботів, без фейкових переглядів."
@@ -16,66 +17,135 @@ const slug = 'about';
     { lang: 'ru', url: `${site}/ru/${slug}` },
   ]}
 >
-  <article class="page-content">
-    <div class="container">
-      <header class="page-header">
-        <p class="eyebrow">Про нас</p>
-        <h1>Що таке EWO?</h1>
-        <p class="lead">EWO — це спеціалізований сервіс просування для вебкам-моделей та студій. Ми допомагаємо будувати реальне, органічне охоплення — без ярликів, які шкодять у довгостроковій перспективі.</p>
-        <p>Ми займаємося просуванням моделей і студій на Chaturbate, Stripchat та інших великих платформах — перетворюємо трафік на відданих глядачів і платних учасників.</p>
-      </header>
 
-      <figure class="page-hero-image">
-        <img src="/images/about-ewo-webcam-promotion-agency.svg" alt="Про EWO — агенція просування вебкам-моделей і студій, глобальна команда" width="640" height="360" loading="lazy" />
-      </figure>
-
-
-      <section>
-        <h2>Наша філософія</h2>
-        <p>Ринок вебкам конкурентний. Алгоритми платформ надають перевагу моделям з наявною тракцією, що ускладнює життя новачкам. Багато хто в цій ситуації вдається до ботів або фейкових переглядів — спокусливо в короткостроковій перспективі, але шкідливо в довгостроковій.</p>
-        <p>EWO вірить в інший підхід: легітимні стратегії просування, що залучають реальних глядачів і надають стійкі результати. Жодних ризиків для твого акаунту, жодного штучного вигляду, який рано чи пізно розкривається.</p>
-      </section>
-
-      <section>
-        <h2>Що ми робимо</h2>
-        <p>Ми працюємо з вебкам-моделями та студіями в Європі та Латинській Америці. Наша команда поєднує знання про алгоритми платформ, стратегію просування та регіональну ринкову динаміку.</p>
-        <ul>
-          <li>Побудова першої аудиторії для нових моделей</li>
-          <li>Оптимізація профілю, тегів і часу стрімінгу</li>
-          <li>Просування поза платформою на релевантних каналах</li>
-          <li>Стратегії масштабування студії для зростаючих операцій</li>
-          <li>Регіональне спрямування на ринки Західної Європи та Північної Америки</li>
-        </ul>
-      </section>
-
-      <section>
-        <h2>Ким ми не є</h2>
-        <p>Ми не є постачальником ботів, сервісом фейкових переглядів і не даємо нереалістичних обіцянок. Ми не працюємо з моделями, які шукають швидкі ризиковані ярлики.</p>
-        <p>Наш сервіс орієнтований на моделей та студії, які хочуть серйозно інвестувати в стале зростання і розуміють, що хороші результати вимагають часу і структури.</p>
-      </section>
-
-      <section>
-        <h2>Наше охоплення</h2>
-        <p>Ми працюємо з моделями та студіями в Румунії, Україні, Німеччині, Іспанії та Латинській Америці — переважно Колумбії. Наші стратегії просування спрямовані на найплатоспроможніші ринки: США, DACH, Велика Британія та Франція.</p>
-      </section>
-
-      <section class="cta-section">
-        <h2>Співпраця з EWO</h2>
-        <p>Якщо шукаєш серйозного партнера для зростання на кам-платформах, ми раді отримати твоє повідомлення.</p>
-        <p><a href="https://t.me/+tBjfmjh9vHo1YzQy" target="_blank" rel="noopener">Зв'язатися зараз →</a></p>
-      </section>
-      <section class="related-articles">
-        <h2>Пов’язані статті</h2>
-        <ul>
-          <li><a href="/uk/model-promotion">Послуги з просування</a></li>
-          <li><a href="/uk/studio-traffic">Трафік студії</a></li>
-          <li><a href="/uk/why-low-viewers-webcam">Чому у твоїй вебкам-кімнаті мало глядачів</a></li>
-          <li><a href="/uk/how-cam-algorithm-ranks-rooms">Як алгоритм кам ранжує кімнати</a></li>
-          <li><a href="/uk/platforms-we-work-with">Платформи, з якими ми працюємо</a></li>
-          <li><a href="https://t.me/+tBjfmjh9vHo1YzQy" target="_blank" rel="noopener">Зв’язатися</a></li>
-        </ul>
-      </section>
+<div class="art-hero">
+  <div class="art-orb art-orb--1"></div>
+  <div class="art-orb art-orb--2"></div>
+  <div class="art-grid"></div>
+  <div class="art-hero__inner container">
+    <div class="art-meta">
+      <span class="art-tag">Про нас</span>
+      <span class="art-tag art-tag--green"><span class="dot-green"></span>13 Країн</span>
     </div>
-  </article>
+    <h1 class="art-title">EWO — <span class="art-grad">Агенція просування вебкам-моделей та студій</span></h1>
+    <p class="art-lead">EWO — це агенція цифрового маркетингу, створена спеціально для індустрії прямих трансляцій. Ми надаємо послуги зростання аудиторії для вебкам-моделей та студій у Північній Америці, Західній Європі та Східній Європі — зі стратегіями, побудованими навколо того, як ця індустрія реально працює, а не загальних маркетингових порад.</p>
+  </div>
+</div>
+
+<div class="art-body">
+  <div class="container">
+
+    <p class="art-intro">Ми займаємося просуванням моделей і студій на Chaturbate, Stripchat та інших великих платформах — перетворюємо трафік на відданих глядачів і платних учасників.</p>
+
+    <div class="glass-card">
+      <h2>Що ми робимо</h2>
+      <p>Ми допомагаємо вебкам-моделям та студіям нарощувати аудиторії через легітимний цифровий маркетинг: оптимізація платформи, стратегія розкладу стрімінгу, присутність у соціальних мережах та SEO. Все, що ми робимо, спрямоване на побудову реальних, лояльних аудиторій — не накрутку метрик марнославства.</p>
+      <p>Наші клієнти — від незалежних моделей, які тільки починають і потребують першої стабільної аудиторії, до сталих багатомодельних студій, які прагнуть масштабувати трафік на весь свій ростер.</p>
+    </div>
+
+    <div class="glass-card">
+      <h2>Наші Послуги</h2>
+      <h3>Для Моделей</h3>
+      <ul>
+        <li><a href="/uk/model-promotion">Просування Моделі</a> — оптимізація профілю, стратегія розкладу, зростання у соцмережах</li>
+        <li><a href="/uk/new-model-growth">Програма Зростання для Нових Моделей</a> — структурована 30-денна програма для моделей, що стартують з нуля</li>
+      </ul>
+      <h3>Для Студій</h3>
+      <ul>
+        <li><a href="/uk/studio-traffic">Зростання Трафіку Студії</a> — багатомодельне розплановування, регіональний таргетинг, SEO студії</li>
+        <li><a href="/uk/studio-scaling">Масштабування Студії</a> — системи і стратегія для розширення ростеру без втрати якості трафіку</li>
+      </ul>
+      <h3>Освітні Ресурси</h3>
+      <ul>
+        <li><a href="/uk/why-low-viewers-webcam">Чому у Твоїй Кімнаті Мало Глядачів</a></li>
+        <li><a href="/uk/how-cam-algorithm-ranks-rooms">Як Працюють Алгоритми Кам-Платформ</a></li>
+        <li><a href="/uk/best-streaming-times-by-region">Найкращий Час для Стрімінгу по Регіонах</a></li>
+        <li><a href="/uk/webcam-model-income-guide">Посібник з Доходів Вебкам-Моделі</a></li>
+        <li><a href="/uk/platforms-we-work-with">Платформи, з якими Ми Працюємо</a></li>
+      </ul>
+    </div>
+
+    <div class="glass-card">
+      <h2>Наша Філософія</h2>
+      <p>На ринку вебкам немає нестачі сервісів, що пропонують ярлики: фейкові глядачі, бот-трафік, маніпуляції з залученістю. Ми нічого з цього не пропонуємо — не тому що наївні щодо того, чого іноді хочуть клієнти, а тому що це незмінно знищує акаунти, витрачає гроші і не дає тривалих результатів.</p>
+      <p>Кожна стратегія, яку ми рекомендуємо, побудована на одному принципі: допомогти тобі залучити глядачів, які справді хочуть тебе дивитися, і дати їм причини повертатися. Це повільніше, ніж купівля фейкового трафіку. Але лише це реально працює з часом.</p>
+      <h3>Без Конфліктів з Платформами</h3>
+      <p>Ми працюємо на всіх великих платформах прямих трансляцій, не створюючи конфліктів з умовами обслуговування платформ. Наші стратегії побудовані навколо алгоритмів платформ та поведінки аудиторії — не обхідних шляхів, що ризикують статусом твого акаунту.</p>
+    </div>
+
+    <div class="glass-card">
+      <h2>Наше Охоплення</h2>
+      <p>Ми працюємо в 13 країнах і маємо специфічну експертизу в динаміці трафіку кожного ринку. Наші гео-специфічні стратегії просування побудовані навколо реальних регіональних відмінностей — не просто перекладених версій одного й того ж посібника.</p>
+      <ul>
+        <li><a href="/uk/model-promotion-usa">США</a> — найбільший ринок, найвищі середні витрати глядачів</li>
+        <li><a href="/uk/model-promotion-germany">Німеччина</a> — високолояльна DACH-аудиторія, сильне довгострокове утримання</li>
+        <li><a href="/uk/model-promotion-romania">Румунія</a> — ринок з високою пропозицією моделей, таргетинг західної аудиторії</li>
+        <li><a href="/uk/model-promotion-ukraine">Україна</a> — перевага європейського прайм-тайму, фокус на міжнародну аудиторію</li>
+      </ul>
+      <p>Додаткові регіони: Канада, Колумбія, Болгарія, Росія, Швеція, Польща, Франція, Англія, Нідерланди.</p>
+    </div>
+
+    <div class="glass-card">
+      <h2>З Ким Ми Працюємо</h2>
+      <p>Ми обслуговуємо дві різні аудиторії з дуже різними потребами:</p>
+      <h3>Незалежні Вебкам-Моделі</h3>
+      <p>Моделі, які стрімлять самостійно і хочуть професійної маркетингової підтримки для зростання аудиторії, збільшення доходу та побудови більш стабільної бази глядачів — без самостійного управління маркетинговою стратегією.</p>
+      <h3>Вебкам-Студії та Агенції</h3>
+      <p>Багатомодельні операції, яким потрібні масштабовані системи трафіку, скоординований розклад по всьому ростеру і стратегії для розширення на нові регіональні ринки без втрати якості трафіку.</p>
+    </div>
+
+    <div class="art-cta" id="contact">
+      <div class="art-cta__orb"></div>
+      <div class="art-cta__inner">
+        <div class="art-cta__badge">Почати</div>
+        <h2>Почати</h2>
+        <p>Розкажи нам свою ситуацію — модель чи студія, платформи, на яких працюєш, і чого хочеш досягти. Ми розглянемо і повернемося з реалістичним планом.</p>
+        <div class="art-cta__actions">
+          <a href="https://t.me/+tBjfmjh9vHo1YzQy" target="_blank" rel="noopener" class="art-cta__btn art-cta__btn--primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 2L2 9l7 4 2 7 10-18z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Зв'язатися з нами →
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <section class="related-section">
+      <h2>Пов'язані Статті</h2>
+      <div class="related-grid">
+        <a href="/uk/model-promotion" class="related-card">
+          <div class="related-card__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <p>Послуги з Просування Моделей</p>
+          <span>Читати →</span>
+        </a>
+        <a href="/uk/studio-traffic" class="related-card">
+          <div class="related-card__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          <p>Трафік Студії</p>
+          <span>Читати →</span>
+        </a>
+        <a href="/uk/why-low-viewers-webcam" class="related-card">
+          <div class="related-card__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/></svg></div>
+          <p>Чому у Твоїй Вебкам-Кімнаті Мало Глядачів</p>
+          <span>Читати →</span>
+        </a>
+        <a href="/uk/how-cam-algorithm-ranks-rooms" class="related-card">
+          <div class="related-card__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          <p>Як Алгоритм Кам Ранжує Кімнати</p>
+          <span>Читати →</span>
+        </a>
+        <a href="/uk/platforms-we-work-with" class="related-card">
+          <div class="related-card__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M8 21h8M12 17v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          <p>Платформи, з якими Ми Працюємо</p>
+          <span>Читати →</span>
+        </a>
+        <a href="https://t.me/+tBjfmjh9vHo1YzQy" target="_blank" rel="noopener" class="related-card">
+          <div class="related-card__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 2L2 9l7 4 2 7 10-18z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <p>Зв'язатися з Нами</p>
+          <span>Telegram →</span>
+        </a>
+      </div>
+    </section>
+
+  </div>
+</div>
+
 </Base>
-<style>.page-content{padding-block:3rem 5rem}.page-header{margin-bottom:3rem;border-bottom:1px solid var(--border);padding-bottom:2rem}.eyebrow{font-family:var(--font-heading);font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.75rem}.page-header h1{margin-bottom:1.25rem}.lead{font-size:1.125rem;max-width:60ch}article section{margin-bottom:2.5rem}article h2{margin-bottom:1rem}article h3{margin-bottom:.5rem;margin-top:1.5rem}article p{margin-bottom:.875rem}article ol,article ul{margin:.75rem 0 .875rem 1.5rem;display:flex;flex-direction:column;gap:.5rem}article li{color:var(--fg-muted)}article a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}.faq-item{padding:1.5rem 0;border-top:1px solid var(--border)}.faq-item:last-child{border-bottom:1px solid var(--border)}.cta-section{background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2rem;margin-top:3rem}</style>
