@@ -1,6 +1,32 @@
-# EWO.cam Promotion Plan
+# EWO Promotion Plan
 
 Running log of daily/session-based SEO & promotion action plans. Newest entry on top; do not delete older entries.
+
+---
+
+## 2026-07-21
+
+### Domain migration: ewo.cam → ewohub.com
+Site moved from ewo.cam to **www.ewohub.com** (confirmed planned). `astro.config.mjs` already points to
+the new domain; ewo.cam now returns 404. **Search Console is still connected to the old ewo.cam property
+only** — `scripts/fetch-search-console.mjs` looks for an `ewohub.com` property but the service account
+has no access to one yet. Action needed: add `ewohub.com` as a property in Search Console (DNS TXT
+verification), then add `ewo-seo-bot@imposing-fin-300612.iam.gserviceaccount.com` as a Full user on it.
+Until then, GSC-driven analysis in this plan is stale (last real pull was against ewo.cam pre-migration).
+
+### Shipped: "Stripchat AI Model Recommendations" article (all 6 languages)
+First topic from the new 10-topic Stripchat-specific backlog (2026-07-21): explains Stripchat's 2026 AI
+"Recommended for You" feed (matches viewer interaction history/"vibe" to models) as a second discovery
+channel separate from Popular-category rankings, and gives concrete optimization steps (accurate
+category/tag signal, consistent identity, encouraging follows) grounded in what's publicly reported
+about the feature. Shipped as `/stripchat-ai-model-recommendations` + 5 locales, cross-linked from
+`/how-cam-algorithm-ranks-rooms` and `/raise-your-room-ranking-score`. Build verified clean (127 pages,
+up from 121).
+
+Remaining 9 Stripchat topics from the 2026-07-21 backlog (not yet written): Popular-category discovery
+bias for new models, mobile streaming via Plasma app, VR/Lovense monetization, 2026 contest categories,
+Stripchat-specific token/payout deep dive, category/tag optimization guide, studio vs independent on
+Stripchat specifically, Stripchat vs Chaturbate comparison, first-weeks onboarding guide.
 
 ---
 
