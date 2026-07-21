@@ -1,41 +1,41 @@
 ---
 import Base from '@/layouts/Base.astro';
 const site = 'https://ewohub.com';
-const slug = 'stripchat_promo';
+const slug = 'stripchat-promo';
 
 const botMenu = [
-  { title: 'Creează comandă', desc: 'Rezervă o fereastră de promovare pentru un model/o cameră anume', icon: 'plus' },
-  { title: 'Sistem de recomandare', desc: 'Câștigă credit aducând alte modele sau cumpărători', icon: 'users' },
-  { title: 'Depunere', desc: 'Alimentează-ți soldul prin cripto', icon: 'wallet' },
-  { title: 'Istoric comenzi', desc: 'Urmărește promovările viitoare, active, anulate și finalizate', icon: 'clock' },
-  { title: 'Profil', desc: 'Verifică soldul și detaliile contului', icon: 'user' },
+  { title: 'Create Order', desc: 'Book a promotion window for a specific model/room', icon: 'plus' },
+  { title: 'Referral System', desc: 'Earn credit for bringing in other models or buyers', icon: 'users' },
+  { title: 'Deposit', desc: 'Top up your balance via crypto', icon: 'wallet' },
+  { title: 'Order History', desc: 'Track upcoming, active, cancelled, and completed promotions', icon: 'clock' },
+  { title: 'Profile', desc: 'Check balance and account details', icon: 'user' },
 ];
 
 const flowSteps = [
-  { n: '01', title: 'Rezervă un interval', desc: 'Introdu username-ul, alege data, ora de start și durata în bot.' },
-  { n: '02', title: 'Camera este plasată', desc: 'La ora programată, sistemul urcă camera ta în categoria Popular.' },
-  { n: '03', title: 'Sosesc viewerii reali', desc: 'Utilizatori reali Stripchat care răsfoiesc acea pagină îți descoperă camera.' },
+  { n: '01', title: 'Book a slot', desc: 'Enter your username, pick a date, start time, and duration in the bot.' },
+  { n: '02', title: 'Room gets placed', desc: 'At the scheduled time, the system elevates your room into the Popular category.' },
+  { n: '03', title: 'Real viewers arrive', desc: 'Real Stripchat users browsing that page discover your room.' },
 ];
 
 const pricingTiers = [
-  { label: 'Standard', rate: '$10', note: 'pe oră', bonus: null, highlight: false },
-  { label: 'Depunere $50+', rate: '$9', note: 'pe oră', bonus: 'bonus 10%', highlight: false },
-  { label: 'Depunere $200+', rate: '$8', note: 'pe oră', bonus: 'bonus 20%', highlight: true },
+  { label: 'Standard', rate: '$10', note: 'per hour', bonus: null, highlight: false },
+  { label: '$50+ deposit', rate: '$9', note: 'per hour', bonus: '10% bonus', highlight: false },
+  { label: '$200+ deposit', rate: '$8', note: 'per hour', bonus: '20% bonus', highlight: true },
 ];
 
 const playbook = [
-  { n: 1, title: 'Intră live cu 10–15 minute mai devreme', desc: 'Sistemul are nevoie ca sala să fie deja live când pornește promovarea.' },
-  { n: 2, title: 'Tratează prima oră ca încălzire', desc: 'Clasamentul începe să urce în aproximativ 10 minute, iar primii viewer stabilesc ritmul restului sesiunii.' },
-  { n: 3, title: 'Menține showul captivant tot timpul', desc: 'Camerele care rețin atenția păstrează mai mult din traficul trimis — un conținut slab pierde poziție chiar și în timpul promovării.' },
-  { n: 4, title: 'Rezolvă mai întâi elementele de bază', desc: 'Conexiune stabilă, cameră decentă și iluminare bună. Niciun trafic nu compensează viewerii care pleacă imediat.' },
-  { n: 5, title: 'Verifică dacă promovarea e activă', desc: 'Dezactivează blocajele de țară și caută username-ul tău cu Ctrl+F pe stripchat.com/girls/popular.' },
+  { n: 1, title: 'Go live 10–15 minutes early', desc: 'The system needs the room already streaming when the promotion kicks in.' },
+  { n: 2, title: 'Treat the first hour as a warm-up', desc: 'Rankings begin climbing within roughly 10 minutes, and early viewers set the momentum.' },
+  { n: 3, title: 'Keep the show engaging throughout', desc: 'Rooms that hold attention retain more of the traffic sent their way — weak content loses position even mid-promotion.' },
+  { n: 4, title: 'Fix the basics first', desc: 'Stable connection, camera, and lighting. No amount of traffic compensates for viewers clicking away.' },
+  { n: 5, title: 'Verify the promotion is live', desc: 'Disable country blocks and Ctrl+F your username on stripchat.com/girls/popular.' },
 ];
 
 const earnMore = [
-  { title: 'Concentrează orele de promovare la ore de vârf', desc: 'Rulează ore în fusul orar de vârf al publicului țintă, nu împrăștiate în ore moarte.', icon: 'trend' },
-  { title: 'Reinvestește câștigurile în mai multe ore', desc: 'Nivelurile de depunere reduc costul la $50 și $200 — cheltuind mai mult obții o rată efectivă mai mică.', icon: 'wallet' },
-  { title: 'Folosește sistemul de recomandare', desc: 'Aducerea altor modele sau cumpărători în bot îți aduce credit care compensează cheltuiala proprie.', icon: 'users' },
-  { title: 'Combină promovarea cu cel mai bun conținut', desc: 'Promovarea aduce priviri — showul decide dacă acestea devin urmăritori și tokeni.', icon: 'star' },
+  { title: 'Stack peak-hour promotion', desc: "Run hours during your target audience's timezone peak, not spread across dead time.", icon: 'trend' },
+  { title: 'Reinvest into more hours', desc: 'Deposit tiers reduce cost at $50 and $200 — scaling spend lowers your effective rate.', icon: 'wallet' },
+  { title: 'Use the referral system', desc: 'Bringing other models or buyers into the bot earns credit that offsets your own spend.', icon: 'users' },
+  { title: 'Pair promotion with your best content', desc: "The promotion brings eyeballs — the show decides if they become followers and tokens.", icon: 'star' },
 ];
 
 const icons: Record<string, string> = {
@@ -50,9 +50,9 @@ const icons: Record<string, string> = {
 ---
 
 <Base
-  title="Recenzie Stripchat Traffic Bot: Mai mulți viewer, stripscore mai mare, câștiguri mai mari"
-  description="O recenzie sinceră a Stripchat_traffic_bot, un instrument de promovare pe Telegram care plasează camera ta în categoria Popular de pe Stripchat. Cum funcționează, cât costă și cum să obții maximum din el."
-  lang="ro"
+  title="Stripchat Traffic Bot Review: More Viewers, Higher Stripscore, More Earnings"
+  description="An honest review of Stripchat_traffic_bot, a Telegram-based promotion tool that places your room in Stripchat's Popular category. How it works, what it costs, and how to get the most out of it."
+  lang="en"
   hreflang={[
     { lang: 'en', url: `${site}/${slug}` },
     { lang: 'de', url: `${site}/de/${slug}` },
@@ -66,45 +66,36 @@ const icons: Record<string, string> = {
     <div class="container">
 
       <header class="page-header">
-        <p class="eyebrow">Recenzie</p>
-        <h1>Recenzie Stripchat Traffic Bot: Mai mulți viewer, stripscore mai mare, câștiguri mai mari</h1>
+        <p class="eyebrow">Review</p>
+        <h1>Stripchat Traffic Bot Review: How to Get More Viewers, Raise Your Stripscore, and Earn More</h1>
         <p class="lead">
-          Pagina "Popular" de pe Stripchat este dominată de camere care au deja număr uriaș de urmăritori și
-          stripscore ridicat. Fără un impuls, stream-urile noi rareori sunt văzute — și fără vizionări, nu
-          există creștere de stripscore și nici bacșișuri. Această recenzie acoperă Stripchat_traffic_bot, un
-          instrument de promovare bazat pe Telegram creat pentru a rezolva exact această problemă de
-          vizibilitate.
+          The Stripchat "Popular" page is dominated by rooms that already have huge follower counts and high
+          stripscore. Without a push, new streams rarely get seen — and without views, there's no stripscore
+          growth and no tips. This review covers Stripchat_traffic_bot, a Telegram-based promotion tool built
+          to solve that visibility problem.
         </p>
         <div class="stat-row">
-          <div class="stat-chip"><span class="stat-num">$10</span><span class="stat-label">tarif de start / oră</span></div>
-          <div class="stat-chip"><span class="stat-num">~10 min</span><span class="stat-label">până la mișcare în clasament</span></div>
-          <div class="stat-chip"><span class="stat-num">20%</span><span class="stat-label">bonus la depunere de $200+</span></div>
+          <div class="stat-chip"><span class="stat-num">$10</span><span class="stat-label">starting rate / hour</span></div>
+          <div class="stat-chip"><span class="stat-num">~10 min</span><span class="stat-label">to rank movement</span></div>
+          <div class="stat-chip"><span class="stat-num">20%</span><span class="stat-label">bonus at $200+ deposit</span></div>
         </div>
       </header>
 
       <figure class="page-hero-image">
-        <img src="/images/stripchat-traffic-bot-popular-placement.svg" alt="Bot de trafic plasând o cameră în categoria Popular de pe Stripchat cu o tendință de creștere a viewerilor" width="640" height="360" loading="lazy" />
+        <img src="/images/stripchat-traffic-bot-popular-placement.svg" alt="Traffic bot placing a room into Stripchat's Popular category with a rising viewer trend" width="640" height="360" loading="lazy" />
       </figure>
 
       <section>
-        <h2>Ce este Stripchat_traffic_bot?</h2>
+        <h2>What Is Stripchat_traffic_bot?</h2>
         <p>
           <a href="https://t.me/Stripchat_traffic_bot" target="_blank" rel="noopener">Stripchat_traffic_bot</a>
-          este un bot de comenzi self-service pentru promovarea modelelor Stripchat, pe Telegram. În loc să
-          scrii unei agenții și să aștepți o ofertă manuală, deschizi botul, rezervi un interval de promovare
-          pentru camera ta, iar sistemul plasează stream-ul tău în categoria cea mai populară de pe Stripchat
-          (stripchat.com/girls/popular) pe durata rezervată. Aceea este categoria unde ajunge cea mai mare
-          parte a traficului organic de căutare al Stripchat, deci a pune o cameră în fața ei — chiar și
-          temporar — este o pârghie importantă pentru creșterea viewerilor.
+          is a self-service ordering bot for Stripchat model promotion, run on Telegram. Instead of messaging
+          an agency and waiting for a manual quote, you open the bot, book a promotion slot for your room, and
+          the system places your stream into Stripchat's most popular cams category
+          (stripchat.com/girls/popular) for the duration you booked. That's the category where the bulk of
+          Stripchat's organic search traffic lands, so getting a room in front of it — even temporarily — is a
+          significant lever for viewer growth.
         </p>
-        <p>Interfața botului este simplă în mod deliberat:</p>
-        <ul>
-          <li><strong>Creează comandă</strong> — rezervă o fereastră de promovare pentru un model/o cameră anume</li>
-          <li><strong>Sistem de recomandare</strong> — câștigă credit aducând alte modele sau cumpărători</li>
-          <li><strong>Depunere</strong> — alimentează-ți soldul prin cripto</li>
-          <li><strong>Istoric comenzi</strong> — urmărește promovările viitoare, active, anulate și finalizate</li>
-          <li><strong>Profil</strong> — verifică soldul și detaliile contului</li>
-        </ul>
 
         <div class="feature-grid">
           {botMenu.map(({ title, desc, icon }) => (
@@ -117,14 +108,14 @@ const icons: Record<string, string> = {
         </div>
 
         <p>
-          Totul se desfășoară printr-un formular de comandă simplu: introduci username-ul modelului, alegi o
-          dată, ora de start (afișată în fusul tău orar) și durata în ore. Promovarea pornește apoi automat la
-          ora programată.
+          Everything runs through a clean order form: enter the model's username, pick a date, choose a start
+          time (displayed in your own local timezone), and set the duration in hours. The promotion then
+          starts automatically at the scheduled time.
         </p>
       </section>
 
       <section>
-        <h2>Cum funcționează de fapt promovarea</h2>
+        <h2>How the Promotion Actually Works</h2>
 
         <div class="flow-steps">
           {flowSteps.map(({ n, title, desc }, i) => (
@@ -140,66 +131,64 @@ const icons: Record<string, string> = {
         </div>
 
         <p>
-          Cu alte cuvinte: botul nu fabrică bacșișuri sau urmăritori falși — obține pentru cameră un loc în
-          categoria unde deja curge trafic real. Ce se întâmplă după depinde în totalitate de calitatea
-          stream-ului modelului. Aceasta este o limitare în mod deliberat sinceră, care merită înțeleasă
-          înainte de rezervare:
+          In other words: the bot doesn't fabricate tips or fake a following — it gets the room a seat in the
+          category where real traffic already flows. What happens after that depends entirely on the model's
+          stream quality. That's a deliberately honest limitation, worth understanding before booking:
         </p>
 
         <div class="pros-cons">
           <div class="pros-col">
-            <p class="pros-cons-label">Ce poate face</p>
+            <p class="pros-cons-label">What it can do</p>
             <ul class="check-list check-list--yes">
-              <li>Pune camera ta în fața traficului real Stripchat</li>
-              <li>Împinge camera ta în pagina cu cel mai mare trafic</li>
-              <li>Începe să miște stripscore-ul tău în câteva minute</li>
+              <li>Put your room in front of real Stripchat traffic</li>
+              <li>Push your room into the highest-traffic listing page</li>
+              <li>Start moving your stripscore within minutes</li>
             </ul>
           </div>
           <div class="cons-col">
-            <p class="pros-cons-label">Ce nu poate face</p>
+            <p class="pros-cons-label">What it can't do</p>
             <ul class="check-list check-list--no">
-              <li>Forța viewerii să rămână, să interacționeze sau să trimită tokeni</li>
-              <li>Repara un stream slab sau o calitate de producție proastă</li>
-              <li>Face ca avansul în clasament să dureze mai mult decât orele plătite</li>
+              <li>Force viewers to stay, engage, or send tokens</li>
+              <li>Fix a weak stream or poor production quality</li>
+              <li>Make the ranking gain outlast the paid hours on its own</li>
             </ul>
           </div>
         </div>
         <p>
-          Dacă evaluezi acest serviciu sau unul similar, această distincție — plasare de trafic vs. venit
-          garantat — este modul sincer de a gândi despre asta.
+          If you're evaluating this or any similar promotion service, that distinction — traffic placement vs.
+          guaranteed income — is the honest way to think about it.
         </p>
       </section>
 
       <section>
-        <h2>Prețuri: cât costă o promovare Stripchat</h2>
-        <p>Prețurile sunt clare și cresc pe măsura volumului:</p>
+        <h2>Pricing: What a Stripchat Promotion Costs</h2>
+        <p>Pricing is straightforward and scales with volume:</p>
 
         <div class="pricing-grid">
           {pricingTiers.map(({ label, rate, note, bonus, highlight }) => (
             <div class={`pricing-card${highlight ? ' pricing-card--best' : ''}`}>
-              {highlight && <span class="pricing-badge">Cel mai bun tarif</span>}
+              {highlight && <span class="pricing-badge">Best rate</span>}
               <p class="pricing-label">{label}</p>
-              <p class="pricing-rate">{rate}<span>/{note.replace('pe ', '')}</span></p>
+              <p class="pricing-rate">{rate}<span>/{note.replace('per ', '')}</span></p>
               {bonus && <p class="pricing-bonus">{bonus}</p>}
             </div>
           ))}
         </div>
 
         <p>
-          Poți rula promovări pentru orice număr de modele simultan, iar soldul nefolosit rămâne în contul tău
-          pentru comenzi viitoare. Plata se face prin depunere în cripto direct în bot, iar anularea unui
-          interval înainte de start returnează fondurile în soldul tău în loc să le pierzi — important dacă
-          programul unui model se schimbă în ultimul moment.
+          You can run promotions on any number of models simultaneously, and unused balance stays in your
+          account for future orders. Payment goes in via crypto deposit directly inside the bot, and cancelling
+          a slot before it starts refunds the funds to your balance rather than losing them — which matters if
+          a model's schedule shifts at the last minute.
         </p>
       </section>
 
       <section>
-        <h2>Cum îți crești stripscore-ul cu acest bot</h2>
+        <h2>How to Raise Your Stripscore With This Bot</h2>
         <p>
-          Stripscore este metrica internă de clasament a Stripchat și este cea care decide unde apare camera
-          ta pe site. Creșterea lui nu înseamnă doar cumpărarea unui interval de promovare — timing-ul și
-          calitatea showului contează la fel de mult. Pe baza propriilor recomandări operaționale ale botului,
-          iată planul practic:
+          Stripscore is Stripchat's internal ranking metric, and it's the gatekeeper for where your room shows
+          up on the site. Raising it isn't just about buying a promotion slot — timing and show quality matter
+          just as much. Based on the bot's own operating guidelines, here's the practical playbook:
         </p>
 
         <div class="step-list">
@@ -215,18 +204,17 @@ const icons: Record<string, string> = {
         </div>
 
         <p>
-          Modelele care urmează această secvență — încălzire, început puternic, energie constantă pe tot
-          parcursul — obțin constant mai mult din fiecare oră plătită decât cele care doar pornesc promovarea
-          și speră.
+          Models who follow this sequence — pre-warm, strong opening, consistent energy throughout —
+          consistently get more out of each paid hour than those who just flip on the promotion and hope.
         </p>
       </section>
 
       <section>
-        <h2>Cum câștigi mai mult pe Stripchat folosind promovarea de trafic</h2>
+        <h2>How to Earn More on Stripchat Using Traffic Promotion</h2>
         <p>
-          Obiectivul final pentru majoritatea modelelor care rezervă o promovare nu este cifra stripscore în
-          sine — sunt bacșișurile, urmăritorii și viewerii care revin, care vin odată cu o vizibilitate mai
-          bună. Câteva moduri prin care utilizatorii acestui bot raportează că obțin rezultate mai bune:
+          The end goal for most models booking a promotion isn't the stripscore number itself — it's the tips,
+          followers, and repeat viewers that come with better visibility. A few ways users of this bot report
+          stretching results further:
         </p>
 
         <div class="feature-grid">
@@ -241,48 +229,48 @@ const icons: Record<string, string> = {
       </section>
 
       <section class="verdict-section">
-        <h2>Merită?</h2>
+        <h2>Is It Worth It?</h2>
         <div class="callout-block">
           <p>
-            Pentru modelele care au deja un show solid, dar sunt blocate pe pagina 3 a rezultatelor de căutare,
-            un astfel de impuls de trafic rezolvă o problemă reală și specifică: să fii văzut. Nu înlocuiește
-            calitatea stream-ului și nu repară o cameră în care nimeni nu vrea să rămână — dar ca mod de a
-            aduce trafic real de căutare Stripchat spre camera ta într-o fereastră programată, face exact ce
-            promite. Prețurile sunt transparente, comenzile sunt self-service și urmăribile, iar intervalele
-            pot fi anulate și rambursate dacă se schimbă planurile.
+            For models who already have a solid show but are stuck buried on page 3 of search results, a traffic
+            push like this addresses a real, specific problem: getting seen. It's not a substitute for stream
+            quality, and it won't fix a room nobody wants to stay in — but as a way to get real Stripchat search
+            traffic looking at your room during a scheduled window, it does what it says. The pricing is
+            transparent, orders are self-service and trackable, and slots can be cancelled and refunded if plans
+            change.
           </p>
         </div>
       </section>
 
       <section class="faq">
-        <h2>Întrebări frecvente</h2>
+        <h2>Frequently Asked Questions</h2>
 
         <div class="faq-item">
-          <h3>Ce înseamnă "promovare" la acest bot?</h3>
+          <h3>What does "promotion" mean on this bot?</h3>
           <p>
-            Plasează camera ta în categoria cea mai populară de pe Stripchat (stripchat.com/girls/popular),
-            pagina cu cel mai mare trafic de pe platformă, pentru orele rezervate.
+            It places your room in Stripchat's most popular cams category (stripchat.com/girls/popular), the
+            platform's highest-traffic listing page, for the hours you've booked.
           </p>
         </div>
 
         <div class="faq-item">
-          <h3>Cât de repede începe să funcționeze?</h3>
-          <p>Clasamentul începe de obicei să urce în aproximativ 10 minute de la începerea promovării.</p>
+          <h3>How fast does it start working?</h3>
+          <p>Ranking typically begins climbing within about 10 minutes of the promotion starting.</p>
         </div>
 
         <div class="faq-item">
-          <h3>Viewerii sunt reali?</h3>
-          <p>Fiecare viewer care ajunge prin categoria populară după ce camera ta este plasată acolo este un utilizator real Stripchat.</p>
+          <h3>Are the viewers real?</h3>
+          <p>Every viewer that arrives through the popular category after your room is placed there is a real Stripchat user.</p>
         </div>
 
         <div class="faq-item">
-          <h3>Pot anula un interval rezervat?</h3>
-          <p>Da — anularea înainte de ora de start returnează suma în soldul tău din bot.</p>
+          <h3>Can I cancel a booked slot?</h3>
+          <p>Yes — cancelling before the start time refunds the amount to your bot balance.</p>
         </div>
 
         <div class="faq-item">
-          <h3>Cum plătesc?</h3>
-          <p>Depunerile se fac în cripto direct prin opțiunea Deposit a botului.</p>
+          <h3>How do I pay?</h3>
+          <p>Deposits are made in crypto directly through the bot's Deposit option.</p>
         </div>
       </section>
 
@@ -290,25 +278,25 @@ const icons: Record<string, string> = {
         <div class="cta-icon" aria-hidden="true">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
         </div>
-        <h2>Încearcă Stripchat_traffic_bot</h2>
-        <p>Rezervă un interval de promovare direct prin bot, pe Telegram.</p>
-        <p><a href="https://t.me/Stripchat_traffic_bot" target="_blank" rel="noopener" class="cta-link">Deschide @Stripchat_traffic_bot →</a></p>
+        <h2>Try Stripchat_traffic_bot</h2>
+        <p>Book a promotion slot directly through the bot on Telegram.</p>
+        <p><a href="https://t.me/Stripchat_traffic_bot" target="_blank" rel="noopener" class="cta-link">Open @Stripchat_traffic_bot →</a></p>
       </section>
 
       <section class="related-articles">
-        <h2>Articole similare</h2>
+        <h2>Related Articles</h2>
         <ul>
-          <li><a href="/ro/how-cam-algorithm-ranks-rooms">Cum clasifică algoritmul cam camerele</a></li>
-          <li><a href="/ro/why-low-viewers-webcam">De ce camera ta de webcam are puțini viewer</a></li>
-          <li><a href="/ro/best-streaming-times-by-region">Cele mai bune ore de streaming pe regiune</a></li>
-          <li><a href="/ro/model-promotion">Servicii de promovare a modelelor</a></li>
-          <li><a href="/ro/platforms-we-work-with">Platforme cu care lucrăm</a></li>
+          <li><a href="/how-cam-algorithm-ranks-rooms">How the Cam Algorithm Ranks Rooms</a></li>
+          <li><a href="/why-low-viewers-webcam">Why Your Webcam Room Has Low Viewers</a></li>
+          <li><a href="/best-streaming-times-by-region">Best Streaming Times by Region</a></li>
+          <li><a href="/model-promotion">Model Promotion Services</a></li>
+          <li><a href="/platforms-we-work-with">Platforms We Work With</a></li>
         </ul>
       </section>
 
       <p class="source-note">
-        Această recenzie se bazează pe anunțul public de Telegram al botului, fluxul său de comandă din
-        aplicație și FAQ-ul oficial publicat la
+        This review is based on the bot's public Telegram listing, its in-app ordering flow, and its official
+        FAQ published at
         <a href="https://teletype.in/@webcamtraffic/stripchat-traffic-bot" target="_blank" rel="noopener">teletype.in/@webcamtraffic/stripchat-traffic-bot</a>.
       </p>
     </div>
@@ -322,6 +310,7 @@ const icons: Record<string, string> = {
   .page-header h1 { margin-bottom: 1.25rem; }
   .lead { font-size: 1.125rem; max-width: 60ch; margin-bottom: 1.75rem; }
 
+  /* Stat row */
   .stat-row { display: flex; flex-wrap: wrap; gap: .875rem; }
   .stat-chip {
     display: flex; flex-direction: column; gap: .2rem;
@@ -340,6 +329,7 @@ const icons: Record<string, string> = {
   article a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
   article a:hover { color: var(--accent-hover); }
 
+  /* Feature grid (bot menu / earn-more cards) */
   .feature-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; margin: 1.25rem 0 1.5rem; }
   .feature-card {
     background: rgba(255,255,255,.03); border: 1px solid var(--border); border-radius: var(--radius-lg);
@@ -356,6 +346,7 @@ const icons: Record<string, string> = {
   }
   .icon-badge--violet { background: rgba(232,121,160,0.1); border-color: rgba(232,121,160,0.25); color: #e879a0; }
 
+  /* Flow steps */
   .flow-steps { display: flex; align-items: stretch; gap: 1rem; margin: 1.25rem 0 1.5rem; flex-wrap: wrap; }
   .flow-step {
     flex: 1 1 200px; background: rgba(255,255,255,.03); border: 1px solid var(--border);
@@ -370,6 +361,7 @@ const icons: Record<string, string> = {
   .flow-arrow { display: flex; align-items: center; justify-content: center; color: var(--fg-faint); font-size: 1.25rem; flex: 0 0 auto; }
   @media (max-width: 700px) { .flow-arrow { display: none; } }
 
+  /* Pros / cons */
   .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.25rem 0 1.5rem; }
   @media (max-width: 600px) { .pros-cons { grid-template-columns: 1fr; } }
   .pros-col, .cons-col { border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; background: rgba(255,255,255,.03); }
@@ -379,6 +371,7 @@ const icons: Record<string, string> = {
   .check-list--yes li::before { content: '✓'; position: absolute; left: 0; color: #34d399; font-weight: 700; }
   .check-list--no li::before { content: '✕'; position: absolute; left: 0; color: #fb7185; font-weight: 700; }
 
+  /* Pricing grid */
   .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin: 1.25rem 0 1.5rem; }
   .pricing-card {
     position: relative; border: 1px solid var(--border); border-radius: var(--radius-lg);
@@ -396,6 +389,7 @@ const icons: Record<string, string> = {
   .pricing-rate span { font-size: 1rem; font-weight: 600; font-style: normal; color: var(--fg-faint); }
   .pricing-bonus { font-size: .8125rem; color: #e879a0; font-weight: 700; margin-bottom: 0; }
 
+  /* Step list (stripscore playbook) */
   .step-list { display: flex; flex-direction: column; gap: .875rem; margin: 1.25rem 0 1.5rem; }
   .step-card {
     display: flex; gap: 1.25rem; align-items: flex-start;
@@ -411,6 +405,7 @@ const icons: Record<string, string> = {
   .step-card h3 { font-size: 1rem; }
   .step-card p { font-size: .9rem; margin-bottom: 0; }
 
+  /* Verdict callout */
   .callout-block {
     border-left: 3px solid var(--accent); background: rgba(129,140,248,.06);
     border-radius: 0 var(--radius-md) var(--radius-md) 0; padding: 1.5rem 1.75rem;

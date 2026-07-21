@@ -6,6 +6,12 @@
   "redirects": [
     { "source": "/:path*", "has": [{ "type": "host", "value": "ewo.cam" }], "destination": "https://ewohub.com/:path*", "permanent": true },
     { "source": "/:path*", "has": [{ "type": "host", "value": "www.ewo.cam" }], "destination": "https://ewohub.com/:path*", "permanent": true },
+    { "source": "/stripchat_promo", "destination": "/stripchat-promo", "permanent": true },
+    { "source": "/de/stripchat_promo", "destination": "/de/stripchat-promo", "permanent": true },
+    { "source": "/es/stripchat_promo", "destination": "/es/stripchat-promo", "permanent": true },
+    { "source": "/ro/stripchat_promo", "destination": "/ro/stripchat-promo", "permanent": true },
+    { "source": "/uk/stripchat_promo", "destination": "/uk/stripchat-promo", "permanent": true },
+    { "source": "/ru/stripchat_promo", "destination": "/ru/stripchat-promo", "permanent": true },
     { "source": "/", "has": [{ "type": "header", "key": "accept-language", "value": "^de" }], "destination": "/de", "permanent": false },
     { "source": "/", "has": [{ "type": "header", "key": "accept-language", "value": "^es" }], "destination": "/es", "permanent": false },
     { "source": "/", "has": [{ "type": "header", "key": "accept-language", "value": "^ro" }], "destination": "/ro", "permanent": false },
