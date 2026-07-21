@@ -3,7 +3,6 @@ import Base from '@/layouts/Base.astro';
 const site = 'https://ewohub.com';
 const slug = 'stripchat-ai-model-recommendations';
 ---
-
 <Base
   title="AI Model Recommendations de Stripchat: cómo funciona y cómo optimizar para ello"
   description="La función de IA de Stripchat construye un feed personalizado 'Recomendado para ti' a partir del comportamiento del espectador. Así funciona realmente y qué pueden hacer las modelos para aparecer en él."
@@ -17,187 +16,159 @@ const slug = 'stripchat-ai-model-recommendations';
     { lang: 'ru', url: `${site}/ru/${slug}` },
   ]}
 >
-  <article class="page-content">
+
+  <section class="art-hero">
+    <div class="art-orb art-orb--1"></div>
+    <div class="art-orb art-orb--2"></div>
+    <div class="art-grid"></div>
+    <div class="art-hero__inner container">
+      <div class="art-meta">
+        <span class="art-tag">Stripchat</span>
+        <span class="art-tag art-tag--green">Guía</span>
+      </div>
+      <h1 class="art-title">Stripchat <span class="art-grad">AI Model Recommendations</span>: Cómo Funciona</h1>
+      <p class="art-lead">Stripchat añadió un feed "Recomendado para ti" impulsado por IA que sugiere modelos según el comportamiento propio de cada espectador — no solo por el número actual de espectadores. Un segundo canal de descubrimiento que corre en paralelo a los rankings de la categoría Popular.</p>
+    </div>
+  </section>
+
+  <div class="art-body">
     <div class="container">
 
-      <header class="page-header">
-        <p class="eyebrow">Guía</p>
-        <h1>AI Model Recommendations de Stripchat: cómo funciona y cómo optimizar para ello</h1>
-        <p class="lead">
-          Stripchat añadió un feed "Recomendado para ti" impulsado por IA que sugiere modelos según el
-          comportamiento propio de cada espectador — no solo por el número actual de espectadores. Es
-          un segundo canal de descubrimiento que corre en paralelo a los rankings de la categoría
-          Popular, y funciona con señales distintas. Esto es lo que realmente se sabe y qué puedes
-          hacer para aparecer en él.
-        </p>
-      </header>
+      <p class="art-intro">Esto es lo que realmente se sabe y qué puedes hacer para aparecer en él.</p>
 
-      <section>
+      <section class="section">
         <h2>Qué hace realmente la función de recomendaciones de IA</h2>
-        <p>
-          La función analiza el historial de interacción propio de un espectador — qué categorías
-          navega, a qué modelos ve y da propina, y a qué modelos sigue — y construye un feed
-          personalizado de modelos que encajan con ese patrón, descrito por la plataforma como una
-          coincidencia con su "vibe". Está diseñada para resolver un problema real: con miles de salas
-          activas en cualquier momento, la mayoría de los espectadores no puede navegar manualmente
-          para encontrar modelos que realmente encajen con lo que buscan.
-        </p>
-        <p>
-          Dos mecánicas importan más para las modelos: el feed se entrena con lo que un espectador
-          sigue, y mejora cuanto más interactúa un espectador con una categoría o tipo de modelo dado.
-          Eso significa que el motor de recomendación no solo lee las estadísticas actuales de tu
-          sala — está comparando tu contenido con las preferencias acumuladas de un espectador específico.
-        </p>
+        <div class="glass-card" style="margin-top:1.25rem;">
+          <p>La función analiza el historial de interacción propio de un espectador — qué categorías navega, a qué modelos ve y da propina, y a qué modelos sigue — y construye un feed personalizado de modelos que encajan con ese patrón, descrito por la plataforma como una coincidencia con su "vibe".</p>
+          <p style="margin-bottom:0;">Dos mecánicas importan más para las modelos: el feed se entrena con lo que un espectador sigue, y mejora cuanto más interactúa un espectador con una categoría o tipo de modelo dado. Eso significa que el motor de recomendación no solo lee las estadísticas actuales de tu sala — está comparando tu contenido con las preferencias acumuladas de un espectador específico.</p>
+        </div>
       </section>
 
-      <section>
+      <section class="section">
         <h2>Por qué esto es un canal distinto de "Popular"</h2>
-        <p>
-          Los rankings estándar de categoría y Popular (cubiertos en nuestro <a href="/es/how-cam-algorithm-ranks-rooms">desglose completo del algoritmo</a>)
-          se basan en señales en vivo — espectadores actuales, engagement, propinas — lo que
-          estructuralmente favorece a las salas que ya son grandes. Esa es la misma dinámica detrás de
-          una crítica conocida al sistema de descubrimiento de Stripchat: tiende a mostrar una y otra
-          vez a las mismas modelos de alto tráfico, dificultando que las modelos nuevas o de nicho
-          destaquen solo por visibilidad.
-        </p>
-        <p>
-          El feed de recomendaciones de IA funciona con entradas distintas — el historial de un
-          espectador específico, no el tamaño actual de tu sala. En principio, eso le da a una modelo
-          nueva o de nicho un camino real hacia la visibilidad con espectadores cuyo comportamiento ya
-          encaja con su contenido, independientemente de cuán grande sea su sala en este momento
-          exacto. No sustituye la mecánica del ranking Popular — es un segundo canal, paralelo, que
-          vale la pena optimizar por sí mismo.
-        </p>
+        <div class="glass-card" style="margin-top:1.25rem;">
+          <p>Los rankings estándar de categoría y Popular (cubiertos en nuestro <a href="/es/how-cam-algorithm-ranks-rooms">desglose completo del algoritmo</a>) se basan en señales en vivo — espectadores actuales, engagement, propinas — lo que estructuralmente favorece a las salas que ya son grandes.</p>
+          <p style="margin-bottom:0;">El feed de recomendaciones de IA funciona con entradas distintas — el historial de un espectador específico, no el tamaño actual de tu sala. En principio, eso le da a una modelo nueva o de nicho un camino real hacia la visibilidad. No sustituye la mecánica del ranking Popular — es un segundo canal, paralelo, que vale la pena optimizar por sí mismo.</p>
+        </div>
       </section>
 
-      <section>
+      <section class="section">
         <h2>Cómo optimizar para ello</h2>
 
-        <h3>1. Mantén tu categoría y tags precisos, no solo populares</h3>
-        <p>
-          Como el motor compara el comportamiento del espectador con el tipo de contenido, etiquetar
-          tu sala con categorías amplias y de alto tráfico que no describen realmente tu contenido
-          puede jugar en tu contra — le da al algoritmo una señal desajustada, y los espectadores cuyo
-          historial coincide con tu nicho real tienen menos probabilidad de que se les muestre. El
-          etiquetado preciso y honesto vale más aquí que el etiquetado de alcance amplio.
-        </p>
+        <div class="reason-card" style="margin-top:1.25rem;">
+          <div class="reason-num">01</div>
+          <div class="reason-content">
+            <h3>1. Mantén tu categoría y tags precisos, no solo populares</h3>
+            <p>Como el motor compara el comportamiento del espectador con el tipo de contenido, etiquetar tu sala con categorías amplias y de alto tráfico que no describen realmente tu contenido puede jugar en tu contra. El etiquetado preciso y honesto vale más aquí que el etiquetado de alcance amplio.</p>
+          </div>
+        </div>
 
-        <h3>2. Construye una identidad consistente y reconocible</h3>
-        <p>
-          Un motor que compara "vibe" necesita un patrón estable con el que comparar. Las modelos que
-          cambian bruscamente de estilo, categoría o tipo de contenido de sesión a sesión le dan menos
-          material de trabajo al algoritmo que las modelos con una identidad clara y consistente — lo
-          cual también es buena práctica para la retención de audiencia en general.
-        </p>
+        <div class="reason-card">
+          <div class="reason-num">02</div>
+          <div class="reason-content">
+            <h3>2. Construye una identidad consistente y reconocible</h3>
+            <p>Un motor que compara "vibe" necesita un patrón estable con el que comparar. Las modelos que cambian bruscamente de estilo, categoría o tipo de contenido de sesión a sesión le dan menos material de trabajo al algoritmo que las modelos con una identidad clara y consistente.</p>
+          </div>
+        </div>
 
-        <h3>3. Fomenta activamente los follows</h3>
-        <p>
-          Los follows son una de las señales específicas reportadas que entrenan el feed de
-          recomendación de un espectador con el tiempo. Un espectador que te sigue tiene más
-          probabilidad de seguir viéndote destacada en futuras sesiones, lo cual se acumula de la misma
-          forma que una audiencia recurrente real lo hace en otros sistemas de ranking de la
-          plataforma. Trata los recordatorios de follow como algo más que una métrica de vanidad —
-          aquí tienen una función de descubrimiento directa.
-        </p>
+        <div class="reason-card">
+          <div class="reason-num">03</div>
+          <div class="reason-content">
+            <h3>3. Fomenta activamente los follows</h3>
+            <p>Los follows son una de las señales específicas reportadas que entrenan el feed de recomendación de un espectador con el tiempo. Un espectador que te sigue tiene más probabilidad de seguir viéndote destacada en futuras sesiones. Trata los recordatorios de follow como algo más que una métrica de vanidad.</p>
+          </div>
+        </div>
 
-        <h3>4. No esperes que sustituya al engagement real</h3>
-        <p>
-          El feed de recomendación se entrena con patrones de interacción genuinos — comportamiento
-          real de navegación, propinas y follows. No premia números inflados artificialmente más de lo
-          que lo hace el algoritmo de ranking base, y por la misma razón subyacente: el engagement
-          fabricado no coincide con patrones reales de comportamiento de espectadores, así que no
-          alimenta la señal de coincidencia como sí lo hace el engagement genuino. Ver <a href="/es/raise-your-room-ranking-score">por qué el tráfico de bots sale mal →</a> para la versión completa de este argumento.
-        </p>
+        <div class="reason-card">
+          <div class="reason-num">04</div>
+          <div class="reason-content">
+            <h3>4. No esperes que sustituya al engagement real</h3>
+            <p>El feed de recomendación se entrena con patrones de interacción genuinos — comportamiento real de navegación, propinas y follows. Ver <a href="/es/raise-your-room-ranking-score">por qué el tráfico de bots sale mal →</a> para la versión completa de este argumento.</p>
+          </div>
+        </div>
       </section>
 
-      <section>
+      <section class="section">
         <h2>Expectativas realistas</h2>
-        <p>
-          Esta es una palanca de descubrimiento genuinamente útil, no un atajo garantizado. La crítica
-          documentada de que el sistema de descubrimiento de Stripchat sigue inclinándose hacia las
-          modelos de alto tráfico aplica a las superficies de descubrimiento de la plataforma en
-          general, y una capa de personalización encima no borra ese sesgo estructural de la noche a
-          la mañana. Trata la optimización de recomendaciones de IA como una palanca adicional junto
-          a — no en lugar de — los fundamentos: horario consistente, engagement real y streaming
-          durante las horas pico de tu audiencia objetivo.
-        </p>
-        <p>Ver: <a href="/es/best-streaming-times-by-region">mejores horarios de streaming por región →</a></p>
+        <div class="glass-card" style="margin-top:1.25rem;">
+          <p>Esta es una palanca de descubrimiento genuinamente útil, no un atajo garantizado. Trata la optimización de recomendaciones de IA como una palanca adicional junto a — no en lugar de — los fundamentos: horario consistente, engagement real y streaming durante las horas pico de tu audiencia objetivo.</p>
+          <p style="margin-bottom:0;"><a href="/es/best-streaming-times-by-region">Ver: mejores horarios de streaming por región →</a></p>
+        </div>
       </section>
 
-      <section class="faq">
+      <section class="faq-section section">
         <h2>Preguntas frecuentes</h2>
 
         <div class="faq-item">
-          <h3>¿Puedo ver si aparezco en los feeds recomendados por IA de los espectadores?</h3>
-          <p>
-            Stripchat no publica datos de visibilidad por modelo específicamente para esta función. Lo
-            que puedes observar indirectamente es el crecimiento de follows y los patrones de
-            espectadores recurrentes, que son las entradas que se reporta que usa el feed.
-          </p>
+          <button class="faq-chevron" aria-expanded="false">
+            <span>¿Puedo ver si aparezco en los feeds recomendados por IA de los espectadores?</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-body">
+            <p>Stripchat no publica datos de visibilidad por modelo específicamente para esta función. Lo que puedes observar indirectamente es el crecimiento de follows y los patrones de espectadores recurrentes.</p>
+          </div>
         </div>
 
         <div class="faq-item">
-          <h3>¿Esta función reemplaza los rankings de la categoría Popular?</h3>
-          <p>
-            No — corren en paralelo. Los rankings Popular se basan en señales de sala en vivo; las
-            recomendaciones de IA se basan en el comportamiento acumulado de un espectador individual.
-            Vale la pena optimizar ambos.
-          </p>
+          <button class="faq-chevron" aria-expanded="false">
+            <span>¿Esta función reemplaza los rankings de la categoría Popular?</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-body">
+            <p>No — corren en paralelo. Los rankings Popular se basan en señales de sala en vivo; las recomendaciones de IA se basan en el comportamiento acumulado de un espectador individual. Vale la pena optimizar ambos.</p>
+          </div>
         </div>
 
         <div class="faq-item">
-          <h3>¿Es un buen atajo etiquetar en exceso con categorías populares?</h3>
-          <p>
-            Puede salir mal para esta función específica. Los tags amplios e imprecisos pueden darte
-            vistas extra ocasionales, pero te desajustan frente a espectadores cuyo historial real no
-            encaja con tu contenido — lo cual va en contra de un sistema construido específicamente
-            para hacer coincidir el contenido con el comportamiento del espectador.
-          </p>
+          <button class="faq-chevron" aria-expanded="false">
+            <span>¿Es un buen atajo etiquetar en exceso con categorías populares?</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-body">
+            <p>Puede salir mal para esta función específica. Los tags amplios e imprecisos pueden darte vistas extra ocasionales, pero te desajustan frente a espectadores cuyo historial real no encaja con tu contenido.</p>
+          </div>
         </div>
       </section>
 
-      <section class="cta-section">
-        <h2>¿Quieres una estrategia de descubrimiento completa, no solo una función?</h2>
-        <p>
-          Las recomendaciones de IA, los rankings Popular y el tráfico externo a la plataforma
-          alimentan el mismo objetivo — que más de los espectadores correctos encuentren tu sala.
-          Construimos estrategias alrededor de todo eso, no solo de una palanca.
-        </p>
-        <p><a href="/es/model-promotion">Servicios de promoción de modelos →</a></p>
-        <p style="margin-top:.75rem;"><a href="/es/how-cam-algorithm-ranks-rooms">Cómo los algoritmos cam clasifican las salas →</a></p>
+      <section class="art-cta section">
+        <div class="art-cta__orb"></div>
+        <div class="art-cta__inner">
+          <span class="art-cta__badge">Estrategia completa</span>
+          <h2>¿Quieres una estrategia de descubrimiento completa?</h2>
+          <p>Las recomendaciones de IA, los rankings Popular y el tráfico externo a la plataforma alimentan el mismo objetivo — que más de los espectadores correctos encuentren tu sala. Construimos estrategias alrededor de todo eso.</p>
+          <div class="art-cta__actions">
+            <a href="/es/model-promotion" class="art-cta__btn--primary btn btn-primary">Servicios de promoción de modelos →</a>
+          </div>
+        </div>
       </section>
 
-      <section class="related-articles">
+      <section class="section">
         <h2>Artículos relacionados</h2>
-        <ul>
-          <li><a href="/es/stripscore-cam-rank-explained">¿Qué es el Stripscore? Cam Rank explicado</a></li>
-          <li><a href="/es/how-cam-algorithm-ranks-rooms">Cómo el algoritmo cam clasifica las salas</a></li>
-          <li><a href="/es/raise-your-room-ranking-score">Cómo subir la puntuación de ranking de tu sala</a></li>
-          <li><a href="/es/stripchat_promo">Reseña del bot de tráfico de Stripchat</a></li>
-          <li><a href="/es/platforms-we-work-with">Plataformas con las que trabajamos</a></li>
-        </ul>
+        <div class="related-grid">
+          <a href="/es/stripscore-cam-rank-explained" class="related-card">
+            <span class="related-card__icon">🎯</span>
+            <span>¿Qué es el Stripscore? Cam Rank explicado</span>
+          </a>
+          <a href="/es/how-cam-algorithm-ranks-rooms" class="related-card">
+            <span class="related-card__icon">⚙️</span>
+            <span>Cómo el algoritmo cam clasifica las salas</span>
+          </a>
+          <a href="/es/raise-your-room-ranking-score" class="related-card">
+            <span class="related-card__icon">📈</span>
+            <span>Cómo subir la puntuación de ranking de tu sala</span>
+          </a>
+          <a href="/es/stripchat_promo" class="related-card">
+            <span class="related-card__icon">🤖</span>
+            <span>Reseña del bot de tráfico de Stripchat</span>
+          </a>
+          <a href="/es/platforms-we-work-with" class="related-card">
+            <span class="related-card__icon">🌐</span>
+            <span>Plataformas con las que trabajamos</span>
+          </a>
+        </div>
       </section>
-    </div>
-  </article>
-</Base>
 
-<style>
-  .page-content { padding-block: 3rem 5rem; }
-  .page-header { margin-bottom: 3rem; border-bottom: 1px solid var(--border); padding-bottom: 2rem; }
-  .eyebrow { font-family: var(--font-heading); font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: .75rem; }
-  .page-header h1 { margin-bottom: 1.25rem; }
-  .lead { font-size: 1.125rem; max-width: 60ch; }
-  article section { margin-bottom: 2.5rem; }
-  article h2 { margin-bottom: 1rem; }
-  article h3 { margin-bottom: .5rem; margin-top: 1.5rem; }
-  article p { margin-bottom: .875rem; }
-  article ul { margin: .75rem 0 .875rem 1.5rem; display: flex; flex-direction: column; gap: .5rem; }
-  article li { color: var(--fg-muted); }
-  article a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
-  article a:hover { color: var(--accent-hover); }
-  .faq { display: flex; flex-direction: column; gap: 0; }
-  .faq h2 { margin-bottom: 1.5rem; }
-  .faq-item { padding: 1.5rem 0; border-top: 1px solid var(--border); }
-  .faq-item:last-child { border-bottom: 1px solid var(--border); }
-  .cta-section { background: var(--bg-raised); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; margin-top: 3rem; }
-</style>
+    </div>
+  </div>
+
+</Base>

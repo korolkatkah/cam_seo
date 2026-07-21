@@ -3,7 +3,6 @@ import Base from '@/layouts/Base.astro';
 const site = 'https://ewohub.com';
 const slug = 'stripchat-ai-model-recommendations';
 ---
-
 <Base
   title="AI Model Recommendations pe Stripchat: cum funcționează și cum te optimizezi pentru asta"
   description="Funcția AI de la Stripchat construiește un feed personalizat 'Recomandat pentru tine' din comportamentul spectatorilor. Iată cum funcționează cu adevărat și ce pot face modelele să apară în el."
@@ -17,187 +16,159 @@ const slug = 'stripchat-ai-model-recommendations';
     { lang: 'ru', url: `${site}/ru/${slug}` },
   ]}
 >
-  <article class="page-content">
+
+  <section class="art-hero">
+    <div class="art-orb art-orb--1"></div>
+    <div class="art-orb art-orb--2"></div>
+    <div class="art-grid"></div>
+    <div class="art-hero__inner container">
+      <div class="art-meta">
+        <span class="art-tag">Stripchat</span>
+        <span class="art-tag art-tag--green">Ghid</span>
+      </div>
+      <h1 class="art-title">Stripchat <span class="art-grad">AI Model Recommendations</span>: Cum Funcționează</h1>
+      <p class="art-lead">Stripchat a adăugat un feed "Recomandat pentru tine" bazat pe AI, care sugerează modele în funcție de comportamentul propriu al fiecărui spectator — nu doar după numărul actual de spectatori. Un al doilea canal de descoperire paralel cu clasamentele Popular.</p>
+    </div>
+  </section>
+
+  <div class="art-body">
     <div class="container">
 
-      <header class="page-header">
-        <p class="eyebrow">Ghid</p>
-        <h1>AI Model Recommendations pe Stripchat: cum funcționează și cum te optimizezi pentru asta</h1>
-        <p class="lead">
-          Stripchat a adăugat un feed "Recomandat pentru tine" bazat pe AI, care sugerează modele în
-          funcție de comportamentul propriu al fiecărui spectator — nu doar după numărul actual de
-          spectatori. Este un al doilea canal de descoperire care rulează paralel cu clasamentele
-          categoriei Popular și funcționează pe semnale diferite. Iată ce se știe cu adevărat și ce
-          poți face pentru a apărea în el.
-        </p>
-      </header>
+      <p class="art-intro">Iată ce se știe cu adevărat și ce poți face pentru a apărea în el.</p>
 
-      <section>
+      <section class="section">
         <h2>Ce face de fapt funcția de recomandări AI</h2>
-        <p>
-          Funcția analizează istoricul propriu de interacțiune al unui spectator — ce categorii
-          răsfoiește, ce modele urmărește și le dă bacșiș, și ce modele urmărește (follow) — și
-          construiește un feed personalizat de modele care se potrivesc cu acel tipar, descris de
-          platformă drept o potrivire cu "vibe"-ul spectatorului. Este construită să rezolve o problemă
-          reală: cu mii de camere active în orice moment, majoritatea spectatorilor nu pot răsfoi manual
-          pentru a găsi modele care se potrivesc cu adevărat cu ce caută.
-        </p>
-        <p>
-          Două mecanici contează cel mai mult pentru modele: feed-ul este antrenat de cine urmărește
-          un spectator, și se îmbunătățește cu cât spectatorul interacționează mai mult cu o anumită
-          categorie sau tip de model. Asta înseamnă că motorul de recomandare nu citește doar
-          statisticile actuale ale camerei tale — potrivește conținutul tău cu preferințele acumulate
-          ale unui spectator specific.
-        </p>
+        <div class="glass-card" style="margin-top:1.25rem;">
+          <p>Funcția analizează istoricul propriu de interacțiune al unui spectator — ce categorii răsfoiește, ce modele urmărește și le dă bacșiș, și ce modele urmărește (follow) — și construiește un feed personalizat de modele care se potrivesc cu acel tipar, descris de platformă drept o potrivire cu "vibe"-ul spectatorului.</p>
+          <p style="margin-bottom:0;">Două mecanici contează cel mai mult pentru modele: feed-ul este antrenat de cine urmărește un spectator, și se îmbunătățește cu cât spectatorul interacționează mai mult cu o anumită categorie sau tip de model. Asta înseamnă că motorul de recomandare nu citește doar statisticile actuale ale camerei tale — potrivește conținutul tău cu preferințele acumulate ale unui spectator specific.</p>
+        </div>
       </section>
 
-      <section>
+      <section class="section">
         <h2>De ce acesta este un canal diferit de "Popular"</h2>
-        <p>
-          Clasamentele standard de categorie și Popular (acoperite în <a href="/ro/how-cam-algorithm-ranks-rooms">detalierea completă a algoritmului</a>)
-          sunt determinate de semnale live — spectatori actuali, engagement, bacșișuri — ceea ce
-          favorizează structural camerele deja mari. Aceasta este aceeași dinamică din spatele unei
-          critici cunoscute la adresa sistemului de descoperire al Stripchat: tinde să afișeze repetat
-          aceleași modele cu trafic mare, făcând mai greu pentru modelele noi sau de nișă să străpungă
-          doar prin vizibilitate.
-        </p>
-        <p>
-          Feed-ul de recomandări AI funcționează cu intrări diferite — istoricul unui spectator
-          specific, nu dimensiunea actuală a camerei tale. În principiu, asta oferă unui model nou sau
-          de nișă o cale reală spre vizibilitate la spectatori al căror comportament se potrivește deja
-          cu conținutul lor, indiferent cât de mare este camera lor chiar în acest moment. Nu înlocuiește
-          mecanica clasamentului Popular — este un al doilea canal, paralel, care merită optimizat pe
-          cont propriu.
-        </p>
+        <div class="glass-card" style="margin-top:1.25rem;">
+          <p>Clasamentele standard de categorie și Popular (acoperite în <a href="/ro/how-cam-algorithm-ranks-rooms">detalierea completă a algoritmului</a>) sunt determinate de semnale live — spectatori actuali, engagement, bacșișuri — ceea ce favorizează structural camerele deja mari.</p>
+          <p style="margin-bottom:0;">Feed-ul de recomandări AI funcționează cu intrări diferite — istoricul unui spectator specific, nu dimensiunea actuală a camerei tale. Nu înlocuiește mecanica clasamentului Popular — este un al doilea canal, paralel, care merită optimizat pe cont propriu.</p>
+        </div>
       </section>
 
-      <section>
+      <section class="section">
         <h2>Cum te optimizezi pentru asta</h2>
 
-        <h3>1. Păstrează categoria și tag-urile precise, nu doar populare</h3>
-        <p>
-          Deoarece motorul potrivește comportamentul spectatorului cu tipul de conținut, etichetarea
-          camerei tale cu categorii largi, cu trafic mare, care nu îți descriu cu adevărat conținutul
-          poate lucra împotriva ta — dă algoritmului un semnal nepotrivit, iar spectatorii al căror
-          istoric se potrivește cu nișa ta reală au șanse mai mici să te vadă afișată. Etichetarea
-          precisă și onestă valorează mai mult aici decât etichetarea pentru acoperire largă.
-        </p>
+        <div class="reason-card" style="margin-top:1.25rem;">
+          <div class="reason-num">01</div>
+          <div class="reason-content">
+            <h3>1. Păstrează categoria și tag-urile precise, nu doar populare</h3>
+            <p>Deoarece motorul potrivește comportamentul spectatorului cu tipul de conținut, etichetarea camerei tale cu categorii largi, cu trafic mare, care nu îți descriu cu adevărat conținutul poate lucra împotriva ta. Etichetarea precisă și onestă valorează mai mult aici.</p>
+          </div>
+        </div>
 
-        <h3>2. Construiește o identitate consistentă, recognoscibilă</h3>
-        <p>
-          Un motor care potrivește "vibe"-ul are nevoie de un tipar stabil cu care să se potrivească.
-          Modelele care trec brusc între stiluri, categorii sau tipuri de conținut de la o sesiune la
-          alta oferă algoritmului mai puțin material de lucru decât modelele cu o identitate clară,
-          consistentă — ceea ce este și o practică bună pentru retenția audienței în general.
-        </p>
+        <div class="reason-card">
+          <div class="reason-num">02</div>
+          <div class="reason-content">
+            <h3>2. Construiește o identitate consistentă, recognoscibilă</h3>
+            <p>Un motor care potrivește "vibe"-ul are nevoie de un tipar stabil cu care să se potrivească. Modelele care trec brusc între stiluri, categorii sau tipuri de conținut de la o sesiune la alta oferă algoritmului mai puțin material de lucru.</p>
+          </div>
+        </div>
 
-        <h3>3. Încurajează activ follow-urile</h3>
-        <p>
-          Follow-urile sunt unul dintre semnalele specifice raportate care antrenează feed-ul de
-          recomandare al unui spectator în timp. Un spectator care te urmărește are șanse mai mari să
-          continue să te vadă afișată în sesiunile viitoare, ceea ce se acumulează la fel cum o face o
-          audiență reală care revine în alte sisteme de clasificare ale platformei. Tratează
-          solicitările de follow ca fiind mai mult decât o metrică de vanitate — au aici o funcție
-          directă de descoperire.
-        </p>
+        <div class="reason-card">
+          <div class="reason-num">03</div>
+          <div class="reason-content">
+            <h3>3. Încurajează activ follow-urile</h3>
+            <p>Follow-urile sunt unul dintre semnalele specifice raportate care antrenează feed-ul de recomandare al unui spectator în timp. Un spectator care te urmărește are șanse mai mari să continue să te vadă afișată în sesiunile viitoare.</p>
+          </div>
+        </div>
 
-        <h3>4. Nu te aștepta să înlocuiască engagementul real</h3>
-        <p>
-          Feed-ul de recomandare este antrenat pe tipare autentice de interacțiune — comportament real
-          de navigare, bacșișuri și follow-uri. Nu recompensează numerele umflate artificial mai mult
-          decât o face algoritmul de clasificare de bază, și din același motiv fundamental: engagementul
-          fabricat nu se potrivește cu tiparele reale de comportament ale spectatorilor, deci nu
-          alimentează semnalul de potrivire așa cum o face engagementul autentic. Vezi <a href="/ro/raise-your-room-ranking-score">de ce traficul de boți eșuează →</a> pentru versiunea completă a acestui argument.
-        </p>
+        <div class="reason-card">
+          <div class="reason-num">04</div>
+          <div class="reason-content">
+            <h3>4. Nu te aștepta să înlocuiască engagementul real</h3>
+            <p>Feed-ul de recomandare este antrenat pe tipare autentice de interacțiune — comportament real de navigare, bacșișuri și follow-uri. Vezi <a href="/ro/raise-your-room-ranking-score">de ce traficul de boți eșuează →</a> pentru versiunea completă.</p>
+          </div>
+        </div>
       </section>
 
-      <section>
+      <section class="section">
         <h2>Așteptări realiste</h2>
-        <p>
-          Aceasta este o pârghie de descoperire cu adevărat utilă, nu o scurtătură garantată. Critica
-          documentată conform căreia sistemul de descoperire al Stripchat încă înclină spre modelele cu
-          trafic mare se aplică suprafețelor de descoperire ale platformei în general, iar un strat de
-          personalizare deasupra nu șterge acest bias structural peste noapte. Tratează optimizarea
-          recomandărilor AI ca pe o pârghie suplimentară alături de — nu în locul — fundamentelor:
-          program consistent, engagement real și streaming în orele de vârf ale publicului tău țintă.
-        </p>
-        <p>Vezi: <a href="/ro/best-streaming-times-by-region">cele mai bune ore de streaming pe regiune →</a></p>
+        <div class="glass-card" style="margin-top:1.25rem;">
+          <p>Aceasta este o pârghie de descoperire cu adevărat utilă, nu o scurtătură garantată. Tratează optimizarea recomandărilor AI ca pe o pârghie suplimentară alături de — nu în locul — fundamentelor: program consistent, engagement real și streaming în orele de vârf ale publicului tău țintă.</p>
+          <p style="margin-bottom:0;"><a href="/ro/best-streaming-times-by-region">Vezi: cele mai bune ore de streaming pe regiune →</a></p>
+        </div>
       </section>
 
-      <section class="faq">
+      <section class="faq-section section">
         <h2>Întrebări frecvente</h2>
 
         <div class="faq-item">
-          <h3>Pot vedea dacă apar în feed-urile recomandate de AI ale spectatorilor?</h3>
-          <p>
-            Stripchat nu publică date de vizibilitate per model specific pentru această funcție. Ce
-            poți observa indirect este creșterea follow-urilor și tiparele spectatorilor care revin,
-            care sunt intrările raportate ca fiind folosite de feed.
-          </p>
+          <button class="faq-chevron" aria-expanded="false">
+            <span>Pot vedea dacă apar în feed-urile recomandate de AI ale spectatorilor?</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-body">
+            <p>Stripchat nu publică date de vizibilitate per model specific pentru această funcție. Ce poți observa indirect este creșterea follow-urilor și tiparele spectatorilor care revin.</p>
+          </div>
         </div>
 
         <div class="faq-item">
-          <h3>Această funcție înlocuiește clasamentele categoriei Popular?</h3>
-          <p>
-            Nu — funcționează în paralel. Clasamentele Popular sunt determinate de semnale live ale
-            camerei; recomandările AI sunt determinate de comportamentul acumulat al unui spectator
-            individual. Ambele merită optimizate.
-          </p>
+          <button class="faq-chevron" aria-expanded="false">
+            <span>Această funcție înlocuiește clasamentele categoriei Popular?</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-body">
+            <p>Nu — funcționează în paralel. Clasamentele Popular sunt determinate de semnale live ale camerei; recomandările AI sunt determinate de comportamentul acumulat al unui spectator individual. Ambele merită optimizate.</p>
+          </div>
         </div>
 
         <div class="faq-item">
-          <h3>Este o scurtătură bună să etichetezi excesiv cu categorii populare?</h3>
-          <p>
-            Poate eșua pentru această funcție specifică. Tag-urile largi și inexacte îți pot aduce
-            vizualizări suplimentare ocazionale, dar te nepotrivesc cu spectatori al căror istoric real
-            nu se potrivește cu conținutul tău — ceea ce lucrează împotriva unui sistem construit
-            special pentru a potrivi conținutul cu comportamentul spectatorului.
-          </p>
+          <button class="faq-chevron" aria-expanded="false">
+            <span>Este o scurtătură bună să etichetezi excesiv cu categorii populare?</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-body">
+            <p>Poate eșua pentru această funcție specifică. Tag-urile largi și inexacte îți pot aduce vizualizări suplimentare ocazionale, dar te nepotrivesc cu spectatori al căror istoric real nu se potrivește cu conținutul tău.</p>
+          </div>
         </div>
       </section>
 
-      <section class="cta-section">
-        <h2>Vrei o strategie completă de descoperire, nu doar o funcție?</h2>
-        <p>
-          Recomandările AI, clasamentele Popular și traficul din afara platformei alimentează același
-          obiectiv — mai mulți spectatori potriviți care găsesc camera ta. Construim strategii în jurul
-          tuturor acestora, nu doar al unei singure pârghii.
-        </p>
-        <p><a href="/ro/model-promotion">Servicii de promovare pentru modele →</a></p>
-        <p style="margin-top:.75rem;"><a href="/ro/how-cam-algorithm-ranks-rooms">Cum clasifică algoritmii cam camerele →</a></p>
+      <section class="art-cta section">
+        <div class="art-cta__orb"></div>
+        <div class="art-cta__inner">
+          <span class="art-cta__badge">Strategie completă</span>
+          <h2>Vrei o strategie completă de descoperire?</h2>
+          <p>Recomandările AI, clasamentele Popular și traficul din afara platformei alimentează același obiectiv — mai mulți spectatori potriviți care găsesc camera ta. Construim strategii în jurul tuturor acestora.</p>
+          <div class="art-cta__actions">
+            <a href="/ro/model-promotion" class="art-cta__btn--primary btn btn-primary">Servicii de promovare pentru modele →</a>
+          </div>
+        </div>
       </section>
 
-      <section class="related-articles">
+      <section class="section">
         <h2>Articole conexe</h2>
-        <ul>
-          <li><a href="/ro/stripscore-cam-rank-explained">Ce este Stripscore? Cam Rank explicat</a></li>
-          <li><a href="/ro/how-cam-algorithm-ranks-rooms">Cum clasifică algoritmul cam camerele</a></li>
-          <li><a href="/ro/raise-your-room-ranking-score">Cum să-ți crești scorul de clasificare al camerei</a></li>
-          <li><a href="/ro/stripchat_promo">Recenzie bot de trafic Stripchat</a></li>
-          <li><a href="/ro/platforms-we-work-with">Platformele cu care lucrăm</a></li>
-        </ul>
+        <div class="related-grid">
+          <a href="/ro/stripscore-cam-rank-explained" class="related-card">
+            <span class="related-card__icon">🎯</span>
+            <span>Ce este Stripscore? Cam Rank explicat</span>
+          </a>
+          <a href="/ro/how-cam-algorithm-ranks-rooms" class="related-card">
+            <span class="related-card__icon">⚙️</span>
+            <span>Cum clasifică algoritmul cam camerele</span>
+          </a>
+          <a href="/ro/raise-your-room-ranking-score" class="related-card">
+            <span class="related-card__icon">📈</span>
+            <span>Cum să-ți crești scorul de clasificare al camerei</span>
+          </a>
+          <a href="/ro/stripchat_promo" class="related-card">
+            <span class="related-card__icon">🤖</span>
+            <span>Recenzie bot de trafic Stripchat</span>
+          </a>
+          <a href="/ro/platforms-we-work-with" class="related-card">
+            <span class="related-card__icon">🌐</span>
+            <span>Platformele cu care lucrăm</span>
+          </a>
+        </div>
       </section>
-    </div>
-  </article>
-</Base>
 
-<style>
-  .page-content { padding-block: 3rem 5rem; }
-  .page-header { margin-bottom: 3rem; border-bottom: 1px solid var(--border); padding-bottom: 2rem; }
-  .eyebrow { font-family: var(--font-heading); font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: .75rem; }
-  .page-header h1 { margin-bottom: 1.25rem; }
-  .lead { font-size: 1.125rem; max-width: 60ch; }
-  article section { margin-bottom: 2.5rem; }
-  article h2 { margin-bottom: 1rem; }
-  article h3 { margin-bottom: .5rem; margin-top: 1.5rem; }
-  article p { margin-bottom: .875rem; }
-  article ul { margin: .75rem 0 .875rem 1.5rem; display: flex; flex-direction: column; gap: .5rem; }
-  article li { color: var(--fg-muted); }
-  article a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
-  article a:hover { color: var(--accent-hover); }
-  .faq { display: flex; flex-direction: column; gap: 0; }
-  .faq h2 { margin-bottom: 1.5rem; }
-  .faq-item { padding: 1.5rem 0; border-top: 1px solid var(--border); }
-  .faq-item:last-child { border-bottom: 1px solid var(--border); }
-  .cta-section { background: var(--bg-raised); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; margin-top: 3rem; }
-</style>
+    </div>
+  </div>
+
+</Base>
