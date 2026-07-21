@@ -1,4 +1,4 @@
-﻿---
+---
 import Base from '@/layouts/Base.astro';
 const site = 'https://ewohub.com';
 const slug = 'resources';
@@ -16,76 +16,96 @@ const slug = 'resources';
     { lang: 'ru', url: `${site}/ru/${slug}` },
   ]}
 >
-  <article class="page-content">
-    <div class="container">
-      <header class="page-header">
-        <p class="eyebrow">Resurse</p>
-        <h1>Ghiduri și sfaturi pentru modele webcam</h1>
-        <p class="lead">Aici găsești toate ghidurile EWO — cunoștințe practice despre algoritmi, creșterea audienței, planificarea orelor și strategia de venituri.</p>
-      </header>
-
-      <section>
-        <h2>Creștere și promovare</h2>
-
-        <h3><a href="/ro/new-model-growth">Program de creștere de 30 de zile pentru modele noi</a></h3>
-        <p>Programul nostru structurat pentru modelele care tocmai au început. Explică cum să-ți construiești prima bază de spectatori în primele 30 de zile și să rupi ciclul algoritmului.</p>
-
-        <h3><a href="/ro/studio-scaling">Scalarea unui studio webcam dincolo de 10 modele</a></h3>
-        <p>Pentru operatorii de studio care vor să crească dincolo de 5–10 modele. Sisteme, planificare, expansiune regională și construirea brandului pentru studiouri profesionale.</p>
-      </section>
-
-      <section>
-        <h2>Algoritm și platforme</h2>
-
-        <h3><a href="/ro/why-low-viewers-webcam">8 motive pentru puțini spectatori – și cum să le rezolvi</a></h3>
-        <p>Orar greșit, tag-uri proaste, fără plan, profil slab — iată cele 8 cauze cele mai frecvente ale puținilor spectatori și soluții concrete pentru fiecare.</p>
-
-        <h3><a href="/ro/how-cam-algorithm-ranks-rooms">Cum clasifică algoritmul cam camerele</a></h3>
-        <p>Ce cântărește cu adevărat în clasamentele platformelor cam: numărul de spectatori, engagement, durata sesiunii, consecvența și tag-urile. Cu metode legitime de îmbunătățire.</p>
-
-        <h3><a href="/ro/stripscore-cam-rank-explained">Ce este Stripscore? Cam Rank explicat</a></h3>
-        <p>Stripscore, cam rank, room rank — ce înseamnă acești termeni și cum diferă conceptul între Chaturbate, Stripchat, BongaCams și LiveJasmin.</p>
-
-        <h3><a href="/ro/platforms-we-work-with">Platformele cu care lucrează EWO</a></h3>
-        <p>Ce diferențiază Chaturbate, Stripchat, LiveJasmin și BongaCams — și cum diferă strategia optimă în funcție de platformă și audiența țintă.</p>
-      </section>
-
-      <section>
-        <h2>Orar și venituri</h2>
-
-        <h3><a href="/ro/best-streaming-times-by-region">Cele mai bune ore de streaming pe regiuni</a></h3>
-        <p>Ore concrete pentru SUA (20:00–02:00 ET), DACH (21:00–01:00 CET), Marea Britanie (20:00–00:00 GMT), Franța, Europa de Est și Columbia — cu sfaturi de planificare.</p>
-
-        <h3><a href="/ro/webcam-model-income-guide">Ghid de venituri pentru modele webcam</a></h3>
-        <p>Ce îți determină cu adevărat veniturile: calitatea spectatorilor, procentul platformei, consecvența, spectatorii fideli și orientarea regională. Cu așteptări realiste.</p>
-
-        <h3><a href="/ro/webcam-earnings-by-platform">Câștiguri webcam pe platformă</a></h3>
-        <p>Chaturbate vs. Stripchat vs. BongaCams vs. LiveJasmin — procente reale de plată, valoarea token-ului și ce platformă plătește cu adevărat mai mult.</p>
-      </section>
-
-      <section class="cta-section">
-        <h2>Gata pentru următorul pas?</h2>
-        <p>Ghidurile îți oferă cunoștințele — noi îți oferim implementarea. Dacă cauți suport profesional pentru construirea audienței tale, contactează-ne.</p>
-        <p><a href="https://t.me/+tBjfmjh9vHo1YzQy" target="_blank" rel="noopener">Contactează-ne acum →</a></p>
-      </section>
-      <section class="related-articles">
-        <h2>Articole înrudite</h2>
-        <ul>
-          <li><a href="/ro/why-low-viewers-webcam">De ce camera ta webcam are puțini spectatori</a></li>
-          <li><a href="/ro/how-cam-algorithm-ranks-rooms">Cum algoritmul cam clasifică camerele</a></li>
-          <li><a href="/ro/stripscore-cam-rank-explained">Ce este Stripscore? Cam Rank explicat</a></li>
-          <li><a href="/ro/best-streaming-times-by-region">Cele mai bune ore de streaming pe regiune</a></li>
-          <li><a href="/ro/webcam-model-income-guide">Ghid de venituri pentru modele webcam</a></li>
-          <li><a href="/ro/webcam-earnings-by-platform">Câștiguri webcam pe platformă</a></li>
-          <li><a href="/ro/model-promotion">Servicii de promovare</a></li>
-          <li><a href="/ro/platforms-we-work-with">Platformele cu care lucrăm</a></li>
-          <li><a href="/ro/studio-traffic">Trafic studio</a></li>
-          <li><a href="/ro/new-model-growth">Creștere pentru modele noi</a></li>
-          <li><a href="/ro/studio-scaling">Scalarea studioului</a></li>
-          <li><a href="/ro/model-promotion-romania">Promovare pentru publicul român</a></li>
-        </ul>
-      </section>
+  <section class="art-hero">
+    <div class="art-orb art-orb--1"></div>
+    <div class="art-orb art-orb--2"></div>
+    <div class="art-grid"></div>
+    <div class="art-hero__inner container">
+      <div class="art-meta">
+        <span class="art-tag">Resurse</span>
+      </div>
+      <h1 class="art-title">Ghiduri și <span class="art-grad">sfaturi</span></h1>
+      <p class="art-lead">Aici găsești toate ghidurile EWO — cunoștințe practice despre algoritmi, creșterea audienței, planificarea orelor și strategia de venituri.</p>
     </div>
-  </article>
+  </section>
+
+  <div class="art-body">
+    <div class="container">
+
+      <h2 style="margin-bottom:1.5rem;">Creștere și promovare</h2>
+      <div class="related-grid" style="margin-bottom:3rem;">
+        <a href="/ro/new-model-growth" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
+          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Program de creștere de 30 de zile pentru modele noi</h3>
+          <p style="margin:0;font-size:.9375rem;">Programul nostru structurat pentru modelele care tocmai au început. Explică cum să-ți construiești prima bază de spectatori în primele 30 de zile și să rupi ciclul algoritmului.</p>
+        </a>
+        <a href="/ro/studio-scaling" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
+          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Scalarea unui studio webcam dincolo de 10 modele</h3>
+          <p style="margin:0;font-size:.9375rem;">Pentru operatorii de studio care vor să crească dincolo de 5–10 modele. Sisteme, planificare, expansiune regională și construirea brandului pentru studiouri profesionale.</p>
+        </a>
+      </div>
+
+      <h2 style="margin-bottom:1.5rem;">Algoritm și platforme</h2>
+      <div class="related-grid" style="margin-bottom:3rem;">
+        <a href="/ro/why-low-viewers-webcam" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
+          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">8 motive pentru puțini spectatori – și cum să le rezolvi</h3>
+          <p style="margin:0;font-size:.9375rem;">Orar greșit, tag-uri proaste, fără plan, profil slab — iată cele 8 cauze cele mai frecvente ale puținilor spectatori și soluții concrete pentru fiecare.</p>
+        </a>
+        <a href="/ro/how-cam-algorithm-ranks-rooms" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
+          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Cum clasifică algoritmul cam camerele</h3>
+          <p style="margin:0;font-size:.9375rem;">Ce cântărește cu adevărat în clasamentele platformelor cam: numărul de spectatori, engagement, durata sesiunii, consecvența și tag-urile. Cu metode legitime de îmbunătățire.</p>
+        </a>
+        <a href="/ro/stripscore-cam-rank-explained" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
+          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Ce este Stripscore? Cam Rank explicat</h3>
+          <p style="margin:0;font-size:.9375rem;">Stripscore, cam rank, room rank — ce înseamnă acești termeni și cum diferă conceptul între Chaturbate, Stripchat, BongaCams și LiveJasmin.</p>
+        </a>
+        <a href="/ro/platforms-we-work-with" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
+          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Platformele cu care lucrează EWO</h3>
+          <p style="margin:0;font-size:.9375rem;">Ce diferențiază Chaturbate, Stripchat, LiveJasmin și BongaCams — și cum diferă strategia optimă în funcție de platformă și audiența țintă.</p>
+        </a>
+      </div>
+
+      <h2 style="margin-bottom:1.5rem;">Orar și venituri</h2>
+      <div class="related-grid" style="margin-bottom:3rem;">
+        <a href="/ro/best-streaming-times-by-region" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
+          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Cele mai bune ore de streaming pe regiuni</h3>
+          <p style="margin:0;font-size:.9375rem;">Ore concrete pentru SUA (20:00–02:00 ET), DACH (21:00–01:00 CET), Marea Britanie (20:00–00:00 GMT), Franța, Europa de Est și Columbia — cu sfaturi de planificare.</p>
+        </a>
+        <a href="/ro/webcam-model-income-guide" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
+          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Ghid de venituri pentru modele webcam</h3>
+          <p style="margin:0;font-size:.9375rem;">Ce îți determină cu adevărat veniturile: calitatea spectatorilor, procentul platformei, consecvența, spectatorii fideli și orientarea regională. Cu așteptări realiste.</p>
+        </a>
+        <a href="/ro/webcam-earnings-by-platform" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
+          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Câștiguri webcam pe platformă</h3>
+          <p style="margin:0;font-size:.9375rem;">Chaturbate vs. Stripchat vs. BongaCams vs. LiveJasmin — procente reale de plată, valoarea token-ului și ce platformă plătește cu adevărat mai mult.</p>
+        </a>
+      </div>
+
+      <section class="art-cta">
+        <div class="art-cta__orb"></div>
+        <div class="art-cta__inner">
+          <span class="art-cta__badge">Pasul următor</span>
+          <h2>Gata pentru următorul pas?</h2>
+          <p>Ghidurile îți oferă cunoștințele — noi îți oferim implementarea. Dacă cauți suport profesional pentru construirea audienței tale, contactează-ne.</p>
+          <div class="art-cta__actions">
+            <a href="https://t.me/+tBjfmjh9vHo1YzQy" target="_blank" rel="noopener" class="art-cta__btn--primary btn btn-primary">Contactează-ne acum →</a>
+          </div>
+        </div>
+      </section>
+
+      <div class="related-grid" style="margin-top:3rem;">
+        <a href="/ro/why-low-viewers-webcam" class="related-card">De ce camera ta webcam are puțini spectatori</a>
+        <a href="/ro/how-cam-algorithm-ranks-rooms" class="related-card">Cum algoritmul cam clasifică camerele</a>
+        <a href="/ro/stripscore-cam-rank-explained" class="related-card">Ce este Stripscore? Cam Rank explicat</a>
+        <a href="/ro/best-streaming-times-by-region" class="related-card">Cele mai bune ore de streaming pe regiune</a>
+        <a href="/ro/webcam-model-income-guide" class="related-card">Ghid de venituri pentru modele webcam</a>
+        <a href="/ro/webcam-earnings-by-platform" class="related-card">Câștiguri webcam pe platformă</a>
+        <a href="/ro/model-promotion" class="related-card">Servicii de promovare</a>
+        <a href="/ro/platforms-we-work-with" class="related-card">Platformele cu care lucrăm</a>
+        <a href="/ro/studio-traffic" class="related-card">Trafic studio</a>
+        <a href="/ro/new-model-growth" class="related-card">Creștere pentru modele noi</a>
+        <a href="/ro/studio-scaling" class="related-card">Scalarea studioului</a>
+        <a href="/ro/model-promotion-romania" class="related-card">Promovare pentru publicul român</a>
+      </div>
+    </div>
+  </div>
 </Base>
-<style>.page-content{padding-block:3rem 5rem}.page-header{margin-bottom:3rem;border-bottom:1px solid var(--border);padding-bottom:2rem}.eyebrow{font-family:var(--font-heading);font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.75rem}.page-header h1{margin-bottom:1.25rem}.lead{font-size:1.125rem;max-width:60ch}article section{margin-bottom:2.5rem}article h2{margin-bottom:1rem}article h3{margin-bottom:.5rem;margin-top:1.5rem}article p{margin-bottom:.875rem}article ol,article ul{margin:.75rem 0 .875rem 1.5rem;display:flex;flex-direction:column;gap:.5rem}article li{color:var(--fg-muted)}article a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}.faq-item{padding:1.5rem 0;border-top:1px solid var(--border)}.faq-item:last-child{border-bottom:1px solid var(--border)}.cta-section{background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2rem;margin-top:3rem}</style>

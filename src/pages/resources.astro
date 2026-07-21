@@ -1,4 +1,4 @@
-﻿---
+---
 import Base from '@/layouts/Base.astro';
 const site = 'https://ewohub.com';
 const slug = 'resources';
@@ -68,103 +68,59 @@ const articles = [
     { lang: 'ru', url: `${site}/ru/${slug}` },
   ]}
 >
-  <div class="page-content">
+  <section class="art-hero">
+    <div class="art-orb art-orb--1"></div>
+    <div class="art-orb art-orb--2"></div>
+    <div class="art-grid"></div>
+    <div class="art-hero__inner container">
+      <div class="art-meta">
+        <span class="art-tag">Free resources</span>
+      </div>
+      <h1 class="art-title">Guides &amp; <span class="art-grad">Articles</span></h1>
+      <p class="art-lead">Practical guides for webcam models and studios — no fluff, no upsell.</p>
+      <p class="art-lead" style="font-size:1rem;margin-top:.5rem;">Covering promotion, traffic, and growth strategy for Chaturbate, Stripchat, and other major platforms.</p>
+    </div>
+  </section>
+
+  <div class="art-body">
     <div class="container">
-
-      <header class="page-header">
-        <p class="eyebrow">Free resources</p>
-        <h1>Guides & Articles</h1>
-        <p class="lead">Practical guides for webcam models and studios — no fluff, no upsell.</p>
-        <p>Covering promotion, traffic, and growth strategy for Chaturbate, Stripchat, and other major platforms.</p>
-      </header>
-
-      <ul class="article-list" role="list">
+      <div class="related-grid">
         {articles.map(({ href, title, desc, tag }) => (
-          <li>
-            <a href={href} class="article-card card">
-              <div class="article-meta">
-                <span class="article-tag">{tag}</span>
-              </div>
-              <h2>{title}</h2>
-              <p>{desc}</p>
-              <span class="card-link">Read article →</span>
-            </a>
-          </li>
+          <a href={href} class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
+            <div class="art-meta">
+              <span class="art-tag">{tag}</span>
+            </div>
+            <h3 style="font-size:1.1rem;font-weight:700;margin:0;">{title}</h3>
+            <p style="margin:0;font-size:.9375rem;">{desc}</p>
+            <span style="font-size:.875rem;font-weight:600;color:var(--accent);margin-top:auto;">Read article →</span>
+          </a>
         ))}
-      </ul>
+      </div>
 
-      <section class="related-articles">
-        <h2>Related Articles</h2>
-        <ul>
-          <li><a href="/why-low-viewers-webcam">Why Your Webcam Room Has Low Viewers</a></li>
-          <li><a href="/how-cam-algorithm-ranks-rooms">How the Cam Algorithm Ranks Rooms</a></li>
-          <li><a href="/best-streaming-times-by-region">Best Streaming Times by Region</a></li>
-          <li><a href="/webcam-model-income-guide">Webcam Model Income Guide</a></li>
-          <li><a href="/model-promotion">Model Promotion Services</a></li>
-          <li><a href="/platforms-we-work-with">Platforms We Work With</a></li>
-          <li><a href="/studio-traffic">Studio Traffic</a></li>
-          <li><a href="/new-model-growth">New Model Growth</a></li>
-          <li><a href="/studio-scaling">Studio Scaling</a></li>
-          <li><a href="/model-promotion-usa">Promotion for US Audiences</a></li>
-          <li><a href="/model-promotion-germany">Promotion for German Audiences</a></li>
-          <li><a href="/model-promotion-romania">Promotion for Romanian Audiences</a></li>
-          <li><a href="/model-promotion-ukraine">Promotion for Ukrainian Audiences</a></li>
-          <li><a href="/model-promotion-colombia">Promotion for Colombian Audiences</a></li>
-          <li><a href="/model-promotion-spain">Promotion for Spanish Audiences</a></li>
-        </ul>
+      <section class="art-cta" style="margin-top:4rem;">
+        <div class="art-cta__orb"></div>
+        <div class="art-cta__inner">
+          <span class="art-cta__badge">Related Articles</span>
+          <h2>More Guides</h2>
+          <div class="related-grid" style="margin-top:1.5rem;">
+            <a href="/why-low-viewers-webcam" class="related-card">Why Your Webcam Room Has Low Viewers</a>
+            <a href="/how-cam-algorithm-ranks-rooms" class="related-card">How the Cam Algorithm Ranks Rooms</a>
+            <a href="/best-streaming-times-by-region" class="related-card">Best Streaming Times by Region</a>
+            <a href="/webcam-model-income-guide" class="related-card">Webcam Model Income Guide</a>
+            <a href="/model-promotion" class="related-card">Model Promotion Services</a>
+            <a href="/platforms-we-work-with" class="related-card">Platforms We Work With</a>
+            <a href="/studio-traffic" class="related-card">Studio Traffic</a>
+            <a href="/new-model-growth" class="related-card">New Model Growth</a>
+            <a href="/studio-scaling" class="related-card">Studio Scaling</a>
+            <a href="/model-promotion-usa" class="related-card">Promotion for US Audiences</a>
+            <a href="/model-promotion-germany" class="related-card">Promotion for German Audiences</a>
+            <a href="/model-promotion-romania" class="related-card">Promotion for Romanian Audiences</a>
+            <a href="/model-promotion-ukraine" class="related-card">Promotion for Ukrainian Audiences</a>
+            <a href="/model-promotion-colombia" class="related-card">Promotion for Colombian Audiences</a>
+            <a href="/model-promotion-spain" class="related-card">Promotion for Spanish Audiences</a>
+          </div>
+        </div>
       </section>
     </div>
   </div>
 </Base>
-
-<style>
-  .page-content { padding-block: 3rem 5rem; }
-  .page-header { margin-bottom: 3rem; }
-  .eyebrow {
-    font-family: var(--font-heading);
-    font-size: .75rem;
-    font-weight: 600;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: .75rem;
-  }
-  .page-header h1 { margin-bottom: .75rem; }
-  .lead { font-size: 1.0625rem; }
-
-  .article-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  .article-card {
-    display: flex;
-    flex-direction: column;
-    gap: .625rem;
-    text-decoration: none;
-  }
-  .article-card h2 {
-    font-size: 1.25rem;
-    transition: color var(--transition);
-  }
-  .article-card:hover h2 { color: var(--accent); }
-  .article-meta { display: flex; align-items: center; gap: .75rem; }
-  .article-tag {
-    font-family: var(--font-heading);
-    font-size: .7rem;
-    font-weight: 600;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: var(--fg-faint);
-    border: 1px solid var(--border);
-    padding: .2rem .6rem;
-    border-radius: 100px;
-  }
-  .card-link {
-    font-family: var(--font-heading);
-    font-size: .875rem;
-    font-weight: 600;
-    color: var(--accent);
-    margin-top: .25rem;
-  }
-</style>
