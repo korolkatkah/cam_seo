@@ -1,0 +1,166 @@
+---
+import Base from '@/layouts/Base.astro';
+const site = 'https://ewohub.com';
+const slug = 'your-page-slug'; // CHANGE THIS
+---
+<Base
+  title="Page Title Here"
+  description="Meta description here (150-160 chars)."
+  lang="en"
+  hreflang={[
+    { lang: 'en', url: `${site}/${slug}` },
+    { lang: 'de', url: `${site}/de/${slug}` },
+    { lang: 'es', url: `${site}/es/${slug}` },
+    { lang: 'ro', url: `${site}/ro/${slug}` },
+    { lang: 'uk', url: `${site}/uk/${slug}` },
+    { lang: 'ru', url: `${site}/ru/${slug}` },
+  ]}
+>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="art-hero">
+    <div class="art-orb art-orb--1"></div>
+    <div class="art-orb art-orb--2"></div>
+    <div class="art-grid"></div>
+    <div class="art-hero__inner container">
+      <div class="art-meta">
+        <span class="art-tag">Category Tag</span>
+        <span class="art-tag art-tag--green">Guide</span>
+      </div>
+      <h1 class="art-title">Main Title with <span class="art-grad">Gradient Word</span></h1>
+      <p class="art-lead">Lead paragraph — 1-2 sentences summarizing the article. Keep under 200 chars.</p>
+    </div>
+  </section>
+
+  <!-- ═══ BODY ═══ -->
+  <div class="art-body">
+    <div class="container">
+
+      <p class="art-intro">
+        Short intro paragraph that appears below the hero. 2-3 sentences. No heading needed.
+      </p>
+
+      <!-- ── Info section with glass card ── -->
+      <section class="section">
+        <h2>Section Heading</h2>
+        <div class="glass-card" style="margin-top:1.25rem;">
+          <p>First paragraph of content.</p>
+          <p style="margin-bottom:0;">Second paragraph. Use style="margin-bottom:0;" on the last &lt;p&gt;.</p>
+        </div>
+      </section>
+
+      <!-- ── Numbered steps/reasons ── -->
+      <section class="section">
+        <h2>Steps / Reasons</h2>
+
+        <div class="reason-card" style="margin-top:1.25rem;">
+          <div class="reason-num">01</div>
+          <div class="reason-content">
+            <h3>First step or reason</h3>
+            <p>Explanation text.</p>
+          </div>
+        </div>
+
+        <div class="reason-card">
+          <div class="reason-num">02</div>
+          <div class="reason-content">
+            <h3>Second step or reason</h3>
+            <p>Explanation text.</p>
+          </div>
+        </div>
+
+        <div class="reason-card">
+          <div class="reason-num">03</div>
+          <div class="reason-content">
+            <h3>Third step or reason</h3>
+            <p>Explanation text.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Warning / highlight box ── -->
+      <section class="section">
+        <div class="highlight-box highlight-box--warning">
+          <h2>Important Note</h2>
+          <p>Warning or important information here.</p>
+        </div>
+      </section>
+
+      <!-- ── Checklist ── -->
+      <section class="section">
+        <h2>Checklist</h2>
+        <div class="checklist" style="margin-top:1rem;">
+          <ul>
+            <li>First item</li>
+            <li>Second item</li>
+            <li>Third item</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ── FAQ ── -->
+      <section class="faq-section section">
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <button class="faq-chevron" aria-expanded="false">
+            <span>First question?</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-body">
+            <p>Answer to the first question.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-chevron" aria-expanded="false">
+            <span>Second question?</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-body">
+            <p>Answer to the second question.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ CTA ══ -->
+      <section class="art-cta section">
+        <div class="art-cta__orb"></div>
+        <div class="art-cta__inner">
+          <span class="art-cta__badge">Badge Label</span>
+          <h2>Call to Action Heading</h2>
+          <p>Brief CTA description — what the user gets by clicking.</p>
+          <div class="art-cta__actions">
+            <a href="https://t.me/+tBjfmjh9vHo1YzQy" target="_blank" rel="noopener" class="art-cta__btn--primary btn btn-primary">Contact Us →</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ Related articles ══ -->
+      <section class="section">
+        <h2>Related Articles</h2>
+        <div class="related-grid">
+          <a href="/why-low-viewers-webcam" class="related-card">
+            <span class="related-card__icon">👁️</span>
+            <span>Why Your Webcam Room Has Low Viewers</span>
+          </a>
+          <a href="/how-cam-algorithm-ranks-rooms" class="related-card">
+            <span class="related-card__icon">⚙️</span>
+            <span>How Cam Algorithms Rank Rooms</span>
+          </a>
+          <a href="/model-promotion" class="related-card">
+            <span class="related-card__icon">🎯</span>
+            <span>Model Promotion Services</span>
+          </a>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+</Base>
+
+<!-- ══════════════════════════════════════════
+     DO NOT ADD A <style> BLOCK HERE.
+     All styles are global in src/layouts/Base.astro.
+     ══════════════════════════════════════════ -->
