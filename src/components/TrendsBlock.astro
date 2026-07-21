@@ -132,19 +132,12 @@ const headingDate = new Intl.DateTimeFormat(LOCALE_MAP[lang] ?? 'en-US', {
 }).format(trends.generated_at ? new Date(trends.generated_at) : new Date());
 
 const hasData = trends.best_hours_utc?.length > 0 || trends.top_tags?.length > 0;
-const allHours = trends.best_hours_utc ?? [];
-const bestHours = [...allHours]
-  .sort((a: { score: number }, b: { score: number }) => b.score - a.score)
-  .slice(0, 10)
-  .sort((a: { hour: number }, b: { hour: number }) => a.hour - b.hour);
+const hoursMap = new Map((trends.best_hours_utc ?? []).map((h: { hour: number; score: number }) => [h.hour, h.score]));
+const hours24 = Array.from({ length: 24 }, (_, i) => ({ hour: i, score: hoursMap.get(i) ?? 0 }));
+const maxScore24 = Math.max(1, ...hours24.map(h => h.score));
 const topTags = (trends.top_tags ?? []).slice(0, 30);
 const topTitles = (trends.top_titles ?? []).slice(0, 6);
 const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
-const maxScore = Math.max(1, ...bestHours.map((h: { score: number }) => h.score));
-const bestHourSet = new Set(
-  [...bestHours].sort((a: { score: number }, b: { score: number }) => b.score - a.score)
-    .slice(0, 5).map((h: { hour: number }) => h.hour)
-);
 ---
 
 <section class="trends-block">
@@ -171,16 +164,20 @@ const bestHourSet = new Set(
           <h3 class="trends-card-title">{t.hoursTitle}</h3>
           <p class="hours-caption">{t.hoursCaption}</p>
           <p class="hours-local-note" data-hours-local-note hidden>{t.hoursLocalNote}</p>
-          <ul class="hours-list">
-            {bestHours.map((h: { hour: number; score: number }) => (
-              <li class={`hours-row${bestHourSet.has(h.hour) ? ' is-best' : ''}`}>
-                <span class="hours-range" data-utc-hour={h.hour}>{String(h.hour).padStart(2, '0')}:00–{String((h.hour + 1) % 24).padStart(2, '0')}:00 UTC</span>
-                <span class="hours-bar-track">
-                  <span class="hours-bar-fill" style={`width:${Math.round((h.score / maxScore) * 100)}%`}></span>
-                </span>
-                <span class="hours-score">{h.score} <small>{t.hoursUnit}</small></span>
-              </li>
-            ))}
+          <ul class="hours-list" id="hours-list">
+            {hours24.map((h: { hour: number; score: number }) => {
+              const pct = Math.round((h.score / maxScore24) * 100);
+              const cls = h.score >= maxScore24 * 0.9 ? 'is-peak' : h.score >= maxScore24 * 0.75 ? 'is-mid' : 'is-low';
+              return (
+                <li class={`hours-row ${cls}`} data-utc-hour={h.hour}>
+                  <span class="hours-range">{String(h.hour).padStart(2, '0')}:00–{String((h.hour + 1) % 24).padStart(2, '0')}:00 UTC</span>
+                  <span class="hours-bar-track">
+                    <span class="hours-bar-fill" style={`width:${pct}%`}></span>
+                  </span>
+                  <span class="hours-score">{h.score} <small>{t.hoursUnit}</small></span>
+                </li>
+              );
+            })}
           </ul>
         </div>
 
@@ -272,15 +269,28 @@ const bestHourSet = new Set(
     return String(n).padStart(2, '0');
   }
 
-  const tzOffsetMin = new Date().getTimezoneOffset(); // (UTC - local) in minutes
+  const tzOffsetMin = new Date().getTimezoneOffset();
+  const localNowHour = new Date().getHours();
 
-  document.querySelectorAll<HTMLElement>('.hours-range[data-utc-hour]').forEach((el) => {
-    const utcHour = Number(el.dataset.utcHour);
+  document.querySelectorAll<HTMLElement>('.hours-row[data-utc-hour]').forEach((row) => {
+    const utcHour = Number(row.dataset.utcHour);
     if (Number.isNaN(utcHour)) return;
     const startTotal = (((utcHour * 60 - tzOffsetMin) % 1440) + 1440) % 1440;
     const endTotal = (startTotal + 60) % 1440;
     const fmt = (totalMin: number) => `${pad(Math.floor(totalMin / 60))}:${pad(totalMin % 60)}`;
-    el.textContent = `${fmt(startTotal)}–${fmt(endTotal)}`;
+    const localStartHour = Math.floor(startTotal / 60);
+
+    const rangeEl = row.querySelector<HTMLElement>('.hours-range');
+    if (rangeEl) rangeEl.textContent = `${fmt(startTotal)}–${fmt(endTotal)}`;
+
+    if (localStartHour === localNowHour) {
+      row.classList.add('is-current');
+      if (rangeEl) rangeEl.innerHTML += '<span class="now-badge">now</span>';
+      const note = document.createElement('div');
+      note.className = 'hours-yesterday-note';
+      note.textContent = '↓ data from yesterday at this hour';
+      row.after(note);
+    }
   });
 
   document.querySelectorAll<HTMLElement>('[data-hours-local-note]').forEach((el) => {
@@ -350,22 +360,40 @@ const bestHourSet = new Set(
 
   .hours-caption { font-size: 0.75rem; color: #64748b; margin-bottom: 0.85rem; }
   .hours-local-note { font-size: 0.75rem; color: #e879a0; font-weight: 600; margin: -0.5rem 0 0.85rem; font-style: italic; }
-  .hours-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
-  .hours-row { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0.75rem; }
-  .hours-range { font-size: 0.8125rem; color: #cbd5e1; font-weight: 600; white-space: nowrap; }
+  .hours-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .hours-row { display: grid; grid-template-columns: 110px 1fr auto; align-items: center; gap: 0.75rem; }
+  .hours-range { font-size: 0.8125rem; color: #94a3b8; font-weight: 600; white-space: nowrap; }
   .hours-bar-track {
-    height: 6px; border-radius: 99px; background: rgba(255,255,255,0.06); overflow: hidden;
+    height: 22px; border-radius: 6px; background: rgba(255,255,255,0.05); overflow: hidden;
   }
   .hours-bar-fill {
-    display: block; height: 100%; border-radius: 99px;
-    background: linear-gradient(90deg, #be185d, #e879a0);
+    display: block; height: 100%; border-radius: 6px;
+    background: #6366f1; opacity: 0.7;
   }
-  .hours-score { font-size: 0.75rem; color: #e879a0; font-weight: 700; white-space: nowrap; }
-  .hours-score small { color: #64748b; font-weight: 600; }
+  .hours-score { font-size: 0.75rem; color: #94a3b8; font-weight: 600; white-space: nowrap; min-width: 90px; text-align: right; }
+  .hours-score small { color: #475569; }
 
-  .hours-row.is-best .hours-range { color: #34d399; }
-  .hours-row.is-best .hours-bar-fill { background: linear-gradient(90deg, #10b981, #34d399); }
-  .hours-row.is-best .hours-score { color: #34d399; }
+  .hours-row.is-mid .hours-bar-fill { background: #f472b6; opacity: 1; }
+  .hours-row.is-mid .hours-range { color: #f472b6; }
+  .hours-row.is-mid .hours-score { color: #f472b6; }
+
+  .hours-row.is-peak .hours-bar-fill { background: #34d399; opacity: 1; }
+  .hours-row.is-peak .hours-range { color: #34d399; }
+  .hours-row.is-peak .hours-score { color: #34d399; }
+
+  .hours-row.is-current { position: relative; }
+  .hours-row.is-current .hours-bar-track { outline: 2px solid #fbbf24; outline-offset: -1px; border-radius: 6px; }
+  .hours-row.is-current .hours-range { color: #fbbf24; }
+  .hours-row.is-current .hours-score { color: #fbbf24; }
+  .now-badge {
+    font-size: 10px; background: rgba(251,191,36,0.15); color: #fbbf24;
+    border: 1px solid rgba(251,191,36,0.3);
+    padding: 1px 6px; border-radius: 99px; margin-left: 5px; vertical-align: middle;
+  }
+  .hours-yesterday-note {
+    font-size: 11px; color: #475569; font-style: italic;
+    padding-left: 122px; margin-top: -2px; margin-bottom: 3px;
+  }
 
   .trends-card-wide { margin-top: 1rem; }
 
