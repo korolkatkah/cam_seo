@@ -324,16 +324,19 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
       if (localStartHour === localNowHour) {
         nowRow = row;
         row.classList.add('is-current');
-        if (rangeEl) rangeEl.innerHTML += '<span class="now-badge">now</span>';
+        if (rangeEl) rangeEl.innerHTML += ' <span class="now-badge">now</span>';
       } else if (localStartHour < localNowHour) {
         historyRows.push(row);
       }
     });
 
-    // Insert "now note" after current row
+    // Insert "now note" right after current row
     if (nowRow && historyRows.length > 0) {
       const nowNote = block.querySelector<HTMLElement>('.hours-yesterday-note');
-      if (nowNote) { nowNote.hidden = false; }
+      if (nowNote) {
+        nowNote.hidden = false;
+        (nowRow as HTMLElement).after(nowNote);
+      }
     }
 
     // Move past rows into history panel
@@ -463,12 +466,12 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
   }
   .hours-history-btn {
     display: flex; align-items: center; gap: 8px; width: 100%;
-    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 10px; padding: 10px 14px; margin-top: 6px;
-    cursor: pointer; font-size: 0.8125rem; color: #64748b;
+    background: rgba(251,191,36,0.07); border: 1px solid rgba(251,191,36,0.25);
+    border-radius: 10px; padding: 11px 16px; margin-top: 8px;
+    cursor: pointer; font-size: 0.875rem; font-weight: 600; color: #fbbf24;
     font-family: var(--font-body); transition: background 0.15s, color 0.15s;
   }
-  .hours-history-btn:hover { background: rgba(255,255,255,0.06); color: #94a3b8; }
+  .hours-history-btn:hover { background: rgba(251,191,36,0.13); color: #fcd34d; }
   .hist-chevron { margin-left: auto; transition: transform 0.2s; }
   .hours-history-panel { margin-top: 6px; }
   .hours-history-label { font-size: 11px; color: #475569; font-style: italic; margin-bottom: 6px; }
