@@ -309,6 +309,8 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
     const rows = Array.from(list.querySelectorAll<HTMLElement>('.hours-row[data-utc-hour]'));
     const historyRows: HTMLElement[] = [];
     let nowRow: HTMLElement | null = null;
+    // map localStartHour → row
+    const rowByLocal = new Map<number, HTMLElement>();
 
     rows.forEach((row) => {
       const utcHour = Number(row.dataset.utcHour);
@@ -321,17 +323,27 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
       const rangeEl = row.querySelector<HTMLElement>('.hours-range');
       if (rangeEl) rangeEl.textContent = `${fmt(startTotal)}–${fmt(endTotal)}`;
 
+      rowByLocal.set(localStartHour, row);
+
       if (localStartHour === localNowHour) {
         nowRow = row;
         row.classList.add('is-current');
         if (rangeEl) rangeEl.innerHTML += ' <span class="now-badge">now</span>';
-      } else if (localStartHour < localNowHour) {
-        historyRows.push(row);
       }
     });
 
+    // Visible: now + next 2 hours. Everything else → history
+    rows.forEach((row) => {
+      const utcHour = Number(row.dataset.utcHour);
+      if (Number.isNaN(utcHour)) return;
+      const startTotal = (((utcHour * 60 - tzOffsetMin) % 1440) + 1440) % 1440;
+      const localStartHour = Math.floor(startTotal / 60);
+      const diff = (localStartHour - localNowHour + 24) % 24;
+      if (diff > 2) historyRows.push(row);
+    });
+
     // Insert "now note" right after current row
-    if (nowRow && historyRows.length > 0) {
+    if (nowRow) {
       const nowNote = block.querySelector<HTMLElement>('.hours-yesterday-note');
       if (nowNote) {
         nowNote.hidden = false;
@@ -339,7 +351,7 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
       }
     }
 
-    // Move past rows into history panel
+    // Move non-visible rows into history panel
     const historyWrap = block.querySelector<HTMLElement>('.hours-history-wrap');
     const historyPanel = block.querySelector<HTMLElement>('.hours-history-panel');
     const historyList = block.querySelector<HTMLElement>('.hours-list--history');
