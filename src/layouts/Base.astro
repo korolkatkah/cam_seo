@@ -36,13 +36,13 @@ const langLabels: Record<string, string> = {
 
 const langPrefix = lang === 'en' ? '' : `/${lang}`;
 
-const navLabels: Record<string, {models: string, studios: string, blog: string}> = {
-  en: { models: 'For Models', studios: 'For Studios', blog: 'Blog' },
-  de: { models: 'Für Models', studios: 'Für Studios', blog: 'Blog' },
-  es: { models: 'Para Modelos', studios: 'Para Estudios', blog: 'Blog' },
-  ro: { models: 'Pentru Modele', studios: 'Pentru Studiouri', blog: 'Blog' },
-  uk: { models: 'Для Моделей', studios: 'Для Студій', blog: 'Блог' },
-  ru: { models: 'Для Моделей', studios: 'Для Студий', blog: 'Блог' },
+const navLabels: Record<string, {models: string, studios: string, blog: string, guides: string}> = {
+  en: { models: 'For Models', studios: 'For Studios', blog: 'Blog', guides: 'Guides' },
+  de: { models: 'Für Models', studios: 'Für Studios', blog: 'Blog', guides: 'Guides' },
+  es: { models: 'Para Modelos', studios: 'Para Estudios', blog: 'Blog', guides: 'Guías' },
+  ro: { models: 'Pentru Modele', studios: 'Pentru Studiouri', blog: 'Blog', guides: 'Ghiduri' },
+  uk: { models: 'Для Моделей', studios: 'Для Студій', blog: 'Блог', guides: 'Гайди' },
+  ru: { models: 'Для Моделей', studios: 'Для Студий', blog: 'Блог', guides: 'Гайды' },
 };
 const nl = navLabels[lang] ?? navLabels.en;
 
@@ -51,9 +51,14 @@ const ctaLabels: Record<string, string> = {
   ro: 'Începe', uk: 'Почати', ru: 'Начать',
 };
 
+const menuLabels: Record<string, string> = {
+  en: 'Menu', de: 'Menü', es: 'Menú', ro: 'Meniu', uk: 'Меню', ru: 'Меню',
+};
+
 const nav = [
   { href: `${langPrefix}/for-models`, label: nl.models },
   { href: `${langPrefix}/studio-traffic`, label: nl.studios },
+  { href: `${langPrefix}/resources`, label: nl.guides },
   { href: `${langPrefix}/blog`, label: nl.blog },
 ];
 ---
@@ -141,7 +146,31 @@ const nav = [
           </div>
         )}
         <a href="https://t.me/+tBjfmjh9vHo1YzQy" target="_blank" rel="noopener" class="btn-nav">{ctaLabels[lang] ?? 'Get Started'}</a>
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-expanded="false" aria-controls="mobile-menu" aria-label={menuLabels[lang] ?? 'Menu'}>
+          <svg class="mobile-menu-icon mobile-menu-icon--open" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg class="mobile-menu-icon mobile-menu-icon--close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
       </nav>
+
+      <div class="mobile-menu" id="mobile-menu">
+        <ul class="mobile-nav-links" role="list">
+          {nav.map(({ href, label }) => (
+            <li><a href={href} class="mobile-nav-link">{label}</a></li>
+          ))}
+        </ul>
+        {hreflang.length > 1 && (
+          <ul class="mobile-lang-list" role="list">
+            {hreflang.filter(h => h.lang !== 'x-default').map(({ lang: l, url }) => (
+              <li>
+                <a href={url} class={`mobile-lang-link${l === lang ? ' mobile-lang-link--active' : ''}`} hreflang={l}>
+                  {langLabels[l] ?? l}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+        <a href="https://t.me/+tBjfmjh9vHo1YzQy" target="_blank" rel="noopener" class="btn btn-primary mobile-menu-cta">{ctaLabels[lang] ?? 'Get Started'}</a>
+      </div>
     </header>
 
 
@@ -392,6 +421,82 @@ const nav = [
   @media (max-width: 640px) {
     .nav-links { display: none; }
     .nav-inner { gap: 1rem; }
+  }
+
+  /* ── Mobile menu ── */
+  .mobile-menu-btn {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--fg-muted);
+    flex-shrink: 0;
+    transition: color var(--transition), border-color var(--transition), background var(--transition);
+  }
+  .mobile-menu-btn:hover {
+    color: var(--fg);
+    border-color: rgba(232,121,160,.35);
+    background: rgba(232,121,160,0.08);
+  }
+  .mobile-menu-icon--close { display: none; }
+  .mobile-menu-btn[aria-expanded="true"] .mobile-menu-icon--open { display: none; }
+  .mobile-menu-btn[aria-expanded="true"] .mobile-menu-icon--close { display: block; }
+
+  .mobile-menu {
+    display: none;
+    flex-direction: column;
+    gap: 1.25rem;
+    max-width: var(--container);
+    margin-inline: auto;
+    padding: 1.25rem clamp(1.25rem, 4vw, 2rem) 1.75rem;
+    border-top: 1px solid rgba(232,121,160,0.08);
+  }
+  .mobile-menu.is-open { display: flex; }
+
+  .mobile-nav-links { display: flex; flex-direction: column; gap: .25rem; }
+  .mobile-nav-link {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: var(--fg);
+    padding: .75rem .5rem;
+    border-radius: var(--radius-sm);
+    transition: color var(--transition), background var(--transition);
+  }
+  .mobile-nav-link:hover { color: var(--accent); background: rgba(232,121,160,0.06); }
+
+  .mobile-lang-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(232,121,160,0.08);
+  }
+  .mobile-lang-link {
+    font-family: var(--font-heading);
+    font-size: .8125rem;
+    font-weight: 600;
+    color: var(--fg-muted);
+    padding: .4rem .875rem;
+    border-radius: 99px;
+    border: 1px solid var(--border);
+    transition: color var(--transition), border-color var(--transition), background var(--transition);
+  }
+  .mobile-lang-link:hover { color: var(--fg); border-color: rgba(232,121,160,.3); }
+  .mobile-lang-link--active { color: var(--accent); border-color: rgba(232,121,160,.4); background: rgba(232,121,160,0.1); }
+
+  .mobile-menu-cta { width: 100%; justify-content: center; }
+
+  @media (max-width: 640px) {
+    .mobile-menu-btn { display: flex; }
+  }
+  @media (min-width: 641px) {
+    .mobile-menu { display: none !important; }
   }
 
   /* ── Cards ── */
@@ -811,6 +916,29 @@ const nav = [
       a.addEventListener('click', function () {
         try { localStorage.setItem('ewo-lang-set', '1'); } catch (e) {}
       });
+    });
+  })();
+
+  // Mobile menu
+  (function () {
+    var btn = document.getElementById('mobile-menu-btn');
+    var menu = document.getElementById('mobile-menu');
+    if (!btn || !menu) return;
+    btn.addEventListener('click', function () {
+      var open = menu.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    menu.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        menu.classList.remove('is-open');
+        btn.setAttribute('aria-expanded', 'false');
+      });
+    });
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 640 && menu.classList.contains('is-open')) {
+        menu.classList.remove('is-open');
+        btn.setAttribute('aria-expanded', 'false');
+      }
     });
   })();
 
