@@ -4,6 +4,36 @@ Running log of daily/session-based SEO & promotion action plans. Newest entry on
 
 ---
 
+## 2026-07-22
+
+### Design system migration: Deep Wine
+The site got a full visual redesign (an external/parallel process, not this session) — all new pages must
+follow `src/pages/_article-template.astro` and the "Deep Wine" classes documented in `CLAUDE.md`
+(`art-hero`, `glass-card`, `reason-card`, `faq-section`, `art-cta`, `related-grid`, etc.). The old template
+(`page-content`, `page-header`, `eyebrow`, `cta-section`, `related-articles`) is deprecated — do not use it
+for new pages going forward.
+
+### Shipped: "Why the Same Models Always Show Up in Stripchat's Popular" (all 6 languages)
+Second topic from the Stripchat-specific backlog (2026-07-21): explains the documented viewer-count
+feedback-loop bias in Stripchat's Popular category, and — grounded in real 2025-2026 platform changes
+(BCAMS Magazine reporting) — covers concrete counter-levers most new models don't know exist: female
+leaderboards expanded ~100→1,000 positions split by continent, Guys/Trans leaderboards expanded Top
+20→Top 100 with cash prizes, category-split contests, and a New Model Promotion visibility window.
+Written first in the old template, then rewritten in the new Deep Wine template after discovering
+`CLAUDE.md`'s design-system requirement mid-task. Shipped as `/stripchat-popular-new-model-visibility` +
+5 locales, cross-linked from the article itself to `/how-cam-algorithm-ranks-rooms`,
+`/stripchat-ai-model-recommendations`, `/raise-your-room-ranking-score`, `/stripscore-cam-rank-explained`,
+and `/new-model-growth`. Added to blog.astro + resources.astro in all 6 locales. Build verified clean
+(138 pages, up from 127).
+
+Remaining topics from the 2026-07-21 Stripchat backlog (not yet written): mobile streaming via Plasma
+app, VR/Lovense monetization, 2026 contest categories (partially covered by this article's contest
+section — revisit before writing a dedicated piece to avoid overlap), Stripchat-specific token/payout
+deep dive, category/tag optimization guide, studio vs independent on Stripchat specifically, Stripchat
+vs Chaturbate comparison, first-weeks onboarding guide.
+
+---
+
 ## 2026-07-21
 
 ### Domain migration: ewo.cam → ewohub.com
