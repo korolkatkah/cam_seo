@@ -2,10 +2,22 @@
 import Base from '@/layouts/Base.astro';
 const site = 'https://ewohub.com';
 const slug = 'resources';
+
+// Doar articolele cu category: 'guides' apar pe această pagină.
+// Restul trăiește pe /blog — această pagină este exclusiv feed-ul curat de Ghiduri.
+const articles = [
+  {
+    href: '/ro/stripchat-first-14-days-guide',
+    title: 'Primele tale 14 zile pe Stripchat',
+    desc: 'Pas cu pas: înregistrare, construirea profilului și cum să profiți la maximum de fereastra de vizibilitate "New" de 14 zile.',
+    tag: 'Stripchat',
+    category: 'guides',
+  },
+].filter(a => a.category === 'guides');
 ---
 <Base
-  title="Resurse pentru modele webcam – Ghiduri și sfaturi | EWO"
-  description="Toate ghidurile EWO pentru modele webcam dintr-o privire: algoritm, sfaturi pentru spectatori, ore de streaming, ghid de venituri și prezentare platforme."
+  title="Ghiduri — Ghiduri pas cu pas pentru modele webcam"
+  description="Ghiduri practice, pas cu pas, pentru modele webcam — înregistrare, mecanica platformei și cum să începi corect."
   lang="ro"
   hreflang={[
     { lang: 'en', url: `${site}/${slug}` },
@@ -22,105 +34,39 @@ const slug = 'resources';
     <div class="art-grid"></div>
     <div class="art-hero__inner container">
       <div class="art-meta">
-        <span class="art-tag">Resurse</span>
+        <span class="art-tag">Resurse gratuite</span>
       </div>
-      <h1 class="art-title">Ghiduri și <span class="art-grad">sfaturi</span></h1>
-      <p class="art-lead">Aici găsești toate ghidurile EWO — cunoștințe practice despre algoritmi, creșterea audienței, planificarea orelor și strategia de venituri.</p>
+      <h1 class="art-title">Ghiduri <span class="art-grad">pas cu pas</span></h1>
+      <p class="art-lead">Ghiduri practice, pas cu pas, pentru modele webcam — fără umplutură, fără upsell.</p>
     </div>
   </section>
 
   <div class="art-body">
     <div class="container">
-
-      <h2 style="margin-bottom:1.5rem;">Creștere și promovare</h2>
-      <div class="related-grid" style="margin-bottom:3rem;">
-        <a href="/ro/new-model-growth" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Program de creștere de 30 de zile pentru modele noi</h3>
-          <p style="margin:0;font-size:.9375rem;">Programul nostru structurat pentru modelele care tocmai au început. Explică cum să-ți construiești prima bază de spectatori în primele 30 de zile și să rupi ciclul algoritmului.</p>
-        </a>
-        <a href="/ro/studio-scaling" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Scalarea unui studio webcam dincolo de 10 modele</h3>
-          <p style="margin:0;font-size:.9375rem;">Pentru operatorii de studio care vor să crească dincolo de 5–10 modele. Sisteme, planificare, expansiune regională și construirea brandului pentru studiouri profesionale.</p>
-        </a>
+      <div class="related-grid">
+        {articles.map(({ href, title, desc, tag }) => (
+          <a href={href} class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
+            <div class="art-meta">
+              <span class="art-tag">{tag}</span>
+            </div>
+            <h3 style="font-size:1.1rem;font-weight:700;margin:0;">{title}</h3>
+            <p style="margin:0;font-size:.9375rem;">{desc}</p>
+            <span style="font-size:.875rem;font-weight:600;color:var(--accent);margin-top:auto;">Citește articolul →</span>
+          </a>
+        ))}
       </div>
 
-      <h2 style="margin-bottom:1.5rem;">Algoritm și platforme</h2>
-      <div class="related-grid" style="margin-bottom:3rem;">
-        <a href="/ro/why-low-viewers-webcam" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">8 motive pentru puțini spectatori – și cum să le rezolvi</h3>
-          <p style="margin:0;font-size:.9375rem;">Orar greșit, tag-uri proaste, fără plan, profil slab — iată cele 8 cauze cele mai frecvente ale puținilor spectatori și soluții concrete pentru fiecare.</p>
-        </a>
-        <a href="/ro/how-cam-algorithm-ranks-rooms" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Cum clasifică algoritmul cam camerele</h3>
-          <p style="margin:0;font-size:.9375rem;">Ce cântărește cu adevărat în clasamentele platformelor cam: numărul de spectatori, engagement, durata sesiunii, consecvența și tag-urile. Cu metode legitime de îmbunătățire.</p>
-        </a>
-        <a href="/ro/stripscore-cam-rank-explained" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Ce este Stripscore? Cam Rank explicat</h3>
-          <p style="margin:0;font-size:.9375rem;">Stripscore, cam rank, room rank — ce înseamnă acești termeni și cum diferă conceptul între Chaturbate, Stripchat, BongaCams și LiveJasmin.</p>
-        </a>
-        <a href="/ro/stripchat-ai-model-recommendations" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">AI Model Recommendations pe Stripchat</h3>
-          <p style="margin:0;font-size:.9375rem;">Cum funcționează feed-ul "Recomandat pentru tine" al Stripchat bazat pe AI și cum îți optimizezi camera pentru a apărea în el.</p>
-        </a>
-        <a href="/ro/stripchat-popular-new-model-visibility" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">De ce apar mereu aceleași modele în Popular</h3>
-          <p style="margin:0;font-size:.9375rem;">Biasul documentat spre camerele mari și căile concrete spre vizibilitate reală pentru o începătoare.</p>
-        </a>
-        <a href="/ro/stripchat-first-14-days-guide" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Primele tale 14 zile pe Stripchat</h3>
-          <p style="margin:0;font-size:.9375rem;">Pas cu pas: înregistrare, construirea profilului și cum să profiți la maximum de fereastra de vizibilitate "New" de 14 zile.</p>
-        </a>
-        <a href="/ro/platforms-we-work-with" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Platformele cu care lucrează EWO</h3>
-          <p style="margin:0;font-size:.9375rem;">Ce diferențiază Chaturbate, Stripchat, LiveJasmin și BongaCams — și cum diferă strategia optimă în funcție de platformă și audiența țintă.</p>
-        </a>
-      </div>
-
-      <h2 style="margin-bottom:1.5rem;">Orar și venituri</h2>
-      <div class="related-grid" style="margin-bottom:3rem;">
-        <a href="/ro/best-streaming-times-by-region" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Cele mai bune ore de streaming pe regiuni</h3>
-          <p style="margin:0;font-size:.9375rem;">Ore concrete pentru SUA (20:00–02:00 ET), DACH (21:00–01:00 CET), Marea Britanie (20:00–00:00 GMT), Franța, Europa de Est și Columbia — cu sfaturi de planificare.</p>
-        </a>
-        <a href="/ro/webcam-model-income-guide" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Ghid de venituri pentru modele webcam</h3>
-          <p style="margin:0;font-size:.9375rem;">Ce îți determină cu adevărat veniturile: calitatea spectatorilor, procentul platformei, consecvența, spectatorii fideli și orientarea regională. Cu așteptări realiste.</p>
-        </a>
-        <a href="/ro/webcam-earnings-by-platform" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Câștiguri webcam pe platformă</h3>
-          <p style="margin:0;font-size:.9375rem;">Chaturbate vs. Stripchat vs. BongaCams vs. LiveJasmin — procente reale de plată, valoarea token-ului și ce platformă plătește cu adevărat mai mult.</p>
-        </a>
-      </div>
-
-      <section class="art-cta">
+      <section class="art-cta" style="margin-top:4rem;">
         <div class="art-cta__orb"></div>
         <div class="art-cta__inner">
-          <span class="art-cta__badge">Pasul următor</span>
-          <h2>Gata pentru următorul pas?</h2>
-          <p>Ghidurile îți oferă cunoștințele — noi îți oferim implementarea. Dacă cauți suport profesional pentru construirea audienței tale, contactează-ne.</p>
+          <span class="art-cta__badge">Cauți altceva?</span>
+          <h2>Răsfoiește catalogul complet de articole</h2>
+          <p>Analize de venituri, comparații de platforme, detalieri de algoritmi și multe altele — pe blog.</p>
           <div class="art-cta__actions">
-            <a href="https://t.me/+tBjfmjh9vHo1YzQy" target="_blank" rel="noopener" class="art-cta__btn--primary btn btn-primary">Contactează-ne acum →</a>
+            <a href="/ro/blog" class="art-cta__btn--primary btn btn-primary">Vezi blogul →</a>
           </div>
         </div>
       </section>
-
-      <div class="related-grid" style="margin-top:3rem;">
-        <a href="/ro/why-low-viewers-webcam" class="related-card">De ce camera ta webcam are puțini spectatori</a>
-        <a href="/ro/how-cam-algorithm-ranks-rooms" class="related-card">Cum algoritmul cam clasifică camerele</a>
-        <a href="/ro/stripscore-cam-rank-explained" class="related-card">Ce este Stripscore? Cam Rank explicat</a>
-        <a href="/ro/stripchat-ai-model-recommendations" class="related-card">AI Model Recommendations pe Stripchat</a>
-        <a href="/ro/stripchat-popular-new-model-visibility" class="related-card">De ce apar mereu aceleași modele în Popular</a>
-        <a href="/ro/stripchat-first-14-days-guide" class="related-card">Primele tale 14 zile pe Stripchat</a>
-        <a href="/ro/best-streaming-times-by-region" class="related-card">Cele mai bune ore de streaming pe regiune</a>
-        <a href="/ro/webcam-model-income-guide" class="related-card">Ghid de venituri pentru modele webcam</a>
-        <a href="/ro/webcam-earnings-by-platform" class="related-card">Câștiguri webcam pe platformă</a>
-        <a href="/ro/model-promotion" class="related-card">Servicii de promovare</a>
-        <a href="/ro/platforms-we-work-with" class="related-card">Platformele cu care lucrăm</a>
-        <a href="/ro/studio-traffic" class="related-card">Trafic studio</a>
-        <a href="/ro/new-model-growth" class="related-card">Creștere pentru modele noi</a>
-        <a href="/ro/studio-scaling" class="related-card">Scalarea studioului</a>
-        <a href="/ro/model-promotion-romania" class="related-card">Promovare pentru publicul român</a>
-      </div>
     </div>
   </div>
 </Base>

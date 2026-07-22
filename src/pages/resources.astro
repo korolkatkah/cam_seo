@@ -3,79 +3,22 @@ import Base from '@/layouts/Base.astro';
 const site = 'https://ewohub.com';
 const slug = 'resources';
 
+// Only articles tagged category: 'guides' appear on this page.
+// Everything else lives on /blog — this page is the curated Guides feed only.
 const articles = [
-  {
-    href: '/why-low-viewers-webcam',
-    title: 'Why Your Webcam Room Has Low Viewers',
-    desc: '8 fixable reasons models struggle with visibility — and what to do about each one.',
-    tag: 'Models',
-  },
-  {
-    href: '/how-cam-algorithm-ranks-rooms',
-    title: 'How Cam Platform Algorithms Rank Rooms',
-    desc: 'What signals platforms weight and how to work with the algorithm, not against it.',
-    tag: 'Models & Studios',
-  },
-  {
-    href: '/stripscore-cam-rank-explained',
-    title: 'What Is Stripscore? Cam Rank Explained',
-    desc: 'What these terms mean and how the ranking concept differs across Chaturbate, Stripchat, BongaCams, and LiveJasmin.',
-    tag: 'Models & Studios',
-  },
-  {
-    href: '/stripchat-ai-model-recommendations',
-    title: 'Stripchat AI Model Recommendations',
-    desc: "How Stripchat's AI-driven discovery feed works and how to optimize your room to show up in it.",
-    tag: 'Models & Studios',
-  },
-  {
-    href: '/stripchat-popular-new-model-visibility',
-    title: "Why the Same Models Always Show Up in Stripchat's Popular",
-    desc: "The documented bias toward large rooms, what Stripchat has done about it, and concrete paths to visibility for newcomers.",
-    tag: 'Models & Studios',
-  },
   {
     href: '/stripchat-first-14-days-guide',
     title: 'Your First 14 Days on Stripchat',
     desc: "Step-by-step: registration, profile setup, and how to make the most of the 14-day 'New' visibility window.",
-    tag: 'Models & Studios',
+    tag: 'Stripchat',
+    category: 'guides',
   },
-  {
-    href: '/best-streaming-times-by-region',
-    title: 'Best Streaming Times by Region',
-    desc: 'Peak viewer hours for USA, Germany, UK, Eastern Europe and more.',
-    tag: 'Models & Studios',
-  },
-  {
-    href: '/webcam-model-income-guide',
-    title: 'Webcam Model Income Guide',
-    desc: 'How earnings actually work, what affects income, and how to build toward consistency.',
-    tag: 'Models',
-  },
-  {
-    href: '/webcam-earnings-by-platform',
-    title: 'Webcam Earnings by Platform',
-    desc: 'Chaturbate vs Stripchat vs BongaCams vs LiveJasmin — real payout rates, token values, and which platform actually pays more.',
-    tag: 'Models',
-  },
-  {
-    href: '/platforms-we-work-with',
-    title: 'Platforms We Work With',
-    desc: 'What Chaturbate, Stripchat, LiveJasmin, and BongaCams differ on — and how our promotion and traffic strategy adapts to each to grow viewers and paying members.',
-    tag: 'Models & Studios',
-  },
-  {
-    href: '/raise-your-room-ranking-score',
-    title: "How to Raise Your Room's Ranking Score",
-    desc: 'Why bot traffic and fake-viewer services backfire, and the legitimate playbook that actually holds.',
-    tag: 'Models',
-  },
-];
+].filter(a => a.category === 'guides');
 ---
 
 <Base
-  title="Resources — Webcam Model & Studio Guides"
-  description="Free guides for webcam models and studios: platform algorithms, streaming times, income strategy, and audience growth."
+  title="Guides — Step-by-Step Webcam Model Guides"
+  description="Practical, step-by-step guides for webcam models — registration, platform mechanics, and how to get started the right way."
   lang="en"
   hreflang={[
     { lang: 'en', url: `${site}/${slug}` },
@@ -94,9 +37,8 @@ const articles = [
       <div class="art-meta">
         <span class="art-tag">Free resources</span>
       </div>
-      <h1 class="art-title">Guides &amp; <span class="art-grad">Articles</span></h1>
-      <p class="art-lead">Practical guides for webcam models and studios — no fluff, no upsell.</p>
-      <p class="art-lead" style="font-size:1rem;margin-top:.5rem;">Covering promotion, traffic, and growth strategy for Chaturbate, Stripchat, and other major platforms.</p>
+      <h1 class="art-title">Step-by-Step <span class="art-grad">Guides</span></h1>
+      <p class="art-lead">Practical, step-by-step guides for webcam models — no fluff, no upsell.</p>
     </div>
   </section>
 
@@ -118,24 +60,11 @@ const articles = [
       <section class="art-cta" style="margin-top:4rem;">
         <div class="art-cta__orb"></div>
         <div class="art-cta__inner">
-          <span class="art-cta__badge">Related Articles</span>
-          <h2>More Guides</h2>
-          <div class="related-grid" style="margin-top:1.5rem;">
-            <a href="/why-low-viewers-webcam" class="related-card">Why Your Webcam Room Has Low Viewers</a>
-            <a href="/how-cam-algorithm-ranks-rooms" class="related-card">How the Cam Algorithm Ranks Rooms</a>
-            <a href="/best-streaming-times-by-region" class="related-card">Best Streaming Times by Region</a>
-            <a href="/webcam-model-income-guide" class="related-card">Webcam Model Income Guide</a>
-            <a href="/model-promotion" class="related-card">Model Promotion Services</a>
-            <a href="/platforms-we-work-with" class="related-card">Platforms We Work With</a>
-            <a href="/studio-traffic" class="related-card">Studio Traffic</a>
-            <a href="/new-model-growth" class="related-card">New Model Growth</a>
-            <a href="/studio-scaling" class="related-card">Studio Scaling</a>
-            <a href="/model-promotion-usa" class="related-card">Promotion for US Audiences</a>
-            <a href="/model-promotion-germany" class="related-card">Promotion for German Audiences</a>
-            <a href="/model-promotion-romania" class="related-card">Promotion for Romanian Audiences</a>
-            <a href="/model-promotion-ukraine" class="related-card">Promotion for Ukrainian Audiences</a>
-            <a href="/model-promotion-colombia" class="related-card">Promotion for Colombian Audiences</a>
-            <a href="/model-promotion-spain" class="related-card">Promotion for Spanish Audiences</a>
+          <span class="art-cta__badge">Looking for Something Else?</span>
+          <h2>Browse the Full Article Catalog</h2>
+          <p>Income breakdowns, platform comparisons, algorithm deep-dives, and more live on the blog.</p>
+          <div class="art-cta__actions">
+            <a href="/blog" class="art-cta__btn--primary btn btn-primary">Visit the blog →</a>
           </div>
         </div>
       </section>

@@ -4,6 +4,26 @@ Running log of daily/session-based SEO & promotion action plans. Newest entry on
 
 ---
 
+## 2026-07-22 (later)
+
+### Nav restructure: /resources becomes a curated "Guides" feed
+Per explicit user request, `/resources` (now linked from the new "Guides" nav tab) no longer lists all
+site content — it's now filtered to only articles with `category: 'guides'` in the page's `articles`
+array. Currently that's exactly one article: "Your First 14 Days on Stripchat" (the first true
+step-by-step guide format published). The other 9 items previously listed there were removed from this
+page — they remain reachable via `/blog`, which still lists everything. Rewrote all 6 locale versions to
+use the same array+filter pattern (the non-EN versions previously used hand-coded grouped HTML sections,
+now unified to match EN's structure) so future guide-format articles can be added here by simply setting
+`category: 'guides'` on their entry. Hero copy and meta title/description updated to reflect the new
+"step-by-step guides" framing. Build verified clean (144 pages).
+
+**Convention going forward**: when publishing a new step-by-step guide article, add it to
+`src/pages/{locale}/resources.astro`'s `articles` array with `category: 'guides'` in all 6 locales, in
+addition to the usual `blog.astro` listing. Analytical/explainer content (algorithm breakdowns, income
+guides, platform comparisons, etc.) should continue to go on `/blog` only, not `/resources`.
+
+---
+
 ## 2026-07-22
 
 ### Shipped: "Your First 14 Days on Stripchat" step-by-step guide (all 6 languages)

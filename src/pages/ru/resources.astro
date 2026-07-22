@@ -2,10 +2,22 @@
 import Base from '@/layouts/Base.astro';
 const site = 'https://ewohub.com';
 const slug = 'resources';
+
+// На этой странице появляются только статьи с category: 'guides'.
+// Всё остальное живёт на /blog — эта страница исключительно кураторская лента Гайдов.
+const articles = [
+  {
+    href: '/ru/stripchat-first-14-days-guide',
+    title: 'Твои первые 14 дней на Stripchat',
+    desc: 'Пошагово: регистрация, настройка профиля и как выжать максимум из 14-дневного окна видимости "New".',
+    tag: 'Stripchat',
+    category: 'guides',
+  },
+].filter(a => a.category === 'guides');
 ---
 <Base
-  title="Ресурсы для веб-кам моделей – Руководства и советы | EWO"
-  description="Все руководства EWO для веб-кам моделей с первого взгляда: алгоритм, советы для зрителей, время стриминга, руководство по доходам и обзор платформ."
+  title="Гайды — Пошаговые гайды для вебкам-моделей"
+  description="Практические пошаговые гайды для вебкам-моделей — регистрация, механика платформы и как начать правильно."
   lang="ru"
   hreflang={[
     { lang: 'en', url: `${site}/${slug}` },
@@ -22,105 +34,39 @@ const slug = 'resources';
     <div class="art-grid"></div>
     <div class="art-hero__inner container">
       <div class="art-meta">
-        <span class="art-tag">Ресурсы</span>
+        <span class="art-tag">Бесплатные ресурсы</span>
       </div>
-      <h1 class="art-title">Руководства и <span class="art-grad">советы</span></h1>
-      <p class="art-lead">Здесь ты найдёшь все руководства EWO — практические знания об алгоритмах, росте аудитории, планировании времени и стратегии доходов.</p>
+      <h1 class="art-title">Пошаговые <span class="art-grad">гайды</span></h1>
+      <p class="art-lead">Практические пошаговые гайды для вебкам-моделей — без воды, без апселла.</p>
     </div>
   </section>
 
   <div class="art-body">
     <div class="container">
-
-      <h2 style="margin-bottom:1.5rem;">Рост и продвижение</h2>
-      <div class="related-grid" style="margin-bottom:3rem;">
-        <a href="/ru/new-model-growth" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">30-дневная программа роста для новых моделей</h3>
-          <p style="margin:0;font-size:.9375rem;">Наша структурированная программа для моделей, только что начавших. Объясняет, как построить первую базу зрителей за первые 30 дней и разорвать цикл алгоритма.</p>
-        </a>
-        <a href="/ru/studio-scaling" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Масштабирование веб-кам студии: выйти за рамки 10 моделей</h3>
-          <p style="margin:0;font-size:.9375rem;">Для владельцев студий, желающих расти за рамки 5–10 моделей. Системы, планирование, региональное расширение и построение бренда для профессиональных студий.</p>
-        </a>
+      <div class="related-grid">
+        {articles.map(({ href, title, desc, tag }) => (
+          <a href={href} class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
+            <div class="art-meta">
+              <span class="art-tag">{tag}</span>
+            </div>
+            <h3 style="font-size:1.1rem;font-weight:700;margin:0;">{title}</h3>
+            <p style="margin:0;font-size:.9375rem;">{desc}</p>
+            <span style="font-size:.875rem;font-weight:600;color:var(--accent);margin-top:auto;">Читать статью →</span>
+          </a>
+        ))}
       </div>
 
-      <h2 style="margin-bottom:1.5rem;">Алгоритм и платформы</h2>
-      <div class="related-grid" style="margin-bottom:3rem;">
-        <a href="/ru/why-low-viewers-webcam" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">8 причин мало зрителей – и как это исправить</h3>
-          <p style="margin:0;font-size:.9375rem;">Неправильное время, плохие теги, без плана, слабый профиль — вот 8 наиболее распространённых причин малого числа зрителей и конкретные решения для каждой.</p>
-        </a>
-        <a href="/ru/how-cam-algorithm-ranks-rooms" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Как кам-алгоритм ранжирует комнаты</h3>
-          <p style="margin:0;font-size:.9375rem;">Что реально весит в рейтингах кам-платформ: количество зрителей, вовлечённость, длина сессии, последовательность и теги. С легитимными методами улучшения.</p>
-        </a>
-        <a href="/ru/stripscore-cam-rank-explained" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Что такое Stripscore? Cam Rank объяснено</h3>
-          <p style="margin:0;font-size:.9375rem;">Stripscore, cam rank, room rank — что значат эти термины и чем концепция отличается между Chaturbate, Stripchat, BongaCams и LiveJasmin.</p>
-        </a>
-        <a href="/ru/stripchat-ai-model-recommendations" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">AI Model Recommendations на Stripchat</h3>
-          <p style="margin:0;font-size:.9375rem;">Как работает ИИ-лента "Рекомендовано для вас" на Stripchat и как оптимизировать комнату, чтобы туда попасть.</p>
-        </a>
-        <a href="/ru/stripchat-popular-new-model-visibility" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Почему всегда одни и те же модели в Popular</h3>
-          <p style="margin:0;font-size:.9375rem;">Задокументированный перекос в пользу больших комнат и конкретные пути к реальной видимости для новичка.</p>
-        </a>
-        <a href="/ru/stripchat-first-14-days-guide" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Твои первые 14 дней на Stripchat</h3>
-          <p style="margin:0;font-size:.9375rem;">Пошагово: регистрация, настройка профиля и как выжать максимум из 14-дневного окна видимости "New".</p>
-        </a>
-        <a href="/ru/platforms-we-work-with" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Платформы, с которыми работает EWO</h3>
-          <p style="margin:0;font-size:.9375rem;">Что отличает Chaturbate, Stripchat, LiveJasmin и BongaCams — и как отличается оптимальная стратегия в зависимости от платформы и целевой аудитории.</p>
-        </a>
-      </div>
-
-      <h2 style="margin-bottom:1.5rem;">Время и доходы</h2>
-      <div class="related-grid" style="margin-bottom:3rem;">
-        <a href="/ru/best-streaming-times-by-region" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Лучшее время для стриминга по регионам</h3>
-          <p style="margin:0;font-size:.9375rem;">Конкретные часы для США (20:00–02:00 ET), DACH (21:00–01:00 CET), Великобритании (20:00–00:00 GMT), Франции, Восточной Европы и Колумбии — с советами по планированию.</p>
-        </a>
-        <a href="/ru/webcam-model-income-guide" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Руководство по доходам веб-кам моделей</h3>
-          <p style="margin:0;font-size:.9375rem;">Что на самом деле определяет твой доход: качество зрителей, комиссия платформы, последовательность, постоянные зрители и региональная ориентация. С реалистичными ожиданиями.</p>
-        </a>
-        <a href="/ru/webcam-earnings-by-platform" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Заработок на вебкам по платформам</h3>
-          <p style="margin:0;font-size:.9375rem;">Chaturbate vs. Stripchat vs. BongaCams vs. LiveJasmin — реальные ставки выплат, стоимость токена и какая платформа реально платит больше.</p>
-        </a>
-      </div>
-
-      <section class="art-cta">
+      <section class="art-cta" style="margin-top:4rem;">
         <div class="art-cta__orb"></div>
         <div class="art-cta__inner">
-          <span class="art-cta__badge">Следующий шаг</span>
-          <h2>Готова к следующему шагу?</h2>
-          <p>Руководства дают тебе знания — мы даём реализацию. Если ищешь профессиональную поддержку в построении своей аудитории, свяжись с нами.</p>
+          <span class="art-cta__badge">Ищете что-то другое?</span>
+          <h2>Посмотрите полный каталог статей</h2>
+          <p>Разбор доходов, сравнение платформ, глубокие разборы алгоритмов и многое другое — в блоге.</p>
           <div class="art-cta__actions">
-            <a href="https://t.me/+tBjfmjh9vHo1YzQy" target="_blank" rel="noopener" class="art-cta__btn--primary btn btn-primary">Связаться сейчас →</a>
+            <a href="/ru/blog" class="art-cta__btn--primary btn btn-primary">Перейти в блог →</a>
           </div>
         </div>
       </section>
-
-      <div class="related-grid" style="margin-top:3rem;">
-        <a href="/ru/why-low-viewers-webcam" class="related-card">Почему в твоей вебкам-комнате мало зрителей</a>
-        <a href="/ru/how-cam-algorithm-ranks-rooms" class="related-card">Как алгоритм кам ранжирует комнаты</a>
-        <a href="/ru/stripscore-cam-rank-explained" class="related-card">Что такое Stripscore? Cam Rank объяснено</a>
-        <a href="/ru/stripchat-ai-model-recommendations" class="related-card">AI Model Recommendations на Stripchat</a>
-        <a href="/ru/stripchat-popular-new-model-visibility" class="related-card">Почему всегда одни и те же модели в Popular</a>
-        <a href="/ru/stripchat-first-14-days-guide" class="related-card">Твои первые 14 дней на Stripchat</a>
-        <a href="/ru/best-streaming-times-by-region" class="related-card">Лучшее время для стриминга по регионам</a>
-        <a href="/ru/webcam-model-income-guide" class="related-card">Гид по доходам вебкам-модели</a>
-        <a href="/ru/webcam-earnings-by-platform" class="related-card">Заработок на вебкам по платформам</a>
-        <a href="/ru/model-promotion" class="related-card">Услуги по продвижению</a>
-        <a href="/ru/platforms-we-work-with" class="related-card">Платформы, с которыми мы работаем</a>
-        <a href="/ru/studio-traffic" class="related-card">Трафик студии</a>
-        <a href="/ru/new-model-growth" class="related-card">Рост для новых моделей</a>
-        <a href="/ru/studio-scaling" class="related-card">Масштабирование студии</a>
-        <a href="/ru/model-promotion-ukraine" class="related-card">Продвижение для украинских моделей</a>
-      </div>
     </div>
   </div>
 </Base>

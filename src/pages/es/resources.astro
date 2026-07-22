@@ -2,10 +2,22 @@
 import Base from '@/layouts/Base.astro';
 const site = 'https://ewohub.com';
 const slug = 'resources';
+
+// Solo los artículos con category: 'guides' aparecen en esta página.
+// Todo lo demás vive en /blog — esta página es únicamente el feed curado de Guías.
+const articles = [
+  {
+    href: '/es/stripchat-first-14-days-guide',
+    title: 'Tus primeros 14 días en Stripchat',
+    desc: 'Paso a paso: registro, configuración del perfil y cómo aprovechar al máximo la ventana de visibilidad "New" de 14 días.',
+    tag: 'Stripchat',
+    category: 'guides',
+  },
+].filter(a => a.category === 'guides');
 ---
 <Base
-  title="Recursos para modelos webcam – Guías y consejos | EWO"
-  description="Todas las guías EWO para modelos webcam en un vistazo: algoritmo, consejos de espectadores, horarios de streaming, guía de ingresos y descripción de plataformas."
+  title="Guías — Guías paso a paso para modelos webcam"
+  description="Guías prácticas y paso a paso para modelos webcam — registro, mecánica de la plataforma y cómo empezar de la forma correcta."
   lang="es"
   hreflang={[
     { lang: 'en', url: `${site}/${slug}` },
@@ -22,106 +34,39 @@ const slug = 'resources';
     <div class="art-grid"></div>
     <div class="art-hero__inner container">
       <div class="art-meta">
-        <span class="art-tag">Recursos</span>
+        <span class="art-tag">Recursos gratuitos</span>
       </div>
-      <h1 class="art-title">Guías y <span class="art-grad">consejos</span></h1>
-      <p class="art-lead">Aquí encontrarás todas las guías EWO — conocimiento práctico sobre algoritmos, crecimiento de audiencia, planificación de horarios y estrategia de ingresos.</p>
+      <h1 class="art-title">Guías <span class="art-grad">paso a paso</span></h1>
+      <p class="art-lead">Guías prácticas y paso a paso para modelos webcam — sin relleno, sin upsell.</p>
     </div>
   </section>
 
   <div class="art-body">
     <div class="container">
-
-      <h2 style="margin-bottom:1.5rem;">Crecimiento y promoción</h2>
-      <div class="related-grid" style="margin-bottom:3rem;">
-        <a href="/es/new-model-growth" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Programa de crecimiento de 30 días para nuevas modelos</h3>
-          <p style="margin:0;font-size:.9375rem;">Nuestro programa estructurado para modelos que acaban de empezar. Explica cómo construir tu primera base de espectadores en los primeros 30 días y romper el ciclo del algoritmo.</p>
-        </a>
-        <a href="/es/studio-scaling" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Escalar un estudio webcam más allá de 10 modelos</h3>
-          <p style="margin:0;font-size:.9375rem;">Para operadores de estudio que quieren crecer más allá de 5–10 modelos. Sistemas, programación, expansión regional y construcción de marca para estudios profesionales.</p>
-        </a>
+      <div class="related-grid">
+        {articles.map(({ href, title, desc, tag }) => (
+          <a href={href} class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
+            <div class="art-meta">
+              <span class="art-tag">{tag}</span>
+            </div>
+            <h3 style="font-size:1.1rem;font-weight:700;margin:0;">{title}</h3>
+            <p style="margin:0;font-size:.9375rem;">{desc}</p>
+            <span style="font-size:.875rem;font-weight:600;color:var(--accent);margin-top:auto;">Leer artículo →</span>
+          </a>
+        ))}
       </div>
 
-      <h2 style="margin-bottom:1.5rem;">Algoritmo y plataformas</h2>
-      <div class="related-grid" style="margin-bottom:3rem;">
-        <a href="/es/why-low-viewers-webcam" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">8 razones de pocos espectadores – y cómo solucionarlo</h3>
-          <p style="margin:0;font-size:.9375rem;">Horario incorrecto, malas etiquetas, sin plan, perfil débil — aquí están las 8 causas más frecuentes de pocos espectadores y soluciones concretas para cada una.</p>
-        </a>
-        <a href="/es/how-cam-algorithm-ranks-rooms" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Cómo el algoritmo cam clasifica las salas</h3>
-          <p style="margin:0;font-size:.9375rem;">Lo que realmente pesa en los rankings de las plataformas cam: número de espectadores, engagement, duración de sesión, consistencia y etiquetas. Con métodos legítimos de mejora.</p>
-        </a>
-        <a href="/es/stripscore-cam-rank-explained" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">¿Qué es el Stripscore? Cam Rank explicado</h3>
-          <p style="margin:0;font-size:.9375rem;">Stripscore, cam rank, room rank — qué significan estos términos y cómo difiere el concepto entre Chaturbate, Stripchat, BongaCams y LiveJasmin.</p>
-        </a>
-        <a href="/es/stripchat-ai-model-recommendations" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">AI Model Recommendations de Stripchat</h3>
-          <p style="margin:0;font-size:.9375rem;">Cómo funciona el feed "Recomendado para ti" de Stripchat impulsado por IA y cómo optimizar tu sala para aparecer en él.</p>
-        </a>
-        <a href="/es/stripchat-popular-new-model-visibility" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Por qué siempre aparecen las mismas modelos en Popular</h3>
-          <p style="margin:0;font-size:.9375rem;">El sesgo documentado hacia salas grandes y los caminos concretos hacia visibilidad real para una principiante.</p>
-        </a>
-        <a href="/es/stripchat-first-14-days-guide" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Tus primeros 14 días en Stripchat</h3>
-          <p style="margin:0;font-size:.9375rem;">Paso a paso: registro, configuración del perfil y cómo aprovechar al máximo la ventana de visibilidad "New" de 14 días.</p>
-        </a>
-        <a href="/es/platforms-we-work-with" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Plataformas con las que trabaja EWO</h3>
-          <p style="margin:0;font-size:.9375rem;">Qué diferencia a Chaturbate, Stripchat, LiveJasmin y BongaCams — y cómo difiere la estrategia óptima según la plataforma y la audiencia objetivo.</p>
-        </a>
-      </div>
-
-      <h2 style="margin-bottom:1.5rem;">Horarios e ingresos</h2>
-      <div class="related-grid" style="margin-bottom:3rem;">
-        <a href="/es/best-streaming-times-by-region" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Mejores horarios de streaming por región</h3>
-          <p style="margin:0;font-size:.9375rem;">Horas concretas para EE.UU. (8pm–2am ET), DACH (9pm–1am CET), Reino Unido (8pm–12am GMT), Francia, Europa del Este y Colombia — con consejos de planificación.</p>
-        </a>
-        <a href="/es/webcam-model-income-guide" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Guía de ingresos para modelos webcam</h3>
-          <p style="margin:0;font-size:.9375rem;">Qué determina realmente tus ingresos: calidad de espectadores, porcentaje de plataforma, consistencia, espectadores habituales y orientación regional. Con expectativas realistas.</p>
-        </a>
-        <a href="/es/webcam-earnings-by-platform" class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
-          <h3 style="font-size:1.05rem;font-weight:700;margin:0;">Ganancias webcam por plataforma</h3>
-          <p style="margin:0;font-size:.9375rem;">Chaturbate vs. Stripchat vs. BongaCams vs. LiveJasmin — tasas de pago reales, valor del token y qué plataforma paga realmente más.</p>
-        </a>
-      </div>
-
-      <section class="art-cta">
+      <section class="art-cta" style="margin-top:4rem;">
         <div class="art-cta__orb"></div>
         <div class="art-cta__inner">
-          <span class="art-cta__badge">Siguiente paso</span>
-          <h2>¿Lista para el siguiente paso?</h2>
-          <p>Las guías te dan el conocimiento — nosotros te damos la implementación. Si buscas apoyo profesional para construir tu audiencia, contáctanos.</p>
+          <span class="art-cta__badge">¿Buscas otra cosa?</span>
+          <h2>Explora el catálogo completo de artículos</h2>
+          <p>Desgloses de ingresos, comparaciones de plataformas, análisis profundos de algoritmos y más — en el blog.</p>
           <div class="art-cta__actions">
-            <a href="https://t.me/+tBjfmjh9vHo1YzQy" target="_blank" rel="noopener" class="art-cta__btn--primary btn btn-primary">Contactar ahora →</a>
+            <a href="/es/blog" class="art-cta__btn--primary btn btn-primary">Ir al blog →</a>
           </div>
         </div>
       </section>
-
-      <div class="related-grid" style="margin-top:3rem;">
-        <a href="/es/why-low-viewers-webcam" class="related-card">Por qué tu sala webcam tiene pocos espectadores</a>
-        <a href="/es/how-cam-algorithm-ranks-rooms" class="related-card">Cómo el algoritmo cam clasifica las salas</a>
-        <a href="/es/stripscore-cam-rank-explained" class="related-card">¿Qué es el Stripscore? Cam Rank explicado</a>
-        <a href="/es/stripchat-ai-model-recommendations" class="related-card">AI Model Recommendations de Stripchat</a>
-        <a href="/es/stripchat-popular-new-model-visibility" class="related-card">Por qué siempre aparecen las mismas modelos en Popular</a>
-        <a href="/es/stripchat-first-14-days-guide" class="related-card">Tus primeros 14 días en Stripchat</a>
-        <a href="/es/best-streaming-times-by-region" class="related-card">Mejores horarios de streaming por región</a>
-        <a href="/es/webcam-model-income-guide" class="related-card">Guía de ingresos para modelos webcam</a>
-        <a href="/es/webcam-earnings-by-platform" class="related-card">Ganancias webcam por plataforma</a>
-        <a href="/es/model-promotion" class="related-card">Servicios de promoción</a>
-        <a href="/es/platforms-we-work-with" class="related-card">Plataformas con las que trabajamos</a>
-        <a href="/es/studio-traffic" class="related-card">Tráfico de estudio</a>
-        <a href="/es/new-model-growth" class="related-card">Crecimiento para modelos nuevas</a>
-        <a href="/es/studio-scaling" class="related-card">Escalado de estudio</a>
-        <a href="/es/model-promotion-colombia" class="related-card">Promoción para audiencias colombianas</a>
-        <a href="/es/model-promotion-spain" class="related-card">Promoción para audiencias españolas</a>
-      </div>
     </div>
   </div>
 </Base>
