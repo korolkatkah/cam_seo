@@ -6,6 +6,29 @@ Running log of daily/session-based SEO & promotion action plans. Newest entry on
 
 ## 2026-07-22
 
+### Shipped: "Your First 14 Days on Stripchat" step-by-step guide (all 6 languages)
+Third Stripchat topic, written after a Russian-segment competitor pass found a direct competitor
+(startmodel.ru's dedicated StripScore page) confirming two concrete facts our earlier articles only
+described generically: new accounts get a **14-day "New" tag** placing them in a separate **New Models**
+category, and profile completeness has a measurable ranking effect via specific thresholds — **background
+photo/video, ≥5 public photos, ≥1 public video, ≥4 filled profile panels**. Also confirmed independently
+by a Medium personal account. This guide turns those specifics into an actual step-by-step plan:
+register → build profile to the thresholds *before* first stream → use all 14 days consistently → what
+happens after the tag expires. Shipped as `/stripchat-first-14-days-guide` + 5 locales, cross-linked
+with `/stripchat-popular-new-model-visibility`, `/how-cam-algorithm-ranks-rooms`,
+`/raise-your-room-ranking-score`, `/stripscore-cam-rank-explained`, `/new-model-growth`. Build verified
+clean (144 pages, up from 138).
+
+**Follow-up not yet done**: the 14-day figure and profile thresholds could also strengthen the earlier
+`/stripchat-popular-new-model-visibility` article, which described the New Model Promotion window only
+generically. Consider updating it to reference the concrete numbers now that they're confirmed by two
+independent sources.
+
+**Also found but not acted on**: RU/CIS segment competitors (dtf.ru, vc.ru — high-authority Russian
+platforms) publish Stripchat overview content with a payout-method angle specific to Russian/Belarusian
+creators (Paxum/Cosmo/ePayments/SEPA, no direct RU/BY card withdrawal) that we don't cover at all. Real
+content gap if we want to compete for RU-language search specifically, not just translate EN content.
+
 ### Design system migration: Deep Wine
 The site got a full visual redesign (an external/parallel process, not this session) — all new pages must
 follow `src/pages/_article-template.astro` and the "Deep Wine" classes documented in `CLAUDE.md`
