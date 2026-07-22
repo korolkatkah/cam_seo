@@ -87,6 +87,25 @@ const nav = [
     ))}
     {hreflang.length > 0 && <link rel="alternate" hreflang="x-default" href={hreflang.find(h => h.lang === 'en')?.url ?? canonicalUrl} />}
     <slot name="head" />
+
+    <!-- Organization schema -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "EWOhub",
+      "url": "https://ewohub.com",
+      "logo": "https://ewohub.com/logo-neon.png",
+      "sameAs": ["https://t.me/+tBjfmjh9vHo1YzQy"]
+    })} />
+
+    <!-- WebSite schema -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "EWOhub",
+      "url": "https://ewohub.com"
+    })} />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@1,300;1,400;1,600;1,700&family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -800,4 +819,24 @@ const nav = [
       btn.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
   });
+</script>
+
+<script>
+  // FAQPage schema — auto-generated from .faq-item elements on the page
+  (function () {
+    var items = [];
+    document.querySelectorAll('.faq-item').forEach(function (item) {
+      var btn = item.querySelector('.faq-chevron span, .faq-chevron > span, summary');
+      var body = item.querySelector('.faq-body p, .faq-body, details > p');
+      if (!btn || !body) return;
+      var q = btn.textContent.trim();
+      var a = body.textContent.trim();
+      if (q && a) items.push({ '@type': 'Question', 'name': q, 'acceptedAnswer': { '@type': 'Answer', 'text': a } });
+    });
+    if (items.length === 0) return;
+    var script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', 'mainEntity': items });
+    document.head.appendChild(script);
+  })();
 </script>
