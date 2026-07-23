@@ -317,7 +317,7 @@ const icons: Record<string, string> = {
     background: rgba(255,255,255,.03); border: 1px solid var(--border);
     border-radius: var(--radius-md); padding: .75rem 1.25rem; min-width: 160px;
   }
-  .stat-num { font-family: var(--font-heading); font-weight: 700; font-style: italic; font-size: 1.4rem; background: linear-gradient(135deg, #0a0a0a, #555555); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .stat-num { font-family: var(--font-heading); font-weight: 700; font-style: italic; font-size: 1.4rem; background: linear-gradient(135deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
   .stat-label { font-size: .75rem; color: var(--fg-faint); font-weight: 600; }
 
   article section { margin-bottom: 2.5rem; }
@@ -344,7 +344,7 @@ const icons: Record<string, string> = {
     display: flex; align-items: center; justify-content: center;
     color: var(--accent); margin-bottom: .875rem;
   }
-  .icon-badge--violet { background: rgba(0,0,0,0.07); border-color: rgba(0,0,0,0.14); color: #1a1a1a; }
+  .icon-badge--violet { background: var(--tag-bg); border-color: rgba(0,0,0,0.14); color: var(--fg); }
 
   /* Flow steps */
   .flow-steps { display: flex; align-items: stretch; gap: 1rem; margin: 1.25rem 0 1.5rem; flex-wrap: wrap; }
@@ -381,13 +381,13 @@ const icons: Record<string, string> = {
   .pricing-badge {
     position: absolute; top: -.65rem; left: 50%; transform: translateX(-50%);
     font-family: var(--font-heading); font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
-    background: #0a0a0a; color: #fafaf8; padding: .25rem .75rem; border-radius: 100px;
+    background: var(--btn-bg); color: #fafaf8; padding: .25rem .75rem; border-radius: 100px;
     white-space: nowrap;
   }
   .pricing-label { font-size: .875rem; color: var(--fg-muted); font-weight: 600; margin-bottom: .5rem; }
   .pricing-rate { font-family: var(--font-heading); font-weight: 700; font-style: italic; font-size: 2rem; color: var(--fg); margin-bottom: .25rem; }
   .pricing-rate span { font-size: 1rem; font-weight: 600; font-style: normal; color: var(--fg-faint); }
-  .pricing-bonus { font-size: .8125rem; color: #1a1a1a; font-weight: 700; margin-bottom: 0; }
+  .pricing-bonus { font-size: .8125rem; color: var(--fg); font-weight: 700; margin-bottom: 0; }
 
   /* Step list (stripscore playbook) */
   .step-list { display: flex; flex-direction: column; gap: .875rem; margin: 1.25rem 0 1.5rem; }
@@ -398,7 +398,7 @@ const icons: Record<string, string> = {
   }
   .step-num {
     flex: 0 0 auto; width: 36px; height: 36px; border-radius: 50%;
-    background: #0a0a0a; color: #fafaf8;
+    background: var(--btn-bg); color: #fafaf8;
     display: flex; align-items: center; justify-content: center;
     font-family: var(--font-heading); font-weight: 700; font-size: .9375rem;
   }
@@ -431,11 +431,12 @@ const icons: Record<string, string> = {
   .cta-link {
     display: inline-flex; align-items: center; gap: .5rem; margin-top: .5rem;
     font-family: var(--font-heading); font-weight: 700; font-size: .9375rem;
-    background: #0a0a0a; color: #fafaf8 !important;
+    background: var(--btn-bg); color: #fafaf8 !important;
     padding: .75rem 1.75rem; border-radius: var(--radius-md); text-decoration: none !important;
   }
   .cta-link:hover { opacity: .9; }
 
   .source-note { font-size: .8125rem; color: var(--fg-faint); border-top: 1px solid var(--border); padding-top: 1.5rem; max-width: none; }
 </style>
+
 
