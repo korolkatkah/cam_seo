@@ -989,6 +989,19 @@ const footerRegions = fd.regions.map((label, i) => ({ href: footerRegionHrefs[i]
   .art-cta__btn--ghost { background: rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.14); color: rgba(10,10,10,0.55); }
   .art-cta__btn--ghost:hover { border-color: rgba(0,0,0,0.2); color: var(--fg); }
 
+  /* ── Blog category filter bar ── */
+  .blog-filter-bar { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 2rem; }
+  .blog-filter-btn {
+    font-family: var(--font-heading); font-size: .8125rem; font-weight: 600;
+    padding: .5rem 1.1rem; border-radius: 99px;
+    background: rgba(0,0,0,0.04); border: 1px solid var(--border);
+    color: var(--fg-muted); cursor: pointer; white-space: nowrap;
+    transition: background var(--transition), border-color var(--transition), color var(--transition);
+  }
+  .blog-filter-btn:hover { color: var(--fg); border-color: rgba(0,0,0,0.18); background: rgba(0,0,0,0.06); }
+  .blog-filter-btn.is-active { background: #0a0a0a; color: #fff; border-color: #0a0a0a; }
+  .related-card.is-hidden { display: none; }
+
   /* ── Related cards grid ── */
   .related-section { margin-top: 3rem; }
   .related-section > h2 { font-size: 1.25rem; font-weight: 700; color: var(--fg); margin-bottom: 1.25rem; letter-spacing: -0.01em; }

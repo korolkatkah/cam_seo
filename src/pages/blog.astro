@@ -2,6 +2,8 @@
 import Base from '@/layouts/Base.astro';
 const site = 'https://ewohub.com';
 
+const filterAllLabel = 'All';
+
 const articles = [
   {
     href: '/model-promotion',
@@ -42,7 +44,7 @@ const articles = [
     href: '/stripchat-ai-model-recommendations',
     title: 'Stripchat AI Model Recommendations',
     desc: "How Stripchat's AI-driven 'Recommended for You' feed works and how to optimize your room to show up in it.",
-    tag: 'Algorithm',
+    tag: 'Stripchat',
     mins: '6 min read',
   },
   {
@@ -98,10 +100,12 @@ const articles = [
     href: '/stripchat-promo',
     title: 'Stripchat Traffic Bot Review',
     desc: "An honest review of Stripchat_traffic_bot: how it works, what it costs, and how to get the most out of it.",
-    tag: 'Review',
+    tag: 'Stripchat',
     mins: '6 min read',
   },
 ];
+
+const tags = [...new Set(articles.map(a => a.tag))];
 ---
 
 <Base
@@ -132,9 +136,15 @@ const articles = [
 
   <div class="art-body">
     <div class="container">
-      <div class="related-grid">
+      <div class="blog-filter-bar" role="group" aria-label="Filter articles by category">
+        <button class="blog-filter-btn is-active" data-filter="all">{filterAllLabel}</button>
+        {tags.map(tag => (
+          <button class="blog-filter-btn" data-filter={tag}>{tag}</button>
+        ))}
+      </div>
+      <div class="related-grid" id="blog-grid">
         {articles.map(({ href, title, desc, tag, mins }) => (
-          <a href={href} class="related-card">
+          <a href={href} class="related-card" data-tag={tag}>
             <div class="art-meta">
               <span class="art-tag">{tag}</span>
               <span class="art-tag">{mins}</span>
@@ -147,3 +157,24 @@ const articles = [
     </div>
   </div>
 </Base>
+
+<script>
+  (function () {
+    var buttons = document.querySelectorAll('.blog-filter-btn');
+    var cards = document.querySelectorAll('#blog-grid .related-card');
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        buttons.forEach(function (b) { b.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+        var filter = btn.dataset.filter;
+        cards.forEach(function (card) {
+          if (filter === 'all' || card.dataset.tag === filter) {
+            card.classList.remove('is-hidden');
+          } else {
+            card.classList.add('is-hidden');
+          }
+        });
+      });
+    });
+  })();
+</script>
