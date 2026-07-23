@@ -3,8 +3,9 @@ import trends from '../data/cb-trends.json';
 
 interface Props {
   lang?: string;
+  section?: 'hours' | 'tags' | 'titles' | 'prices';
 }
-const { lang = 'en' } = Astro.props;
+const { lang = 'en', section } = Astro.props;
 
 const STR: Record<string, Record<string, string>> = {
   en: {
@@ -184,6 +185,7 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
 
 <section class="trends-block">
   <div class="trends-inner">
+    {!section && (
     <div class="trends-head">
       <span class="trends-eyebrow"><span class="live-dot"></span>{t.eyebrow}</span>
       <h2 class="trends-heading">{t.heading} — {headingDate}</h2>
@@ -194,6 +196,7 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
         <button type="button" class="platform-tab" data-platform="sc" role="tab" aria-selected="false">{t.platformSc}</button>
       </div>
     </div>
+    )}
 
     <div class="platform-panel" data-panel="cb">
       {!hasData && (
@@ -202,6 +205,7 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
 
       {hasData && (
         <>
+        {(!section || section === 'hours') && (
         <div class="trends-card trends-card-wide">
           <h3 class="trends-card-title">{t.hoursTitle}</h3>
           <p class="hours-caption">{t.hoursCaption}</p>
@@ -241,7 +245,9 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
             </div>
           </div>
         </div>
+        )}
 
+        {(!section || section === 'tags') && (
         <div class="trends-card trends-card-wide">
           <h3 class="trends-card-title">{t.tagsTitle}</h3>
           <p class="tags-caption">{t.tagsCaption}</p>
@@ -283,8 +289,9 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
             </>
           )}
         </div>
+        )}
 
-        {topTitles.length > 0 && (
+        {(!section || section === 'titles') && topTitles.length > 0 && (
           <div class="trends-card trends-card-wide">
             <h3 class="trends-card-title">{t.titlesTitle}</h3>
             <p class="titles-caption">{t.titlesCaption}</p>
@@ -299,7 +306,7 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
           </div>
         )}
 
-        {(trends.economy?.goal_median || topPatterns.length > 0) && (
+        {(!section || section === 'prices') && (trends.economy?.goal_median || topPatterns.length > 0) && (
           <div class="trends-card trends-card-wide">
             <h3 class="trends-card-title">{t.pricesTitle}</h3>
             <p class="prices-caption">{t.pricesCaption}</p>
