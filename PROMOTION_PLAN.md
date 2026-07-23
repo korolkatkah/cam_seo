@@ -4,6 +4,26 @@ Running log of daily/session-based SEO & promotion action plans. Newest entry on
 
 ---
 
+## 2026-07-23 (later still)
+
+### Category convention: platform-specific content tagged by platform, not "Algorithm"
+Per explicit user instruction: the pill/tag shown on blog cards (`tag:` field in `blog.astro`) is our
+content category system. Content specific to one platform's mechanics (e.g. Stripchat's StripScore)
+should carry that platform's name as the tag, not a generic label like "Algorithm", even when the
+content is algorithm-adjacent. Retagged `stripscore-cam-rank-explained` from `Algorithm` → `Stripchat`
+in all 6 locales to match. **Note:** `stripchat-ai-model-recommendations` has the same
+Algorithm-vs-Stripchat tagging inconsistency and wasn't touched — worth asking the user about for
+consistency next time content tagging comes up.
+
+### "Your First 14 Days on Stripchat" removed from `/blog` listing (all 6 locales)
+Per user request, the guide-format article no longer appears on `/blog` — it now lives only on
+`/resources` (the Guides feed), which is where it already was. The page itself and its `resources.astro`
+listing were untouched; only the `blog.astro` array entry was removed in en/de/es/ro/uk/ru. This
+narrows the earlier convention noted below ("add to resources.astro *in addition to* blog.astro") —
+step-by-step guides should now be resources-only, not double-listed. Not yet pushed as of this entry.
+
+---
+
 ## 2026-07-23 (later)
 
 ### Shipped: "How StripScore Works" mechanics deep-dive (all 6 languages)
