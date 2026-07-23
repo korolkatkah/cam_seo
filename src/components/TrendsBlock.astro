@@ -17,6 +17,8 @@ const STR: Record<string, Record<string, string>> = {
     hoursNowNote: '↓ below is history from yesterday',
     hoursHistoryBtn: 'Show history yesterday',
     hoursHistoryLabel: '↓ data from yesterday',
+    hoursLegendHigh: 'high traffic', hoursLegendMid: 'medium traffic', hoursLegendLow: 'low traffic',
+    hoursYesterdayAbove: '↑ yesterday', hoursYesterdayBelow: '↓ yesterday',
     tagsTitle: 'Top-performing tags today on Chaturbate', tagsRoomsUnit: 'rooms',
     tagsCaption: 'Tags used by the rooms with the most viewers right now',
     titlesTitle: 'Top-performing titles today on Chaturbate', viewersWord: 'viewers',
@@ -39,6 +41,8 @@ const STR: Record<string, Record<string, string>> = {
     hoursNowNote: '↓ Unten sind die Daten von gestern',
     hoursHistoryBtn: 'Verlauf von gestern anzeigen',
     hoursHistoryLabel: '↓ Daten von gestern',
+    hoursLegendHigh: 'hoher Traffic', hoursLegendMid: 'mittlerer Traffic', hoursLegendLow: 'niedriger Traffic',
+    hoursYesterdayAbove: '↑ gestern', hoursYesterdayBelow: '↓ gestern',
     tagsTitle: 'Top-Tags heute auf Chaturbate', tagsRoomsUnit: 'Räume',
     tagsCaption: 'Tags, die Räume mit den meisten Zuschauern gerade verwenden',
     titlesTitle: 'Top-Titel heute auf Chaturbate', viewersWord: 'Zuschauer',
@@ -61,6 +65,8 @@ const STR: Record<string, Record<string, string>> = {
     hoursNowNote: '↓ Abajo está el historial de ayer',
     hoursHistoryBtn: 'Ver historial de ayer',
     hoursHistoryLabel: '↓ Datos de ayer',
+    hoursLegendHigh: 'tráfico alto', hoursLegendMid: 'tráfico medio', hoursLegendLow: 'tráfico bajo',
+    hoursYesterdayAbove: '↑ ayer', hoursYesterdayBelow: '↓ ayer',
     tagsTitle: 'Tags con mejor rendimiento hoy en Chaturbate', tagsRoomsUnit: 'salas',
     tagsCaption: 'Tags que usan ahora mismo las salas con más espectadores',
     titlesTitle: 'Mejores títulos hoy en Chaturbate', viewersWord: 'espectadores',
@@ -83,6 +89,8 @@ const STR: Record<string, Record<string, string>> = {
     hoursNowNote: '↓ Mai jos este istoricul de ieri',
     hoursHistoryBtn: 'Arată istoricul de ieri',
     hoursHistoryLabel: '↓ Date de ieri',
+    hoursLegendHigh: 'trafic ridicat', hoursLegendMid: 'trafic mediu', hoursLegendLow: 'trafic scăzut',
+    hoursYesterdayAbove: '↑ ieri', hoursYesterdayBelow: '↓ ieri',
     tagsTitle: 'Cele mai performante taguri astăzi pe Chaturbate', tagsRoomsUnit: 'camere',
     tagsCaption: 'Taguri folosite chiar acum de camerele cu cei mai mulți spectatori',
     titlesTitle: 'Cele mai bune titluri astăzi pe Chaturbate', viewersWord: 'spectatori',
@@ -105,6 +113,8 @@ const STR: Record<string, Record<string, string>> = {
     hoursNowNote: '↓ Нижче — дані за вчора',
     hoursHistoryBtn: 'Показати історію за вчора',
     hoursHistoryLabel: '↓ Дані за вчора',
+    hoursLegendHigh: 'високий трафік', hoursLegendMid: 'середній трафік', hoursLegendLow: 'низький трафік',
+    hoursYesterdayAbove: '↑ вчора', hoursYesterdayBelow: '↓ вчора',
     tagsTitle: 'Найефективніші теги сьогодні на Chaturbate', tagsRoomsUnit: 'кімнат',
     tagsCaption: 'Теги, які зараз використовують кімнати з найбільшою кількістю глядачів',
     titlesTitle: 'Найкращі заголовки сьогодні на Chaturbate', viewersWord: 'глядачів',
@@ -127,6 +137,8 @@ const STR: Record<string, Record<string, string>> = {
     hoursNowNote: '↓ Ниже — данные за вчера',
     hoursHistoryBtn: 'Показать историю за вчера',
     hoursHistoryLabel: '↓ Данные за вчера',
+    hoursLegendHigh: 'высокий трафик', hoursLegendMid: 'средний трафик', hoursLegendLow: 'низкий трафик',
+    hoursYesterdayAbove: '↑ вчера', hoursYesterdayBelow: '↓ вчера',
     tagsTitle: 'Самые эффективные теги сегодня на Chaturbate', tagsRoomsUnit: 'комнат',
     tagsCaption: 'Теги, которые сейчас используют комнаты с наибольшим числом зрителей',
     titlesTitle: 'Лучшие заголовки сегодня на Chaturbate', viewersWord: 'зрителей',
@@ -182,12 +194,17 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
           <h3 class="trends-card-title">{t.hoursTitle}</h3>
           <p class="hours-caption">{t.hoursCaption}</p>
           <p class="hours-local-note" data-hours-local-note hidden>{t.hoursLocalNote}</p>
+          <div class="hours-legend" data-hours-legend hidden>
+            <span class="hours-legend-high">■ {t.hoursLegendHigh}</span>
+            <span class="hours-legend-mid">■ {t.hoursLegendMid}</span>
+            <span class="hours-legend-low">■ {t.hoursLegendLow}</span>
+          </div>
           <ul class="hours-list" id="hours-list">
             {hours24.map((h: { hour: number; score: number }) => {
               const pct = Math.round((h.score / maxScore24) * 100);
               const cls = h.score >= maxScore24 * 0.9 ? 'is-peak' : h.score >= maxScore24 * 0.75 ? 'is-mid' : 'is-low';
               return (
-                <li class={`hours-row ${cls}`} data-utc-hour={h.hour}>
+                <li class={`hours-row ${cls}`} data-utc-hour={h.hour} data-score={h.score}>
                   <span class="hours-range">{String(h.hour).padStart(2, '0')}:00–{String((h.hour + 1) % 24).padStart(2, '0')}:00 UTC</span>
                   <span class="hours-bar-track">
                     <span class="hours-bar-fill" style={`width:${pct}%`}></span>
@@ -198,7 +215,9 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
             })}
           </ul>
           <p class="hours-yesterday-note" hidden>{t.hoursNowNote}</p>
-          <div class="hours-history-wrap" hidden>
+          <div class="hours-history-wrap" hidden
+               data-yesterday-above={t.hoursYesterdayAbove}
+               data-yesterday-below={t.hoursYesterdayBelow}>
             <button class="hours-history-btn" aria-expanded="false">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><polyline points="12 7 12 12 15 15"/></svg>
               <span>{t.hoursHistoryBtn}</span>
@@ -362,6 +381,40 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
       if (historyLabelEl) historyLabelEl.textContent = historyLabelEl.dataset.historyLabel ?? '';
       historyWrap.hidden = false;
 
+      // Insert now-dup separator between past and future rows
+      if (nowRow) {
+        const yesterdayAbove = historyWrap.dataset.yesterdayAbove ?? '↑ yesterday';
+        const yesterdayBelow = historyWrap.dataset.yesterdayBelow ?? '↓ yesterday';
+        let insertBefore: Element | null = null;
+        for (const child of Array.from(historyList.children)) {
+          const el = child as HTMLElement;
+          const utcH = Number(el.dataset.utcHour);
+          if (Number.isNaN(utcH)) continue;
+          const startMin = (((utcH * 60 - tzOffsetMin) % 1440) + 1440) % 1440;
+          const localH = Math.floor(startMin / 60);
+          if (localH > localNowHour + 2) { insertBefore = child; break; }
+        }
+        const sepAbove = document.createElement('div');
+        sepAbove.className = 'hours-now-sep';
+        sepAbove.textContent = yesterdayAbove;
+        const nowDup = document.createElement('div');
+        nowDup.className = 'hours-now-dup';
+        const clone = (nowRow as HTMLElement).cloneNode(true) as HTMLElement;
+        nowDup.appendChild(clone);
+        const sepBelow = document.createElement('div');
+        sepBelow.className = 'hours-now-sep';
+        sepBelow.textContent = yesterdayBelow;
+        if (insertBefore) {
+          historyList.insertBefore(sepAbove, insertBefore);
+          historyList.insertBefore(nowDup, insertBefore);
+          historyList.insertBefore(sepBelow, insertBefore);
+        } else {
+          historyList.appendChild(sepAbove);
+          historyList.appendChild(nowDup);
+          historyList.appendChild(sepBelow);
+        }
+      }
+
       const histBtn = historyWrap.querySelector<HTMLButtonElement>('.hours-history-btn');
       if (histBtn) {
         histBtn.addEventListener('click', () => {
@@ -376,6 +429,9 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
   });
 
   document.querySelectorAll<HTMLElement>('[data-hours-local-note]').forEach((el) => {
+    el.hidden = false;
+  });
+  document.querySelectorAll<HTMLElement>('[data-hours-legend]').forEach((el) => {
     el.hidden = false;
   });
 </script>
@@ -450,21 +506,24 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
   }
   .hours-bar-fill {
     display: block; height: 100%; border-radius: 6px;
-    background: #6366f1; opacity: 0.7;
+    background: #166534; opacity: 1;
   }
-  .hours-score { font-size: 0.75rem; color: #94a3b8; font-weight: 600; white-space: nowrap; min-width: 90px; text-align: right; }
-  .hours-score small { color: #475569; }
+  .hours-score { font-size: 0.75rem; color: rgba(74,222,128,0.35); font-weight: 600; white-space: nowrap; min-width: 90px; text-align: right; display: flex; align-items: center; justify-content: flex-end; gap: 5px; }
+  .hours-score small { color: #fff; }
 
-  .hours-row.is-mid .hours-bar-fill { background: #f472b6; opacity: 1; }
-  .hours-row.is-mid .hours-range { color: #f472b6; }
-  .hours-row.is-mid .hours-score { color: #f472b6; }
+  .hours-row.is-low .hours-range { color: rgba(74,222,128,0.35); }
+  .hours-row.is-low .hours-score { color: rgba(74,222,128,0.35); }
 
-  .hours-row.is-peak .hours-bar-fill { background: #34d399; opacity: 1; }
-  .hours-row.is-peak .hours-range { color: #34d399; }
-  .hours-row.is-peak .hours-score { color: #34d399; }
+  .hours-row.is-mid .hours-bar-fill { background: #86efac; opacity: 1; }
+  .hours-row.is-mid .hours-range { color: #86efac; }
+  .hours-row.is-mid .hours-score { color: #86efac; }
+
+  .hours-row.is-peak .hours-bar-fill { background: #22c55e; opacity: 1; }
+  .hours-row.is-peak .hours-range { color: #22c55e; }
+  .hours-row.is-peak .hours-score { color: #22c55e; }
 
   .hours-row.is-current { position: relative; }
-  .hours-row.is-current .hours-bar-track { outline: 2px solid #fbbf24; outline-offset: -1px; border-radius: 6px; }
+  .hours-row.is-current .hours-bar-track { outline: 2px solid #22c55e; outline-offset: -1px; border-radius: 6px; }
   .hours-row.is-current .hours-range { color: #fbbf24; }
   .hours-row.is-current .hours-score { color: #fbbf24; }
   .now-badge {
@@ -473,20 +532,33 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
     padding: 1px 6px; border-radius: 99px; margin-left: 5px; vertical-align: middle;
   }
   .hours-yesterday-note {
-    font-size: 11px; color: #475569; font-style: italic;
+    font-size: 11px; color: #fff; font-style: italic;
     margin-top: 2px; margin-bottom: 6px;
   }
+  .hours-legend {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    font-size: 11px; margin-bottom: 10px;
+  }
+  .hours-legend-high { color: #22c55e; }
+  .hours-legend-mid  { color: #86efac; }
+  .hours-legend-low  { color: rgba(74,222,128,0.4); }
   .hours-history-btn {
     display: flex; align-items: center; gap: 8px; width: 100%;
-    background: rgba(251,191,36,0.07); border: 1px solid rgba(251,191,36,0.25);
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.18);
     border-radius: 10px; padding: 11px 16px; margin-top: 8px;
-    cursor: pointer; font-size: 0.875rem; font-weight: 600; color: #fbbf24;
-    font-family: var(--font-body); transition: background 0.15s, color 0.15s;
+    cursor: pointer; font-size: 0.875rem; font-weight: 600; color: #fff;
+    font-family: var(--font-body); transition: background 0.15s;
   }
-  .hours-history-btn:hover { background: rgba(251,191,36,0.13); color: #fcd34d; }
+  .hours-history-btn:hover { background: rgba(255,255,255,0.1); }
   .hist-chevron { margin-left: auto; transition: transform 0.2s; }
   .hours-history-panel { margin-top: 6px; }
-  .hours-history-label { font-size: 11px; color: #475569; font-style: italic; margin-bottom: 6px; }
+  .hours-history-label { font-size: 11px; color: #fff; font-style: italic; margin-bottom: 6px; }
+  .hours-now-dup {
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px; padding: 8px; margin: 0;
+  }
+  .hours-now-dup .hours-row { margin-bottom: 0; }
+  .hours-now-sep { font-size: 10px; color: #fff; letter-spacing: 0.04em; margin: 6px 0 4px 2px; }
 
   .trends-card-wide { margin-top: 1rem; }
 
