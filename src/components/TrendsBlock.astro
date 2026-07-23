@@ -519,8 +519,8 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
   .trends-head { text-align: center; margin-bottom: 2rem; }
   .trends-eyebrow {
     display: inline-flex; align-items: center; gap: 6px;
-    background: rgba(232,121,160,0.1); border: 1px solid rgba(232,121,160,0.22);
-    color: #e879a0; font-size: 11px; font-weight: 600; letter-spacing: 0.01em;
+    background: rgba(0,0,0,0.07); border: 1px solid rgba(0,0,0,0.13);
+    color: #1a1a1a; font-size: 11px; font-weight: 600; letter-spacing: 0.01em;
     padding: 4px 12px; border-radius: 99px; margin-bottom: 14px;
   }
   .live-dot {
@@ -539,7 +539,7 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
 
   .platform-tabs {
     display: inline-flex; gap: 0.25rem; margin-top: 1.25rem;
-    background: rgba(255,255,255,0.03); border: 1px solid rgba(232,121,160,0.12);
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(0,0,0,0.08);
     border-radius: 99px; padding: 4px;
   }
   .platform-tab {
@@ -551,13 +551,13 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
   }
   .platform-tab:hover { color: #cbd5e1; }
   .platform-tab.is-active {
-    color: #fff; background: linear-gradient(135deg, #be185d, #e879a0);
+    color: #fff; background: #0a0a0a;
   }
   .trends-empty { text-align: center; color: #64748b; font-size: 0.9375rem; padding: 1rem 0; }
 
   .trends-card {
     background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(232,121,160,0.12);
+    border: 1px solid rgba(0,0,0,0.08);
     border-radius: 16px;
     padding: 1.5rem;
   }
@@ -568,7 +568,7 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
   }
 
   .hours-caption { font-size: 0.75rem; color: #94a3b8; margin-bottom: 0.85rem; }
-  .hours-local-note { font-size: 0.75rem; color: #e879a0; font-weight: 600; margin: -0.5rem 0 0.85rem; font-style: italic; }
+  .hours-local-note { font-size: 0.75rem; color: #1a1a1a; font-weight: 600; margin: -0.5rem 0 0.85rem; font-style: italic; }
   .hours-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
   .hours-row { display: grid; grid-template-columns: 110px 1fr auto; align-items: center; gap: 0.75rem; }
   .hours-range { font-size: 0.8125rem; color: #94a3b8; font-weight: 600; white-space: nowrap; }
@@ -641,7 +641,7 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
   }
   .titles-row:last-child { border-bottom: none; padding-bottom: 0; }
   .titles-viewers {
-    font-size: 0.75rem; font-weight: 700; color: #e879a0; white-space: nowrap;
+    font-size: 0.75rem; font-weight: 700; color: #1a1a1a; white-space: nowrap;
   }
   .titles-viewers small { color: #64748b; font-weight: 600; }
   .titles-subject { font-size: 0.875rem; color: #cbd5e1; line-height: 1.5; }
@@ -660,7 +660,7 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
   .price-dots {
     flex: 1; border-bottom: 1px dotted rgba(255,255,255,0.15); margin-bottom: 0.3rem;
   }
-  .price-value { color: #e879a0; font-weight: 700; white-space: nowrap; }
+  .price-value { color: #1a1a1a; font-weight: 700; white-space: nowrap; }
 
   .tags-caption { font-size: 0.75rem; color: #94a3b8; margin-bottom: 0.5rem; }
   .tags-section-label { font-size: 11px; font-weight: 700; color: #fff; margin: 0 0 6px; }
@@ -702,3 +702,4 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
   .tag-cell-stats { color: #64748b; font-size: 0.75rem; font-weight: 600; }
 
 </style>
+

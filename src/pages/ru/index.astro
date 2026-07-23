@@ -22,9 +22,9 @@ const hreflang = [
         theme: {
           extend: {
             colors: {
-              wine: { bg: '#0f0609', raised: '#190812', subtle: '#0a0407' },
+              wine: { bg: '#fafaf8', raised: '#f4f4f2', subtle: '#f0f0ee' },
               
-              accent: { DEFAULT: '#e879a0', dark: '#be185d' },
+              accent: { DEFAULT: '#1a1a1a', dark: '#444444' },
               
             },
             fontFamily: { sans: ['Nunito', 'Inter', 'system-ui', 'sans-serif'] },
@@ -37,55 +37,55 @@ const hreflang = [
 
       .card-glass {
         background: rgba(255,255,255,0.03);
-        border: 1px solid rgba(232,121,160,0.12);
+        border: 1px solid rgba(0,0,0,0.08);
         backdrop-filter: blur(12px);
         transition: border-color 0.3s, background 0.3s;
       }
-      .card-glass:hover { border-color: rgba(232,121,160,0.3); background: rgba(232,121,160,0.05); }
+      .card-glass:hover { border-color: rgba(0,0,0,0.16); background: rgba(0,0,0,0.05); }
 
       .btn-primary {
-        background: linear-gradient(135deg, #be185d, #e879a0);
+        background: #0a0a0a;
         transition: opacity 0.2s, transform 0.2s;
         min-height: 48px; display: inline-flex; align-items: center; justify-content: center;
       }
       .btn-primary:active { opacity: 0.85; transform: scale(0.98); }
 
       .btn-ghost {
-        border: 1px solid rgba(232,121,160,0.18);
+        border: 1px solid rgba(0,0,0,0.1);
         transition: border-color 0.2s, background 0.2s;
         min-height: 48px; display: inline-flex; align-items: center; justify-content: center;
       }
-      .btn-ghost:active { background: rgba(232,121,160,0.08); }
+      .btn-ghost:active { background: rgba(0,0,0,0.05); }
 
-      .stat-num { background: linear-gradient(135deg, #e879a0, #be185d); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+      .stat-num { background: linear-gradient(135deg, #0a0a0a, #555555); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 
       .hero-grid-line {
         position:absolute; inset:0;
-        background-image: linear-gradient(rgba(232,121,160,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(232,121,160,0.04) 1px, transparent 1px);
+        background-image: linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
         background-size: 60px 60px;
         mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
       }
 
       .tag-pill {
-        background: rgba(232,121,160,0.1); border: 1px solid rgba(232,121,160,0.22);
-        color: #e879a0; font-size: 11px; padding: 4px 12px;
+        background: rgba(0,0,0,0.07); border: 1px solid rgba(0,0,0,0.13);
+        color: #1a1a1a; font-size: 11px; padding: 4px 12px;
         border-radius: 99px; display: inline-flex; align-items: center; gap: 6px; font-weight: 600;
       }
 
       .live-dot { width:7px; height:7px; background:#34d399; border-radius:50%; animation:pulse-dot 2s infinite; flex-shrink:0; }
       @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
 
-      .avatar-placeholder { background: linear-gradient(135deg,#2d0818,#4a0d28); border: 1px solid rgba(232,121,160,0.2); display:flex; align-items:center; justify-content:center; }
+      .avatar-placeholder { background: linear-gradient(135deg,#e8e8e6,#d8d8d6); border: 1px solid rgba(0,0,0,0.12); display:flex; align-items:center; justify-content:center; }
 
-      .divider { height:1px; background:linear-gradient(90deg,transparent,rgba(232,121,160,0.2),transparent); }
+      .divider { height:1px; background:linear-gradient(90deg,transparent,rgba(0,0,0,0.12),transparent); }
 
       .features-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
       @media (min-width: 640px) { .features-grid { grid-template-columns: 1fr 1fr; } }
       @media (min-width: 1024px) { .features-grid { grid-template-columns: 1fr 1fr 1fr; } }
 
-      .heading-xl { font-family:'Josefin Sans',sans-serif; font-weight:700; font-style:normal; font-size:clamp(40px,10vw,88px); line-height:1.05; letter-spacing:-0.01em; color:#fce7f3; }
-      .heading-lg { font-family:'Josefin Sans',sans-serif; font-weight:700; font-style:normal; font-size:clamp(26px,5vw,44px); color:#fce7f3; letter-spacing:-0.01em; }
-      .grad-text { background:linear-gradient(90deg,#e879a0,#be185d); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+      .heading-xl { font-family:'Josefin Sans',sans-serif; font-weight:700; font-style:normal; font-size:clamp(40px,10vw,88px); line-height:1.05; letter-spacing:-0.01em; color:#0a0a0a; }
+      .heading-lg { font-family:'Josefin Sans',sans-serif; font-weight:700; font-style:normal; font-size:clamp(26px,5vw,44px); color:#0a0a0a; letter-spacing:-0.01em; }
+      .grad-text { background:linear-gradient(90deg, #0a0a0a, #555555); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 
       .section-pad { padding: 64px 20px; }
       @media (min-width: 768px) { .section-pad { padding: 96px 24px; } }
@@ -100,15 +100,15 @@ const hreflang = [
   <!-- HERO -->
   <section class="relative min-h-[85dvh] flex items-center justify-center overflow-hidden">
     <div class="hero-grid-line"></div>
-    <div class="glow-orb w-80 h-80 top-10 left-0 -translate-x-1/3" style="background:#be185d;"></div>
-    <div class="glow-orb w-72 h-72 top-20 right-0 translate-x-1/3" style="background:#e879a0;"></div>
-    <div class="glow-orb w-64 h-64 bottom-0 left-1/2 -translate-x-1/2 opacity-15" style="background:#be185d;"></div>
+    <div class="glow-orb w-80 h-80 top-10 left-0 -translate-x-1/3" style="background:rgba(0,0,0,0.04);"></div>
+    <div class="glow-orb w-72 h-72 top-20 right-0 translate-x-1/3" style="background:rgba(0,0,0,0.04);"></div>
+    <div class="glow-orb w-64 h-64 bottom-0 left-1/2 -translate-x-1/2 opacity-15" style="background:rgba(0,0,0,0.04);"></div>
 
     <svg class="absolute top-20 right-6 opacity-15 hidden sm:block" width="100" height="100" viewBox="0 0 120 120" fill="none">
-      <circle cx="60" cy="60" r="50" stroke="#e879a0" stroke-width="1" stroke-dasharray="4 8"/>
-      <circle cx="60" cy="60" r="30" stroke="#e879a0" stroke-width="0.5" stroke-dasharray="2 6"/>
-      <line x1="60" y1="10" x2="60" y2="110" stroke="#e879a0" stroke-width="0.5" opacity="0.5"/>
-      <line x1="10" y1="60" x2="110" y2="60" stroke="#e879a0" stroke-width="0.5" opacity="0.5"/>
+      <circle cx="60" cy="60" r="50" stroke="#555555" stroke-width="1" stroke-dasharray="4 8"/>
+      <circle cx="60" cy="60" r="30" stroke="#555555" stroke-width="0.5" stroke-dasharray="2 6"/>
+      <line x1="60" y1="10" x2="60" y2="110" stroke="#555555" stroke-width="0.5" opacity="0.5"/>
+      <line x1="10" y1="60" x2="110" y2="60" stroke="#555555" stroke-width="0.5" opacity="0.5"/>
     </svg>
 
     <div class="relative z-10 text-center px-5 max-w-4xl mx-auto w-full py-16">
@@ -126,7 +126,7 @@ const hreflang = [
         <a href="/ru/for-models" class="btn-primary px-7 py-3.5 rounded-2xl text-white font-bold text-base w-full sm:w-auto">
           Для Моделей →
         </a>
-        <a href="/ru/studio-traffic" class="btn-ghost px-7 py-3.5 rounded-2xl font-semibold text-base flex items-center gap-2 justify-center w-full sm:w-auto" style="color:#fce7f3;">
+        <a href="/ru/studio-traffic" class="btn-ghost px-7 py-3.5 rounded-2xl font-semibold text-base flex items-center gap-2 justify-center w-full sm:w-auto" style="color:#0a0a0a;">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M6.5 5.5l4 2.5-4 2.5V5.5z" fill="currentColor"/></svg>
           Для Студий
         </a>
@@ -135,11 +135,11 @@ const hreflang = [
       <div class="mt-10 flex items-center justify-center gap-2 flex-wrap">
         <div class="flex -space-x-2">
           <div class="w-8 h-8 rounded-full avatar-placeholder"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="opacity:.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></div>
-          <div class="w-8 h-8 rounded-full avatar-placeholder" style="background:linear-gradient(135deg,#2d1b69,#4c1d95)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="opacity:.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></div>
-          <div class="w-8 h-8 rounded-full avatar-placeholder" style="background:linear-gradient(135deg,#1e3a5f,#1e40af)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="opacity:.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></div>
+          <div class="w-8 h-8 rounded-full avatar-placeholder" style="background:linear-gradient(135deg,#d8d8e8,#4c1d95)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="opacity:.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></div>
+          <div class="w-8 h-8 rounded-full avatar-placeholder" style="background:linear-gradient(135deg,#d8e4f0,#1e40af)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="opacity:.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></div>
           <div class="w-8 h-8 rounded-full avatar-placeholder" style="background:linear-gradient(135deg,#3b0764,#6b21a8)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="opacity:.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></div>
         </div>
-        <span class="text-sm" style="color:#9b7389;">Нам доверяют <span class="font-semibold" style="color:#fce7f3;">1000+</span> моделей и студий</span>
+        <span class="text-sm" style="color:rgba(10,10,10,0.45);">Нам доверяют <span class="font-semibold" style="color:#0a0a0a;">1000+</span> моделей и студий</span>
       </div>
     </div>
   </section>
@@ -154,7 +154,7 @@ const hreflang = [
       <div class="text-center mb-10 px-1">
         <div class="tag-pill mb-4">Популярные услуги</div>
         <h2 class="heading-lg mb-3">В тренде сейчас</h2>
-        <p class="text-sm sm:text-base max-w-lg mx-auto" style="color:#9b7389;">Услуга продвижения, о которой наши клиенты спрашивают больше всего в этом месяце.</p>
+        <p class="text-sm sm:text-base max-w-lg mx-auto" style="color:rgba(10,10,10,0.45);">Услуга продвижения, о которой наши клиенты спрашивают больше всего в этом месяце.</p>
       </div>
 
       <a href="/ru/stripchat_promo" class="card-glass rounded-2xl overflow-hidden flex flex-col md:flex-row items-stretch" style="text-decoration:none;">
@@ -163,9 +163,9 @@ const hreflang = [
         </div>
         <div class="p-6 sm:p-8 flex flex-col justify-center md:w-3/5">
           <span class="tag-pill mb-4 w-fit">Stripchat</span>
-          <h3 class="font-bold text-xl sm:text-2xl mb-3" style="color:#fce7f3;">Stripchat Traffic Promo</h3>
-          <p class="text-sm sm:text-base leading-relaxed mb-5" style="color:#9b7389;">Размести свою комнату в категории Popular на Stripchat, подними свой stripscore и получи реальных зрителей. Посмотри, как работает продвижение, цены и план действий, чтобы получить максимум.</p>
-          <span class="text-sm font-semibold inline-flex items-center gap-1" style="color:#e879a0;">Читать полный обзор →</span>
+          <h3 class="font-bold text-xl sm:text-2xl mb-3" style="color:#0a0a0a;">Stripchat Traffic Promo</h3>
+          <p class="text-sm sm:text-base leading-relaxed mb-5" style="color:rgba(10,10,10,0.45);">Размести свою комнату в категории Popular на Stripchat, подними свой stripscore и получи реальных зрителей. Посмотри, как работает продвижение, цены и план действий, чтобы получить максимум.</p>
+          <span class="text-sm font-semibold inline-flex items-center gap-1" style="color:#1a1a1a;">Читать полный обзор →</span>
         </div>
       </a>
     </div>
@@ -175,21 +175,22 @@ const hreflang = [
 
   <!-- CTA -->
   <section class="section-pad relative">
-    <div class="glow-orb w-80 h-80 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20" style="background:#e879a0;"></div>
+    <div class="glow-orb w-80 h-80 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20" style="background:rgba(0,0,0,0.04);"></div>
     <div class="max-w-2xl mx-auto px-5 sm:px-6 text-center relative z-10">
-      <div class="card-glass rounded-3xl cta-box" style="border:1px solid rgba(232,121,160,0.15); background:rgba(25,8,18,0.85);">
+      <div class="card-glass rounded-3xl cta-box" style="border:1px solid rgba(0,0,0,0.09); background:rgba(250,250,248,0.85);">
         <svg class="mx-auto mb-6 opacity-30" width="52" height="52" viewBox="0 0 60 60" fill="none">
-          <circle cx="30" cy="30" r="25" stroke="#e879a0" stroke-width="1" stroke-dasharray="4 6"/>
-          <circle cx="30" cy="30" r="12" stroke="#e879a0" stroke-width="0.8"/>
-          <circle cx="30" cy="30" r="4" fill="#e879a0"/>
+          <circle cx="30" cy="30" r="25" stroke="#555555" stroke-width="1" stroke-dasharray="4 6"/>
+          <circle cx="30" cy="30" r="12" stroke="#555555" stroke-width="0.8"/>
+          <circle cx="30" cy="30" r="4" fill="#555555"/>
         </svg>
         <h2 class="heading-lg mb-4">Готова расти?</h2>
-        <p class="mb-8 text-sm sm:text-base max-w-sm mx-auto" style="color:#d1a0b8;">Расскажи нам, где ты сейчас и куда хочешь попасть. Мы построим план.</p>
+        <p class="mb-8 text-sm sm:text-base max-w-sm mx-auto" style="color:rgba(10,10,10,0.5);">Расскажи нам, где ты сейчас и куда хочешь попасть. Мы построим план.</p>
         <div class="flex flex-col sm:flex-row gap-3 justify-center">
           <a href="https://t.me/+tBjfmjh9vHo1YzQy" target="_blank" rel="noopener" class="btn-primary px-7 py-3.5 rounded-2xl text-white font-bold w-full sm:w-auto">Связаться</a>
-          <a href="/ru/platforms-we-work-with" class="btn-ghost px-7 py-3.5 rounded-2xl font-semibold w-full sm:w-auto" style="color:#fce7f3;">Платформы, с Которыми Мы Работаем</a>
+          <a href="/ru/platforms-we-work-with" class="btn-ghost px-7 py-3.5 rounded-2xl font-semibold w-full sm:w-auto" style="color:#0a0a0a;">Платформы, с Которыми Мы Работаем</a>
         </div>
       </div>
     </div>
   </section>
 </Base>
+
