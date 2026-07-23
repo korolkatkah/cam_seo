@@ -21,8 +21,8 @@ const STR: Record<string, Record<string, string>> = {
     hoursYesterdayAbove: '↑ yesterday', hoursYesterdayBelow: '↓ yesterday',
     tagsTitle: 'Top-performing tags today on Chaturbate', tagsRoomsUnit: 'rooms',
     tagsCaption: 'Tags used by the rooms with the most viewers right now',
-    tagsHotLabel: '⭐ самые перспективные', tagsRestLabel: 'остальные топ теги сегодня',
-    tagsHotBadge: 'перспективный', tagsShowMore: 'Показать ещё теги', tagsHide: 'Скрыть',
+    tagsHotLabel: '⭐ most promising', tagsRestLabel: 'other top tags today',
+    tagsHotBadge: 'promising', tagsShowMore: 'Show more tags', tagsHide: 'Hide',
     titlesTitle: 'Top-performing titles today on Chaturbate', viewersWord: 'viewers',
     titlesCaption: "Real room titles today's top-earning models are using",
     pricesTitle: 'Average show prices today on Chaturbate', goalPriceLabel: 'Typical goal price',
@@ -177,7 +177,7 @@ const hasData = trends.best_hours_utc?.length > 0 || trends.top_tags?.length > 0
 const hoursMap = new Map((trends.best_hours_utc ?? []).map((h: { hour: number; score: number }) => [h.hour, h.score]));
 const hours24 = Array.from({ length: 24 }, (_, i) => ({ hour: i, score: hoursMap.get(i) ?? 0 }));
 const maxScore24 = Math.max(1, ...hours24.map(h => h.score));
-const topTags = (trends.top_tags ?? []).slice(0, 6);
+const topTags = (trends.top_tags ?? []).slice(0, 30);
 const topTitles = (trends.top_titles ?? []).slice(0, 6);
 const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
 ---
