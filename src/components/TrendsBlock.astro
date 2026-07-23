@@ -595,15 +595,15 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
 
   .hours-row.is-current { position: relative; }
   .hours-row.is-current .hours-bar-track { outline: 2px solid #22c55e; outline-offset: -1px; border-radius: 6px; }
-  .hours-row.is-current .hours-range { color: #fbbf24; }
-  .hours-row.is-current .hours-score { color: #fbbf24; }
+  .hours-row.is-current .hours-range { color: #92400e; }
+  .hours-row.is-current .hours-score { color: #92400e; }
   .now-badge {
-    font-size: 10px; background: rgba(251,191,36,0.15); color: #fbbf24;
-    border: 1px solid rgba(251,191,36,0.3);
+    font-size: 10px; background: rgba(146,64,14,0.10); color: #92400e;
+    border: 1px solid rgba(146,64,14,0.25);
     padding: 1px 6px; border-radius: 99px; margin-left: 5px; vertical-align: middle;
   }
   .hours-yesterday-note {
-    font-size: 11px; color: #fff; font-style: italic;
+    font-size: 11px; color: var(--fg-muted); font-style: italic;
     margin-top: 2px; margin-bottom: 6px;
   }
   .hours-legend {
@@ -615,17 +615,17 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
   .hours-legend-low  { color: #16a34a; }
   .hours-history-btn {
     display: flex; align-items: center; gap: 8px; width: 100%;
-    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.12);
     border-radius: 10px; padding: 11px 16px; margin-top: 8px;
-    cursor: pointer; font-size: 0.875rem; font-weight: 600; color: #fff;
+    cursor: pointer; font-size: 0.875rem; font-weight: 600; color: #0a0a0a;
     font-family: var(--font-body); transition: background 0.15s;
   }
-  .hours-history-btn:hover { background: rgba(255,255,255,0.1); }
+  .hours-history-btn:hover { background: rgba(0,0,0,0.08); }
   .hist-chevron { margin-left: auto; transition: transform 0.2s; }
   .hours-history-panel { margin-top: 6px; }
   .hours-history-label { font-size: 11px; color: var(--fg-muted); font-style: italic; margin-bottom: 6px; }
   .hours-now-dup {
-    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.08);
     border-radius: 10px; padding: 8px; margin: 0;
   }
   .hours-now-dup .hours-row { margin-bottom: 0; }
@@ -652,7 +652,7 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
   .price-range { color: var(--fg-faint); font-size: 0.8125rem; }
   .price-by-category-label {
     font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
-    color: #64748b; margin-bottom: 0.6rem;
+    color: #6b6b67; margin-bottom: 0.6rem;
   }
   .price-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
   .price-row { display: flex; align-items: baseline; gap: 0.5rem; font-size: 0.875rem; }
@@ -670,17 +670,17 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
   .tag-hot-badge {
     position: absolute; top: 6px; right: 8px;
     font-size: 9px; font-weight: 700;
-    background: rgba(34,197,94,0.15); color: #22c55e; border: 1px solid rgba(34,197,94,0.3);
+    background: rgba(34,197,94,0.12); color: #15803d; border: 1px solid rgba(34,197,94,0.25);
     padding: 1px 6px; border-radius: 99px;
   }
   .tags-more-btn {
     display: flex; align-items: center; gap: 8px; width: 100%;
-    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.12);
     border-radius: 10px; padding: 11px 16px; margin-top: 8px;
-    cursor: pointer; font-size: 0.875rem; font-weight: 600; color: #fff;
+    cursor: pointer; font-size: 0.875rem; font-weight: 600; color: #0a0a0a;
     font-family: var(--font-body); transition: background 0.15s;
   }
-  .tags-more-btn:hover { background: rgba(255,255,255,0.1); }
+  .tags-more-btn:hover { background: rgba(0,0,0,0.08); }
   .tags-more-btn svg { transition: transform 0.2s; }
   .tags-more-btn[aria-expanded="true"] svg { transform: rotate(180deg); }
   .tags-more-panel { margin-top: 8px; }
