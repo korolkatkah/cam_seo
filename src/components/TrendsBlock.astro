@@ -1,5 +1,6 @@
 ﻿---
 import trends from '../data/cb-trends.json';
+import scTrends from '../data/sc-trends.json';
 
 interface Props {
   lang?: string;
@@ -12,7 +13,7 @@ const STR: Record<string, Record<string, string>> = {
     eyebrow: 'Live market data', updateFreq: 'Live market data updates every 15 minutes',
     heading: "Analytics to make more profit",
     sub: 'We use this real-time data every day to drive traffic and grow our models\' earnings — pulled from public Chaturbate rooms, refreshed automatically.',
-    hoursTitle: 'Best hours to stream on Chaturbate', hoursUnit: 'viewers / room',
+    hoursTitle: 'Best hours to stream on Chaturbate', scHoursTitle: 'Best hours to stream on Stripchat', hoursUnit: 'viewers / room',
     hoursCaption: 'Avg. viewers per broadcasting room',
     hoursLocalNote: 'Times shown in your local time zone',
     hoursNowNote: '↓ below is history from yesterday',
@@ -38,7 +39,7 @@ const STR: Record<string, Record<string, string>> = {
     eyebrow: 'Live-Marktdaten', updateFreq: 'Live-Marktdaten werden alle 15 Minuten aktualisiert',
     heading: 'Analysen für mehr Profit',
     sub: 'Wir nutzen diese Echtzeitdaten täglich, um Traffic zu treiben und die Einnahmen unserer Models zu steigern — aus öffentlichen Chaturbate-Räumen, automatisch aktualisiert.',
-    hoursTitle: 'Beste Sendezeiten auf Chaturbate', hoursUnit: 'Zuschauer / Raum',
+    hoursTitle: 'Beste Sendezeiten auf Chaturbate', scHoursTitle: 'Beste Sendezeiten auf Stripchat', hoursUnit: 'Zuschauer / Raum',
     hoursCaption: 'Durchschn. Zuschauer pro sendendem Raum',
     hoursLocalNote: 'Zeiten in deiner lokalen Zeitzone angezeigt',
     hoursNowNote: '↓ Unten sind die Daten von gestern',
@@ -64,7 +65,7 @@ const STR: Record<string, Record<string, string>> = {
     eyebrow: 'Datos en vivo del mercado', updateFreq: 'Los datos en vivo se actualizan cada 15 minutos',
     heading: 'Analítica para ganar más',
     sub: 'Usamos estos datos en tiempo real cada día para generar tráfico y aumentar los ingresos de nuestras modelos — de salas públicas de Chaturbate, actualizados automáticamente.',
-    hoursTitle: 'Mejores horas para transmitir en Chaturbate', hoursUnit: 'espectadores / sala',
+    hoursTitle: 'Mejores horas para transmitir en Chaturbate', scHoursTitle: 'Mejores horas para transmitir en Stripchat', hoursUnit: 'espectadores / sala',
     hoursCaption: 'Espectadores prom. por sala en emisión',
     hoursLocalNote: 'Horas mostradas en tu zona horaria local',
     hoursNowNote: '↓ Abajo está el historial de ayer',
@@ -90,7 +91,7 @@ const STR: Record<string, Record<string, string>> = {
     eyebrow: 'Date live din piață', updateFreq: 'Datele live se actualizează la fiecare 15 minute',
     heading: 'Analize pentru mai mult profit',
     sub: 'Folosim aceste date în timp real zilnic pentru a genera trafic și a crește veniturile modelelor noastre — din camere publice Chaturbate, actualizate automat.',
-    hoursTitle: 'Cele mai bune ore de streaming pe Chaturbate', hoursUnit: 'spectatori / cameră',
+    hoursTitle: 'Cele mai bune ore de streaming pe Chaturbate', scHoursTitle: 'Cele mai bune ore de streaming pe Stripchat', hoursUnit: 'spectatori / cameră',
     hoursCaption: 'Spectatori medii per cameră activă',
     hoursLocalNote: 'Orele sunt afișate în fusul tău orar local',
     hoursNowNote: '↓ Mai jos este istoricul de ieri',
@@ -116,7 +117,7 @@ const STR: Record<string, Record<string, string>> = {
     eyebrow: 'Живі ринкові дані', updateFreq: 'Живі ринкові дані оновлюються кожні 15 хвилин',
     heading: 'Аналітика для більшого прибутку',
     sub: 'Ми використовуємо ці дані в реальному часі щодня, щоб залучати трафік і збільшувати дохід наших моделей — з публічних кімнат Chaturbate, оновлюються автоматично.',
-    hoursTitle: 'Найкращі години для стріму на Chaturbate', hoursUnit: 'глядачів / кімнату',
+    hoursTitle: 'Найкращі години для стріму на Chaturbate', scHoursTitle: 'Найкращі години для стріму на Stripchat', hoursUnit: 'глядачів / кімнату',
     hoursCaption: 'Середня к-сть глядачів на одну активну кімнату',
     hoursLocalNote: 'Час показано у твоєму місцевому часовому поясі',
     hoursNowNote: '↓ Нижче — дані за вчора',
@@ -142,7 +143,7 @@ const STR: Record<string, Record<string, string>> = {
     eyebrow: 'Живые рыночные данные', updateFreq: 'Живые рыночные данные обновляются каждые 15 минут',
     heading: 'Аналитика для большей прибыли',
     sub: 'Мы используем эти данные в реальном времени каждый день, чтобы привлекать трафик и увеличивать доход наших моделей — из публичных комнат Chaturbate, обновляются автоматически.',
-    hoursTitle: 'Лучшие часы для стрима на Chaturbate', hoursUnit: 'зрителей / комнату',
+    hoursTitle: 'Лучшие часы для стрима на Chaturbate', scHoursTitle: 'Лучшие часы для стрима на Stripchat', hoursUnit: 'зрителей / комнату',
     hoursCaption: 'Среднее число зрителей на одну вещающую комнату',
     hoursLocalNote: 'Время показано в твоём локальном часовом поясе',
     hoursNowNote: '↓ Ниже — данные за вчера',
@@ -181,6 +182,11 @@ const maxScore24 = Math.max(1, ...hours24.map(h => h.score));
 const topTags = (trends.top_tags ?? []).slice(0, 30);
 const topTitles = (trends.top_titles ?? []).slice(0, 6);
 const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
+
+const hasScData = (scTrends.best_hours_utc?.length ?? 0) > 0;
+const scHoursMap = new Map((scTrends.best_hours_utc ?? []).map((h: { hour: number; score: number }) => [h.hour, h.score]));
+const scHours24 = Array.from({ length: 24 }, (_, i) => ({ hour: i, score: scHoursMap.get(i) ?? 0 }));
+const scMaxScore24 = Math.max(1, ...scHours24.map(h => h.score));
 ---
 
 <section class="trends-block">
@@ -340,7 +346,31 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
     </div>
 
     <div class="platform-panel" data-panel="sc" hidden>
-      <p class="trends-empty">{t.stripchatSoon}</p>
+      {!hasScData && (
+        <p class="trends-empty">{t.stripchatSoon}</p>
+      )}
+      {hasScData && (!section || section === 'hours') && (
+        <div class="trends-card trends-card-wide">
+          <h3 class="trends-card-title">{t.scHoursTitle}</h3>
+          <p class="hours-caption">{t.hoursCaption}</p>
+          <p class="hours-local-note" data-hours-local-note hidden>{t.hoursLocalNote}</p>
+          <ul class="hours-list hours-list--sc" id="hours-list-sc">
+            {scHours24.map((h: { hour: number; score: number }) => {
+              const pct = Math.round((h.score / scMaxScore24) * 100);
+              const cls = h.score >= scMaxScore24 * 0.9 ? 'is-peak' : h.score >= scMaxScore24 * 0.75 ? 'is-mid' : 'is-low';
+              return (
+                <li class={`hours-row ${cls}`} data-utc-hour={h.hour} data-score={h.score}>
+                  <span class="hours-range">{String(h.hour).padStart(2, '0')}:00–{String((h.hour + 1) % 24).padStart(2, '0')}:00 UTC</span>
+                  <span class="hours-bar-track">
+                    <span class="hours-bar-fill" style={`width:${pct}%`}></span>
+                  </span>
+                  <span class="hours-score">{h.score} <small>{t.hoursUnit}</small></span>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
     </div>
   </div>
 </section>
@@ -493,6 +523,17 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
         });
       }
     }
+  });
+
+  // Simple local-time conversion for the Stripchat hours list (no history/legend UI, just labels).
+  document.querySelectorAll<HTMLElement>('.hours-list--sc .hours-row[data-utc-hour]').forEach((row) => {
+    const utcHour = Number(row.dataset.utcHour);
+    if (Number.isNaN(utcHour)) return;
+    const startTotal = (((utcHour * 60 - tzOffsetMin) % 1440) + 1440) % 1440;
+    const endTotal = (startTotal + 60) % 1440;
+    const fmt = (m: number) => `${pad(Math.floor(m / 60))}:${pad(m % 60)}`;
+    const rangeEl = row.querySelector<HTMLElement>('.hours-range');
+    if (rangeEl) rangeEl.textContent = `${fmt(startTotal)}–${fmt(endTotal)}`;
   });
 
   document.querySelectorAll<HTMLButtonElement>('.tags-more-btn').forEach((btn) => {

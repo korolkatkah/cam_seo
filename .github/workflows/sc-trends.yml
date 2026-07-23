@@ -1,0 +1,48 @@
+name: SC Trends Collector
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sc-trends
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Restore raw snapshot window
+        uses: actions/cache@v4
+        with:
+          path: .cache/sc-raw.jsonl
+          key: sc-raw-${{ github.run_id }}
+          restore-keys: |
+            sc-raw-
+
+      - name: Collect snapshot and rebuild summary
+        env:
+          SC_USER_ID: ${{ secrets.SC_USER_ID }}
+        run: python3 scripts/sc_trends.py
+
+      - name: Commit updated summary
+        run: |
+          git config user.name "sc-trends-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add src/data/sc-trends.json
+          if git diff --cached --quiet; then
+            echo "no changes"
+          else
+            git commit -m "chore: update sc trends data"
+            git push
+          fi
