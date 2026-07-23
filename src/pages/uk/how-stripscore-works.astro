@@ -1,0 +1,291 @@
+---
+import Base from '@/layouts/Base.astro';
+const site = 'https://ewohub.com';
+const slug = 'how-stripscore-works';
+---
+
+<Base
+  title="Як насправді працює StripScore: реальні сигнали за рейтингом Stripchat"
+  description="Розбір того, що насправді формує StripScore — кількість глядачів, утримання, активність у чаті, чайові, фоловери, стабільність — як показник згасає і що з цим робити."
+  lang="uk"
+  hreflang={[
+    { lang: 'en', url: `${site}/${slug}` },
+    { lang: 'de', url: `${site}/de/${slug}` },
+    { lang: 'es', url: `${site}/es/${slug}` },
+    { lang: 'ro', url: `${site}/ro/${slug}` },
+    { lang: 'uk', url: `${site}/uk/${slug}` },
+    { lang: 'ru', url: `${site}/ru/${slug}` },
+  ]}
+>
+  <section class="art-hero">
+    <div class="art-orb art-orb--1"></div>
+    <div class="art-orb art-orb--2"></div>
+    <div class="art-grid"></div>
+    <div class="art-hero__inner container">
+      <div class="art-meta">
+        <span class="art-tag">Гайд</span>
+        <span class="art-tag art-tag--green">Stripchat</span>
+      </div>
+      <h1 class="art-title">Як насправді працює <span class="art-grad">StripScore</span></h1>
+      <p class="art-lead">
+        Не що означає термін — а як рухається саме число. Ось практичний розбір сигналів, що формують
+        StripScore, наскільки швидко вони згасають, і де моделі витрачають зусилля на речі, які
+        насправді на нього не впливають.
+      </p>
+    </div>
+  </section>
+
+  <div class="art-body container">
+    <div class="art-layout">
+      <aside class="art-toc">
+        <p class="art-toc__title">Зміст</p>
+        <ol class="art-toc__list">
+          <li><a href="#signals">Сигнали, що його формують</a></li>
+          <li><a href="#decay">Наскільки швидко він згасає</a></li>
+          <li><a href="#new-model">StripScore проти буста "New Model"</a></li>
+          <li><a href="#myths">Що на нього НЕ впливає</a></li>
+          <li><a href="#checklist">Практичний чекліст</a></li>
+          <li><a href="#faq">Питання і відповіді</a></li>
+        </ol>
+        <a href="#cta" class="art-toc__cta">Отримати стратегію зростання →</a>
+      </aside>
+
+      <main class="art-main">
+
+        <section id="signals">
+          <h2>Сигнали, що справді формують StripScore</h2>
+          <p>
+            Stripchat не публікує точну формулу, але поведінка категорії Popular з часом робить вхідні
+            дані досить зрозумілими. Жоден з них не працює ізольовано — StripScore це рухомий композитний
+            показник, який постійно перераховується, поки ви в ефірі.
+          </p>
+
+          <div class="reason-card">
+            <div class="reason-num">01</div>
+            <div class="reason-content">
+              <h3>Кількість одночасних глядачів</h3>
+              <p>
+                Найпомітніший вхідний сигнал, але й найбільш зважений на <em>стабільні</em> числа, а не
+                на піки. Кімната, яка утримує 40 глядачів годину, обходить кімнату, яка стрибає до 150 на
+                дві хвилини і падає до 10.
+              </p>
+            </div>
+          </div>
+
+          <div class="reason-card">
+            <div class="reason-num">02</div>
+            <div class="reason-content">
+              <h3>Час перегляду / утримання</h3>
+              <p>
+                Скільки часу реально залишається кожен глядач важить більше, ніж скільки заходять.
+                Високий клікрейт зі швидким відходом (типово для бот- або низькоякісного трафіку)
+                читається як негативний сигнал, а не нейтральний — алгоритму це каже, що ваша кімната не
+                утримує аудиторію, яку їй показали.
+              </p>
+            </div>
+          </div>
+
+          <div class="reason-card">
+            <div class="reason-num">03</div>
+            <div class="reason-content">
+              <h3>Активність у чаті</h3>
+              <p>
+                Повідомлення, реакції та загальний темп чату сигналізують про залучену кімнату, а не
+                пасивно переглянуту. Кімнати, що стимулюють розмову — ставлять питання, реагують на
+                нікнейми, проводять опитування — генерують більше цього сигналу на глядача, ніж тихі
+                стріми.
+              </p>
+            </div>
+          </div>
+
+          <div class="reason-card">
+            <div class="reason-num">04</div>
+            <div class="reason-content">
+              <h3>Чайові та виконані цілі</h3>
+              <p>
+                Події прямої монетизації мають реальну вагу, оскільки вони найсильніший проксі-сигнал
+                платформи для "ця кімната приносить цінність". Часті невеликі чайові протягом стріму
+                зазвичай підтримують показник краще, ніж один великий чайовий, а потім тиша.
+              </p>
+            </div>
+          </div>
+
+          <div class="reason-card">
+            <div class="reason-num">05</div>
+            <div class="reason-content">
+              <h3>Фоловери, отримані в ефірі</h3>
+              <p>
+                Нові фоловери під час активної сесії розглядаються як сильніший сигнал, ніж загальна
+                кількість фоловерів — алгоритму важливіше, чи конвертує ця кімната глядачів прямо зараз,
+                ніж статичне число з місяців тому.
+              </p>
+            </div>
+          </div>
+
+          <div class="reason-card">
+            <div class="reason-num">06</div>
+            <div class="reason-content">
+              <h3>Стабільність стрімінгу</h3>
+              <p>
+                Кімнати, які виходять в ефір за передбачуваним графіком, будують базу, якій алгоритм
+                довіряє — це проявляється у стабільнішому розміщенні навіть при середніх сесіях.
+                Нерегулярні стрімери бачать більш волатильні коливання рейтингу від сесії до сесії, навіть
+                за подібної продуктивності.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="decay">
+          <h2>Наскільки швидко згасає StripScore</h2>
+          <div class="highlight-box highlight-box--warning">
+            <p>
+              StripScore — не банківський рахунок, він не накопичується і не зберігається. Це радше
+              рухоме середнє, яке швидко згасає одразу після завершення стріму і продовжує згасати, чим
+              довше ви офлайн. Чудова сесія три дні тому практично не впливає на ваше сьогоднішнє
+              розміщення. Саме тому один винятковий стрім не "тримає" вас довго — стабільність перемагає
+              випадкові піки, бо показник завжди вимірює недавню продуктивність, а не за весь час.
+            </p>
+          </div>
+        </section>
+
+        <section id="new-model">
+          <h2>StripScore проти буста "New Model"</h2>
+          <div class="glass-card">
+            <p>
+              Нові акаунти отримують розміщення в окремій категорії "New Models" приблизно на перші 14
+              днів — це окремий механізм видимості, а не множник StripScore. Це гарантоване вікно
+              розміщення, незалежне від того, наскільки сильний уже ваш органічний показник. Коли це вікно
+              закривається, вас ранжують чисто за сигналами вище, у загальному пулі Popular. Моделі, які
+              будують сильні звички сесій <em>під час</em> вікна New Model, зазвичай мають найплавніший
+              перехід, бо звички стабільності й утримання переносяться, навіть якщо гарантоване розміщення
+              — ні.
+            </p>
+            <p style="margin-top:.875rem;">
+              Повний розбір по днях — у нашому <a href="/uk/stripchat-first-14-days-guide">гайді про перші 14 днів →</a>
+            </p>
+          </div>
+        </section>
+
+        <section id="myths">
+          <h2>Що на нього НЕ впливає (навіть якщо здається, що мало б)</h2>
+          <div class="two-col-box">
+            <div class="two-col-box__item two-col-box__item--bad">
+              <p class="two-col-box__label">МІФ</p>
+              <p>Більше тегів робить вас видимішою у більшій кількості категорій, що піднімає показник.</p>
+            </div>
+            <div class="two-col-box__item two-col-box__item--good">
+              <p class="two-col-box__label">РЕАЛЬНІСТЬ</p>
+              <p>Теги впливають на видимість, а не на сам показник. Нерелевантні теги можуть навіть шкодити утриманню, коли не ті глядачі заходять і швидко йдуть.</p>
+            </div>
+          </div>
+          <div class="two-col-box">
+            <div class="two-col-box__item two-col-box__item--bad">
+              <p class="two-col-box__label">МІФ</p>
+              <p>Купівля глядачів або бот для "буста трафіку" піднімає StripScore.</p>
+            </div>
+            <div class="two-col-box__item two-col-box__item--good">
+              <p class="two-col-box__label">РЕАЛЬНІСТЬ</p>
+              <p>Бот-трафік дає майже нульовий час перегляду і жодної активності в чаті/чайових, що тягне сигнал утримання вниз. Дивіться наш <a href="/uk/stripchat-promo">повний огляд таких сервісів →</a></p>
+            </div>
+          </div>
+          <div class="two-col-box">
+            <div class="two-col-box__item two-col-box__item--bad">
+              <p class="two-col-box__label">МІФ</p>
+              <p>Довші години стрімінгу завжди означають вищий показник.</p>
+            </div>
+            <div class="two-col-box__item two-col-box__item--good">
+              <p class="two-col-box__label">РЕАЛЬНІСТЬ</p>
+              <p>Довгі періоди слабкої залученості тягнуть середнє вниз. Фокусована 2-годинна сесія з реальною взаємодією обходить 6 тихих годин.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="checklist">
+          <h2>Практичний чекліст</h2>
+          <div class="checklist">
+            <p class="checklist__title">Звички сесій, які справді впливають на StripScore</p>
+            <ul>
+              <li class="ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Стрімте у той самий час у більшість днів — передбачуваність будує базову довіру</li>
+              <li class="ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Починайте з прямої взаємодії (вітайтеся на ім'я, ставте питання) у перші хвилини</li>
+              <li class="ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Ставте маленькі, часті цілі замість однієї великої й далекої</li>
+              <li class="ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Пріоритезуйте утримання поточних глядачів над гонитвою за новими кліками</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Не розтягуйте тривалість сесії за межу реальної залученості</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Не використовуйте куплений трафік чи бот-глядачів, щоб імітувати сплеск</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="cta">
+          <div class="art-cta">
+            <div class="art-cta__orb"></div>
+            <div class="art-cta__inner">
+              <span class="art-cta__badge">Довірте це нам</span>
+              <h2>Ми будуємо звички сесій, які рухають ваш рейтинг</h2>
+              <p>Розклад, темп залученості, структура цілей — ті самі сигнали, описані тут, але виконані стабільно, а не навмання.</p>
+              <div class="art-cta__actions">
+                <a href="/uk/model-promotion" class="art-cta__btn--primary btn btn-primary">Дивитися просування моделей →</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="faq" class="faq-section">
+          <h2>Питання і відповіді</h2>
+          <div class="faq-item">
+            <button class="faq-chevron" aria-expanded="false">
+              <span>StripScore скидається до нуля, коли я йду офлайн?</span>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="faq-body"><p>Не до жорсткого нуля, але сильно згасає, чим довше ви офлайн, тож довга перерва на практиці працює майже як скидання.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-chevron" aria-expanded="false">
+              <span>StripScore — це те саме, що буст New Model?</span>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="faq-body"><p>Ні — вікно New Model це окрема, обмежена в часі гарантія розміщення. StripScore — це поточний органічний показник, який бере на себе роль, коли це вікно закінчується.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-chevron" aria-expanded="false">
+              <span>Чи може один чудовий стрім компенсувати тиждень низької глядацької активності?</span>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="faq-body"><p>Він допомагає розміщенню саме тієї сесії, але оскільки показник швидко згасає, ефект не тримається довше дня-двох. Стабільність важить більше, ніж будь-який окремий пік.</p></div>
+          </div>
+        </section>
+
+        <section>
+          <h2>Схожі статті</h2>
+          <div class="related-grid">
+            <a href="/uk/stripscore-cam-rank-explained" class="related-card">
+              <span class="related-card__icon">❓</span>
+              <span>Що таке Stripscore? Термінологія пояснена</span>
+            </a>
+            <a href="/uk/how-cam-algorithm-ranks-rooms" class="related-card">
+              <span class="related-card__icon">📊</span>
+              <span>Як алгоритми кам-платформ ранжують кімнати (усі платформи)</span>
+            </a>
+            <a href="/uk/stripchat-first-14-days-guide" class="related-card">
+              <span class="related-card__icon">🗓</span>
+              <span>Твої перші 14 днів на Stripchat</span>
+            </a>
+            <a href="/uk/raise-your-room-ranking-score" class="related-card">
+              <span class="related-card__icon">📈</span>
+              <span>Як підняти рейтинг своєї кімнати</span>
+            </a>
+            <a href="/uk/stripchat-popular-new-model-visibility" class="related-card">
+              <span class="related-card__icon">👀</span>
+              <span>Чому нові моделі з'являються в Popular</span>
+            </a>
+            <a href="/uk/why-low-viewers-webcam" class="related-card">
+              <span class="related-card__icon">📉</span>
+              <span>Чому у вашій вебкам-кімнаті мало глядачів</span>
+            </a>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+</Base>

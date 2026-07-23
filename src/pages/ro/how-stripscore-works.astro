@@ -1,0 +1,292 @@
+---
+import Base from '@/layouts/Base.astro';
+const site = 'https://ewohub.com';
+const slug = 'how-stripscore-works';
+---
+
+<Base
+  title="Cum funcționează cu adevărat StripScore: Semnalele reale din spatele clasamentului Stripchat"
+  description="O analiză a ceea ce alimentează cu adevărat StripScore — număr de spectatori, retenție, activitate în chat, tips, follows, consecvență — cum scade scorul și ce poți face."
+  lang="ro"
+  hreflang={[
+    { lang: 'en', url: `${site}/${slug}` },
+    { lang: 'de', url: `${site}/de/${slug}` },
+    { lang: 'es', url: `${site}/es/${slug}` },
+    { lang: 'ro', url: `${site}/ro/${slug}` },
+    { lang: 'uk', url: `${site}/uk/${slug}` },
+    { lang: 'ru', url: `${site}/ru/${slug}` },
+  ]}
+>
+  <section class="art-hero">
+    <div class="art-orb art-orb--1"></div>
+    <div class="art-orb art-orb--2"></div>
+    <div class="art-grid"></div>
+    <div class="art-hero__inner container">
+      <div class="art-meta">
+        <span class="art-tag">Ghid</span>
+        <span class="art-tag art-tag--green">Stripchat</span>
+      </div>
+      <h1 class="art-title">Cum funcționează cu adevărat <span class="art-grad">StripScore</span></h1>
+      <p class="art-lead">
+        Nu ce înseamnă termenul — ci cum se mișcă efectiv numărul. Iată o analiză practică a semnalelor
+        care construiesc StripScore, cât de repede scad, și unde modelele irosesc efort urmărind lucruri
+        care de fapt nu îl mișcă.
+      </p>
+    </div>
+  </section>
+
+  <div class="art-body container">
+    <div class="art-layout">
+      <aside class="art-toc">
+        <p class="art-toc__title">Cuprins</p>
+        <ol class="art-toc__list">
+          <li><a href="#signals">Semnalele care îl construiesc</a></li>
+          <li><a href="#decay">Cât de repede scade</a></li>
+          <li><a href="#new-model">StripScore vs. boost-ul New Model</a></li>
+          <li><a href="#myths">Ce NU îl mișcă</a></li>
+          <li><a href="#checklist">O listă practică</a></li>
+          <li><a href="#faq">Întrebări frecvente</a></li>
+        </ol>
+        <a href="#cta" class="art-toc__cta">Obține o strategie de creștere →</a>
+      </aside>
+
+      <main class="art-main">
+
+        <section id="signals">
+          <h2>Semnalele care construiesc cu adevărat StripScore</h2>
+          <p>
+            Stripchat nu publică o formulă exactă, dar comportamentul categoriei Popular în timp arată
+            destul de clar inputurile. Niciunul nu funcționează izolat — StripScore este un compozit
+            mobil, recalculat continuu cât timp ești live.
+          </p>
+
+          <div class="reason-card">
+            <div class="reason-num">01</div>
+            <div class="reason-content">
+              <h3>Numărul de spectatori concurenți</h3>
+              <p>
+                Cel mai vizibil input, dar și cel mai ponderat spre numere <em>susținute</em>, nu spre
+                vârfuri. O cameră care menține 40 de spectatori timp de o oră depășește o cameră care
+                sare la 150 pentru două minute și scade la 10.
+              </p>
+            </div>
+          </div>
+
+          <div class="reason-card">
+            <div class="reason-num">02</div>
+            <div class="reason-content">
+              <h3>Timp de vizionare / retenție</h3>
+              <p>
+                Cât timp rămâne efectiv fiecare spectator contează mai mult decât câți dau click. Un
+                click-through mare cu abandon rapid (frecvent la trafic bot sau cu intenție scăzută) se
+                citește ca semnal negativ, nu neutru — spune algoritmului că sala ta nu reține audiența
+                căreia i-a fost arătată.
+              </p>
+            </div>
+          </div>
+
+          <div class="reason-card">
+            <div class="reason-num">03</div>
+            <div class="reason-content">
+              <h3>Activitate în chat</h3>
+              <p>
+                Mesajele, reacțiile și ritmul general al chatului semnalează o cameră implicată, nu una
+                urmărită pasiv. Camerele care stimulează conversația — punând întrebări, răspunzând la
+                nume de utilizator, făcând sondaje — generează mai mult din acest semnal per spectator
+                decât streamurile tăcute.
+              </p>
+            </div>
+          </div>
+
+          <div class="reason-card">
+            <div class="reason-num">04</div>
+            <div class="reason-content">
+              <h3>Tips și obiective îndeplinite</h3>
+              <p>
+                Evenimentele de monetizare directă contează mult, fiind cel mai puternic proxy al
+                platformei pentru "această cameră livrează valoare". Tips mici și frecvente pe parcursul
+                streamului tind să susțină scorul mai bine decât un tip mare urmat de o perioadă liniștită.
+              </p>
+            </div>
+          </div>
+
+          <div class="reason-card">
+            <div class="reason-num">05</div>
+            <div class="reason-content">
+              <h3>Follows câștigate live</h3>
+              <p>
+                Follows noi în timpul unei sesiuni active sunt tratate ca semnal mai puternic decât
+                numărul total de followers — algoritmul îi pasă mai mult dacă această cameră convertește
+                spectatori chiar acum decât de un număr static de acum câteva luni.
+              </p>
+            </div>
+          </div>
+
+          <div class="reason-card">
+            <div class="reason-num">06</div>
+            <div class="reason-content">
+              <h3>Consecvența streamingului</h3>
+              <p>
+                Camerele care intră live după un program previzibil construiesc o bază în care algoritmul
+                are încredere, ceea ce se traduce în plasare mai stabilă chiar și la sesiuni medii.
+                Streamerii neregulați văd fluctuații de clasament mai volatile de la o sesiune la alta,
+                chiar la performanțe similare.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="decay">
+          <h2>Cât de repede scade StripScore</h2>
+          <div class="highlight-box highlight-box--warning">
+            <p>
+              StripScore nu e un sold bancar — nu se acumulează și nu rămâne. E mai degrabă o medie
+              mobilă care scade rapid odată ce un stream se termină și continuă să scadă cu cât ești mai
+              mult offline. O sesiune excepțională de acum trei zile are practic zero influență asupra
+              plasării tale de azi. De aceea un singur stream excepțional nu te "duce" mai departe —
+              consecvența bate vârfurile ocazionale pentru că scorul măsoară mereu performanța recentă,
+              nu cea de-a lungul timpului.
+            </p>
+          </div>
+        </section>
+
+        <section id="new-model">
+          <h2>StripScore vs. boost-ul „New Model"</h2>
+          <div class="glass-card">
+            <p>
+              Conturile noi primesc plasare în categoria separată „New Models" pentru aproximativ primele
+              14 zile, ceea ce e un mecanism de vizibilitate distinct, nu un multiplicator de StripScore.
+              E o fereastră de plasare garantată, independentă de cât de puternic e deja scorul tău
+              organic. Odată ce fereastra se închide, ești clasată strict după semnalele de mai sus,
+              concurând în pool-ul general Popular. Modelele care construiesc obiceiuri solide de sesiune
+              <em>în timpul</em> ferestrei New Model tind să aibă cea mai lină tranziție, deoarece
+              obiceiurile de consecvență și retenție se transferă, chiar dacă plasarea garantată nu o face.
+            </p>
+            <p style="margin-top:.875rem;">
+              Vezi analiza completă zi cu zi în <a href="/ro/stripchat-first-14-days-guide">ghidul nostru pentru primele 14 zile →</a>
+            </p>
+          </div>
+        </section>
+
+        <section id="myths">
+          <h2>Ce NU îl mișcă (chiar dacă pare că ar trebui)</h2>
+          <div class="two-col-box">
+            <div class="two-col-box__item two-col-box__item--bad">
+              <p class="two-col-box__label">MIT</p>
+              <p>Adăugarea mai multor tag-uri te face vizibilă în mai multe categorii, ceea ce îți crește scorul.</p>
+            </div>
+            <div class="two-col-box__item two-col-box__item--good">
+              <p class="two-col-box__label">REALITATE</p>
+              <p>Tag-urile afectează vizibilitatea, nu scorul în sine. Tag-urile irelevante pot chiar dăuna retenției, când spectatorii greșiți intră și pleacă rapid.</p>
+            </div>
+          </div>
+          <div class="two-col-box">
+            <div class="two-col-box__item two-col-box__item--bad">
+              <p class="two-col-box__label">MIT</p>
+              <p>Cumpărarea de spectatori sau un bot de „boost de trafic" crește StripScore.</p>
+            </div>
+            <div class="two-col-box__item two-col-box__item--good">
+              <p class="two-col-box__label">REALITATE</p>
+              <p>Traficul bot produce timp de vizionare aproape zero și nicio activitate de chat/tips, ceea ce trage în jos semnalul de retenție. Vezi <a href="/ro/stripchat-promo">recenzia completă a acestor servicii →</a></p>
+            </div>
+          </div>
+          <div class="two-col-box">
+            <div class="two-col-box__item two-col-box__item--bad">
+              <p class="two-col-box__label">MIT</p>
+              <p>Streamingul mai multe ore înseamnă mereu un scor mai mare.</p>
+            </div>
+            <div class="two-col-box__item two-col-box__item--good">
+              <p class="two-col-box__label">REALITATE</p>
+              <p>Perioadele lungi cu implicare scăzută trag media în jos. O sesiune concentrată de 2 ore cu interacțiune reală depășește 6 ore liniștite.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="checklist">
+          <h2>O listă practică</h2>
+          <div class="checklist">
+            <p class="checklist__title">Obiceiuri de sesiune care chiar mișcă StripScore</p>
+            <ul>
+              <li class="ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Streamează la aceleași ore în majoritatea zilelor — predictibilitatea construiește încredere de bază</li>
+              <li class="ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Deschide cu implicare directă (salută pe nume, pune o întrebare) în primele minute</li>
+              <li class="ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Rulează obiective mici și frecvente în loc de unul mare și îndepărtat</li>
+              <li class="ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Prioritizează păstrarea spectatorilor actuali în locul vânării de click-uri noi</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Nu prelungi sesiunea peste punctul de implicare reală</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Nu folosi trafic cumpărat sau spectatori bot pentru a simula un vârf</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="cta">
+          <div class="art-cta">
+            <div class="art-cta__orb"></div>
+            <div class="art-cta__inner">
+              <span class="art-cta__badge">Lasă-ne să gestionăm asta</span>
+              <h2>Construim obiceiurile de sesiune care îți mișcă clasamentul</h2>
+              <p>Programare, ritmul implicării, structura obiectivelor — aceleași semnale acoperite aici, aplicate consecvent, nu ghicite.</p>
+              <div class="art-cta__actions">
+                <a href="/ro/model-promotion" class="art-cta__btn--primary btn btn-primary">Vezi promovarea modelelor →</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="faq" class="faq-section">
+          <h2>Întrebări frecvente</h2>
+          <div class="faq-item">
+            <button class="faq-chevron" aria-expanded="false">
+              <span>StripScore se resetează la zero când intru offline?</span>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="faq-body"><p>Nu la zero absolut, dar scade puternic cu cât ești mai mult offline, așa că o pauză lungă funcționează aproape ca un reset în practică.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-chevron" aria-expanded="false">
+              <span>StripScore e același lucru cu boost-ul New Model?</span>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="faq-body"><p>Nu — fereastra New Model e o garanție de plasare separată, limitată în timp. StripScore e scorul organic continuu care preia rolul odată ce fereastra se termină.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-chevron" aria-expanded="false">
+              <span>Poate un stream excelent să compenseze o săptămână cu puțini spectatori?</span>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="faq-body"><p>Ajută plasarea acelei sesiuni, dar cum scorul scade rapid, nu se menține mult peste o zi sau două. Consecvența contează mai mult decât orice vârf izolat.</p></div>
+          </div>
+        </section>
+
+        <section>
+          <h2>Articole conexe</h2>
+          <div class="related-grid">
+            <a href="/ro/stripscore-cam-rank-explained" class="related-card">
+              <span class="related-card__icon">❓</span>
+              <span>Ce este Stripscore? Terminologie explicată</span>
+            </a>
+            <a href="/ro/how-cam-algorithm-ranks-rooms" class="related-card">
+              <span class="related-card__icon">📊</span>
+              <span>Cum clasează algoritmii de cam camerele (toate platformele)</span>
+            </a>
+            <a href="/ro/stripchat-first-14-days-guide" class="related-card">
+              <span class="related-card__icon">🗓</span>
+              <span>Primele tale 14 zile pe Stripchat</span>
+            </a>
+            <a href="/ro/raise-your-room-ranking-score" class="related-card">
+              <span class="related-card__icon">📈</span>
+              <span>Cum îți crești scorul de clasament</span>
+            </a>
+            <a href="/ro/stripchat-popular-new-model-visibility" class="related-card">
+              <span class="related-card__icon">👀</span>
+              <span>De ce apar modelele noi în Popular</span>
+            </a>
+            <a href="/ro/why-low-viewers-webcam" class="related-card">
+              <span class="related-card__icon">📉</span>
+              <span>De ce camera ta webcam are puțini spectatori</span>
+            </a>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+</Base>

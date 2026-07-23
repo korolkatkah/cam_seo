@@ -61,6 +61,77 @@ const nav = [
 { href: `${langPrefix}/resources`, label: nl.guides },
   { href: `${langPrefix}/blog`, label: nl.blog },
 ];
+
+interface FooterLabels {
+  tagline: string;
+  colServices: string; colResources: string; colRegions: string;
+  services: { href: string; label: string }[];
+  resources: { href: string; label: string }[];
+  regions: { href: string; label: string }[];
+  rights: string;
+}
+
+const footerData: Record<string, Omit<FooterLabels, 'services' | 'resources' | 'regions'> & {
+  services: string[]; resources: string[]; regions: string[];
+}> = {
+  en: {
+    tagline: 'Legitimate audience growth for webcam models & studios worldwide.',
+    colServices: 'Services', colResources: 'Resources', colRegions: 'Regions',
+    services: ['For Models', 'Studio Traffic', 'New Model Growth', 'Studio Scaling'],
+    resources: ['Model Promotion', 'Why Low Viewers', 'Algorithm Guide', 'Income Guide', 'Resources', 'Blog', 'Contact'],
+    regions: ['USA', 'Germany', 'Romania', 'Ukraine', 'Colombia', 'Spain'],
+    rights: 'All rights reserved',
+  },
+  de: {
+    tagline: 'Seriöses Publikumswachstum für Webcam-Models & Studios weltweit.',
+    colServices: 'Services', colResources: 'Ressourcen', colRegions: 'Regionen',
+    services: ['Für Models', 'Studio-Traffic', 'Wachstum für neue Models', 'Studio-Skalierung'],
+    resources: ['Model-Promotion', 'Warum wenig Zuschauer', 'Algorithmus-Guide', 'Einkommens-Guide', 'Ressourcen', 'Blog', 'Kontakt'],
+    regions: ['USA', 'Deutschland', 'Rumänien', 'Ukraine', 'Kolumbien', 'Spanien'],
+    rights: 'Alle Rechte vorbehalten',
+  },
+  es: {
+    tagline: 'Crecimiento de audiencia legítimo para modelos webcam y estudios en todo el mundo.',
+    colServices: 'Servicios', colResources: 'Recursos', colRegions: 'Regiones',
+    services: ['Para Modelos', 'Tráfico para Estudios', 'Crecimiento de Nuevas Modelos', 'Escalado de Estudios'],
+    resources: ['Promoción de Modelos', 'Por Qué Pocos Espectadores', 'Guía del Algoritmo', 'Guía de Ingresos', 'Recursos', 'Blog', 'Contacto'],
+    regions: ['EE. UU.', 'Alemania', 'Rumanía', 'Ucrania', 'Colombia', 'España'],
+    rights: 'Todos los derechos reservados',
+  },
+  ro: {
+    tagline: 'Creștere legitimă de audiență pentru modele webcam și studiouri la nivel mondial.',
+    colServices: 'Servicii', colResources: 'Resurse', colRegions: 'Regiuni',
+    services: ['Pentru Modele', 'Trafic pentru Studiouri', 'Creștere Modele Noi', 'Extindere Studiouri'],
+    resources: ['Promovare Modele', 'De Ce Puțini Vizitatori', 'Ghid Algoritm', 'Ghid Venituri', 'Resurse', 'Blog', 'Contact'],
+    regions: ['SUA', 'Germania', 'România', 'Ucraina', 'Columbia', 'Spania'],
+    rights: 'Toate drepturile rezervate',
+  },
+  uk: {
+    tagline: 'Легітимне зростання аудиторії для вебкам-моделей і студій у всьому світі.',
+    colServices: 'Послуги', colResources: 'Ресурси', colRegions: 'Регіони',
+    services: ['Для Моделей', 'Трафік для Студій', 'Зростання Нових Моделей', 'Масштабування Студій'],
+    resources: ['Промоція Моделей', 'Чому Мало Глядачів', 'Гід по Алгоритму', 'Гід по Доходу', 'Ресурси', 'Блог', 'Контакт'],
+    regions: ['США', 'Німеччина', 'Румунія', 'Україна', 'Колумбія', 'Іспанія'],
+    rights: 'Усі права захищені',
+  },
+  ru: {
+    tagline: 'Легитимный рост аудитории для вебкам-моделей и студий по всему миру.',
+    colServices: 'Услуги', colResources: 'Ресурсы', colRegions: 'Регионы',
+    services: ['Для Моделей', 'Трафик для Студий', 'Рост Новых Моделей', 'Масштабирование Студий'],
+    resources: ['Продвижение Моделей', 'Почему Мало Зрителей', 'Гид по Алгоритму', 'Гид по Доходу', 'Ресурсы', 'Блог', 'Контакт'],
+    regions: ['США', 'Германия', 'Румыния', 'Украина', 'Колумбия', 'Испания'],
+    rights: 'Все права защищены',
+  },
+};
+const fd = footerData[lang] ?? footerData.en;
+
+const footerServiceHrefs = ['/for-models', '/studio-traffic', '/new-model-growth', '/studio-scaling'];
+const footerResourceHrefs = ['/model-promotion', '/why-low-viewers-webcam', '/how-cam-algorithm-ranks-rooms', '/webcam-model-income-guide', '/resources', '/blog', '/contact'];
+const footerRegionHrefs = ['/model-promotion-usa', '/model-promotion-germany', '/model-promotion-romania', '/model-promotion-ukraine', '/model-promotion-colombia', '/model-promotion-spain'];
+
+const footerServices = fd.services.map((label, i) => ({ href: `${langPrefix}${footerServiceHrefs[i]}`, label }));
+const footerResources = fd.resources.map((label, i) => ({ href: `${langPrefix}${footerResourceHrefs[i]}`, label }));
+const footerRegions = fd.regions.map((label, i) => ({ href: footerRegionHrefs[i], label }));
 ---
 
 <!doctype html>
@@ -86,6 +157,12 @@ const nav = [
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://ewohub.com/logo-neon.png" />
+    <meta property="og:site_name" content={siteName} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={`${title} | ${siteName}`} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://ewohub.com/logo-neon.png" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     {hreflang.map(({ lang: l, url }) => (
       <link rel="alternate" hreflang={l} href={url} />
@@ -185,45 +262,37 @@ const nav = [
             <img src="/logo-neon.png" alt="EWO" class="logo-img">
             <span class="logo-ewo">EWO<span class="logo-hub">hub</span></span>
           </div>
-          <p class="footer-tagline">Legitimate audience growth for webcam models & studios worldwide.</p>
+          <p class="footer-tagline">{fd.tagline}</p>
         </div>
         <nav class="footer-nav" aria-label="Footer navigation">
           <div class="footer-col">
-            <p class="footer-col-title">Services</p>
+            <p class="footer-col-title">{fd.colServices}</p>
             <ul role="list">
-              <li><a href="/for-models">For Models</a></li>
-              <li><a href="/studio-traffic">Studio Traffic</a></li>
-              <li><a href="/new-model-growth">New Model Growth</a></li>
-              <li><a href="/studio-scaling">Studio Scaling</a></li>
+              {footerServices.map(({ href, label }) => (
+                <li><a href={href}>{label}</a></li>
+              ))}
             </ul>
           </div>
           <div class="footer-col">
-            <p class="footer-col-title">Resources</p>
+            <p class="footer-col-title">{fd.colResources}</p>
             <ul role="list">
-              <li><a href="/model-promotion">Model Promotion</a></li>
-              <li><a href="/why-low-viewers-webcam">Why Low Viewers</a></li>
-              <li><a href="/how-cam-algorithm-ranks-rooms">Algorithm Guide</a></li>
-              <li><a href="/webcam-model-income-guide">Income Guide</a></li>
-              <li><a href="/resources">Resources</a></li>
-              <li><a href="/blog">Blog</a></li>
-              <li><a href="/contact">Contact</a></li>
+              {footerResources.map(({ href, label }) => (
+                <li><a href={href}>{label}</a></li>
+              ))}
             </ul>
           </div>
           <div class="footer-col">
-            <p class="footer-col-title">Regions</p>
+            <p class="footer-col-title">{fd.colRegions}</p>
             <ul role="list">
-              <li><a href="/model-promotion-usa">USA</a></li>
-              <li><a href="/model-promotion-germany">Germany</a></li>
-              <li><a href="/model-promotion-romania">Romania</a></li>
-              <li><a href="/model-promotion-ukraine">Ukraine</a></li>
-              <li><a href="/model-promotion-colombia">Colombia</a></li>
-              <li><a href="/model-promotion-spain">Spain</a></li>
+              {footerRegions.map(({ href, label }) => (
+                <li><a href={href}>{label}</a></li>
+              ))}
             </ul>
           </div>
         </nav>
       </div>
       <div class="footer-bottom">
-        <p>&copy; {new Date().getFullYear()} EWOhub · All rights reserved</p>
+        <p>&copy; {new Date().getFullYear()} EWOhub · {fd.rights}</p>
       </div>
     </footer>
   </body>

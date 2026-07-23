@@ -1,0 +1,293 @@
+---
+import Base from '@/layouts/Base.astro';
+const site = 'https://ewohub.com';
+const slug = 'how-stripscore-works';
+---
+
+<Base
+  title="Wie StripScore wirklich funktioniert: Die echten Signale hinter Stripchats Ranking"
+  description="Eine Aufschlüsselung dessen, was StripScore wirklich speist — Zuschauerzahl, Verweildauer, Chat-Aktivität, Tips, Follows, Konsistenz — wie der Score verfällt und was du tun kannst."
+  lang="de"
+  hreflang={[
+    { lang: 'en', url: `${site}/${slug}` },
+    { lang: 'de', url: `${site}/de/${slug}` },
+    { lang: 'es', url: `${site}/es/${slug}` },
+    { lang: 'ro', url: `${site}/ro/${slug}` },
+    { lang: 'uk', url: `${site}/uk/${slug}` },
+    { lang: 'ru', url: `${site}/ru/${slug}` },
+  ]}
+>
+  <section class="art-hero">
+    <div class="art-orb art-orb--1"></div>
+    <div class="art-orb art-orb--2"></div>
+    <div class="art-grid"></div>
+    <div class="art-hero__inner container">
+      <div class="art-meta">
+        <span class="art-tag">Guide</span>
+        <span class="art-tag art-tag--green">Stripchat</span>
+      </div>
+      <h1 class="art-title">Wie <span class="art-grad">StripScore</span> wirklich funktioniert</h1>
+      <p class="art-lead">
+        Nicht was der Begriff bedeutet — wie sich die Zahl selbst bewegt. Hier ist eine praktische
+        Aufschlüsselung der Signale, die StripScore aufbauen, wie schnell sie verfallen, und wo Models
+        Aufwand in Dinge stecken, die die Zahl gar nicht bewegen.
+      </p>
+    </div>
+  </section>
+
+  <div class="art-body container">
+    <div class="art-layout">
+      <aside class="art-toc">
+        <p class="art-toc__title">Inhalt</p>
+        <ol class="art-toc__list">
+          <li><a href="#signals">Die Signale, die es aufbauen</a></li>
+          <li><a href="#decay">Wie schnell es verfällt</a></li>
+          <li><a href="#new-model">StripScore vs. New-Model-Boost</a></li>
+          <li><a href="#myths">Was es nicht bewegt</a></li>
+          <li><a href="#checklist">Praktische Checkliste</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+        <a href="#cta" class="art-toc__cta">Wachstumsstrategie holen →</a>
+      </aside>
+
+      <main class="art-main">
+
+        <section id="signals">
+          <h2>Die Signale, die StripScore wirklich aufbauen</h2>
+          <p>
+            Stripchat veröffentlicht keine exakte Formel, aber das Verhalten der Popular-Kategorie über
+            Zeit macht die Inputs recht klar. Keines davon wirkt isoliert — StripScore ist ein rollender
+            Composite-Wert, der kontinuierlich neu berechnet wird, während du live bist.
+          </p>
+
+          <div class="reason-card">
+            <div class="reason-num">01</div>
+            <div class="reason-content">
+              <h3>Gleichzeitige Zuschauerzahl</h3>
+              <p>
+                Der sichtbarste Input, aber auch am stärksten auf <em>anhaltende</em> Zahlen gewichtet
+                statt auf Peaks. Ein Raum, der eine Stunde lang 40 Zuschauer hält, schlägt einen Raum,
+                der auf 150 springt und dann auf 10 abfällt.
+              </p>
+            </div>
+          </div>
+
+          <div class="reason-card">
+            <div class="reason-num">02</div>
+            <div class="reason-content">
+              <h3>Verweildauer / Retention</h3>
+              <p>
+                Wie lange jeder Zuschauer tatsächlich bleibt, zählt mehr als wie viele reinklicken.
+                Hohe Click-Through-Rate mit schnellem Abbruch (typisch bei Bot- oder Low-Intent-Traffic)
+                liest sich als negatives Signal, nicht als neutrales — es sagt dem Algorithmus, dass dein
+                Raum das Publikum nicht hält, das ihm gezeigt wurde.
+              </p>
+            </div>
+          </div>
+
+          <div class="reason-card">
+            <div class="reason-num">03</div>
+            <div class="reason-content">
+              <h3>Chat-Aktivität</h3>
+              <p>
+                Nachrichten, Reaktionen und generelles Chat-Tempo signalisieren einen engagierten
+                Raum statt einen passiv geschauten. Räume, die Konversation anstoßen — Fragen stellen,
+                auf Usernamen reagieren, Umfragen laufen lassen — erzeugen pro Zuschauer mehr davon als
+                stille Streams.
+              </p>
+            </div>
+          </div>
+
+          <div class="reason-card">
+            <div class="reason-num">04</div>
+            <div class="reason-content">
+              <h3>Tips und erreichte Ziele</h3>
+              <p>
+                Direkte Monetarisierungs-Events zählen stark, da sie das stärkste Proxy-Signal der
+                Plattform dafür sind, dass "dieser Raum liefert Wert". Häufige kleinere Tips über den
+                Stream verteilt halten den Score tendenziell besser als ein großer Tip gefolgt von Stille.
+              </p>
+            </div>
+          </div>
+
+          <div class="reason-card">
+            <div class="reason-num">05</div>
+            <div class="reason-content">
+              <h3>Follows während des Live-Streams</h3>
+              <p>
+                Neue Follows während einer aktiven Session gelten als stärkeres Signal als deine
+                Gesamt-Follower-Zahl — der Algorithmus interessiert sich mehr dafür, ob dieser Raum
+                gerade jetzt konvertiert, als für eine statische Zahl von vor Monaten.
+              </p>
+            </div>
+          </div>
+
+          <div class="reason-card">
+            <div class="reason-num">06</div>
+            <div class="reason-content">
+              <h3>Streaming-Konsistenz</h3>
+              <p>
+                Räume, die nach einem vorhersehbaren Zeitplan live gehen, bauen eine Baseline auf, der
+                der Algorithmus vertraut — das zeigt sich in stabilerer Platzierung selbst bei
+                durchschnittlichen Sessions. Unregelmäßige Streamer sehen volatilere Ranking-Schwankungen
+                von Session zu Session, selbst bei ähnlicher Leistung.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="decay">
+          <h2>Wie schnell StripScore verfällt</h2>
+          <div class="highlight-box highlight-box--warning">
+            <p>
+              StripScore ist kein Kontostand — er sammelt sich nicht an und bleibt bestehen. Er ist eher
+              ein rollender Durchschnitt, der schnell verfällt, sobald ein Stream endet, und weiter
+              verfällt, je länger du offline bist. Eine großartige Session vor drei Tagen hat praktisch
+              keinen Einfluss mehr auf deine Platzierung heute. Deshalb "trägt" dich ein einzelner
+              Ausnahme-Stream nicht — Konsistenz schlägt gelegentliche Peaks, weil der Score immer
+              aktuelle, nicht lebenslange, Leistung misst.
+            </p>
+          </div>
+        </section>
+
+        <section id="new-model">
+          <h2>StripScore vs. der "New Model"-Boost</h2>
+          <div class="glass-card">
+            <p>
+              Neue Accounts bekommen Platzierung in der separaten "New Models"-Kategorie für etwa die
+              ersten 14 Tage — das ist ein eigenständiger Sichtbarkeits-Mechanismus, kein StripScore-
+              Multiplikator. Es ist ein garantiertes Platzierungsfenster, unabhängig davon, wie stark
+              dein organischer Score bereits ist. Sobald dieses Fenster schließt, wirst du rein nach den
+              obigen Signalen gerankt, im allgemeinen Popular-Pool. Models, die <em>während</em> des
+              New-Model-Fensters starke Session-Gewohnheiten aufbauen, sehen tendenziell den
+              reibungslosesten Übergang, da Konsistenz- und Retention-Gewohnheiten übertragen werden,
+              auch wenn die garantierte Platzierung es nicht tut.
+            </p>
+            <p style="margin-top:.875rem;">
+              Die vollständige Tag-für-Tag-Aufschlüsselung findest du in unserem <a href="/de/stripchat-first-14-days-guide">Guide für die ersten 14 Tage →</a>
+            </p>
+          </div>
+        </section>
+
+        <section id="myths">
+          <h2>Was es nicht bewegt (auch wenn es sich so anfühlt)</h2>
+          <div class="two-col-box">
+            <div class="two-col-box__item two-col-box__item--bad">
+              <p class="two-col-box__label">MYTHOS</p>
+              <p>Mehr Tags stapeln bringt dich vor mehr Kategorien-Publikum, was deinen Score erhöht.</p>
+            </div>
+            <div class="two-col-box__item two-col-box__item--good">
+              <p class="two-col-box__label">REALITÄT</p>
+              <p>Tags beeinflussen die Auffindbarkeit, nicht den Score selbst. Irrelevante Tags können die Retention sogar schädigen, wenn die falschen Zuschauer reinklicken und schnell wieder gehen.</p>
+            </div>
+          </div>
+          <div class="two-col-box">
+            <div class="two-col-box__item two-col-box__item--bad">
+              <p class="two-col-box__label">MYTHOS</p>
+              <p>Zuschauer kaufen oder ein "Traffic-Boost"-Bot erhöht StripScore.</p>
+            </div>
+            <div class="two-col-box__item two-col-box__item--good">
+              <p class="two-col-box__label">REALITÄT</p>
+              <p>Bot-Traffic erzeugt fast keine Verweildauer und keine Chat-/Tip-Aktivität, was das Retention-Signal nach unten zieht. Siehe unsere <a href="/de/stripchat-promo">vollständige Review dieser Dienste →</a></p>
+            </div>
+          </div>
+          <div class="two-col-box">
+            <div class="two-col-box__item two-col-box__item--bad">
+              <p class="two-col-box__label">MYTHOS</p>
+              <p>Längere Streaming-Stunden bedeuten immer einen höheren Score.</p>
+            </div>
+            <div class="two-col-box__item two-col-box__item--good">
+              <p class="two-col-box__label">REALITÄT</p>
+              <p>Lange Phasen mit wenig Engagement ziehen den Durchschnitt runter. Eine fokussierte 2-Stunden-Session mit echter Interaktion schlägt 6 ruhige Stunden.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="checklist">
+          <h2>Eine praktische Checkliste</h2>
+          <div class="checklist">
+            <p class="checklist__title">Session-Gewohnheiten, die StripScore wirklich bewegen</p>
+            <ul>
+              <li class="ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Zu den gleichen Zeiten an den meisten Tagen streamen — Vorhersehbarkeit baut Baseline-Vertrauen auf</li>
+              <li class="ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Mit direktem Engagement starten (mit Namen begrüßen, Frage stellen) in den ersten Minuten</li>
+              <li class="ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Kleine, häufige Ziele statt eines einzigen fernen großen Ziels</li>
+              <li class="ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Aktuelle Zuschauer halten priorisieren statt neue Klicks jagen</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Session-Länge nicht über den Punkt echten Engagements hinaus strecken</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Keinen gekauften Traffic oder Bot-Zuschauer nutzen, um einen Spike vorzutäuschen</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="cta">
+          <div class="art-cta">
+            <div class="art-cta__orb"></div>
+            <div class="art-cta__inner">
+              <span class="art-cta__badge">Lass es managen</span>
+              <h2>Wir bauen die Session-Gewohnheiten, die dein Ranking bewegen</h2>
+              <p>Scheduling, Engagement-Pacing, Ziel-Struktur — dieselben Signale, konsistent umgesetzt statt geraten.</p>
+              <div class="art-cta__actions">
+                <a href="/de/model-promotion" class="art-cta__btn--primary btn btn-primary">Model-Promotion ansehen →</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="faq" class="faq-section">
+          <h2>FAQ</h2>
+          <div class="faq-item">
+            <button class="faq-chevron" aria-expanded="false">
+              <span>Setzt sich StripScore auf null zurück, wenn ich offline gehe?</span>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="faq-body"><p>Nicht auf eine harte Null, aber er verfällt stark, je länger du offline bist, sodass eine lange Pause in der Praxis fast wie ein Reset wirkt.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-chevron" aria-expanded="false">
+              <span>Ist StripScore dasselbe wie der New-Model-Boost?</span>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="faq-body"><p>Nein — das New-Model-Fenster ist eine separate, zeitlich begrenzte Platzierungsgarantie. StripScore ist der laufende organische Score, der übernimmt, sobald dieses Fenster endet.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-chevron" aria-expanded="false">
+              <span>Kann ein großartiger Stream eine Woche geringer Zuschauerzahl ausgleichen?</span>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="faq-body"><p>Er hilft der Platzierung dieser Session, aber da der Score schnell verfällt, trägt er kaum über einen Tag oder zwei hinaus. Konsistenz zählt mehr als jeder einzelne Peak.</p></div>
+          </div>
+        </section>
+
+        <section>
+          <h2>Verwandte Artikel</h2>
+          <div class="related-grid">
+            <a href="/de/stripscore-cam-rank-explained" class="related-card">
+              <span class="related-card__icon">❓</span>
+              <span>Was ist Stripscore? Begriffe erklärt</span>
+            </a>
+            <a href="/de/how-cam-algorithm-ranks-rooms" class="related-card">
+              <span class="related-card__icon">📊</span>
+              <span>Wie Cam-Algorithmen Räume ranken (alle Plattformen)</span>
+            </a>
+            <a href="/de/stripchat-first-14-days-guide" class="related-card">
+              <span class="related-card__icon">🗓</span>
+              <span>Deine ersten 14 Tage auf Stripchat</span>
+            </a>
+            <a href="/de/raise-your-room-ranking-score" class="related-card">
+              <span class="related-card__icon">📈</span>
+              <span>Wie du dein Ranking erhöhst</span>
+            </a>
+            <a href="/de/stripchat-popular-new-model-visibility" class="related-card">
+              <span class="related-card__icon">👀</span>
+              <span>Warum neue Models in Popular erscheinen</span>
+            </a>
+            <a href="/de/why-low-viewers-webcam" class="related-card">
+              <span class="related-card__icon">📉</span>
+              <span>Warum dein Webcam-Raum wenig Zuschauer hat</span>
+            </a>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+</Base>

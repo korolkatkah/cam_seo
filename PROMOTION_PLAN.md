@@ -4,6 +4,65 @@ Running log of daily/session-based SEO & promotion action plans. Newest entry on
 
 ---
 
+## 2026-07-23 (later)
+
+### Shipped: "How StripScore Works" mechanics deep-dive (all 6 languages)
+New article at `/how-stripscore-works` — deliberately scoped to avoid cannibalizing two existing pieces:
+`stripscore-cam-rank-explained` (terminology: what the word means, how it maps across platforms) and
+`how-cam-algorithm-ranks-rooms` (generic cross-platform algorithm explainer). This one is a
+Stripchat-specific mechanics breakdown: the 6 signals that build the score (viewer count, retention,
+chat activity, tips/goals, live follows, streaming consistency), how fast it decays after a session
+ends, how it interacts with the separate New Model placement window, a myth-vs-reality section, and a
+practical checklist. Tag: `Stripchat`, blog-only per the established convention (analytical content,
+not `/resources`).
+
+Added to `blog.astro` in all 6 locales. Added reciprocal related-article links from
+`stripscore-cam-rank-explained`, `how-cam-algorithm-ranks-rooms`, and `stripchat-first-14-days-guide`
+(all 6 locales, 18 files total) so the three pieces form a coherent internal-linking cluster instead of
+orphaned content. `npm run build` verified clean (174 pages), link-checker script confirmed zero broken
+internal links after the change.
+
+---
+
+## 2026-07-23
+
+### Full technical SEO audit + fixes (all 6 languages)
+Ran a deep technical SEO audit across all 144→168 pages (code-level, not GSC-based since Chrome
+extension wasn't connected this session). Found and fixed:
+
+1. **Duplicate `<title>` suffix** — 32 files across de/es/ro/uk/ru (`about`, `new-model-growth`,
+   `studio-scaling`, `how-cam-algorithm-ranks-rooms`, `best-streaming-times-by-region`,
+   `platforms-we-work-with`, `why-low-viewers-webcam`) had `| EWO` baked into the `title=` prop on top of
+   Base.astro's own `{title} | {siteName}` suffix, rendering `...| EWO | EWO` in `<title>`. Stripped the
+   redundant suffix from all 32.
+2. **Footer not localized** — `Base.astro` footer was 100% hardcoded English (hrefs with no
+   `langPrefix`, English label text) on every non-English page. Rebuilt as a `footerData` table per
+   locale (tagline, column titles, service/resource link labels + `langPrefix`-aware hrefs) with region
+   links intentionally left unprefixed since no localized geo pages exist.
+3. **Broken internal links (404s)** — `es/ro/ru/uk/about.astro` linked to nonexistent
+   `/{locale}/model-promotion-{usa,germany,romania,ukraine}` pages. Repointed all 16 links to the
+   existing English root geo pages.
+4. **Missing `og:image` / Twitter Card** — Base.astro had no `og:image` or `twitter:*` meta at all,
+   so shared links (esp. via the Telegram CTA channel) rendered no preview image. Added `og:image`,
+   `og:site_name`, and `twitter:card=summary_large_image` + title/description/image, using
+   `logo-neon.png` as a stopgap. **Follow-up worth considering**: a proper 1200×630 branded OG image
+   would look better than the square logo crop.
+5. **`robots.txt` stale domain** — `Sitemap:` line pointed to `https://ewo.cam/sitemap-index.xml` (old
+   domain from the migration) instead of `ewohub.com`. Fixed.
+6. **`/stripchat_promo` (underscore) links** — 24 occurrences across all 6 locales linked to the
+   underscore slug, which only resolved via a 301 redirect in `vercel.json` to the real hyphenated
+   `/stripchat-promo`. Repointed all 24 to the canonical hyphenated URL directly.
+
+Verified after fix: `npm run build` succeeds (168 pages), zero duplicate titles, zero broken internal
+links (script-checked against actual route list), zero `stripchat_promo` references left,
+`robots.txt`/`og:image`/`twitter:card` all confirmed correct in the built `dist/` output, RU homepage
+footer spot-checked showing correctly localized hrefs+labels.
+
+**Not changed (flagged, not a bug):** the `/` → `/de,/es,/ro,/ru,/uk` Accept-Language redirect in
+`vercel.json` is a deliberate 302 UX redirect, not an error — left as-is.
+
+---
+
 ## 2026-07-22 (later)
 
 ### Nav restructure: /resources becomes a curated "Guides" feed
