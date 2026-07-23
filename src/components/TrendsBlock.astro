@@ -21,6 +21,8 @@ const STR: Record<string, Record<string, string>> = {
     hoursYesterdayAbove: '↑ yesterday', hoursYesterdayBelow: '↓ yesterday',
     tagsTitle: 'Top-performing tags today on Chaturbate', tagsRoomsUnit: 'rooms',
     tagsCaption: 'Tags used by the rooms with the most viewers right now',
+    tagsHotLabel: '⭐ самые перспективные', tagsRestLabel: 'остальные топ теги сегодня',
+    tagsHotBadge: 'перспективный', tagsShowMore: 'Показать ещё теги', tagsHide: 'Скрыть',
     titlesTitle: 'Top-performing titles today on Chaturbate', viewersWord: 'viewers',
     titlesCaption: "Real room titles today's top-earning models are using",
     pricesTitle: 'Average show prices today on Chaturbate', goalPriceLabel: 'Typical goal price',
@@ -45,6 +47,8 @@ const STR: Record<string, Record<string, string>> = {
     hoursYesterdayAbove: '↑ gestern', hoursYesterdayBelow: '↓ gestern',
     tagsTitle: 'Top-Tags heute auf Chaturbate', tagsRoomsUnit: 'Räume',
     tagsCaption: 'Tags, die Räume mit den meisten Zuschauern gerade verwenden',
+    tagsHotLabel: '⭐ vielversprechendste', tagsRestLabel: 'weitere Top-Tags heute',
+    tagsHotBadge: 'vielversprechend', tagsShowMore: 'Mehr Tags anzeigen', tagsHide: 'Ausblenden',
     titlesTitle: 'Top-Titel heute auf Chaturbate', viewersWord: 'Zuschauer',
     titlesCaption: 'Echte Raum-Titel, die heutige Top-Verdienerinnen verwenden',
     pricesTitle: 'Durchschnittliche Show-Preise heute auf Chaturbate', goalPriceLabel: 'Typischer Goal-Preis',
@@ -69,6 +73,8 @@ const STR: Record<string, Record<string, string>> = {
     hoursYesterdayAbove: '↑ ayer', hoursYesterdayBelow: '↓ ayer',
     tagsTitle: 'Tags con mejor rendimiento hoy en Chaturbate', tagsRoomsUnit: 'salas',
     tagsCaption: 'Tags que usan ahora mismo las salas con más espectadores',
+    tagsHotLabel: '⭐ más prometedores', tagsRestLabel: 'otros top tags hoy',
+    tagsHotBadge: 'prometedor', tagsShowMore: 'Mostrar más tags', tagsHide: 'Ocultar',
     titlesTitle: 'Mejores títulos hoy en Chaturbate', viewersWord: 'espectadores',
     titlesCaption: 'Títulos reales que usan hoy las modelos que más ganan',
     pricesTitle: 'Precios promedio de shows hoy en Chaturbate', goalPriceLabel: 'Precio de meta típico',
@@ -93,6 +99,8 @@ const STR: Record<string, Record<string, string>> = {
     hoursYesterdayAbove: '↑ ieri', hoursYesterdayBelow: '↓ ieri',
     tagsTitle: 'Cele mai performante taguri astăzi pe Chaturbate', tagsRoomsUnit: 'camere',
     tagsCaption: 'Taguri folosite chiar acum de camerele cu cei mai mulți spectatori',
+    tagsHotLabel: '⭐ cele mai promițătoare', tagsRestLabel: 'alte top taguri azi',
+    tagsHotBadge: 'promițător', tagsShowMore: 'Arată mai multe taguri', tagsHide: 'Ascunde',
     titlesTitle: 'Cele mai bune titluri astăzi pe Chaturbate', viewersWord: 'spectatori',
     titlesCaption: 'Titluri reale folosite azi de modelele cu cele mai mari câștiguri',
     pricesTitle: 'Prețuri medii ale show-urilor astăzi pe Chaturbate', goalPriceLabel: 'Preț obiectiv tipic',
@@ -117,6 +125,8 @@ const STR: Record<string, Record<string, string>> = {
     hoursYesterdayAbove: '↑ вчора', hoursYesterdayBelow: '↓ вчора',
     tagsTitle: 'Найефективніші теги сьогодні на Chaturbate', tagsRoomsUnit: 'кімнат',
     tagsCaption: 'Теги, які зараз використовують кімнати з найбільшою кількістю глядачів',
+    tagsHotLabel: '⭐ найперспективніші', tagsRestLabel: 'інші топ теги сьогодні',
+    tagsHotBadge: 'перспективний', tagsShowMore: 'Показати більше тегів', tagsHide: 'Сховати',
     titlesTitle: 'Найкращі заголовки сьогодні на Chaturbate', viewersWord: 'глядачів',
     titlesCaption: 'Реальні заголовки кімнат, які сьогодні використовують топ-моделі',
     pricesTitle: 'Середні ціни на шоу сьогодні на Chaturbate', goalPriceLabel: 'Типова ціна цілі',
@@ -141,6 +151,8 @@ const STR: Record<string, Record<string, string>> = {
     hoursYesterdayAbove: '↑ вчера', hoursYesterdayBelow: '↓ вчера',
     tagsTitle: 'Самые эффективные теги сегодня на Chaturbate', tagsRoomsUnit: 'комнат',
     tagsCaption: 'Теги, которые сейчас используют комнаты с наибольшим числом зрителей',
+    tagsHotLabel: '⭐ самые перспективные', tagsRestLabel: 'остальные топ теги сегодня',
+    tagsHotBadge: 'перспективный', tagsShowMore: 'Показать ещё теги', tagsHide: 'Скрыть',
     titlesTitle: 'Лучшие заголовки сегодня на Chaturbate', viewersWord: 'зрителей',
     titlesCaption: 'Реальные заголовки комнат, которые сегодня используют топ-модели',
     pricesTitle: 'Средние цены на шоу сегодня на Chaturbate', goalPriceLabel: 'Типичная цена цели',
@@ -165,7 +177,7 @@ const hasData = trends.best_hours_utc?.length > 0 || trends.top_tags?.length > 0
 const hoursMap = new Map((trends.best_hours_utc ?? []).map((h: { hour: number; score: number }) => [h.hour, h.score]));
 const hours24 = Array.from({ length: 24 }, (_, i) => ({ hour: i, score: hoursMap.get(i) ?? 0 }));
 const maxScore24 = Math.max(1, ...hours24.map(h => h.score));
-const topTags = (trends.top_tags ?? []).slice(0, 30);
+const topTags = (trends.top_tags ?? []).slice(0, 6);
 const topTitles = (trends.top_titles ?? []).slice(0, 6);
 const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
 ---
@@ -233,14 +245,43 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
         <div class="trends-card trends-card-wide">
           <h3 class="trends-card-title">{t.tagsTitle}</h3>
           <p class="tags-caption">{t.tagsCaption}</p>
+          <p class="tags-section-label">{t.tagsHotLabel}</p>
           <div class="tag-grid">
-            {topTags.map((tag: { tag: string; avg_users: number; rooms: number }) => (
+            {topTags.slice(0, 6).map((tag: { tag: string; avg_users: number; rooms: number }) => (
+              <div class="tag-cell tag-cell--hot">
+                <span class="tag-hot-badge">{t.tagsHotBadge}</span>
+                <span class="tag-cell-name">#{tag.tag}</span>
+                <span class="tag-cell-stats">~{tag.avg_users} {t.hoursUnit.split(' / ')[0]} · {tag.rooms} {t.tagsRoomsUnit}</span>
+              </div>
+            ))}
+          </div>
+          <p class="tags-section-label tags-section-label--rest">{t.tagsRestLabel}</p>
+          <div class="tag-grid">
+            {topTags.slice(6, 9).map((tag: { tag: string; avg_users: number; rooms: number }) => (
               <div class="tag-cell">
                 <span class="tag-cell-name">#{tag.tag}</span>
                 <span class="tag-cell-stats">~{tag.avg_users} {t.hoursUnit.split(' / ')[0]} · {tag.rooms} {t.tagsRoomsUnit}</span>
               </div>
             ))}
           </div>
+          {topTags.length > 9 && (
+            <>
+              <button class="tags-more-btn" data-show={t.tagsShowMore} data-hide={t.tagsHide} aria-expanded="false">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                <span>{t.tagsShowMore} ({topTags.length - 9})</span>
+              </button>
+              <div class="tags-more-panel" hidden>
+                <div class="tag-grid">
+                  {topTags.slice(9).map((tag: { tag: string; avg_users: number; rooms: number }) => (
+                    <div class="tag-cell">
+                      <span class="tag-cell-name">#{tag.tag}</span>
+                      <span class="tag-cell-stats">~{tag.avg_users} {t.hoursUnit.split(' / ')[0]} · {tag.rooms} {t.tagsRoomsUnit}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
         </div>
 
         {topTitles.length > 0 && (
@@ -428,6 +469,17 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
     }
   });
 
+  document.querySelectorAll<HTMLButtonElement>('.tags-more-btn').forEach((btn) => {
+    const panel = btn.nextElementSibling as HTMLElement;
+    const labelEl = btn.querySelector('span')!;
+    btn.addEventListener('click', () => {
+      const open = panel.hidden;
+      panel.hidden = !open;
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      labelEl.textContent = open ? btn.dataset.hide! : `${btn.dataset.show} (${panel.querySelectorAll('.tag-cell').length})`;
+    });
+  });
+
   document.querySelectorAll<HTMLElement>('[data-hours-local-note]').forEach((el) => {
     el.hidden = false;
   });
@@ -591,7 +643,28 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
   }
   .price-value { color: #e879a0; font-weight: 700; white-space: nowrap; }
 
-  .tags-caption { font-size: 0.75rem; color: #94a3b8; margin-bottom: 0.85rem; }
+  .tags-caption { font-size: 0.75rem; color: #94a3b8; margin-bottom: 0.5rem; }
+  .tags-section-label { font-size: 11px; font-weight: 700; color: #fff; margin: 0 0 6px; }
+  .tags-section-label--rest { margin-top: 12px; }
+  .tag-cell--hot { background: rgba(34,197,94,0.06); border-color: rgba(34,197,94,0.25); position: relative; }
+  .tag-cell--hot .tag-cell-name { color: #86efac; }
+  .tag-hot-badge {
+    position: absolute; top: 6px; right: 8px;
+    font-size: 9px; font-weight: 700;
+    background: rgba(34,197,94,0.15); color: #22c55e; border: 1px solid rgba(34,197,94,0.3);
+    padding: 1px 6px; border-radius: 99px;
+  }
+  .tags-more-btn {
+    display: flex; align-items: center; gap: 8px; width: 100%;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 10px; padding: 11px 16px; margin-top: 8px;
+    cursor: pointer; font-size: 0.875rem; font-weight: 600; color: #fff;
+    font-family: var(--font-body); transition: background 0.15s;
+  }
+  .tags-more-btn:hover { background: rgba(255,255,255,0.1); }
+  .tags-more-btn svg { transition: transform 0.2s; }
+  .tags-more-btn[aria-expanded="true"] svg { transform: rotate(180deg); }
+  .tags-more-panel { margin-top: 8px; }
   .tag-grid {
     display: grid; grid-template-columns: 1fr; gap: 0.6rem;
   }
