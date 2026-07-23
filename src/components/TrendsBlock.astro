@@ -454,6 +454,18 @@ const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
           historyList.appendChild(nowDup);
           historyList.appendChild(sepBelow);
         }
+
+        // Also append clones of now+1 and now+2 after the separator
+        rows.forEach((row) => {
+          const utcH = Number(row.dataset.utcHour);
+          if (Number.isNaN(utcH)) return;
+          const startMin = (((utcH * 60 - tzOffsetMin) % 1440) + 1440) % 1440;
+          const localH = Math.floor(startMin / 60);
+          const d = (localH - localNowHour + 24) % 24;
+          if (d === 1 || d === 2) {
+            historyList.appendChild((row as HTMLElement).cloneNode(true) as HTMLElement);
+          }
+        });
       }
 
       const histBtn = historyWrap.querySelector<HTMLButtonElement>('.hours-history-btn');
