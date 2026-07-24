@@ -59,7 +59,6 @@ const nav = [
   { href: `${langPrefix}/for-models`, label: nl.models },
   { href: `${langPrefix}/studio-traffic`, label: nl.studios },
 { href: `${langPrefix}/resources`, label: nl.guides },
-  { href: `${langPrefix}/blog`, label: nl.blog },
 ];
 
 interface FooterLabels {
@@ -1000,7 +999,7 @@ const footerRegions = fd.regions.map((label, i) => ({ href: footerRegionHrefs[i]
   }
   .blog-filter-btn:hover { color: var(--fg); border-color: rgba(0,0,0,0.18); background: rgba(0,0,0,0.06); }
   .blog-filter-btn.is-active { background: #0a0a0a; color: #fff; border-color: #0a0a0a; }
-  .related-card.is-hidden { display: none; }
+  .is-hidden { display: none; }
 
   /* ── Related cards grid ── */
   .related-section { margin-top: 3rem; }

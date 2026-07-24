@@ -14,6 +14,9 @@ const articles = [
     category: 'guides',
   },
 ].filter(a => a.category === 'guides');
+
+const filterAllLabel = 'Toate';
+const tags = [...new Set(articles.map(a => a.tag))];
 ---
 <Base
   title="Ghiduri — Ghiduri pas cu pas pentru modele webcam"
@@ -43,9 +46,15 @@ const articles = [
 
   <div class="art-body">
     <div class="container">
-      <div class="related-grid">
+      <div class="blog-filter-bar" role="group" aria-label="Filter guides by category">
+        <button class="blog-filter-btn is-active" data-filter="all">{filterAllLabel}</button>
+        {tags.map(tag => (
+          <button class="blog-filter-btn" data-filter={tag}>{tag}</button>
+        ))}
+      </div>
+      <div class="related-grid" id="resources-grid">
         {articles.map(({ href, title, desc, tag }) => (
-          <a href={href} class="glass-card" style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
+          <a href={href} class="glass-card" data-tag={tag} style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
             <div class="art-meta">
               <span class="art-tag">{tag}</span>
             </div>
@@ -70,3 +79,25 @@ const articles = [
     </div>
   </div>
 </Base>
+
+<script>
+  (function () {
+    var buttons = document.querySelectorAll('.blog-filter-btn');
+    var cards = document.querySelectorAll('#resources-grid .glass-card');
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        buttons.forEach(function (b) { b.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+        var filter = btn.dataset.filter;
+        cards.forEach(function (card) {
+          if (filter === 'all' || card.dataset.tag === filter) {
+            card.classList.remove('is-hidden');
+          } else {
+            card.classList.add('is-hidden');
+          }
+        });
+      });
+    });
+  })();
+</script>
+
