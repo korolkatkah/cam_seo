@@ -4,6 +4,43 @@ Running log of daily/session-based SEO & promotion action plans. Newest entry on
 
 ---
 
+## 2026-07-24
+
+### Shipped: "How to Choose a Webcam Studio: Splits, Contracts, and Red Flags" (all 6 languages)
+First model-facing article on the studio side of the business — a genuine content gap. Every prior
+piece on the site (StripScore, algorithm ranking, new-model growth, Popular-category bias, income
+guides, platform comparisons) covers platform mechanics or growth strategy; nothing existed to help a
+model actually evaluate a studio contract before signing, even though `/studio-scaling` and
+`/studio-traffic` (studio-facing service pages) and `/for-models` (model recruitment, including studio
+placement) all sit right next to this gap. `webcam-model-income-guide.astro` only mentioned studio
+splits in passing (one FAQ line: "often 50-70%" studio cut).
+
+Article covers: why the split percentage alone is meaningless without knowing the calculation base
+(gross vs. net, flat vs. tiered), 8 concrete things to check before signing (split calculation,
+exclusivity, minimum-hours penalties, equipment/housing deductions, payment schedule — including the
+RU/BY/CIS withdrawal-method problem flagged as a content gap back on 2026-07-22 but never used until
+now — traffic actually driven vs. not, contract/exit terms, track record), a red-flags checklist, a
+studio-vs-independent decision framework, and 4 FAQs. Format: analytical/breakdown (reason-cards,
+similar structure to `how-stripscore-works`), not a linear step-by-step guide, so it's **blog.astro
+only**, all 6 locales, tagged `Studios` (new tag — first non-platform-specific, non-generic category;
+distinct from `Stripchat`/`Algorithm`/etc. since this isn't platform-specific content).
+
+CTA points to `/for-models` (EWO's own model-recruitment page) rather than `/model-promotion`, since
+the natural next step for a model reading this is "should I go independent-with-promotion or
+studio-with-EWO," and `/for-models` is the more relevant conversion target. Cross-linked in both
+directions: added related-card links to `/webcam-model-income-guide` and `/studio-scaling` (all 6
+locales each, reciprocal), plus `/webcam-earnings-by-platform`, `/new-model-growth`,
+`/platforms-we-work-with`, `/for-models` from the new article itself. (Translated `for-models.astro`
+pages have no related-articles section to hook into, so skipped reciprocal links there — EN
+`for-models.astro` already links to the new article.)
+
+Build verified clean: `npm run build` succeeded, 180 pages (+6 from the new article across 6 locales),
+zero errors. Spot-checked rendered HTML for the EN and RU versions via local static server — hero,
+all 8 reason-cards, red-flags checklist, comparison framework, FAQ, CTA, and 6 related-article cards
+all present and correctly linked.
+
+---
+
 ## 2026-07-23 (later still)
 
 ### Category convention: platform-specific content tagged by platform, not "Algorithm"
