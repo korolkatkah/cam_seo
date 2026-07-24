@@ -4,6 +4,33 @@ Running log of daily/session-based SEO & promotion action plans. Newest entry on
 
 ---
 
+## 2026-07-24 (later)
+
+### Shipped: "Goals & Tip Menus: Structured for Tips" (all 6 languages)
+Published on user request ("пусть сейчас опубликует по стрипчат") outside the normal schedule, to fill
+the gap immediately after the 10:00 scheduled slot had already used up the day on the (pre-restriction)
+studio article. Deliberately scoped as a tactical execution piece, distinct from `how-stripscore-works`
+(which explains *why* tips/goals matter for the score) — this one covers *how* to size a goal, price a
+tip menu (anchoring, cheap first-tip entry point, 6-10 item length), and sequence both across a session.
+Format: analytical/tactical, so blog.astro only (not resources), tag `Stripchat`.
+
+Added right after `how-stripscore-works` in `blog.astro`'s articles array, all 6 locales. Cross-linked
+in both directions: new article links to `how-stripscore-works`, `stripchat-first-14-days-guide`,
+`stripchat-popular-new-model-visibility`, `stripscore-cam-rank-explained`,
+`raise-your-room-ranking-score`, `why-low-viewers-webcam`; reciprocal related-cards added to
+`how-stripscore-works` and `stripchat-first-14-days-guide` (all 6 locales, 12 files).
+
+Build verified clean: 186 pages, zero errors.
+
+### Correction: scheduled-task cadence is 2 articles/day (one per slot), not 1/day shared
+Earlier same-day design assumed a shared daily cap — the 15:00 slot would skip entirely if the 10:00
+slot had already published. User corrected this: each of the two daily slots (10:00, 15:00) should
+independently find and publish its own distinct, non-redundant Stripchat topic. Updated both
+`ewo-daily-article` and `ewo-daily-article-pm` scheduled-task prompts to check what the *other* slot
+published that day (to avoid overlap) rather than skipping outright if anything shipped earlier.
+
+---
+
 ## 2026-07-24
 
 ### Shipped: "How to Choose a Webcam Studio: Splits, Contracts, and Red Flags" (all 6 languages)

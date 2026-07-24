@@ -1,0 +1,284 @@
+---
+import Base from '@/layouts/Base.astro';
+const site = 'https://ewohub.com';
+const slug = 'stripchat-goals-tip-menu-structure';
+---
+
+<Base
+  title="Голы и тип-меню на Stripchat: как структурировать для большего числа чаевых"
+  description="Как правильно размерить голы, оценить тип-меню и выстроить последовательность обоих в течение сессии, чтобы они реально конвертировали — а не просто украшали комнату."
+  lang="ru"
+  hreflang={[
+    { lang: 'en', url: `${site}/${slug}` },
+    { lang: 'de', url: `${site}/de/${slug}` },
+    { lang: 'es', url: `${site}/es/${slug}` },
+    { lang: 'ro', url: `${site}/ro/${slug}` },
+    { lang: 'uk', url: `${site}/uk/${slug}` },
+    { lang: 'ru', url: `${site}/ru/${slug}` },
+  ]}
+>
+  <section class="art-hero">
+    <div class="art-orb art-orb--1"></div>
+    <div class="art-orb art-orb--2"></div>
+    <div class="art-grid"></div>
+    <div class="art-hero__inner container">
+      <div class="art-meta">
+        <span class="art-tag">Гайд</span>
+        <span class="art-tag art-tag--green">Stripchat</span>
+      </div>
+      <h1 class="art-title">Голы и Тип-Меню: <span class="art-grad">Структурированные для Чаевых</span></h1>
+      <p class="art-lead">
+        В большинстве комнат есть шкала гола и тип-меню. Мало кто структурирует хоть одно из них
+        осознанно. Вот как размер гола, цены в тип-меню и порядок, в котором вы их запускаете, меняют,
+        сколько сессия реально зарабатывает — а не просто как она выглядит.
+      </p>
+    </div>
+  </section>
+
+  <div class="art-body container">
+    <div class="art-layout">
+      <aside class="art-toc">
+        <p class="art-toc__title">Содержание</p>
+        <ol class="art-toc__list">
+          <li><a href="#goal-size">Правильный размер гола</a></li>
+          <li><a href="#tip-menu">Ценообразование тип-меню</a></li>
+          <li><a href="#sequencing">Последовательность голов и пунктов меню</a></li>
+          <li><a href="#mistakes">Частые ошибки</a></li>
+          <li><a href="#checklist">Практический чеклист</a></li>
+          <li><a href="#faq">Вопросы и ответы</a></li>
+        </ol>
+        <a href="#cta" class="art-toc__cta">Получить стратегию роста →</a>
+      </aside>
+
+      <main class="art-main">
+
+        <section id="goal-size">
+          <h2>Как правильно размерить гол</h2>
+          <p>
+            Гол — это обратный отсчёт, а обратные отсчёты мотивируют только когда финишная черта
+            ощущается достаточно близкой, чтобы иметь значение. Постоянно встречаются два типа ошибок:
+          </p>
+
+          <div class="reason-card">
+            <div class="reason-num">01</div>
+            <div class="reason-content">
+              <h3>Слишком большой для комнаты, которая у вас реально есть</h3>
+              <p>
+                Гол на 5000 токенов в комнате со средней посещаемостью 15 зрителей редко завершается, а
+                незавершённый гол в конце сессии читается как "эта комната не достигает своих целей" —
+                худший сигнал, чем вообще не запускать гол. Размеряйте гол под то, что ваша
+                <em>типичная</em> сессия реально может завершить, а не лучшую сессию за всё время.
+              </p>
+            </div>
+          </div>
+
+          <div class="reason-card">
+            <div class="reason-num">02</div>
+            <div class="reason-content">
+              <h3>Слишком маленький, чтобы ощущаться как событие</h3>
+              <p>
+                Гол, который завершается в первые четыре минуты, перестаёт функционировать как гол — это
+                просто чаевой, который случайно попал в число. Шкале нужен запас, чтобы зрители,
+                присоединяющиеся посреди сессии, всё ещё видели прогресс и хотели быть теми, кто его
+                завершит.
+              </p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              <strong>Правило:</strong> размеряйте гол так, чтобы он завершался примерно 2–4 раза за
+              типичную 2-часовую сессию, не один раз и не никогда. Такой ритм даёт зрителям, приходящим
+              в любой момент стрима, реалистичную цель, к которой можно присоединиться.
+            </p>
+          </div>
+        </section>
+
+        <section id="tip-menu">
+          <h2>Ценообразование тип-меню</h2>
+          <p>
+            Тип-меню — это прайс-лист, и прайс-листы работают так же, как везде: якорение, диапазон цен
+            и понятная дешёвая точка входа важнее конкретных чисел.
+          </p>
+
+          <div class="reason-card">
+            <div class="reason-num">03</div>
+            <div class="reason-content">
+              <h3>Поставьте настоящий якорь наверху</h3>
+              <p>
+                Добавьте один пункт с ценой заметно выше остальных, даже если его редко типлят. Его
+                задача не продать себя — а сделать каждый другой пункт меню выглядящим разумно
+                оценённым по сравнению.
+              </p>
+            </div>
+          </div>
+
+          <div class="reason-card">
+            <div class="reason-num">04</div>
+            <div class="reason-content">
+              <h3>Дайте новым зрителям дешёвый, очевидный первый чаевой</h3>
+              <p>
+                Тот, кто никогда не типлил в вашей комнате, гораздо чаще даст один небольшой чаевой, чем
+                сразу перейдёт к пункту средней цены. Этот первый чаевой важит непропорционально много —
+                это действие, которое превращает пассивного зрителя в участника, а участники типлят
+                снова.
+              </p>
+            </div>
+          </div>
+
+          <div class="reason-card">
+            <div class="reason-num">05</div>
+            <div class="reason-content">
+              <h3>Держите меню достаточно коротким, чтобы прочитать за один взгляд</h3>
+              <p>
+                Тип-меню из 20 строк требует от зрителей работы, на которую большинство не пойдёт. 6–10
+                пунктов, логично сгруппированных, читают; всё длиннее в основном полностью пропускают.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="sequencing">
+          <h2>Последовательность голов и пунктов меню в течение сессии</h2>
+          <div class="glass-card">
+            <p>
+              Запуск гола и полного тип-меню одновременно с первой минуты делит внимание между двумя
+              просьбами. Более чёткая последовательность: начните с лёгкого взаимодействия через меню
+              первые 10–15 минут, пока комната наполняется, введите гол, когда появится реальная
+              аудитория, способная в него внести вклад, и дайте чаевым из меню продолжаться вместе с
+              голом как фоновая активность. Завершение выполненного гола конкретным, обещанным
+              продолжением (не расплывчатым, а конкретным "и теперь происходит X") даёт следующему голу
+              сессии доверие ещё до того, как он начнётся.
+            </p>
+          </div>
+        </section>
+
+        <section id="mistakes">
+          <h2>Частые ошибки</h2>
+          <div class="two-col-box">
+            <div class="two-col-box__item two-col-box__item--bad">
+              <p class="two-col-box__label">ОШИБКА</p>
+              <p>Сброс незавершённого гола до меньшего числа посреди сессии.</p>
+            </div>
+            <div class="two-col-box__item two-col-box__item--good">
+              <p class="two-col-box__label">ЛУЧШЕ</p>
+              <p>Дайте ему завершиться незавершённым и анонсируйте свежий, правильно размеренный гол на следующей сессии — сброс вживую сигнализирует, что число изначально было произвольным.</p>
+            </div>
+          </div>
+          <div class="two-col-box">
+            <div class="two-col-box__item two-col-box__item--bad">
+              <p class="two-col-box__label">ОШИБКА</p>
+              <p>Тип-меню, которое никогда не меняется, сессия за сессией.</p>
+            </div>
+            <div class="two-col-box__item two-col-box__item--good">
+              <p class="two-col-box__label">ЛУЧШЕ</p>
+              <p>Периодически меняйте 1–2 пункта — постоянные зрители перестают читать меню, которое уже запомнили, небольшое изменение заставляет снова на него посмотреть.</p>
+            </div>
+          </div>
+          <div class="two-col-box">
+            <div class="two-col-box__item two-col-box__item--bad">
+              <p class="two-col-box__label">ОШИБКА</p>
+              <p>Анонсировать гол один раз и больше никогда его не упоминать.</p>
+            </div>
+            <div class="two-col-box__item two-col-box__item--good">
+              <p class="two-col-box__label">ЛУЧШЕ</p>
+              <p>Непринуждённые упоминания прогресса ("уже половина") каждые 15–20 минут держат его на виду, не будучи навязчивым.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="checklist">
+          <h2>Практический чеклист</h2>
+          <div class="checklist">
+            <p class="checklist__title">Перед следующей сессией</p>
+            <ul>
+              <li class="ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Гол размерен так, чтобы завершаться 2–4 раза за типичную сессию, а не один раз</li>
+              <li class="ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> В тип-меню есть чёткий дорогой якорный пункт</li>
+              <li class="ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> В меню есть дешёвый, очевидный первый вариант чаевого</li>
+              <li class="ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Меню состоит из 6–10 пунктов, читается за один взгляд</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Не сбрасывайте незавершённый гол посреди сессии</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Не оставляйте меню неизменным месяцами</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="cta">
+          <div class="art-cta">
+            <div class="art-cta__orb"></div>
+            <div class="art-cta__inner">
+              <span class="art-cta__badge">Доверьте это нам</span>
+              <h2>Мы помогаем структурировать сессию, а не только вести трафик</h2>
+              <p>Размер гола, цены меню и темп — часть нашей повседневной работы с моделями.</p>
+              <div class="art-cta__actions">
+                <a href="/ru/model-promotion" class="art-cta__btn--primary btn btn-primary">Смотреть продвижение моделей →</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="faq" class="faq-section">
+          <h2>Вопросы и ответы</h2>
+          <div class="faq-item">
+            <button class="faq-chevron" aria-expanded="false">
+              <span>Значит ли больший гол всегда больше суммарных чаевых?</span>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="faq-body"><p>Нет — гол, размеренный сверх того, что ваша комната реально может завершить, обычно снижает суммарные чаевые, поскольку явно застрявшая шкала скорее отпугивает дальнейшие взносы, чем поощряет их.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-chevron" aria-expanded="false">
+              <span>Должны ли тип-меню и гол когда-либо конкурировать за внимание?</span>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="faq-body"><p>Их не стоит продвигать с одинаковым весом в один момент. Пусть один ведёт за раз — пункты меню в начале, чтобы разогреть комнату, гол — когда появится реальная аудитория.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-chevron" aria-expanded="false">
+              <span>Как часто должны меняться цены в тип-меню?</span>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="faq-body"><p>Полная переоценка не нужна часто, но ротация 1–2 пунктов каждые несколько недель удерживает постоянных зрителей за реальным чтением меню, а не игнорированием его как фонового декора.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-chevron" aria-expanded="false">
+              <span>Влияет ли структура голов/тип-меню на StripScore?</span>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="faq-body"><p>Косвенно да — чаевые и завершённые голы это один из сигналов, которые учитывает StripScore, поэтому структура меню/гола, которая реально конвертирует, питает этот сигнал стабильнее, чем та, что просто существует. Смотрите наш <a href="/ru/how-stripscore-works">полный разбор того, что формирует StripScore →</a></p></div>
+          </div>
+        </section>
+
+        <section>
+          <h2>Похожие статьи</h2>
+          <div class="related-grid">
+            <a href="/ru/how-stripscore-works" class="related-card">
+              <span class="related-card__icon">🧮</span>
+              <span>Как на самом деле работает StripScore</span>
+            </a>
+            <a href="/ru/stripchat-first-14-days-guide" class="related-card">
+              <span class="related-card__icon">🗓</span>
+              <span>Твои первые 14 дней на Stripchat</span>
+            </a>
+            <a href="/ru/stripchat-popular-new-model-visibility" class="related-card">
+              <span class="related-card__icon">👀</span>
+              <span>Почему новые модели появляются в Popular</span>
+            </a>
+            <a href="/ru/stripscore-cam-rank-explained" class="related-card">
+              <span class="related-card__icon">❓</span>
+              <span>Что такое Stripscore? Терминология объяснена</span>
+            </a>
+            <a href="/ru/raise-your-room-ranking-score" class="related-card">
+              <span class="related-card__icon">📈</span>
+              <span>Как поднять рейтинг своей комнаты</span>
+            </a>
+            <a href="/ru/why-low-viewers-webcam" class="related-card">
+              <span class="related-card__icon">📉</span>
+              <span>Почему в вашей вебкам-комнате мало зрителей</span>
+            </a>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+</Base>
