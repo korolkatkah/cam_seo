@@ -4,6 +4,18 @@ Running log of daily/session-based SEO & promotion action plans. Newest entry on
 
 ---
 
+## 2026-07-27
+
+### Shipped: "VR Shows on Stripchat: Is the Equipment Worth It?" (all 6 languages)
+Published on user request, first of two dual-audience (models + studios) Stripchat articles from a fresh content plan built by researching per-country popular topics (US/DE/RO/UK-RU/ES-CO searches) instead of generic platform mechanics. Slug: `stripchat-vr-shows-worth-it`. Covers VR camera equipment cost ($300-800 range), break-even math for a solo model, and a dedicated "For Studios" section on shared-equipment economics across a roster. Added to `/blog` (tag: Stripchat) in all 6 locales.
+
+### Shipped: "Model News for Studio Admins: What Actually Changed" (all 6 languages)
+Second of the two — first article on the site written specifically for the Studio Admin audience rather than individual models. Slug: `stripchat-model-news-studio-admin`. Covers Stripchat's January 2026 update (Model News now visible to Studio Admin accounts, extended new-model promotion window, contests split by category) and what each change means operationally for running a multi-model roster. Added to `/blog` (tag: Stripchat) in all 6 locales.
+
+**Context on the content plan shift:** user rejected an earlier 10-article Stripchat plan for being model-only/platform-mechanics-focused with no studio angle and no local grounding. Redone by researching Stripchat-related trends per target market: US (Studio Admin / Model News update, VR premium pricing), Germany (4K VR emphasis), Romania (studios running models across 6-8 platforms simultaneously), Ukraine/Russia (CIS withdrawal/payout friction, night-shift Moscow-time peak hours), Colombia/Spain (24/7 three-shift studio operations, themed rooms, HRW labor-exploitation reporting). Remaining 8 topics from that revised plan are queued but not yet written — see prior conversation for the full list (CIS payouts, LatAm shift scheduling, Romania multi-platform studios, new-model-boost 2026 update, fair-split/trust content, timezone shift coverage, recruitment compliance checklist, and a solo-vs-studio show-format comparison).
+
+---
+
 ## 2026-07-24 (later)
 
 ### Shipped: "Goals & Tip Menus: Structured for Tips" (all 6 languages)
