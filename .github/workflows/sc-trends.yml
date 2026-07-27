@@ -38,7 +38,7 @@ jobs:
       - name: Commit updated summary
         run: |
           MIN=$(date -u +%M)
-          if [ "$MIN" -ge 15 ] && [ "${{ github.event_name }}" = "schedule" ]; then
+          if [ "$MIN" -ge 15 ]; then
             echo "collected snapshot, deferring commit/deploy to the top-of-hour run (minute=$MIN)"
             exit 0
           fi
