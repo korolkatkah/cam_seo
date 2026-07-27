@@ -3,6 +3,10 @@ import Base from '@/layouts/Base.astro';
 const site = 'https://ewohub.com';
 
 const filterAllLabel = 'Toate';
+const dateLocale = 'ro-RO';
+function fmtDate(iso: string) {
+  return new Date(`${iso}T00:00:00Z`).toLocaleDateString(dateLocale, { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
+}
 
 const articles = [
   {
@@ -11,6 +15,7 @@ const articles = [
     desc: 'Cum funcționează serviciul nostru de marketing și creștere a audienței pentru modele webcam care transmit deja.',
     tag: 'Promovare',
     mins: '6 min',
+    date: '2026-07-07',
   },
   {
     href: '/ro/why-low-viewers-webcam',
@@ -18,6 +23,7 @@ const articles = [
     desc: '8 motive reale pentru care numărul de spectatori este scăzut și ce să faci pentru fiecare.',
     tag: 'Creștere',
     mins: '8 min',
+    date: '2026-07-07',
   },
   {
     href: '/ro/how-cam-algorithm-ranks-rooms',
@@ -25,6 +31,7 @@ const articles = [
     desc: 'Ce determină cu adevărat vizibilitatea ta pe platformele cam și cum să lucrezi cu asta.',
     tag: 'Algoritm',
     mins: '6 min',
+    date: '2026-07-07',
   },
   {
     href: '/ro/stripscore-cam-rank-explained',
@@ -32,6 +39,7 @@ const articles = [
     desc: 'Stripscore, cam rank, room rank — ce înseamnă acești termeni și cum diferă conceptul între Chaturbate, Stripchat, BongaCams și LiveJasmin.',
     tag: 'Stripchat',
     mins: '5 min',
+    date: '2026-07-19',
   },
   {
     href: '/ro/how-stripscore-works',
@@ -39,6 +47,7 @@ const articles = [
     desc: 'O analiză a ceea ce alimentează StripScore — spectatori, retenție, activitate în chat, tips, follows, consecvență — cum scade scorul și ce poți face.',
     tag: 'Stripchat',
     mins: '7 min',
+    date: '2026-07-23',
   },
   {
     href: '/ro/stripchat-goals-tip-menu-structure',
@@ -46,6 +55,7 @@ const articles = [
     desc: 'Cum să dimensionezi goals, să prețuiești un meniu de tips și să le secvențiezi într-o sesiune ca să convertească real — nu doar să stea decorativ.',
     tag: 'Stripchat',
     mins: '6 min',
+    date: '2026-07-24',
   },
   {
     href: '/ro/stripchat-ai-model-recommendations',
@@ -53,6 +63,7 @@ const articles = [
     desc: 'Cum funcționează feed-ul "Recomandat pentru tine" al Stripchat bazat pe AI și cum îți optimizezi camera pentru a apărea în el.',
     tag: 'Stripchat',
     mins: '6 min',
+    date: '2026-07-21',
   },
   {
     href: '/ro/stripchat-popular-new-model-visibility',
@@ -60,6 +71,7 @@ const articles = [
     desc: 'Biasul documentat spre camerele deja mari, ce a făcut Stripchat în privința asta, și căile concrete spre vizibilitate reală pentru o începătoare.',
     tag: 'Stripchat',
     mins: '7 min',
+    date: '2026-07-22',
   },
   {
     href: '/ro/best-streaming-times-by-region',
@@ -67,6 +79,7 @@ const articles = [
     desc: 'Date despre orele de vârf pe regiune — maximizează-ți audiența la fiecare sesiune.',
     tag: 'Strategie',
     mins: '5 min',
+    date: '2026-07-07',
   },
   {
     href: '/ro/webcam-model-income-guide',
@@ -74,6 +87,7 @@ const articles = [
     desc: 'O prezentare clară a modului în care funcționează câștigurile webcam și cum să le crești.',
     tag: 'Venituri',
     mins: '10 min',
+    date: '2026-07-07',
   },
   {
     href: '/ro/webcam-earnings-by-platform',
@@ -81,6 +95,7 @@ const articles = [
     desc: 'Chaturbate vs. Stripchat vs. BongaCams vs. LiveJasmin — procente reale de plată, valoarea token-ului și ce platformă plătește cu adevărat mai mult.',
     tag: 'Venituri',
     mins: '8 min',
+    date: '2026-07-19',
   },
   {
     href: '/ro/new-model-growth',
@@ -88,6 +103,7 @@ const articles = [
     desc: 'Cum să-ți construiești prima audiență constantă de la zero ca model webcam nou.',
     tag: 'Începător',
     mins: '7 min',
+    date: '2026-07-07',
   },
   {
     href: '/ro/platforms-we-work-with',
@@ -95,6 +111,7 @@ const articles = [
     desc: 'Ce diferențiază Chaturbate, Stripchat, LiveJasmin și BongaCams — și cum se adaptează strategia noastră la fiecare.',
     tag: 'Platforme',
     mins: '8 min',
+    date: '2026-07-07',
   },
   {
     href: '/ro/stripchat-promo',
@@ -102,6 +119,7 @@ const articles = [
     desc: 'O recenzie sinceră a Stripchat_traffic_bot: cum funcționează, cât costă și cum să obții maximum din el.',
     tag: 'Stripchat',
     mins: '6 min',
+    date: '2026-07-09',
   },
   {
     href: '/ro/stripchat-vr-shows-worth-it',
@@ -109,6 +127,7 @@ const articles = [
     desc: 'Costul real al echipamentului VR, patru cifre de verificat înainte de a cumpăra, și cum ar trebui studiourile să gândească echiparea unei camere comune.',
     tag: 'Stripchat',
     mins: '7 min',
+    date: '2026-07-27',
   },
   {
     href: '/ro/stripchat-model-news-studio-admin',
@@ -116,6 +135,7 @@ const articles = [
     desc: 'Actualizarea Stripchat din ianuarie 2026 a dat Studio Admin acces la Model News, a extins fereastra de promovare pentru modele noi și a împărțit concursurile pe categorii.',
     tag: 'Stripchat',
     mins: '7 min',
+    date: '2026-07-27',
   },
   {
     href: '/ro/how-to-choose-a-webcam-studio',
@@ -123,6 +143,7 @@ const articles = [
     desc: 'Ce determină cu adevărat o înțelegere bună cu un studio — cum se calculează procentul, clauze de exclusivitate, deduceri, metode de plată și semnalele care prevestesc o înțelegere proastă.',
     tag: 'Studiouri',
     mins: '9 min',
+    date: '2026-07-24',
   },
 ];
 
@@ -164,7 +185,7 @@ const tags = [...new Set(articles.map(a => a.tag))];
         ))}
       </div>
       <div class="related-grid" id="blog-grid">
-        {articles.map(({ href, title, desc, tag, mins }) => (
+        {articles.map(({ href, title, desc, tag, mins, date }) => (
           <a href={href} class="related-card" data-tag={tag}>
             <div class="art-meta">
               <span class="art-tag">{tag}</span>
@@ -172,6 +193,7 @@ const tags = [...new Set(articles.map(a => a.tag))];
             </div>
             <h3>{title}</h3>
             <p>{desc}</p>
+            <time class="card-date" datetime={date}>{fmtDate(date)}</time>
           </a>
         ))}
       </div>

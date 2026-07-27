@@ -3,6 +3,10 @@ import Base from '@/layouts/Base.astro';
 const site = 'https://ewohub.com';
 
 const filterAllLabel = 'Всі';
+const dateLocale = 'uk-UA';
+function fmtDate(iso: string) {
+  return new Date(`${iso}T00:00:00Z`).toLocaleDateString(dateLocale, { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
+}
 
 const articles = [
   {
@@ -11,6 +15,7 @@ const articles = [
     desc: 'Як працює наш сервіс маркетингу та зростання аудиторії для вебкам-моделей, які вже стримлять.',
     tag: 'Просування',
     mins: '6 хв',
+    date: '2026-07-07',
   },
   {
     href: '/uk/why-low-viewers-webcam',
@@ -18,6 +23,7 @@ const articles = [
     desc: '8 реальних причин низького числа глядачів і що саме робити з кожною з них.',
     tag: 'Зростання',
     mins: '8 хв',
+    date: '2026-07-07',
   },
   {
     href: '/uk/how-cam-algorithm-ranks-rooms',
@@ -25,6 +31,7 @@ const articles = [
     desc: 'Що насправді визначає твою видимість на кам-платформах і як з цим працювати.',
     tag: 'Алгоритм',
     mins: '6 хв',
+    date: '2026-07-07',
   },
   {
     href: '/uk/stripscore-cam-rank-explained',
@@ -32,6 +39,7 @@ const articles = [
     desc: 'Stripscore, cam rank, room rank — що означають ці терміни і чим концепція відрізняється між Chaturbate, Stripchat, BongaCams і LiveJasmin.',
     tag: 'Stripchat',
     mins: '5 хв',
+    date: '2026-07-19',
   },
   {
     href: '/uk/how-stripscore-works',
@@ -39,6 +47,7 @@ const articles = [
     desc: 'Розбір того, що формує StripScore — глядачі, утримання, активність у чаті, чайові, фоловери, стабільність — як показник згасає і що з цим робити.',
     tag: 'Stripchat',
     mins: '7 хв',
+    date: '2026-07-23',
   },
   {
     href: '/uk/stripchat-goals-tip-menu-structure',
@@ -46,6 +55,7 @@ const articles = [
     desc: 'Як розмірити голи, оцінити тип-меню і вибудувати їх послідовність за сесію, щоб вони реально конвертували — а не просто прикрашали кімнату.',
     tag: 'Stripchat',
     mins: '6 хв',
+    date: '2026-07-24',
   },
   {
     href: '/uk/stripchat-ai-model-recommendations',
@@ -53,6 +63,7 @@ const articles = [
     desc: 'Як працює ШІ-стрічка "Рекомендовано для вас" на Stripchat і як оптимізувати кімнату, щоб туди потрапити.',
     tag: 'Stripchat',
     mins: '6 хв',
+    date: '2026-07-21',
   },
   {
     href: '/uk/stripchat-popular-new-model-visibility',
@@ -60,6 +71,7 @@ const articles = [
     desc: 'Задокументований перекіс на користь великих кімнат, що Stripchat реально зробив з цим, і конкретні шляхи до реальної видимості для новачки.',
     tag: 'Stripchat',
     mins: '7 хв',
+    date: '2026-07-22',
   },
   {
     href: '/uk/best-streaming-times-by-region',
@@ -67,6 +79,7 @@ const articles = [
     desc: 'Дані про пікові години по регіонах — максимізуй охоплення аудиторії на кожній сесії.',
     tag: 'Стратегія',
     mins: '5 хв',
+    date: '2026-07-07',
   },
   {
     href: '/uk/webcam-model-income-guide',
@@ -74,6 +87,7 @@ const articles = [
     desc: 'Чіткий розбір того, як працюють вебкам-заробітки, що впливає на твій дохід і як його збільшити.',
     tag: 'Дохід',
     mins: '10 хв',
+    date: '2026-07-07',
   },
   {
     href: '/uk/webcam-earnings-by-platform',
@@ -81,6 +95,7 @@ const articles = [
     desc: 'Chaturbate vs. Stripchat vs. BongaCams vs. LiveJasmin — реальні ставки виплат, вартість токена і яка платформа насправді платить більше.',
     tag: 'Дохід',
     mins: '8 хв',
+    date: '2026-07-19',
   },
   {
     href: '/uk/new-model-growth',
@@ -88,6 +103,7 @@ const articles = [
     desc: 'Як побудувати свою першу стабільну аудиторію з нуля як нова вебкам-модель.',
     tag: 'Початківець',
     mins: '7 хв',
+    date: '2026-07-07',
   },
   {
     href: '/uk/platforms-we-work-with',
@@ -95,6 +111,7 @@ const articles = [
     desc: 'Що відрізняє Chaturbate, Stripchat, LiveJasmin та BongaCams — і як наша стратегія адаптується під кожну з них.',
     tag: 'Платформи',
     mins: '8 хв',
+    date: '2026-07-07',
   },
   {
     href: '/uk/stripchat-promo',
@@ -102,6 +119,7 @@ const articles = [
     desc: 'Чесний огляд Stripchat_traffic_bot: як він працює, скільки коштує і як отримати максимум.',
     tag: 'Stripchat',
     mins: '6 хв',
+    date: '2026-07-09',
   },
   {
     href: '/uk/stripchat-vr-shows-worth-it',
@@ -109,6 +127,7 @@ const articles = [
     desc: 'Реальна вартість VR-камери, чотири цифри для перевірки перед покупкою, і як студіям варто думати про обладнання спільної кімнати.',
     tag: 'Stripchat',
     mins: '7 хв',
+    date: '2026-07-27',
   },
   {
     href: '/uk/stripchat-model-news-studio-admin',
@@ -116,6 +135,7 @@ const articles = [
     desc: 'Оновлення Stripchat у січні 2026 дало Studio Admin доступ до Model News, продовжило вікно просування для нових моделей і розділило конкурси за категоріями.',
     tag: 'Stripchat',
     mins: '7 хв',
+    date: '2026-07-27',
   },
   {
     href: '/uk/how-to-choose-a-webcam-studio',
@@ -123,6 +143,7 @@ const articles = [
     desc: 'Що насправді визначає хорошу угоду зі студією — як рахується відсоток, умови ексклюзивності, відрахування, способи виплат і сигнали, що передвіщають погану угоду.',
     tag: 'Студії',
     mins: '9 хв',
+    date: '2026-07-24',
   },
 ];
 
@@ -164,7 +185,7 @@ const tags = [...new Set(articles.map(a => a.tag))];
         ))}
       </div>
       <div class="related-grid" id="blog-grid">
-        {articles.map(({ href, title, desc, tag, mins }) => (
+        {articles.map(({ href, title, desc, tag, mins, date }) => (
           <a href={href} class="related-card" data-tag={tag}>
             <div class="art-meta">
               <span class="art-tag">{tag}</span>
@@ -172,6 +193,7 @@ const tags = [...new Set(articles.map(a => a.tag))];
             </div>
             <h3>{title}</h3>
             <p>{desc}</p>
+            <time class="card-date" datetime={date}>{fmtDate(date)}</time>
           </a>
         ))}
       </div>

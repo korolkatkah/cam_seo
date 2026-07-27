@@ -3,6 +3,10 @@ import Base from '@/layouts/Base.astro';
 const site = 'https://ewohub.com';
 
 const filterAllLabel = 'All';
+const dateLocale = 'en-US';
+function fmtDate(iso: string) {
+  return new Date(`${iso}T00:00:00Z`).toLocaleDateString(dateLocale, { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
+}
 
 const articles = [
   {
@@ -11,6 +15,7 @@ const articles = [
     desc: 'How our marketing and audience-growth service works for webcam models already streaming.',
     tag: 'Promotion',
     mins: '6 min read',
+    date: '2026-07-07',
   },
   {
     href: '/why-low-viewers-webcam',
@@ -18,6 +23,7 @@ const articles = [
     desc: '8 real reasons your viewer count is low and exactly what to do about each one.',
     tag: 'Growth',
     mins: '8 min read',
+    date: '2026-07-07',
   },
   {
     href: '/how-cam-algorithm-ranks-rooms',
@@ -25,6 +31,7 @@ const articles = [
     desc: 'What actually determines your visibility on cam platforms and how to work with it.',
     tag: 'Algorithm',
     mins: '6 min read',
+    date: '2026-07-07',
   },
   {
     href: '/stripscore-cam-rank-explained',
@@ -32,6 +39,7 @@ const articles = [
     desc: 'Stripscore, cam rank, room rank — what these terms mean and how the concept differs across Chaturbate, Stripchat, BongaCams, and LiveJasmin.',
     tag: 'Stripchat',
     mins: '5 min read',
+    date: '2026-07-19',
   },
   {
     href: '/how-stripscore-works',
@@ -39,6 +47,7 @@ const articles = [
     desc: 'A breakdown of what actually feeds StripScore — viewer count, retention, chat activity, tips, follows, consistency — how it decays, and what to do about it.',
     tag: 'Stripchat',
     mins: '7 min read',
+    date: '2026-07-23',
   },
   {
     href: '/stripchat-goals-tip-menu-structure',
@@ -46,6 +55,7 @@ const articles = [
     desc: 'How to size goals, price a tip menu, and sequence both across a session so they actually convert — not just sit there as decoration.',
     tag: 'Stripchat',
     mins: '6 min read',
+    date: '2026-07-24',
   },
   {
     href: '/stripchat-ai-model-recommendations',
@@ -53,6 +63,7 @@ const articles = [
     desc: "How Stripchat's AI-driven 'Recommended for You' feed works and how to optimize your room to show up in it.",
     tag: 'Stripchat',
     mins: '6 min read',
+    date: '2026-07-21',
   },
   {
     href: '/stripchat-popular-new-model-visibility',
@@ -60,6 +71,7 @@ const articles = [
     desc: "The documented bias toward already-large rooms, what Stripchat has done about it, and the concrete paths a newcomer has to real visibility.",
     tag: 'Stripchat',
     mins: '7 min read',
+    date: '2026-07-22',
   },
   {
     href: '/best-streaming-times-by-region',
@@ -67,6 +79,7 @@ const articles = [
     desc: 'Peak hour data by region — maximize your audience reach every single session.',
     tag: 'Strategy',
     mins: '5 min read',
+    date: '2026-07-07',
   },
   {
     href: '/webcam-model-income-guide',
@@ -74,6 +87,7 @@ const articles = [
     desc: 'A clear breakdown of how webcam earnings work, what affects your income, and how to grow it.',
     tag: 'Income',
     mins: '10 min read',
+    date: '2026-07-07',
   },
   {
     href: '/webcam-earnings-by-platform',
@@ -81,6 +95,7 @@ const articles = [
     desc: 'Chaturbate vs Stripchat vs BongaCams vs LiveJasmin — real payout rates, token values, and which platform actually pays more.',
     tag: 'Income',
     mins: '8 min read',
+    date: '2026-07-19',
   },
   {
     href: '/new-model-growth',
@@ -88,6 +103,7 @@ const articles = [
     desc: 'How to build your first consistent audience from scratch as a new webcam model.',
     tag: 'Beginner',
     mins: '7 min read',
+    date: '2026-07-07',
   },
   {
     href: '/platforms-we-work-with',
@@ -95,6 +111,7 @@ const articles = [
     desc: 'What Chaturbate, Stripchat, LiveJasmin, and BongaCams differ on — and how our strategy adapts to each.',
     tag: 'Platforms',
     mins: '8 min read',
+    date: '2026-07-07',
   },
   {
     href: '/raise-your-room-ranking-score',
@@ -102,6 +119,7 @@ const articles = [
     desc: 'Why bot traffic and fake-viewer services backfire, and the legitimate playbook that actually holds.',
     tag: 'Ranking',
     mins: '6 min read',
+    date: '2026-07-09',
   },
   {
     href: '/stripchat-promo',
@@ -109,6 +127,7 @@ const articles = [
     desc: "An honest review of Stripchat_traffic_bot: how it works, what it costs, and how to get the most out of it.",
     tag: 'Stripchat',
     mins: '6 min read',
+    date: '2026-07-09',
   },
   {
     href: '/stripchat-vr-shows-worth-it',
@@ -116,6 +135,7 @@ const articles = [
     desc: 'The real cost of VR camera equipment, four numbers to check before buying, and how studios should think about equipping a shared room.',
     tag: 'Stripchat',
     mins: '7 min read',
+    date: '2026-07-27',
   },
   {
     href: '/stripchat-model-news-studio-admin',
@@ -123,6 +143,7 @@ const articles = [
     desc: "Stripchat's January 2026 update gave Studio Admin accounts access to Model News, extended the new-model promotion window, and split contests by category.",
     tag: 'Stripchat',
     mins: '7 min read',
+    date: '2026-07-27',
   },
   {
     href: '/how-to-choose-a-webcam-studio',
@@ -130,6 +151,7 @@ const articles = [
     desc: 'What actually determines a good studio deal — how splits are calculated, exclusivity terms, deductions, payout methods, and the red flags that predict a bad contract.',
     tag: 'Studios',
     mins: '9 min read',
+    date: '2026-07-24',
   },
 ];
 
@@ -171,7 +193,7 @@ const tags = [...new Set(articles.map(a => a.tag))];
         ))}
       </div>
       <div class="related-grid" id="blog-grid">
-        {articles.map(({ href, title, desc, tag, mins }) => (
+        {articles.map(({ href, title, desc, tag, mins, date }) => (
           <a href={href} class="related-card" data-tag={tag}>
             <div class="art-meta">
               <span class="art-tag">{tag}</span>
@@ -179,6 +201,7 @@ const tags = [...new Set(articles.map(a => a.tag))];
             </div>
             <h3>{title}</h3>
             <p>{desc}</p>
+            <time class="card-date" datetime={date}>{fmtDate(date)}</time>
           </a>
         ))}
       </div>

@@ -3,6 +3,11 @@ import Base from '@/layouts/Base.astro';
 const site = 'https://ewohub.com';
 const slug = 'resources';
 
+const dateLocale = 'uk-UA';
+function fmtDate(iso: string) {
+  return new Date(`${iso}T00:00:00Z`).toLocaleDateString(dateLocale, { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
+}
+
 // На цій сторінці з'являються тільки статті з category: 'guides'.
 // Все інше живе на /blog — ця сторінка виключно кураторська стрічка Гайдів.
 const articles = [
@@ -12,6 +17,7 @@ const articles = [
     desc: 'Покроково: реєстрація, налаштування профілю і як вичавити максимум із 14-денного вікна видимості "New".',
     tag: 'Stripchat',
     category: 'guides',
+    date: '2026-07-22',
   },
 ].filter(a => a.category === 'guides');
 
@@ -53,7 +59,7 @@ const tags = [...new Set(articles.map(a => a.tag))];
         ))}
       </div>
       <div class="related-grid" id="resources-grid">
-        {articles.map(({ href, title, desc, tag }) => (
+        {articles.map(({ href, title, desc, tag, date }) => (
           <a href={href} class="glass-card" data-tag={tag} style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
             <div class="art-meta">
               <span class="art-tag">{tag}</span>
@@ -61,6 +67,7 @@ const tags = [...new Set(articles.map(a => a.tag))];
             <h3 style="font-size:1.1rem;font-weight:700;margin:0;">{title}</h3>
             <p style="margin:0;font-size:.9375rem;">{desc}</p>
             <span style="font-size:.875rem;font-weight:600;color:var(--accent);margin-top:auto;">Читати статтю →</span>
+            <time class="card-date" datetime={date}>{fmtDate(date)}</time>
           </a>
         ))}
       </div>
@@ -100,4 +107,3 @@ const tags = [...new Set(articles.map(a => a.tag))];
     });
   })();
 </script>
-

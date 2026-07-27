@@ -3,6 +3,10 @@ import Base from '@/layouts/Base.astro';
 const site = 'https://ewohub.com';
 
 const filterAllLabel = 'Todos';
+const dateLocale = 'es-ES';
+function fmtDate(iso: string) {
+  return new Date(`${iso}T00:00:00Z`).toLocaleDateString(dateLocale, { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
+}
 
 const articles = [
   {
@@ -11,6 +15,7 @@ const articles = [
     desc: 'Cómo funciona nuestro servicio de marketing y crecimiento de audiencia para modelos webcam que ya transmiten.',
     tag: 'Promoción',
     mins: '6 min',
+    date: '2026-07-07',
   },
   {
     href: '/es/why-low-viewers-webcam',
@@ -18,6 +23,7 @@ const articles = [
     desc: '8 razones reales por las que tu conteo de espectadores es bajo y qué hacer con cada una.',
     tag: 'Crecimiento',
     mins: '8 min',
+    date: '2026-07-07',
   },
   {
     href: '/es/how-cam-algorithm-ranks-rooms',
@@ -25,6 +31,7 @@ const articles = [
     desc: 'Qué determina realmente tu visibilidad en plataformas cam y cómo trabajar con eso.',
     tag: 'Algoritmo',
     mins: '6 min',
+    date: '2026-07-07',
   },
   {
     href: '/es/stripscore-cam-rank-explained',
@@ -32,6 +39,7 @@ const articles = [
     desc: 'Stripscore, cam rank, room rank — qué significan estos términos y cómo difiere el concepto entre Chaturbate, Stripchat, BongaCams y LiveJasmin.',
     tag: 'Stripchat',
     mins: '5 min',
+    date: '2026-07-19',
   },
   {
     href: '/es/how-stripscore-works',
@@ -39,6 +47,7 @@ const articles = [
     desc: 'Un desglose de qué alimenta realmente StripScore — espectadores, retención, actividad en el chat, propinas, follows, consistencia — cómo decae y qué hacer al respecto.',
     tag: 'Stripchat',
     mins: '7 min',
+    date: '2026-07-23',
   },
   {
     href: '/es/stripchat-goals-tip-menu-structure',
@@ -46,6 +55,7 @@ const articles = [
     desc: 'Cómo dimensionar goals, poner precio a un menú de propinas y secuenciar ambos en una sesión para que realmente conviertan — no solo estén ahí de adorno.',
     tag: 'Stripchat',
     mins: '6 min',
+    date: '2026-07-24',
   },
   {
     href: '/es/stripchat-ai-model-recommendations',
@@ -53,6 +63,7 @@ const articles = [
     desc: "Cómo funciona el feed 'Recomendado para ti' de Stripchat impulsado por IA y cómo optimizar tu sala para aparecer en él.",
     tag: 'Stripchat',
     mins: '6 min',
+    date: '2026-07-21',
   },
   {
     href: '/es/stripchat-popular-new-model-visibility',
@@ -60,6 +71,7 @@ const articles = [
     desc: 'El sesgo documentado hacia salas ya grandes, qué ha hecho Stripchat al respecto, y los caminos concretos hacia visibilidad real para una principiante.',
     tag: 'Stripchat',
     mins: '7 min',
+    date: '2026-07-22',
   },
   {
     href: '/es/best-streaming-times-by-region',
@@ -67,6 +79,7 @@ const articles = [
     desc: 'Datos de horas pico por región para maximizar tu audiencia en cada sesión.',
     tag: 'Estrategia',
     mins: '5 min',
+    date: '2026-07-07',
   },
   {
     href: '/es/webcam-model-income-guide',
@@ -74,6 +87,7 @@ const articles = [
     desc: 'Un desglose claro de cómo funcionan las ganancias webcam, qué afecta tus ingresos y cómo crecer.',
     tag: 'Ingresos',
     mins: '10 min',
+    date: '2026-07-07',
   },
   {
     href: '/es/webcam-earnings-by-platform',
@@ -81,6 +95,7 @@ const articles = [
     desc: 'Chaturbate vs. Stripchat vs. BongaCams vs. LiveJasmin — tasas de pago reales, valor del token y qué plataforma paga realmente más.',
     tag: 'Ingresos',
     mins: '8 min',
+    date: '2026-07-19',
   },
   {
     href: '/es/new-model-growth',
@@ -88,6 +103,7 @@ const articles = [
     desc: 'Cómo construir tu primera audiencia consistente desde cero como modelo webcam nueva.',
     tag: 'Principiante',
     mins: '7 min',
+    date: '2026-07-07',
   },
   {
     href: '/es/platforms-we-work-with',
@@ -95,6 +111,7 @@ const articles = [
     desc: 'Qué diferencia a Chaturbate, Stripchat, LiveJasmin y BongaCams — y cómo se adapta nuestra estrategia a cada una.',
     tag: 'Plataformas',
     mins: '8 min',
+    date: '2026-07-07',
   },
   {
     href: '/es/stripchat-promo',
@@ -102,6 +119,7 @@ const articles = [
     desc: 'Una reseña honesta de Stripchat_traffic_bot: cómo funciona, cuánto cuesta y cómo sacarle el máximo provecho.',
     tag: 'Stripchat',
     mins: '6 min',
+    date: '2026-07-09',
   },
   {
     href: '/es/stripchat-vr-shows-worth-it',
@@ -109,6 +127,7 @@ const articles = [
     desc: 'El costo real del equipo de cámara VR, cuatro números que revisar antes de comprar, y cómo deberían pensarlo los estudios al equipar una sala compartida.',
     tag: 'Stripchat',
     mins: '7 min',
+    date: '2026-07-27',
   },
   {
     href: '/es/stripchat-model-news-studio-admin',
@@ -116,6 +135,7 @@ const articles = [
     desc: 'La actualización de enero de 2026 de Stripchat dio a Studio Admin acceso a Model News, extendió la ventana de promoción para modelos nuevas y dividió los concursos por categoría.',
     tag: 'Stripchat',
     mins: '7 min',
+    date: '2026-07-27',
   },
   {
     href: '/es/how-to-choose-a-webcam-studio',
@@ -123,6 +143,7 @@ const articles = [
     desc: 'Qué determina realmente un buen contrato con un estudio — cómo se calcula el reparto, cláusulas de exclusividad, deducciones, métodos de pago y las señales que predicen un mal trato.',
     tag: 'Estudios',
     mins: '9 min',
+    date: '2026-07-24',
   },
 ];
 
@@ -164,7 +185,7 @@ const tags = [...new Set(articles.map(a => a.tag))];
         ))}
       </div>
       <div class="related-grid" id="blog-grid">
-        {articles.map(({ href, title, desc, tag, mins }) => (
+        {articles.map(({ href, title, desc, tag, mins, date }) => (
           <a href={href} class="related-card" data-tag={tag}>
             <div class="art-meta">
               <span class="art-tag">{tag}</span>
@@ -172,6 +193,7 @@ const tags = [...new Set(articles.map(a => a.tag))];
             </div>
             <h3>{title}</h3>
             <p>{desc}</p>
+            <time class="card-date" datetime={date}>{fmtDate(date)}</time>
           </a>
         ))}
       </div>
