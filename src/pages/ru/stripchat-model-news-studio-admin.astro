@@ -31,12 +31,26 @@ const slug = 'stripchat-model-news-studio-admin';
     </div>
   </section>
 
-  <div class="art-body">
-    <div class="container">
+  <div class="art-body container">
+    <div class="art-layout">
+      <aside class="art-toc">
+        <p class="art-toc__title">Содержание</p>
+        <ol class="art-toc__list">
+          <li><a href="#sec-1">Что изменилось в обновлении января 2026</a></li>
+          <li><a href="#sec-2">Что на самом деле даёт Model News админу студии</a></li>
+          <li><a href="#sec-3">Почему это важно для управления студией</a></li>
+          <li><a href="#sec-4">Продлённое окно продвижения для новых моделей</a></li>
+          <li><a href="#sec-5">Конкурсы, разделённые по категориям</a></li>
+          <li><a href="#faq">Частые вопросы</a></li>
+        </ol>
+        <a href="#cta" class="art-toc__cta">Получить помощь →</a>
+      </aside>
+
+      <main class="art-main">
 
       <p class="art-intro">Обновления платформы, нацеленные на отдельные аккаунты моделей, замечают быстро — модели общаются между собой. Обновления, нацеленные именно на уровень Studio Admin, часто остаются непрочитанными в списке изменений, пока студия случайно не наткнётся на эффект месяцы спустя. Вот что изменилось и что с этим реально делать.</p>
 
-      <section class="section">
+      <section class="section" id="sec-1">
         <h2>Что изменилось в обновлении января 2026</h2>
         <div class="glass-card" style="margin-top:1.25rem;">
           <p>Вместе пришли три изменения: Model News — раньше видимый только в отдельных аккаунтах моделей — стал доступен напрямую аккаунтам Studio Admin. Окно продвижения для новых моделей (временный буст видимости для свежей комнаты, разобранный в нашей <a href="/ru/stripchat-popular-new-model-visibility">статье о видимости на странице Popular</a>) продлили. А конкурсы платформы, которые раньше объединяли все комнаты в один рейтинг независимо от ниши, теперь разделены по категориям.</p>
@@ -44,7 +58,7 @@ const slug = 'stripchat-model-news-studio-admin';
         </div>
       </section>
 
-      <section class="section">
+      <section class="section" id="sec-2">
         <h2>Что на самом деле даёт Model News админу студии</h2>
         <div class="glass-card" style="margin-top:1.25rem;">
           <p>Model News — это канал Stripchat для анонсов новых функций, изменений политики и объявлений платформы — то, что раньше доходило до студии, только если какая-то модель случайно увидела это в собственном аккаунте и упомянула. Это структурно ненадёжный способ управлять комплаенсом и стратегией для ростера: всё зависит от того, какая из твоих моделей читает уведомления на этой неделе, и придёт ли ей в голову передать эту информацию дальше.</p>
@@ -52,7 +66,7 @@ const slug = 'stripchat-model-news-studio-admin';
         </div>
       </section>
 
-      <section class="section">
+      <section class="section" id="sec-3">
         <h2>Почему это важно для управления студией</h2>
 
         <div class="reason-card" style="margin-top:1.25rem;">
@@ -88,7 +102,7 @@ const slug = 'stripchat-model-news-studio-admin';
         </div>
       </section>
 
-      <section class="section">
+      <section class="section" id="sec-4">
         <h2>Продлённое окно продвижения для новых моделей</h2>
         <div class="glass-card" style="margin-top:1.25rem;">
           <p>Новые комнаты на Stripchat получают временный буст видимости — дополнительное размещение, которое угасает с возрастом комнаты, призванное дать новым исполнительницам честный первый шанс, прежде чем начнёт действовать обычная предвзятость алгоритма в пользу уже крупных комнат. Январское обновление продлило это окно, что меняет вопрос планирования для студии, вводящей несколько новых моделей: вместо запуска всех новых моделей одновременно и распределения внимания буста между всеми, поэтапное введение позволяет каждой новой комнате использовать больше своего собственного продлённого окна, не конкурируя напрямую с коллегой по студии за ту же раннюю видимость.</p>
@@ -96,7 +110,7 @@ const slug = 'stripchat-model-news-studio-admin';
         </div>
       </section>
 
-      <section class="section">
+      <section class="section" id="sec-5">
         <h2>Конкурсы, разделённые по категориям</h2>
         <div class="glass-card" style="margin-top:1.25rem;">
           <p>Раньше конкурсы ранжировали каждую участницу против всей платформы независимо от ниши, что структурно давало преимущество категориям с наибольшим трафиком — так же, как и общие рейтинги Popular. Разделение конкурсов по категориям означает, что комната из меньшей или более специфичной ниши теперь соревнуется со сравнимыми комнатами, а не по умолчанию с крупнейшими категориями платформы.</p>
@@ -116,7 +130,7 @@ const slug = 'stripchat-model-news-studio-admin';
         </div>
       </section>
 
-      <section class="faq-section section">
+      <section class="faq-section section" id="faq">
         <h2>Частые вопросы</h2>
 
         <div class="faq-item">
@@ -166,7 +180,7 @@ const slug = 'stripchat-model-news-studio-admin';
         </a>
       </section>
 
-<section class="art-cta section">
+<section id="cta" class="art-cta section">
         <div class="art-cta__orb"></div>
         <div class="art-cta__inner">
           <span class="art-cta__badge">Для студий</span>
@@ -209,6 +223,7 @@ const slug = 'stripchat-model-news-studio-admin';
         </div>
       </section>
 
+      </main>
     </div>
   </div>
 
