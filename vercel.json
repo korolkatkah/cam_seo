@@ -4,8 +4,8 @@
   "installCommand": "npm install",
   "framework": "astro",
   "redirects": [
-    { "source": "/:path*", "has": [{ "type": "host", "value": "ewo.cam" }], "destination": "https://ewohub.com/:path*", "permanent": true },
-    { "source": "/:path*", "has": [{ "type": "host", "value": "www.ewo.cam" }], "destination": "https://ewohub.com/:path*", "permanent": true },
+    { "source": "/:path*", "has": [{ "type": "host", "value": "ewo.cam" }], "destination": "https://www.ewohub.com/:path*", "permanent": true },
+    { "source": "/:path*", "has": [{ "type": "host", "value": "www.ewo.cam" }], "destination": "https://www.ewohub.com/:path*", "permanent": true },
     { "source": "/stripchat_promo", "destination": "/stripchat-promo", "permanent": true },
     { "source": "/de/stripchat_promo", "destination": "/de/stripchat-promo", "permanent": true },
     { "source": "/es/stripchat_promo", "destination": "/es/stripchat-promo", "permanent": true },
