@@ -53,9 +53,13 @@ TK_RE = re.compile(r"\b(\d{2,6})\s*(?:tk|tokens?)\b", re.I)
 MULTI_RE = re.compile(r"multi[- ]?goal", re.I)
 
 
+MAX_ROOMS = 1000
+
+
 def fetch_all():
+    """Fetch up to MAX_ROOMS rooms, matching the sample size used for Stripchat."""
     rooms, offset = [], 0
-    while True:
+    while len(rooms) < MAX_ROOMS:
         q = urllib.parse.urlencode({
             "wm": WM, "client_ip": "request_ip",
             "format": "json", "limit": 500, "offset": offset,
@@ -71,7 +75,7 @@ def fetch_all():
             break
         offset += 500
         time.sleep(1)
-    return rooms
+    return rooms[:MAX_ROOMS]
 
 
 def load_raw():

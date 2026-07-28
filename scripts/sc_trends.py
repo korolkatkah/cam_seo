@@ -46,12 +46,15 @@ WINDOW_HOURS = float(os.environ.get("SC_WINDOW_HOURS", "24"))
 API = "https://go.whitetrafsa.com/api/models"
 
 
+MAX_MODELS = 1000
+
+
 def fetch_models():
-    q = urllib.parse.urlencode({"userId": USER_ID, "tag": TAG, "limit": 1000})
+    q = urllib.parse.urlencode({"userId": USER_ID, "tag": TAG, "limit": MAX_MODELS})
     req = urllib.request.Request(API + "?" + q, headers={"User-Agent": "sc-trends/1.0"})
     with urllib.request.urlopen(req, timeout=30) as r:
         data = json.loads(r.read().decode())
-    return data.get("models", [])
+    return data.get("models", [])[:MAX_MODELS]
 
 
 def load_raw():
