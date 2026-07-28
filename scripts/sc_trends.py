@@ -141,10 +141,13 @@ def main():
         print(f"fetch failed: {e}", file=sys.stderr)
         return 1
 
+    # Restrict to solo female broadcasts to match cb_trends.py's gender=f filter.
+    # The "girls" tag also returns couple/group shows (broadcastGender=="group"),
+    # which pull in much bigger crowds and were skewing the average upward.
     new_rows = [
         {"ts": now_ts, "username": m.get("username", ""), "viewers": m.get("viewersCount", 0)}
         for m in models
-        if m.get("username")
+        if m.get("username") and m.get("broadcastGender") == "female"
     ]
 
     rows = load_raw() + new_rows
