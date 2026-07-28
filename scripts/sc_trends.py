@@ -111,6 +111,21 @@ def build_summary(rows):
     }
 
 
+def should_publish(summary, out_path):
+    """Don't regress the live site to a noisier, shorter window after a raw-cache reset."""
+    if not summary.get("preliminary"):
+        return True
+    if not out_path.exists():
+        return True
+    try:
+        existing = json.loads(out_path.read_text(encoding="utf-8"))
+    except Exception:
+        return True
+    if not existing.get("preliminary", True):
+        return False
+    return summary["hours_covered"] >= existing.get("hours_covered", 0)
+
+
 def main():
     if not USER_ID:
         print("SC_USER_ID not set — skipping run", file=sys.stderr)
@@ -138,6 +153,10 @@ def main():
     summary = build_summary(rows)
     if summary is None:
         print("no rows yet — not writing summary", file=sys.stderr)
+        return 0
+
+    if not should_publish(summary, OUT_PATH):
+        print(f"window still short ({summary['hours_covered']}h) — keeping last published summary", file=sys.stderr)
         return 0
 
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
