@@ -1,0 +1,233 @@
+---
+import Base from '@/layouts/Base.astro';
+const site = 'https://www.ewohub.com';
+
+const filterAllLabel = 'Tous';
+const dateLocale = 'fr-FR';
+function fmtDate(iso: string) {
+  return new Date(`${iso}T00:00:00Z`).toLocaleDateString(dateLocale, { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
+}
+
+const articles = [
+  {
+    href: '/fr/model-promotion',
+    title: 'Services de Promotion pour Modèles',
+    desc: 'Comment fonctionne notre service de marketing et de croissance d\'audience pour les modèles webcam déjà en activité.',
+    tag: 'Promotion',
+    mins: '6 min',
+    date: '2026-07-07',
+  },
+  {
+    href: '/fr/why-low-viewers-webcam',
+    title: 'Pourquoi Votre Salle Webcam a Peu de Spectateurs',
+    desc: '8 raisons réelles expliquant un faible nombre de spectateurs et exactement quoi faire pour chacune.',
+    tag: 'Croissance',
+    mins: '8 min',
+    date: '2026-07-07',
+  },
+  {
+    href: '/fr/how-cam-algorithm-ranks-rooms',
+    title: 'Comment les Algorithmes Cam Classent les Salles',
+    desc: 'Ce qui détermine réellement votre visibilité sur les plateformes cam et comment en tirer parti.',
+    tag: 'Algorithme',
+    mins: '6 min',
+    date: '2026-07-07',
+  },
+  {
+    href: '/fr/stripscore-cam-rank-explained',
+    title: 'Qu\'est-ce que le Stripscore ? Le Cam Rank Expliqué',
+    desc: 'Stripscore, cam rank, room rank — ce que signifient ces termes et comment le concept diffère entre Chaturbate, Stripchat, BongaCams et LiveJasmin.',
+    tag: 'Stripchat',
+    mins: '5 min',
+    date: '2026-07-19',
+  },
+  {
+    href: '/fr/how-stripscore-works',
+    title: 'Comment Fonctionne Réellement le StripScore',
+    desc: 'Une analyse de ce qui alimente vraiment le StripScore — spectateurs, rétention, activité du chat, pourboires, follows, régularité — comment il décline et quoi faire.',
+    tag: 'Stripchat',
+    mins: '7 min',
+    date: '2026-07-23',
+  },
+  {
+    href: '/fr/stripchat-goals-tip-menu-structure',
+    title: 'Goals et Menus de Pourboires : Structurés pour Convertir',
+    desc: 'Comment dimensionner des goals, tarifer un menu de pourboires, et les enchaîner dans une session pour qu\'ils convertissent vraiment — pas juste décoratifs.',
+    tag: 'Stripchat',
+    mins: '6 min',
+    date: '2026-07-24',
+  },
+  {
+    href: '/fr/stripchat-ai-model-recommendations',
+    title: 'Recommandations IA de Modèles sur Stripchat',
+    desc: 'Comment fonctionne le flux "Recommandé pour vous" de Stripchat piloté par IA, et comment optimiser votre salle pour y apparaître.',
+    tag: 'Stripchat',
+    mins: '6 min',
+    date: '2026-07-21',
+  },
+  {
+    href: '/fr/stripchat-popular-new-model-visibility',
+    title: 'Pourquoi Ce Sont Toujours les Mêmes Modèles dans le Populaire de Stripchat',
+    desc: 'Le biais documenté envers les salles déjà populaires, ce que Stripchat a fait à ce sujet, et les chemins concrets vers une vraie visibilité pour une débutante.',
+    tag: 'Stripchat',
+    mins: '7 min',
+    date: '2026-07-22',
+  },
+  {
+    href: '/fr/best-streaming-times-by-region',
+    title: 'Meilleurs Horaires de Streaming par Région',
+    desc: 'Données d\'heures de pointe par région pour maximiser votre audience à chaque session.',
+    tag: 'Stratégie',
+    mins: '5 min',
+    date: '2026-07-07',
+  },
+  {
+    href: '/fr/webcam-model-income-guide',
+    title: 'Guide des Revenus pour Modèles Webcam',
+    desc: 'Une explication claire du fonctionnement des revenus webcam, de ce qui les affecte et comment les augmenter.',
+    tag: 'Revenus',
+    mins: '10 min',
+    date: '2026-07-07',
+  },
+  {
+    href: '/fr/webcam-earnings-by-platform',
+    title: 'Revenus Webcam par Plateforme',
+    desc: 'Chaturbate vs Stripchat vs BongaCams vs LiveJasmin — taux de rémunération réels, valeur des tokens, et quelle plateforme paie vraiment le plus.',
+    tag: 'Revenus',
+    mins: '8 min',
+    date: '2026-07-19',
+  },
+  {
+    href: '/fr/new-model-growth',
+    title: 'Stratégie de Croissance pour Nouvelles Modèles',
+    desc: 'Comment construire votre première audience régulière à partir de zéro en tant que nouvelle modèle webcam.',
+    tag: 'Débutant',
+    mins: '7 min',
+    date: '2026-07-07',
+  },
+  {
+    href: '/fr/platforms-we-work-with',
+    title: 'Plateformes avec Lesquelles Nous Travaillons',
+    desc: 'Ce qui différencie Chaturbate, Stripchat, LiveJasmin et BongaCams — et comment notre stratégie s\'adapte à chacune.',
+    tag: 'Plateformes',
+    mins: '8 min',
+    date: '2026-07-07',
+  },
+  {
+    href: '/fr/raise-your-room-ranking-score',
+    title: 'Comment Augmenter le Score de Classement de Votre Salle',
+    desc: 'Pourquoi le trafic de bots et les faux spectateurs se retournent contre vous, et la méthode légitime qui fonctionne réellement.',
+    tag: 'Classement',
+    mins: '6 min',
+    date: '2026-07-09',
+  },
+  {
+    href: '/fr/stripchat-promo',
+    title: 'Avis sur Stripchat Traffic Bot',
+    desc: 'Un avis honnête sur Stripchat_traffic_bot : comment il fonctionne, ce qu\'il coûte, et comment en tirer le meilleur parti.',
+    tag: 'Stripchat',
+    mins: '6 min',
+    date: '2026-07-09',
+  },
+  {
+    href: '/fr/stripchat-vr-shows-worth-it',
+    title: 'Shows VR sur Stripchat : l\'Équipement en Vaut-il la Peine ?',
+    desc: 'Le coût réel de l\'équipement caméra VR, quatre chiffres à vérifier avant d\'acheter, et comment les studios devraient équiper une salle partagée.',
+    tag: 'Stripchat',
+    mins: '7 min',
+    date: '2026-07-27',
+  },
+  {
+    href: '/fr/stripchat-model-news-studio-admin',
+    title: 'Model News pour les Admins de Studio : Ce Qui a Vraiment Changé',
+    desc: 'La mise à jour de janvier 2026 de Stripchat a donné aux comptes Studio Admin l\'accès à Model News, allongé la fenêtre de promotion des nouvelles modèles, et divisé les concours par catégorie.',
+    tag: 'Stripchat',
+    mins: '7 min',
+    date: '2026-07-27',
+  },
+  {
+    href: '/fr/how-to-choose-a-webcam-studio',
+    title: 'Comment Choisir un Studio Webcam : Répartitions, Contrats et Signaux d\'Alerte',
+    desc: 'Ce qui détermine vraiment un bon deal de studio — comment se calcule la répartition, les clauses d\'exclusivité, les déductions, les méthodes de paiement, et les signaux qui prédisent un mauvais contrat.',
+    tag: 'Studios',
+    mins: '9 min',
+    date: '2026-07-24',
+  },
+];
+
+const tags = [...new Set(articles.map(a => a.tag))];
+---
+
+<Base
+  title="Blog — Guides de Croissance Webcam et Stratégies"
+  description="Guides d'experts pour les modèles webcam et les studios. Apprenez comment fonctionnent les algorithmes cam, comment développer votre audience et maximiser vos revenus."
+  lang="fr"
+  hreflang={[
+    { lang: 'en', url: `${site}/blog` },
+    { lang: 'de', url: `${site}/de/blog` },
+    { lang: 'es', url: `${site}/es/blog` },
+    { lang: 'ro', url: `${site}/ro/blog` },
+    { lang: 'uk', url: `${site}/uk/blog` },
+    { lang: 'ru', url: `${site}/ru/blog` },
+    { lang: 'fr', url: `${site}/fr/blog` },
+    { lang: 'pt', url: `${site}/pt/blog` },
+  ]}
+>
+  <section class="art-hero">
+    <div class="art-orb art-orb--1"></div>
+    <div class="art-orb art-orb--2"></div>
+    <div class="art-grid"></div>
+    <div class="art-hero__inner container">
+      <div class="art-meta">
+        <span class="art-tag">Blog</span>
+      </div>
+      <h1 class="art-title">Guides et <span class="art-grad">Stratégies</span></h1>
+      <p class="art-lead">Des connaissances pratiques pour les modèles webcam et les studios qui veulent grandir — sans faux trafic ni raccourcis.</p>
+    </div>
+  </section>
+
+  <div class="art-body">
+    <div class="container">
+      <div class="blog-filter-bar" role="group" aria-label="Filter articles by category">
+        <button class="blog-filter-btn is-active" data-filter="all">{filterAllLabel}</button>
+        {tags.map(tag => (
+          <button class="blog-filter-btn" data-filter={tag}>{tag}</button>
+        ))}
+      </div>
+      <div class="related-grid" id="blog-grid">
+        {articles.map(({ href, title, desc, tag, mins, date }) => (
+          <a href={href} class="related-card" data-tag={tag}>
+            <div class="art-meta">
+              <span class="art-tag">{tag}</span>
+              <span class="art-tag">{mins}</span>
+            </div>
+            <h3>{title}</h3>
+            <p>{desc}</p>
+            <time class="card-date" datetime={date}>{fmtDate(date)}</time>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</Base>
+
+<script>
+  (function () {
+    var buttons = document.querySelectorAll('.blog-filter-btn');
+    var cards = document.querySelectorAll('#blog-grid .related-card');
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        buttons.forEach(function (b) { b.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+        var filter = btn.dataset.filter;
+        cards.forEach(function (card) {
+          if (filter === 'all' || card.dataset.tag === filter) {
+            card.classList.remove('is-hidden');
+          } else {
+            card.classList.add('is-hidden');
+          }
+        });
+      });
+    });
+  })();
+</script>

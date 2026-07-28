@@ -1,0 +1,111 @@
+---
+import Base from '@/layouts/Base.astro';
+const site = 'https://www.ewohub.com';
+const slug = 'resources';
+
+const dateLocale = 'pt-BR';
+function fmtDate(iso: string) {
+  return new Date(`${iso}T00:00:00Z`).toLocaleDateString(dateLocale, { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
+}
+
+// Apenas os artigos com category: 'guides' aparecem nesta página.
+// Todo o restante vive em /blog — esta página é somente o feed selecionado de Guias.
+const articles = [
+  {
+    href: '/pt/stripchat-first-14-days-guide',
+    title: 'Seus Primeiros 14 Dias na Stripchat',
+    desc: 'Passo a passo: cadastro, configuração de perfil e como aproveitar ao máximo a janela de visibilidade "New" de 14 dias.',
+    tag: 'Stripchat',
+    category: 'guides',
+    date: '2026-07-22',
+  },
+].filter(a => a.category === 'guides');
+
+const filterAllLabel = 'Todos';
+const tags = [...new Set(articles.map(a => a.tag))];
+---
+<Base
+  title="Guias — Guias Passo a Passo para Modelos Webcam"
+  description="Guias práticos e passo a passo para modelos webcam — cadastro, mecânica da plataforma e como começar do jeito certo."
+  lang="pt"
+  hreflang={[
+    { lang: 'en', url: `${site}/${slug}` },
+    { lang: 'de', url: `${site}/de/${slug}` },
+    { lang: 'es', url: `${site}/es/${slug}` },
+    { lang: 'ro', url: `${site}/ro/${slug}` },
+    { lang: 'uk', url: `${site}/uk/${slug}` },
+    { lang: 'ru', url: `${site}/ru/${slug}` },
+    { lang: 'fr', url: `${site}/fr/${slug}` },
+    { lang: 'pt', url: `${site}/pt/${slug}` },
+  ]}
+>
+  <section class="art-hero">
+    <div class="art-orb art-orb--1"></div>
+    <div class="art-orb art-orb--2"></div>
+    <div class="art-grid"></div>
+    <div class="art-hero__inner container">
+      <div class="art-meta">
+        <span class="art-tag">Recursos gratuitos</span>
+      </div>
+      <h1 class="art-title">Guias <span class="art-grad">Passo a Passo</span></h1>
+      <p class="art-lead">Guias práticos e passo a passo para modelos webcam — sem enrolação, sem upsell.</p>
+    </div>
+  </section>
+
+  <div class="art-body">
+    <div class="container">
+      <div class="blog-filter-bar" role="group" aria-label="Filter guides by category">
+        <button class="blog-filter-btn is-active" data-filter="all">{filterAllLabel}</button>
+        {tags.map(tag => (
+          <button class="blog-filter-btn" data-filter={tag}>{tag}</button>
+        ))}
+      </div>
+      <div class="related-grid" id="resources-grid">
+        {articles.map(({ href, title, desc, tag, date }) => (
+          <a href={href} class="glass-card" data-tag={tag} style="text-decoration:none;display:flex;flex-direction:column;gap:.625rem;">
+            <div class="art-meta">
+              <span class="art-tag">{tag}</span>
+            </div>
+            <h3 style="font-size:1.1rem;font-weight:700;margin:0;">{title}</h3>
+            <p style="margin:0;font-size:.9375rem;">{desc}</p>
+            <span style="font-size:.875rem;font-weight:600;color:var(--accent);margin-top:auto;">Ler artigo →</span>
+            <time class="card-date" datetime={date}>{fmtDate(date)}</time>
+          </a>
+        ))}
+      </div>
+
+      <section class="art-cta" style="margin-top:4rem;">
+        <div class="art-cta__orb"></div>
+        <div class="art-cta__inner">
+          <span class="art-cta__badge">Procurando Outra Coisa?</span>
+          <h2>Explore o Catálogo Completo de Artigos</h2>
+          <p>Análises de renda, comparações de plataformas, mergulhos profundos em algoritmos e muito mais, no blog.</p>
+          <div class="art-cta__actions">
+            <a href="/pt/blog" class="art-cta__btn--primary btn btn-primary">Ir para o blog →</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</Base>
+
+<script>
+  (function () {
+    var buttons = document.querySelectorAll('.blog-filter-btn');
+    var cards = document.querySelectorAll('#resources-grid .glass-card');
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        buttons.forEach(function (b) { b.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+        var filter = btn.dataset.filter;
+        cards.forEach(function (card) {
+          if (filter === 'all' || card.dataset.tag === filter) {
+            card.classList.remove('is-hidden');
+          } else {
+            card.classList.add('is-hidden');
+          }
+        });
+      });
+    });
+  })();
+</script>
