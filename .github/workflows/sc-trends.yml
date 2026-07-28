@@ -38,8 +38,9 @@ jobs:
       - name: Commit updated summary
         run: |
           MIN=$(date -u +%M)
-          if [ "$MIN" -ge 15 ]; then
-            echo "collected snapshot, deferring commit/deploy to the top-of-hour run (minute=$MIN)"
+          STALE_SEC=$(python3 -c "import json,sys; from datetime import datetime, timezone; d=json.load(open('src/data/sc-trends.json', encoding='utf-8')); g=datetime.strptime(d['generated_at'], '%Y-%m-%dT%H:%M:%SZ').replace(tzinfo=timezone.utc); print(int((datetime.now(timezone.utc) - g).total_seconds()))" 2>/dev/null || echo 999999)
+          if [ "$MIN" -ge 15 ] && [ "$STALE_SEC" -lt 4500 ]; then
+            echo "collected snapshot, deferring commit/deploy to the top-of-hour run (minute=$MIN, published data is ${STALE_SEC}s old)"
             exit 0
           fi
           git config user.name "sc-trends-bot"
@@ -47,7 +48,18 @@ jobs:
           git add src/data/sc-trends.json
           if git diff --cached --quiet; then
             echo "no changes"
-          else
-            git commit -m "chore: update sc trends data"
-            git push
+            exit 0
           fi
+          git commit -m "chore: update sc trends data"
+          n=0
+          until git push; do
+            n=$((n + 1))
+            if [ "$n" -ge 5 ]; then
+              echo "push failed after $n attempts" >&2
+              exit 1
+            fi
+            echo "push rejected (attempt $n) — rebasing onto latest and retrying"
+            git fetch origin main
+            git rebase origin/main
+            sleep $((n * 3))
+          done
