@@ -354,6 +354,11 @@ const scMaxScore24 = Math.max(1, ...scHours24.map(h => h.score));
           <h3 class="trends-card-title">{t.scHoursTitle}</h3>
           <p class="hours-caption">{t.hoursCaption}</p>
           <p class="hours-local-note" data-hours-local-note hidden>{t.hoursLocalNote}</p>
+          <div class="hours-legend" data-hours-legend hidden>
+            <span class="hours-legend-high">■ {t.hoursLegendHigh}</span>
+            <span class="hours-legend-mid">■ {t.hoursLegendMid}</span>
+            <span class="hours-legend-low">■ {t.hoursLegendLow}</span>
+          </div>
           <ul class="hours-list hours-list--sc" id="hours-list-sc">
             {scHours24.map((h: { hour: number; score: number }) => {
               const pct = Math.round((h.score / scMaxScore24) * 100);
@@ -369,6 +374,20 @@ const scMaxScore24 = Math.max(1, ...scHours24.map(h => h.score));
               );
             })}
           </ul>
+          <p class="hours-yesterday-note" hidden>{t.hoursNowNote}</p>
+          <div class="hours-history-wrap" hidden
+               data-yesterday-above={t.hoursYesterdayAbove}
+               data-yesterday-below={t.hoursYesterdayBelow}>
+            <button class="hours-history-btn" aria-expanded="false">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><polyline points="12 7 12 12 15 15"/></svg>
+              <span>{t.hoursHistoryBtn}</span>
+              <svg class="hist-chevron" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="hours-history-panel" hidden>
+              <p class="hours-history-label" data-history-label={t.hoursHistoryLabel}></p>
+              <ul class="hours-list hours-list--history"></ul>
+            </div>
+          </div>
         </div>
       )}
     </div>
@@ -399,9 +418,9 @@ const scMaxScore24 = Math.max(1, ...scHours24.map(h => h.score));
   const tzOffsetMin = new Date().getTimezoneOffset();
   const localNowHour = new Date().getHours();
 
-  document.querySelectorAll<HTMLElement>('.trends-block').forEach((block) => {
-    const list = block.querySelector<HTMLElement>('.hours-list');
-    if (!list) return;
+  document.querySelectorAll<HTMLElement>('.hours-list[id]').forEach((list) => {
+    const card = list.closest<HTMLElement>('.trends-card');
+    if (!card) return;
 
     const rows = Array.from(list.querySelectorAll<HTMLElement>('.hours-row[data-utc-hour]'));
     const historyRows: HTMLElement[] = [];
@@ -441,7 +460,7 @@ const scMaxScore24 = Math.max(1, ...scHours24.map(h => h.score));
 
     // Insert "now note" right after current row
     if (nowRow) {
-      const nowNote = block.querySelector<HTMLElement>('.hours-yesterday-note');
+      const nowNote = card.querySelector<HTMLElement>('.hours-yesterday-note');
       if (nowNote) {
         nowNote.hidden = false;
         (nowRow as HTMLElement).after(nowNote);
@@ -449,10 +468,10 @@ const scMaxScore24 = Math.max(1, ...scHours24.map(h => h.score));
     }
 
     // Move non-visible rows into history panel
-    const historyWrap = block.querySelector<HTMLElement>('.hours-history-wrap');
-    const historyPanel = block.querySelector<HTMLElement>('.hours-history-panel');
-    const historyList = block.querySelector<HTMLElement>('.hours-list--history');
-    const historyLabelEl = block.querySelector<HTMLElement>('[data-history-label]');
+    const historyWrap = card.querySelector<HTMLElement>('.hours-history-wrap');
+    const historyPanel = card.querySelector<HTMLElement>('.hours-history-panel');
+    const historyList = card.querySelector<HTMLElement>('.hours-list--history');
+    const historyLabelEl = card.querySelector<HTMLElement>('[data-history-label]');
 
     if (historyRows.length > 0 && historyWrap && historyPanel && historyList && historyLabelEl) {
       historyRows.forEach(r => historyList.appendChild(r));
@@ -523,17 +542,6 @@ const scMaxScore24 = Math.max(1, ...scHours24.map(h => h.score));
         });
       }
     }
-  });
-
-  // Simple local-time conversion for the Stripchat hours list (no history/legend UI, just labels).
-  document.querySelectorAll<HTMLElement>('.hours-list--sc .hours-row[data-utc-hour]').forEach((row) => {
-    const utcHour = Number(row.dataset.utcHour);
-    if (Number.isNaN(utcHour)) return;
-    const startTotal = (((utcHour * 60 - tzOffsetMin) % 1440) + 1440) % 1440;
-    const endTotal = (startTotal + 60) % 1440;
-    const fmt = (m: number) => `${pad(Math.floor(m / 60))}:${pad(m % 60)}`;
-    const rangeEl = row.querySelector<HTMLElement>('.hours-range');
-    if (rangeEl) rangeEl.textContent = `${fmt(startTotal)}–${fmt(endTotal)}`;
   });
 
   document.querySelectorAll<HTMLButtonElement>('.tags-more-btn').forEach((btn) => {
