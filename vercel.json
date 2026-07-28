@@ -16,6 +16,8 @@
     { "source": "/", "has": [{ "type": "header", "key": "accept-language", "value": "^es" }], "destination": "/es", "permanent": false },
     { "source": "/", "has": [{ "type": "header", "key": "accept-language", "value": "^ro" }], "destination": "/ro", "permanent": false },
     { "source": "/", "has": [{ "type": "header", "key": "accept-language", "value": "^ru" }], "destination": "/ru", "permanent": false },
-    { "source": "/", "has": [{ "type": "header", "key": "accept-language", "value": "^uk" }], "destination": "/uk", "permanent": false }
+    { "source": "/", "has": [{ "type": "header", "key": "accept-language", "value": "^uk" }], "destination": "/uk", "permanent": false },
+    { "source": "/", "has": [{ "type": "header", "key": "accept-language", "value": "^fr" }], "destination": "/fr", "permanent": false },
+    { "source": "/", "has": [{ "type": "header", "key": "accept-language", "value": "^pt" }], "destination": "/pt", "permanent": false }
   ]
 }

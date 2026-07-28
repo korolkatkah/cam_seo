@@ -45,16 +45,20 @@ const navLabels: Record<string, {models: string, studios: string, blog: string, 
   ro: { models: 'Pentru Modele', studios: 'Pentru Studiouri', blog: 'Blog', guides: 'Ghiduri' },
   uk: { models: 'Для Моделей', studios: 'Для Студій', blog: 'Блог', guides: 'Гайди' },
   ru: { models: 'Для Моделей', studios: 'Для Студий', blog: 'Блог', guides: 'Гайды' },
+  fr: { models: 'Pour les Modèles', studios: 'Pour les Studios', blog: 'Blog', guides: 'Guides' },
+  pt: { models: 'Para Modelos', studios: 'Para Estúdios', blog: 'Blog', guides: 'Guias' },
 };
 const nl = navLabels[lang] ?? navLabels.en;
 
 const ctaLabels: Record<string, string> = {
   en: 'Get Started', de: 'Loslegen', es: 'Comenzar',
   ro: 'Începe', uk: 'Почати', ru: 'Начать',
+  fr: 'Commencer', pt: 'Começar',
 };
 
 const menuLabels: Record<string, string> = {
   en: 'Menu', de: 'Menü', es: 'Menú', ro: 'Meniu', uk: 'Меню', ru: 'Меню',
+  fr: 'Menu', pt: 'Menu',
 };
 
 const nav = [
@@ -122,6 +126,22 @@ const footerData: Record<string, Omit<FooterLabels, 'services' | 'resources' | '
     resources: ['Продвижение Моделей', 'Почему Мало Зрителей', 'Гид по Алгоритму', 'Гид по Доходу', 'Ресурсы', 'Блог', 'Контакт'],
     regions: ['США', 'Германия', 'Румыния', 'Украина', 'Колумбия', 'Испания'],
     rights: 'Все права защищены',
+  },
+  fr: {
+    tagline: 'Croissance d\'audience légitime pour les modèles et studios webcam du monde entier.',
+    colServices: 'Services', colResources: 'Ressources', colRegions: 'Régions',
+    services: ['Pour les Modèles', 'Trafic pour Studios', 'Croissance Nouvelles Modèles', 'Extension de Studio'],
+    resources: ['Promotion de Modèles', 'Pourquoi Peu de Spectateurs', 'Guide de l\'Algorithme', 'Guide des Revenus', 'Ressources', 'Blog', 'Contact'],
+    regions: ['États-Unis', 'Allemagne', 'Roumanie', 'Ukraine', 'Colombie', 'Espagne'],
+    rights: 'Tous droits réservés',
+  },
+  pt: {
+    tagline: 'Crescimento de audiência legítimo para modelos e estúdios de webcam no mundo todo.',
+    colServices: 'Serviços', colResources: 'Recursos', colRegions: 'Regiões',
+    services: ['Para Modelos', 'Tráfego para Estúdios', 'Crescimento de Novas Modelos', 'Expansão de Estúdio'],
+    resources: ['Promoção de Modelos', 'Por Que Poucos Espectadores', 'Guia do Algoritmo', 'Guia de Renda', 'Recursos', 'Blog', 'Contato'],
+    regions: ['EUA', 'Alemanha', 'Romênia', 'Ucrânia', 'Colômbia', 'Espanha'],
+    rights: 'Todos os direitos reservados',
   },
 };
 const fd = footerData[lang] ?? footerData.en;
