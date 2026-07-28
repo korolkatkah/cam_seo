@@ -14,9 +14,7 @@ Single source of truth for how this site is built. Verified against the actual c
 
 **8 locales are live:** `en` (root, no prefix), `de`, `es`, `ro`, `uk`, `ru`, `fr`, `pt` (`fr`/`pt` added later — 31 pages each vs ~32 for the older ones, close to full parity).
 
-**Known gap (unresolved as of 2026-07-27):** `src/layouts/Base.astro` has `fr`/`pt` in `langLabels` (so they show correctly in the language switcher), but **`navLabels`, `ctaLabels`, `menuLabels`, and `footerData` have no `fr`/`pt` entries** — those all fall back to the English strings (`?? navLabels.en` etc.), so French/Portuguese pages currently render nav ("For Models"/"For Studios"/"Guides"), the "Get Started" CTA, the mobile "Menu" label, and the entire footer in English even though the page body is translated. Fix by adding `fr`/`pt` blocks to all four dictionaries in `Base.astro`, mirroring the `es`/`ro`/etc. entries.
-
-Also: `vercel.json`'s `accept-language` auto-redirect rules only cover `de/es/ro/ru/uk` — no `fr`/`pt` rule was added, so French/Portuguese browsers won't auto-redirect off the English homepage.
+**Fixed 2026-07-27:** `navLabels`, `ctaLabels`, `menuLabels`, and `footerData` in `Base.astro` now have `fr`/`pt` entries (previously fell back to English chrome around translated body content). `vercel.json`'s `accept-language` redirect rules now also cover `fr`/`pt`.
 
 **Rule: when you ship a content change, ship it in all 8 locales, same day, same commit or same session.** Don't leave a page translated in 6 and missing in 2 — that's exactly the kind of drift this doc exists to prevent. `raise-your-room-ranking-score` and a few other early pages are historically missing from `de`/`es`/etc. `blog.astro` listings even though the page itself exists in that locale — check both the page file AND its listing entry in `blog.astro`/`resources.astro` when adding a language.
 
@@ -120,7 +118,6 @@ Two scheduled cloud tasks publish articles automatically: `ewo-daily-article` (1
 
 ## Known content/structure gaps (2026-07-27 snapshot — re-check before assuming still true)
 
-- **fr/pt nav/footer localization incomplete** (see Locales section above) — highest-priority fix, it's a live rendering bug on ~62 pages.
 - No deep content for BongaCams / MyFreeCams / LiveJasmin / CamSoda — only Stripchat and Chaturbate have article clusters; competitors cover multi-platform comparisons where this site doesn't.
 - Phase 2 geo-page plan (13 countries) is only ~6 built (USA, Germany, Romania, Ukraine, Colombia, Spain); Canada, Bulgaria, Russia, Sweden, Poland, France, England, Netherlands still missing.
 - No BreadcrumbList or Article/BlogPosting structured data on content pages (only Organization/WebSite + client-side-generated FAQPage).
