@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-08-08T21:01:01Z",
+  "generated_at": "2026-08-08T22:01:03Z",
   "tag": "girls",
   "hours_covered": 24.0,
-  "snapshots": 130,
-  "rooms_seen": 3226,
+  "snapshots": 131,
+  "rooms_seen": 3218,
   "preliminary": false,
   "best_hours_utc": [
     {
@@ -92,11 +92,11 @@
     },
     {
       "hour": 21,
-      "score": 212
+      "score": 209
     },
     {
       "hour": 22,
-      "score": 211
+      "score": 213
     },
     {
       "hour": 23,
