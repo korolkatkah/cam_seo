@@ -1,14 +1,14 @@
 {
-  "generated_at": "2026-08-07T23:01:17Z",
+  "generated_at": "2026-08-08T00:01:28Z",
   "gender": "f",
   "hours_covered": 23.8,
-  "snapshots": 114,
-  "rooms_seen": 9480,
+  "snapshots": 116,
+  "rooms_seen": 9451,
   "preliminary": false,
   "best_hours_utc": [
     {
       "hour": 0,
-      "score": 1189
+      "score": 1158
     },
     {
       "hour": 1,
@@ -100,44 +100,39 @@
     },
     {
       "hour": 23,
-      "score": 1337
+      "score": 1176
     }
   ],
   "top_tags": [
     {
       "tag": "brazilian",
-      "avg_users": 9429,
+      "avg_users": 9427,
       "rooms": 5
     },
     {
       "tag": "bj",
-      "avg_users": 8700,
+      "avg_users": 9397,
       "rooms": 14
     },
     {
       "tag": "smile",
-      "avg_users": 8018,
-      "rooms": 43
+      "avg_users": 7588,
+      "rooms": 42
     },
     {
       "tag": "yoga",
-      "avg_users": 7422,
+      "avg_users": 5288,
       "rooms": 8
     },
     {
-      "tag": "student",
-      "avg_users": 5008,
-      "rooms": 16
-    },
-    {
       "tag": "aussie",
-      "avg_users": 4939,
+      "avg_users": 5031,
       "rooms": 23
     },
     {
-      "tag": "beauty",
-      "avg_users": 4633,
-      "rooms": 9
+      "tag": "student",
+      "avg_users": 4798,
+      "rooms": 17
     },
     {
       "tag": "hotwife",
@@ -146,78 +141,78 @@
     },
     {
       "tag": "play",
-      "avg_users": 4128,
-      "rooms": 6
+      "avg_users": 4293,
+      "rooms": 5
     },
     {
       "tag": "twerk",
-      "avg_users": 4056,
+      "avg_users": 4230,
       "rooms": 82
-    },
-    {
-      "tag": "sensual",
-      "avg_users": 3840,
-      "rooms": 52
     },
     {
       "tag": "dildo",
       "avg_users": 3838,
-      "rooms": 83
+      "rooms": 84
     },
     {
-      "tag": "muscles",
-      "avg_users": 3648,
+      "tag": "sensual",
+      "avg_users": 3663,
+      "rooms": 53
+    },
+    {
+      "tag": "chat",
+      "avg_users": 3632,
       "rooms": 13
     },
     {
       "tag": "lesbian",
-      "avg_users": 3383,
-      "rooms": 68
-    },
-    {
-      "tag": "erotic",
-      "avg_users": 3319,
-      "rooms": 91
+      "avg_users": 3514,
+      "rooms": 70
     },
     {
       "tag": "fit",
-      "avg_users": 3311,
-      "rooms": 134
+      "avg_users": 3478,
+      "rooms": 138
     },
     {
-      "tag": "boobs",
-      "avg_users": 3223,
-      "rooms": 53
+      "tag": "muscles",
+      "avg_users": 3472,
+      "rooms": 14
     },
     {
       "tag": "sexy",
-      "avg_users": 3064,
-      "rooms": 140
+      "avg_users": 3339,
+      "rooms": 141
+    },
+    {
+      "tag": "boobs",
+      "avg_users": 3216,
+      "rooms": 54
+    },
+    {
+      "tag": "erotic",
+      "avg_users": 3141,
+      "rooms": 89
     },
     {
       "tag": "kinky",
-      "avg_users": 2842,
-      "rooms": 47
+      "avg_users": 2759,
+      "rooms": 49
     },
     {
-      "tag": "oil",
-      "avg_users": 2635,
-      "rooms": 27
-    },
-    {
-      "tag": "flexible",
-      "avg_users": 2628,
-      "rooms": 66
-    },
-    {
-      "tag": "dance",
-      "avg_users": 2625,
-      "rooms": 76
+      "tag": "beauty",
+      "avg_users": 2741,
+      "rooms": 8
     },
     {
       "tag": "fuck",
-      "avg_users": 2592,
+      "avg_users": 2551,
       "rooms": 10
+    },
+    {
+      "tag": "oil",
+      "avg_users": 2550,
+      "rooms": 26
     },
     {
       "tag": "pierced",
@@ -225,159 +220,164 @@
       "rooms": 6
     },
     {
-      "tag": "domi",
-      "avg_users": 2459,
-      "rooms": 71
-    },
-    {
       "tag": "pussy",
-      "avg_users": 2449,
-      "rooms": 81
-    },
-    {
-      "tag": "pawg",
-      "avg_users": 2213,
-      "rooms": 78
-    },
-    {
-      "tag": "lush",
-      "avg_users": 2130,
-      "rooms": 208
-    },
-    {
-      "tag": "wet",
-      "avg_users": 2110,
-      "rooms": 24
+      "avg_users": 2473,
+      "rooms": 79
     },
     {
       "tag": "asmr",
-      "avg_users": 2090,
-      "rooms": 10
+      "avg_users": 2256,
+      "rooms": 9
+    },
+    {
+      "tag": "dance",
+      "avg_users": 2208,
+      "rooms": 74
+    },
+    {
+      "tag": "pawg",
+      "avg_users": 2203,
+      "rooms": 79
+    },
+    {
+      "tag": "wet",
+      "avg_users": 2141,
+      "rooms": 22
+    },
+    {
+      "tag": "lush",
+      "avg_users": 2106,
+      "rooms": 205
+    },
+    {
+      "tag": "naughty",
+      "avg_users": 2066,
+      "rooms": 55
     }
   ],
   "top_titles": [
     {
-      "avg_users": 20548,
+      "avg_users": 20194,
       "subject": "happy friday!"
     },
     {
-      "avg_users": 15518,
+      "avg_users": 15250,
       "subject": "Welcome to my room! - Goal: Eva licks Masha's anal Close Up [1179 tokens left] #18 #blonde #teen #daddysgirl #lovense"
     },
     {
-      "avg_users": 13994,
+      "avg_users": 13753,
       "subject": "Happy Friday, say hi♡  - All Goals reached! Thanks to all tippers! #bigboobs #erotic #fit #sensual"
     },
     {
-      "avg_users": 13920,
+      "avg_users": 13680,
       "subject": "fingering until orgasm 💪KURWA SLUT is baaaaack 💪 lovense work ! 200 is fav pattern 🥳... call me Cherry :) #18 #bigboobs "
     },
     {
-      "avg_users": 13896,
+      "avg_users": 13656,
       "subject": "[9331 tokens to goal] -- Current Goal: Full Body Oil & Fox Tail Twerk once countdown reaches zero -- This is the Last Go"
     },
     {
-      "avg_users": 13018,
+      "avg_users": 12793,
       "subject": "ᴀᴛ ɢᴏᴀʟ 𝗙𝗜𝗡𝗚𝗘𝗥 𝗠𝗬 𝗔𝗦𝗦𝗛𝗢𝗟𝗘【𝟰𝟴𝟵 ᴛᴋ ʟᴇꜰᴛ】 Imagine #bigass #latina is in your room, what would you do?? #squirt #teen #loven"
     },
     {
-      "avg_users": 11961,
+      "avg_users": 11754,
       "subject": "I am Eva and I wanna reach 500 👍 Body tour :> #new #shy #cute #young #18  [0 tokens remaining]"
     },
     {
-      "avg_users": 11767,
+      "avg_users": 11722,
+      "subject": "Remove my top 🔥🔥😘 #latina #bigboobs #bigass #sexy #twerk [368 tokens remaining]"
+    },
+    {
+      "avg_users": 11564,
       "subject": "g:  Shall we turn on my  Domi again before the stream ends? / Hello! I'm Chiara! It's my third day here! #shy #new #18 #"
     },
     {
-      "avg_users": 11743,
+      "avg_users": 11540,
       "subject": "Disney Princess <3 - Multi-Goal :  ⭐BIG SQUIRT⭐ #asian #lovense #squirt #teen #shy"
     },
     {
-      "avg_users": 11317,
+      "avg_users": 11122,
       "subject": "Current Goal: Make me squirt once countdown reaches zero -- Your TIPS decide the vibe tonight! MULTI-SQUIRT. Best vibes:"
     },
     {
-      "avg_users": 11006,
+      "avg_users": 10817,
       "subject": "I'am back! Goal:  Rub pussy till i cum  🦊 #18 #blonde #new #young #shy ❤ [0 tokens remaining]"
     },
     {
-      "avg_users": 10705,
+      "avg_users": 10520,
       "subject": "Lingerie & Dance [2375 tokens left]"
     },
     {
-      "avg_users": 10097,
+      "avg_users": 9923,
       "subject": "🎀 flirty friyayy 💕 goal : cow girl outfit 🤠💕 #teen #bigboobs #bigass #new #18  [0 tokens remaining]"
     },
     {
-      "avg_users": 9307,
-      "subject": "Remove my top 🔥🔥😘 #latina #bigboobs #bigass #sexy #twerk [2977 tokens remaining]"
+      "avg_users": 9152,
+      "subject": "/menu 𝐬𝐩𝐞𝐜𝐢𝐚𝐥 𝐩𝐚𝐭𝐭𝐞𝐫𝐧𝐬 𝐓𝐈𝐏  𝟒𝟎⭐𝟕𝟕⭐𝟏𝟑𝟏⭐𝟏𝟔𝟏⭐𝟒𝟒𝟒⭐ 𝟏𝟎𝟎𝟏 𝐭𝐨𝐤𝐞𝐧𝐬 🔥 #fuckmachine #latina #squirt #deepthroat #asian [608 tokens"
     },
     {
-      "avg_users": 9260,
+      "avg_users": 9100,
       "subject": "HAPPY BDAY STREAM - nude only on OF/FANSLY (bio) | Goal: gol »  [ Completed! ] | #bigboobs #teen #nonude"
     },
     {
-      "avg_users": 9256,
-      "subject": "/menu 𝐬𝐩𝐞𝐜𝐢𝐚𝐥 𝐩𝐚𝐭𝐭𝐞𝐫𝐧𝐬 𝐓𝐈𝐏  𝟒𝟎⭐𝟕𝟕⭐𝟏𝟑𝟏⭐𝟏𝟔𝟏⭐𝟒𝟒𝟒⭐ 𝟏𝟎𝟎𝟏 𝐭𝐨𝐤𝐞𝐧𝐬 🔥 #fuckmachine #latina #squirt #deepthroat #asian [2097 token"
-    },
-    {
-      "avg_users": 9096,
+      "avg_users": 8939,
       "subject": "Lush Coming up 💞 #bigass #boobs #aussie #teen"
     },
     {
-      "avg_users": 8666,
+      "avg_users": 8608,
+      "subject": "-- Lush in my cute ass   #squirt #bigboobs #deepthroat #lovense #fuckmachine"
+    },
+    {
+      "avg_users": 8521,
+      "subject": "4 FINGERTS ASS + DOGGY + TWERK [1639 tokens left] SHH MOM HOUSE/menu💙CHECK BIO💙 favorite VIBES 99,123,499,999   #new #sq"
+    },
+    {
+      "avg_users": 8516,
       "subject": "Current Goal: squirt cum with dildo in pussy at 3333 tokens -- #squirt #bigass #smalltits #anal #pawg #babyface #cute #f"
-    },
-    {
-      "avg_users": 8329,
-      "subject": "Current Goal: Squirt Show at 3999 tokens -- Next Goal: GLASS ANAL -- Lets get a fun time  💘 #daddy #anal #young #latina "
-    },
-    {
-      "avg_users": 8107,
-      "subject": "Goal: Make me naked! Panties off!😜 Hi!  I'm Tella!✨ Im #18 #bigboobs #shy and #new with a #skinny  d  [2295 tokens remai"
     }
   ],
   "economy": {
-    "goal_median": 738,
-    "goal_p25": 331,
-    "goal_p75": 1430,
-    "goal_samples": 3079,
+    "goal_median": 737,
+    "goal_p25": 332,
+    "goal_p75": 1441,
+    "goal_samples": 3085,
     "top_patterns": [
       {
         "value": 111,
-        "count": 100
+        "count": 101
       },
       {
         "value": 222,
-        "count": 95
+        "count": 97
       },
       {
         "value": 100,
-        "count": 70
+        "count": 73
       },
       {
         "value": 333,
-        "count": 62
+        "count": 67
       },
       {
         "value": 25,
-        "count": 50
+        "count": 47
       },
       {
         "value": 77,
-        "count": 46
-      },
-      {
-        "value": 99,
         "count": 45
       },
       {
+        "value": 99,
+        "count": 43
+      },
+      {
         "value": 55,
-        "count": 37
+        "count": 43
       },
       {
         "value": 38,
-        "count": 33
+        "count": 34
       },
       {
         "value": 50,
@@ -385,8 +385,8 @@
       }
     ],
     "multi_goal_share": 0.069,
-    "with_goal_share": 0.541,
-    "with_price_share": 0.677
+    "with_goal_share": 0.543,
+    "with_price_share": 0.679
   },
   "recommendation": {
     "tags": [
@@ -394,12 +394,12 @@
       "bj",
       "smile",
       "yoga",
-      "student",
       "aussie",
+      "student",
       "play",
       "hotwife",
-      "beauty",
-      "pierced"
+      "pierced",
+      "beauty"
     ],
     "low_competition_tag": "play"
   }
