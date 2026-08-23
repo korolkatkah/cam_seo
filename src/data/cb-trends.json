@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-08-23T22:01:27Z",
+  "generated_at": "2026-08-23T23:01:18Z",
   "gender": "f",
-  "hours_covered": 23.8,
-  "snapshots": 134,
-  "rooms_seen": 8904,
+  "hours_covered": 24.0,
+  "snapshots": 135,
+  "rooms_seen": 8989,
   "preliminary": false,
   "best_hours_utc": [
     {
@@ -96,42 +96,37 @@
     },
     {
       "hour": 22,
-      "score": 1226
+      "score": 1302
     },
     {
       "hour": 23,
-      "score": 1048
+      "score": 1072
     }
   ],
   "top_tags": [
     {
       "tag": "tiny",
-      "avg_users": 7798,
+      "avg_users": 7730,
       "rooms": 9
     },
     {
       "tag": "aussie",
-      "avg_users": 7464,
+      "avg_users": 7266,
       "rooms": 26
     },
     {
       "tag": "ohmibod",
-      "avg_users": 6033,
-      "rooms": 13
+      "avg_users": 5964,
+      "rooms": 14
     },
     {
       "tag": "creamy",
-      "avg_users": 5893,
+      "avg_users": 5860,
       "rooms": 25
     },
     {
-      "tag": "shower",
-      "avg_users": 5884,
-      "rooms": 6
-    },
-    {
       "tag": "big",
-      "avg_users": 4589,
+      "avg_users": 4516,
       "rooms": 21
     },
     {
@@ -140,253 +135,258 @@
       "rooms": 12
     },
     {
-      "tag": "erotic",
-      "avg_users": 3991,
-      "rooms": 76
-    },
-    {
       "tag": "19",
-      "avg_users": 3966,
+      "avg_users": 4079,
       "rooms": 12
     },
     {
+      "tag": "erotic",
+      "avg_users": 3786,
+      "rooms": 79
+    },
+    {
       "tag": "kinky",
-      "avg_users": 3257,
-      "rooms": 49
+      "avg_users": 3135,
+      "rooms": 52
     },
     {
       "tag": "lush",
-      "avg_users": 3103,
-      "rooms": 219
+      "avg_users": 3061,
+      "rooms": 221
     },
     {
       "tag": "snowbunny",
-      "avg_users": 2837,
-      "rooms": 7
+      "avg_users": 2896,
+      "rooms": 9
     },
     {
       "tag": "cosplay",
-      "avg_users": 2678,
-      "rooms": 113
+      "avg_users": 2667,
+      "rooms": 115
     },
     {
-      "tag": "naked",
-      "avg_users": 2600,
-      "rooms": 45
+      "tag": "lesbian",
+      "avg_users": 2533,
+      "rooms": 59
     },
     {
       "tag": "boobs",
-      "avg_users": 2498,
+      "avg_users": 2483,
       "rooms": 62
     },
     {
       "tag": "naturalbigboobs",
-      "avg_users": 2492,
+      "avg_users": 2470,
       "rooms": 13
     },
     {
-      "tag": "sensual",
-      "avg_users": 2403,
-      "rooms": 39
-    },
-    {
-      "tag": "bush",
-      "avg_users": 2223,
-      "rooms": 63
-    },
-    {
-      "tag": "lesbian",
-      "avg_users": 1978,
-      "rooms": 58
-    },
-    {
-      "tag": "tease",
-      "avg_users": 1962,
-      "rooms": 338
-    },
-    {
-      "tag": "slim",
-      "avg_users": 1771,
-      "rooms": 58
-    },
-    {
-      "tag": "tits",
-      "avg_users": 1720,
-      "rooms": 48
-    },
-    {
-      "tag": "flexible",
-      "avg_users": 1643,
-      "rooms": 55
-    },
-    {
-      "tag": "teen",
-      "avg_users": 1527,
-      "rooms": 1599
-    },
-    {
-      "tag": "anime",
-      "avg_users": 1351,
-      "rooms": 33
-    },
-    {
-      "tag": "cute",
-      "avg_users": 1278,
-      "rooms": 561
-    },
-    {
       "tag": "english",
-      "avg_users": 1269,
+      "avg_users": 2439,
       "rooms": 6
     },
     {
-      "tag": "smile",
-      "avg_users": 1246,
-      "rooms": 34
+      "tag": "sensual",
+      "avg_users": 2316,
+      "rooms": 40
     },
     {
-      "tag": "young",
-      "avg_users": 1240,
-      "rooms": 1099
+      "tag": "bush",
+      "avg_users": 2230,
+      "rooms": 66
+    },
+    {
+      "tag": "naked",
+      "avg_users": 2191,
+      "rooms": 46
+    },
+    {
+      "tag": "anime",
+      "avg_users": 1864,
+      "rooms": 33
+    },
+    {
+      "tag": "tits",
+      "avg_users": 1842,
+      "rooms": 49
+    },
+    {
+      "tag": "tease",
+      "avg_users": 1828,
+      "rooms": 348
+    },
+    {
+      "tag": "slim",
+      "avg_users": 1734,
+      "rooms": 58
+    },
+    {
+      "tag": "teen",
+      "avg_users": 1509,
+      "rooms": 1609
+    },
+    {
+      "tag": "flexible",
+      "avg_users": 1461,
+      "rooms": 54
+    },
+    {
+      "tag": "shower",
+      "avg_users": 1404,
+      "rooms": 6
+    },
+    {
+      "tag": "cute",
+      "avg_users": 1296,
+      "rooms": 567
+    },
+    {
+      "tag": "fuckmachine",
+      "avg_users": 1287,
+      "rooms": 544
+    },
+    {
+      "tag": "asian",
+      "avg_users": 1257,
+      "rooms": 796
     },
     {
       "tag": "petite",
-      "avg_users": 1221,
-      "rooms": 441
+      "avg_users": 1245,
+      "rooms": 453
     }
   ],
   "top_titles": [
     {
-      "avg_users": 12949,
-      "subject": "Goal Reached! #lovense #teen #anal #skinny #bigboobs"
-    },
-    {
-      "avg_users": 12242,
-      "subject": "Disney Princess <3 - Multi-Goal :  ⭐BIG SQUIRT⭐ #asian #lovense #squirt #teen #shy"
-    },
-    {
-      "avg_users": 12042,
+      "avg_users": 13480,
       "subject": "'CrazyTicket': SQUIRT SHOW  - TICKET PRICE 333 TOKENS Type /cmds to see all commands."
     },
     {
-      "avg_users": 11947,
+      "avg_users": 12853,
+      "subject": "Goal Reached! #lovense #teen #anal #skinny #bigboobs"
+    },
+    {
+      "avg_users": 12151,
+      "subject": "Disney Princess <3 - Multi-Goal :  ⭐BIG SQUIRT⭐ #asian #lovense #squirt #teen #shy"
+    },
+    {
+      "avg_users": 11884,
+      "subject": "Hi! Begged Alice to stream today! Exploring her dark side | Goal: Beg Alice to take off her top! hehehe | #young #18 #na"
+    },
+    {
+      "avg_users": 11859,
       "subject": "💦 𝑫𝒓𝒐𝒑𝒔 𝒐𝒇 𝒑𝒍𝒆𝒂𝒔𝒖𝒓𝒆 𝒘𝒊𝒕𝒉  31 - 81 - 111 - 333 - 999 💦 - Goal: BIG SQUIRT 💦 #squirt #latina #asian #anal #teen"
     },
     {
-      "avg_users": 11697,
-      "subject": "Hi! Begged Alice to stream today! Exploring her dark side | Goal: Beg Alice to take off my top (get her comfy for hers!)"
-    },
-    {
-      "avg_users": 11452,
+      "avg_users": 11367,
       "subject": "Click to watch me ❤ // My favourite patterns 120, 160, 222, 301 // #new #lovense #teen #natural #18"
     },
     {
-      "avg_users": 11300,
+      "avg_users": 11216,
       "subject": "Imagine #bigass #latina is in your room, what would you do?? #squirt #teen #lovense"
     },
     {
-      "avg_users": 10898,
-      "subject": "💦"
-    },
-    {
-      "avg_users": 10514,
+      "avg_users": 10437,
       "subject": "🫦 sexy towel tease #blonde #petite #teen #new [1453 tokens remaining]"
     },
     {
-      "avg_users": 10342,
-      "subject": "/menu1 𝐬𝐩𝐞𝐜𝐢𝐚𝐥 𝐩𝐚𝐭𝐭𝐞𝐫𝐧𝐬 𝐓𝐈𝐏  𝟒𝟎🍌𝟕𝟕🍌𝟏𝟑𝟏🍌𝟏𝟔𝟏🍌𝟒𝟒𝟒🍌 𝟏𝟎𝟎𝟏 𝐭𝐨𝐤𝐞𝐧𝐬  - Goal: BIG MONSTER DILDO TIME 🍌  #fuckmachine #latina #squ"
+      "avg_users": 10264,
+      "subject": "/menu1 𝐬𝐩𝐞𝐜𝐢𝐚𝐥 𝐩𝐚𝐭𝐭𝐞𝐫𝐧𝐬 𝐓𝐈𝐏  𝟒𝟎🍌𝟕𝟕🍌𝟏𝟑𝟏🍌𝟏𝟔𝟏🍌𝟒𝟒𝟒🍌 𝟏𝟎𝟎𝟏 𝐭𝐨𝐤𝐞𝐧𝐬  - Goal: FUCK-MACHINE DOGGY 🍌  #fuckmachine #latina #squirt "
     },
     {
-      "avg_users": 9990,
-      "subject": "hi! //  Goal: show assholee » [ 3266 tks left ] //  #new #skinny #shy #teen #18"
+      "avg_users": 9971,
+      "subject": "hi! //  Goal: show boobs + lick nippls » [ 909 tks left ] //  #new #skinny #shy #teen #18"
     },
     {
-      "avg_users": 9227,
+      "avg_users": 9159,
       "subject": "CrazyTicket: PAW IS BACK! 😈 WARM SENSUAL OIL SHOW + ORGASMS AT END WITH MIC 😈 | TICKET PRICE: 289"
     },
     {
-      "avg_users": 9171,
-      "subject": "Ticket Show: sweet cum with me - Tip 299tk to get your ticket."
-    },
-    {
-      "avg_users": 9098,
+      "avg_users": 9031,
       "subject": "CrazyTicket: 👠 OFFICE TICKET SHOW!  📕  - naked boobies,  special  rubber guest and sweet secretary's orgasm🥵 | TICKET PR"
     },
     {
-      "avg_users": 8706,
+      "avg_users": 8845,
+      "subject": "💦"
+    },
+    {
+      "avg_users": 8641,
       "subject": "💙OF in BIO💙Try my fav 123/250/323/400! 💙 - Goal reached! #tease #bigboobs #bigass #lush #joi"
     },
     {
-      "avg_users": 8505,
+      "avg_users": 8554,
+      "subject": "Fav levels: 270, 500+ - Goal: Handjob [713 tokens left] #lovense #blowjob #bigboobs #cute #feet"
+    },
+    {
+      "avg_users": 8442,
       "subject": "Come say Hi! 💖 been to long #boobs #bigass #aussie #teen"
     },
     {
-      "avg_users": 8224,
-      "subject": "Fav levels: 270, 500+ - Goal: Panties off [722 tokens left] #lovense #blowjob #bigboobs #cute #feet"
+      "avg_users": 8284,
+      "subject": "Ticket Show: sweet cum with me - Tip 299tk to get your ticket."
     },
     {
-      "avg_users": 7838,
+      "avg_users": 7780,
       "subject": "Show is over thank youuu  for cumming lovee!! FAV PATTERNS 50,111,222,333,666 #bigboobs #teen #deepthroat #squirt #cospl"
     },
     {
-      "avg_users": 7789,
+      "avg_users": 7732,
       "subject": "❤️ 800k followers!! ❤️❤️  thank you guys! ❤️ - Goal: wet and naughty [61 tokens left] #squirt #anal #bigboobs #tease #bl"
     },
     {
-      "avg_users": 7605,
+      "avg_users": 7549,
       "subject": "GOAL:STRONG TITS MASSAGE ^_~(●'◡'●)💋💕 Hello kitties, i'm Ginnie and this is my 4th day!! Im #young #18 #new and very ver"
     }
   ],
   "economy": {
-    "goal_median": 686,
+    "goal_median": 692,
     "goal_p25": 333,
-    "goal_p75": 1249,
-    "goal_samples": 2830,
+    "goal_p75": 1250,
+    "goal_samples": 2855,
     "top_patterns": [
       {
         "value": 111,
-        "count": 91
+        "count": 90
       },
       {
         "value": 222,
-        "count": 87
+        "count": 89
       },
       {
         "value": 333,
-        "count": 63
+        "count": 64
       },
       {
         "value": 100,
-        "count": 60
+        "count": 62
       },
       {
         "value": 99,
-        "count": 45
+        "count": 50
       },
       {
         "value": 25,
-        "count": 41
+        "count": 43
       },
       {
         "value": 33,
-        "count": 33
-      },
-      {
-        "value": 38,
-        "count": 31
-      },
-      {
-        "value": 55,
         "count": 30
       },
       {
+        "value": 38,
+        "count": 29
+      },
+      {
+        "value": 50,
+        "count": 27
+      },
+      {
         "value": 77,
-        "count": 25
+        "count": 27
       }
     ],
     "multi_goal_share": 0.065,
     "with_goal_share": 0.544,
-    "with_price_share": 0.67
+    "with_price_share": 0.668
   },
   "recommendation": {
     "tags": [
@@ -394,13 +394,13 @@
       "aussie",
       "ohmibod",
       "creamy",
-      "shower",
       "big",
-      "snowbunny",
       "fuck",
+      "english",
       "19",
-      "beauty"
+      "snowbunny",
+      "shower"
     ],
-    "low_competition_tag": "snowbunny"
+    "low_competition_tag": "english"
   }
 }
