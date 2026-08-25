@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-08-25T22:01:26Z",
+  "generated_at": "2026-08-25T23:01:23Z",
   "gender": "f",
   "hours_covered": 24.0,
-  "snapshots": 129,
-  "rooms_seen": 10006,
+  "snapshots": 128,
+  "rooms_seen": 10058,
   "preliminary": false,
   "best_hours_utc": [
     {
@@ -96,38 +96,38 @@
     },
     {
       "hour": 22,
-      "score": 1207
+      "score": 1167
     },
     {
       "hour": 23,
-      "score": 1116
+      "score": 1106
     }
   ],
   "top_tags": [
     {
+      "tag": "innocent",
+      "avg_users": 12516,
+      "rooms": 6
+    },
+    {
       "tag": "big",
-      "avg_users": 10121,
-      "rooms": 11
+      "avg_users": 10312,
+      "rooms": 10
     },
     {
       "tag": "aussie",
-      "avg_users": 9918,
+      "avg_users": 10031,
       "rooms": 25
     },
     {
-      "tag": "innocent",
-      "avg_users": 9747,
-      "rooms": 6
-    },
-    {
-      "tag": "shower",
-      "avg_users": 8022,
-      "rooms": 6
+      "tag": "hush",
+      "avg_users": 9402,
+      "rooms": 5
     },
     {
       "tag": "snowbunny",
-      "avg_users": 7491,
-      "rooms": 8
+      "avg_users": 7826,
+      "rooms": 7
     },
     {
       "tag": "fuck",
@@ -135,24 +135,34 @@
       "rooms": 9
     },
     {
+      "tag": "shower",
+      "avg_users": 4961,
+      "rooms": 6
+    },
+    {
       "tag": "creamy",
-      "avg_users": 4560,
-      "rooms": 27
+      "avg_users": 4476,
+      "rooms": 24
     },
     {
       "tag": "19",
-      "avg_users": 3940,
-      "rooms": 12
+      "avg_users": 4175,
+      "rooms": 13
     },
     {
       "tag": "abs",
-      "avg_users": 3850,
+      "avg_users": 3905,
       "rooms": 6
     },
     {
       "tag": "slim",
-      "avg_users": 3681,
+      "avg_users": 3665,
       "rooms": 63
+    },
+    {
+      "tag": "naked",
+      "avg_users": 3473,
+      "rooms": 47
     },
     {
       "tag": "nora",
@@ -160,24 +170,19 @@
       "rooms": 6
     },
     {
-      "tag": "naked",
-      "avg_users": 3021,
-      "rooms": 47
-    },
-    {
       "tag": "ohmibod",
-      "avg_users": 2825,
+      "avg_users": 2880,
       "rooms": 14
     },
     {
-      "tag": "domination",
-      "avg_users": 2815,
-      "rooms": 5
+      "tag": "oil",
+      "avg_users": 2700,
+      "rooms": 31
     },
     {
-      "tag": "oil",
-      "avg_users": 2758,
-      "rooms": 31
+      "tag": "domination",
+      "avg_users": 2424,
+      "rooms": 6
     },
     {
       "tag": "boobs",
@@ -185,222 +190,217 @@
       "rooms": 62
     },
     {
-      "tag": "dildo",
-      "avg_users": 2006,
-      "rooms": 79
+      "tag": "domi",
+      "avg_users": 2084,
+      "rooms": 101
     },
     {
       "tag": "kinky",
-      "avg_users": 1976,
-      "rooms": 60
-    },
-    {
-      "tag": "lesbian",
-      "avg_users": 1964,
-      "rooms": 54
-    },
-    {
-      "tag": "lush",
-      "avg_users": 1947,
-      "rooms": 228
-    },
-    {
-      "tag": "brunette",
-      "avg_users": 1943,
-      "rooms": 196
+      "avg_users": 2046,
+      "rooms": 59
     },
     {
       "tag": "smile",
-      "avg_users": 1931,
-      "rooms": 38
+      "avg_users": 1985,
+      "rooms": 39
+    },
+    {
+      "tag": "lesbian",
+      "avg_users": 1970,
+      "rooms": 54
+    },
+    {
+      "tag": "brunette",
+      "avg_users": 1952,
+      "rooms": 201
     },
     {
       "tag": "horny",
-      "avg_users": 1858,
-      "rooms": 53
-    },
-    {
-      "tag": "fingering",
-      "avg_users": 1782,
-      "rooms": 10
+      "avg_users": 1926,
+      "rooms": 51
     },
     {
       "tag": "pretty",
-      "avg_users": 1742,
+      "avg_users": 1714,
       "rooms": 11
     },
     {
-      "tag": "pawg",
-      "avg_users": 1705,
-      "rooms": 99
-    },
-    {
-      "tag": "domi",
-      "avg_users": 1691,
-      "rooms": 99
+      "tag": "dildo",
+      "avg_users": 1697,
+      "rooms": 82
     },
     {
       "tag": "daddy",
-      "avg_users": 1678,
-      "rooms": 270
+      "avg_users": 1620,
+      "rooms": 272
+    },
+    {
+      "tag": "lush",
+      "avg_users": 1596,
+      "rooms": 231
     },
     {
       "tag": "british",
-      "avg_users": 1616,
-      "rooms": 108
+      "avg_users": 1563,
+      "rooms": 103
     },
     {
       "tag": "sexy",
-      "avg_users": 1519,
-      "rooms": 180
+      "avg_users": 1538,
+      "rooms": 181
+    },
+    {
+      "tag": "tease",
+      "avg_users": 1487,
+      "rooms": 334
     }
   ],
   "top_titles": [
     {
-      "avg_users": 12919,
+      "avg_users": 14941,
       "subject": "🍑"
     },
     {
-      "avg_users": 10257,
+      "avg_users": 10275,
       "subject": "PLUG ANAL IN DOGGY [1405 tokens left] SHH MOM HOUSE /menu💙CHECK BIO💙 favorite VIBES 99,123,499,999   #new #squirt #18 #b"
     },
     {
-      "avg_users": 9076,
+      "avg_users": 9146,
       "subject": "🫦  naked towel + dildo tease #blonde #petite #teen #new [3276 tokens remaining]"
     },
     {
-      "avg_users": 8830,
+      "avg_users": 8899,
       "subject": "❤️Can we reach 222 thumbs 👍🏻 up? ❤️// OF: Gigipriv & gigidick  = BG Videos 💙 #deepthroat #asian #fuckmachine #bigboobs #"
     },
     {
-      "avg_users": 8676,
+      "avg_users": 8743,
       "subject": "Titty Tuesday 💖 #boobs #bigass #aussie #teen"
     },
     {
-      "avg_users": 8317,
-      "subject": "Make me #squirt=1600⭐Pvt open⭐Tip 169 to spin=instant guaranteed prize⭐Mega package=1111⭐ #new vids #bigboobs #anal #dad"
+      "avg_users": 8289,
+      "subject": "tysm for watching! check out OF/chroniclove69 Link in Bio"
     },
     {
-      "avg_users": 8173,
+      "avg_users": 8237,
       "subject": "Hand bra ;) #new #18 #skinny [0 tokens remaining]"
     },
     {
-      "avg_users": 8037,
+      "avg_users": 8100,
       "subject": "6th day! GOAL: Good night Molly [823 tokens remaining] Hello, im Molly #new here, #slim #teen #bigboobs #bigass , lets h"
     },
     {
-      "avg_users": 7813,
+      "avg_users": 7875,
       "subject": "pvt open/ fingering pussy  #teen #blonde  #new #18 #anal                                                        [3996 to"
     },
     {
-      "avg_users": 7763,
-      "subject": "😈you know how make me wet with 55,222,333,500,777(NEW)and 2222 for cum/squirt😈 privates open❤  - Goal: 2 finger in ass p"
-    },
-    {
-      "avg_users": 7356,
+      "avg_users": 7414,
       "subject": "Current Goal: GLASS ANAL at 4444 tokens -- Next Goal: SQUIRT -- Lets get a fun time  💘 #daddy #anal #young #latina #squi"
     },
     {
-      "avg_users": 7312,
+      "avg_users": 7369,
       "subject": "lowrise try onn❤️ [2221 tokens remaining]"
     },
     {
-      "avg_users": 7228,
-      "subject": "Doggystyle + String Thong @ Goal! Type /menu for Tip Options! Tip 25 & Rate me! New Videos @ OF/chroniclove69 Link in Bi"
-    },
-    {
-      "avg_users": 7134,
+      "avg_users": 7189,
       "subject": "GOAL: I’m jumping on top of you, and my boobs are shaking in the oil.💦🩷// Hi, I'm Mila and I want to drive you crazy.🤪❤ "
     },
     {
-      "avg_users": 7091,
+      "avg_users": 7183,
+      "subject": "Make me #squirt=1600⭐Pvt open⭐Ticket Show-Ride dildo⭐Tip 169 to spin=instant 100%prize⭐ #new vids #bigboobs #anal #daddy"
+    },
+    {
+      "avg_users": 7146,
       "subject": "❤️ Lets play! 💦 🎯 suck dildo [1447 tokens left] #bigtits #bigass #deepthroat #lovense #pawg"
     },
     {
-      "avg_users": 7073,
+      "avg_users": 7129,
       "subject": "🫦 hand panties #teen #new #18 #brunette #petite [0 tokens remaining]"
     },
     {
-      "avg_users": 6925,
+      "avg_users": 7049,
+      "subject": "😈you know how make me wet with 55,222,333,500,777(NEW)and 2222 for cum/squirt😈 privates open❤  - Goal: Squirt 💦 [3624 to"
+    },
+    {
+      "avg_users": 6947,
       "subject": "Spidergirl 🕷️🕸️ 🎯 go upstairs [1791 tokens left] #dirtytalk #young #new #18 #sexy"
     },
     {
-      "avg_users": 6880,
+      "avg_users": 6934,
       "subject": "🎀 fav:44/120/222/444 #anal #squirt #fuckmachine #double #creamy"
     },
     {
-      "avg_users": 6775,
-      "subject": "🌸 GOAL: pinch my nipples  [199] 🌸 Fav patterns : 121,222,444,567 💗 #bigboobs #cute #blonde #tease #new"
+      "avg_users": 6881,
+      "subject": "CrazyGoal: 2 Cougars training a Kitten! fav vibe 33,101,222,1222, pvt open #milf #bigboobs #threesome"
     },
     {
-      "avg_users": 6611,
-      "subject": "'CrazyTicket': Hidden Cam show has ended"
+      "avg_users": 6761,
+      "subject": "🌸 GOAL: pinch my nipples  [199] 🌸 Fav patterns : 121,222,444,567 💗 #bigboobs #cute #blonde #tease #new"
     }
   ],
   "economy": {
-    "goal_median": 679,
-    "goal_p25": 333,
-    "goal_p75": 1362,
-    "goal_samples": 3100,
+    "goal_median": 683,
+    "goal_p25": 331,
+    "goal_p75": 1395,
+    "goal_samples": 3137,
     "top_patterns": [
       {
         "value": 222,
-        "count": 94
+        "count": 95
       },
       {
         "value": 111,
-        "count": 86
+        "count": 85
       },
       {
         "value": 333,
-        "count": 70
+        "count": 78
       },
       {
         "value": 100,
-        "count": 67
+        "count": 68
       },
       {
         "value": 99,
-        "count": 56
+        "count": 53
       },
       {
         "value": 25,
-        "count": 44
+        "count": 46
       },
       {
         "value": 77,
-        "count": 39
+        "count": 38
       },
       {
         "value": 38,
-        "count": 36
+        "count": 38
       },
       {
         "value": 200,
-        "count": 32
+        "count": 33
       },
       {
         "value": 55,
-        "count": 31
+        "count": 30
       }
     ],
     "multi_goal_share": 0.07,
-    "with_goal_share": 0.521,
-    "with_price_share": 0.656
+    "with_goal_share": 0.518,
+    "with_price_share": 0.657
   },
   "recommendation": {
     "tags": [
+      "innocent",
       "big",
       "aussie",
-      "innocent",
-      "shower",
+      "hush",
       "snowbunny",
       "fuck",
+      "shower",
       "abs",
-      "domination",
       "nora",
-      "19"
+      "domination"
     ],
-    "low_competition_tag": "abs"
+    "low_competition_tag": "shower"
   }
 }
