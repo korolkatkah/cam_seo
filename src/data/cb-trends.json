@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-08-25T06:01:29Z",
+  "generated_at": "2026-08-25T06:04:06Z",
   "gender": "f",
-  "hours_covered": 24.0,
+  "hours_covered": 23.8,
   "snapshots": 126,
-  "rooms_seen": 9871,
+  "rooms_seen": 9860,
   "preliminary": false,
   "best_hours_utc": [
     {
@@ -32,7 +32,7 @@
     },
     {
       "hour": 6,
-      "score": 933
+      "score": 947
     },
     {
       "hour": 7,
@@ -111,12 +111,12 @@
     },
     {
       "tag": "shower",
-      "avg_users": 9606,
+      "avg_users": 9605,
       "rooms": 8
     },
     {
       "tag": "aussie",
-      "avg_users": 6897,
+      "avg_users": 6962,
       "rooms": 33
     },
     {
@@ -126,23 +126,23 @@
     },
     {
       "tag": "domination",
-      "avg_users": 4835,
+      "avg_users": 5157,
       "rooms": 5
     },
     {
       "tag": "lesbian",
-      "avg_users": 4622,
+      "avg_users": 4755,
       "rooms": 56
     },
     {
       "tag": "boobs",
-      "avg_users": 4174,
+      "avg_users": 4200,
       "rooms": 53
     },
     {
-      "tag": "spank",
-      "avg_users": 4078,
-      "rooms": 6
+      "tag": "fuck",
+      "avg_users": 4110,
+      "rooms": 9
     },
     {
       "tag": "bigdildo",
@@ -155,34 +155,39 @@
       "rooms": 7
     },
     {
-      "tag": "fuck",
-      "avg_users": 3790,
-      "rooms": 9
-    },
-    {
       "tag": "nude",
       "avg_users": 3081,
       "rooms": 24
     },
     {
-      "tag": "longlegs",
-      "avg_users": 2844,
-      "rooms": 13
-    },
-    {
       "tag": "boots",
-      "avg_users": 2782,
+      "avg_users": 2752,
       "rooms": 17
     },
     {
+      "tag": "longlegs",
+      "avg_users": 2739,
+      "rooms": 13
+    },
+    {
       "tag": "teasing",
-      "avg_users": 2620,
+      "avg_users": 2621,
       "rooms": 14
     },
     {
       "tag": "ohmibod",
-      "avg_users": 2600,
-      "rooms": 19
+      "avg_users": 2604,
+      "rooms": 18
+    },
+    {
+      "tag": "oil",
+      "avg_users": 2528,
+      "rooms": 30
+    },
+    {
+      "tag": "smile",
+      "avg_users": 2322,
+      "rooms": 40
     },
     {
       "tag": "strip",
@@ -190,24 +195,14 @@
       "rooms": 8
     },
     {
-      "tag": "smile",
-      "avg_users": 2310,
-      "rooms": 40
-    },
-    {
-      "tag": "oil",
-      "avg_users": 2279,
-      "rooms": 30
-    },
-    {
       "tag": "pawg",
-      "avg_users": 2147,
-      "rooms": 92
+      "avg_users": 2139,
+      "rooms": 91
     },
     {
       "tag": "brunette",
-      "avg_users": 1991,
-      "rooms": 179
+      "avg_users": 2025,
+      "rooms": 180
     },
     {
       "tag": "pretty",
@@ -215,44 +210,49 @@
       "rooms": 9
     },
     {
-      "tag": "bigtoys",
-      "avg_users": 1682,
-      "rooms": 7
-    },
-    {
       "tag": "erotic",
-      "avg_users": 1664,
+      "avg_users": 1666,
       "rooms": 82
     },
     {
-      "tag": "blonde",
-      "avg_users": 1592,
-      "rooms": 659
+      "tag": "bigtoys",
+      "avg_users": 1635,
+      "rooms": 7
     },
     {
-      "tag": "daddy",
-      "avg_users": 1519,
-      "rooms": 289
+      "tag": "blonde",
+      "avg_users": 1587,
+      "rooms": 660
     },
     {
       "tag": "naked",
-      "avg_users": 1510,
+      "avg_users": 1536,
       "rooms": 57
     },
     {
-      "tag": "lush",
-      "avg_users": 1462,
-      "rooms": 240
+      "tag": "daddy",
+      "avg_users": 1518,
+      "rooms": 288
     },
     {
-      "tag": "dance",
-      "avg_users": 1406,
-      "rooms": 68
+      "tag": "lush",
+      "avg_users": 1455,
+      "rooms": 239
+    },
+    {
+      "tag": "sexy",
+      "avg_users": 1430,
+      "rooms": 185
     },
     {
       "tag": "petite",
-      "avg_users": 1403,
-      "rooms": 519
+      "avg_users": 1411,
+      "rooms": 520
+    },
+    {
+      "tag": "dance",
+      "avg_users": 1398,
+      "rooms": 68
     }
   ],
   "top_titles": [
@@ -338,18 +338,18 @@
     }
   ],
   "economy": {
-    "goal_median": 680,
-    "goal_p25": 323,
+    "goal_median": 681,
+    "goal_p25": 324,
     "goal_p75": 1395,
-    "goal_samples": 3049,
+    "goal_samples": 3065,
     "top_patterns": [
       {
         "value": 111,
-        "count": 98
+        "count": 99
       },
       {
         "value": 222,
-        "count": 95
+        "count": 94
       },
       {
         "value": 333,
@@ -357,23 +357,23 @@
       },
       {
         "value": 100,
-        "count": 60
+        "count": 57
       },
       {
         "value": 99,
-        "count": 53
+        "count": 52
       },
       {
         "value": 25,
         "count": 44
       },
       {
-        "value": 200,
+        "value": 55,
         "count": 37
       },
       {
-        "value": 55,
-        "count": 36
+        "value": 200,
+        "count": 37
       },
       {
         "value": 38,
@@ -381,11 +381,11 @@
       },
       {
         "value": 33,
-        "count": 33
+        "count": 32
       }
     ],
-    "multi_goal_share": 0.067,
-    "with_goal_share": 0.523,
+    "multi_goal_share": 0.066,
+    "with_goal_share": 0.522,
     "with_price_share": 0.657
   },
   "recommendation": {
@@ -396,11 +396,11 @@
       "student",
       "domination",
       "lesbian",
-      "spank",
       "bigdildo",
       "abs",
-      "fuck"
+      "fuck",
+      "strip"
     ],
-    "low_competition_tag": "spank"
+    "low_competition_tag": "bigdildo"
   }
 }
