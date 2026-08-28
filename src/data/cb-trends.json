@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-08-28T15:01:25Z",
+  "generated_at": "2026-08-28T16:01:23Z",
   "gender": "f",
   "hours_covered": 24.0,
   "snapshots": 99,
-  "rooms_seen": 9307,
+  "rooms_seen": 9327,
   "preliminary": false,
   "best_hours_utc": [
     {
@@ -68,11 +68,11 @@
     },
     {
       "hour": 15,
-      "score": 929
+      "score": 983
     },
     {
       "hour": 16,
-      "score": 934
+      "score": 939
     },
     {
       "hour": 17,
@@ -105,94 +105,89 @@
   ],
   "top_tags": [
     {
+      "tag": "student",
+      "avg_users": 10763,
+      "rooms": 26
+    },
+    {
       "tag": "english",
-      "avg_users": 10456,
+      "avg_users": 10229,
       "rooms": 8
     },
     {
       "tag": "snowbunny",
-      "avg_users": 10283,
+      "avg_users": 9790,
       "rooms": 10
     },
     {
-      "tag": "student",
-      "avg_users": 9679,
-      "rooms": 25
-    },
-    {
-      "tag": "pale",
-      "avg_users": 6303,
-      "rooms": 5
-    },
-    {
       "tag": "big",
-      "avg_users": 5669,
+      "avg_users": 5819,
       "rooms": 15
     },
     {
       "tag": "chat",
-      "avg_users": 4828,
+      "avg_users": 4907,
       "rooms": 11
     },
     {
       "tag": "fuck",
-      "avg_users": 4773,
-      "rooms": 10
+      "avg_users": 4555,
+      "rooms": 9
     },
     {
       "tag": "smile",
-      "avg_users": 4004,
+      "avg_users": 4089,
       "rooms": 53
     },
     {
       "tag": "ohmibod",
-      "avg_users": 3478,
+      "avg_users": 3506,
       "rooms": 16
     },
     {
+      "tag": "exhibitionist",
+      "avg_users": 3328,
+      "rooms": 5
+    },
+    {
       "tag": "lesbian",
-      "avg_users": 3126,
-      "rooms": 61
+      "avg_users": 3150,
+      "rooms": 59
     },
     {
       "tag": "love",
-      "avg_users": 2732,
-      "rooms": 12
-    },
-    {
-      "tag": "oil",
-      "avg_users": 2724,
-      "rooms": 32
+      "avg_users": 2674,
+      "rooms": 14
     },
     {
       "tag": "anime",
-      "avg_users": 2606,
-      "rooms": 28
+      "avg_users": 2656,
+      "rooms": 27
     },
     {
-      "tag": "flexible",
-      "avg_users": 2524,
-      "rooms": 83
+      "tag": "oil",
+      "avg_users": 2575,
+      "rooms": 33
     },
     {
       "tag": "19",
-      "avg_users": 2523,
+      "avg_users": 2558,
       "rooms": 11
     },
     {
-      "tag": "nonude",
-      "avg_users": 1928,
-      "rooms": 167
+      "tag": "flexible",
+      "avg_users": 2529,
+      "rooms": 81
     },
     {
-      "tag": "lush",
-      "avg_users": 1887,
-      "rooms": 227
+      "tag": "nonude",
+      "avg_users": 1882,
+      "rooms": 172
     },
     {
       "tag": "sensual",
-      "avg_users": 1829,
-      "rooms": 43
+      "avg_users": 1822,
+      "rooms": 44
     },
     {
       "tag": "ginger",
@@ -200,64 +195,69 @@
       "rooms": 7
     },
     {
-      "tag": "smallboobs",
-      "avg_users": 1641,
-      "rooms": 33
+      "tag": "lush",
+      "avg_users": 1779,
+      "rooms": 225
     },
     {
       "tag": "fit",
-      "avg_users": 1624,
-      "rooms": 160
+      "avg_users": 1602,
+      "rooms": 166
     },
     {
       "tag": "aussie",
-      "avg_users": 1598,
+      "avg_users": 1597,
       "rooms": 29
     },
     {
+      "tag": "smallboobs",
+      "avg_users": 1594,
+      "rooms": 33
+    },
+    {
       "tag": "brunette",
-      "avg_users": 1557,
-      "rooms": 172
-    },
-    {
-      "tag": "sexy",
-      "avg_users": 1459,
-      "rooms": 168
-    },
-    {
-      "tag": "kinky",
-      "avg_users": 1452,
-      "rooms": 61
-    },
-    {
-      "tag": "twerk",
-      "avg_users": 1394,
-      "rooms": 81
-    },
-    {
-      "tag": "young",
-      "avg_users": 1356,
-      "rooms": 1191
-    },
-    {
-      "tag": "goddess",
-      "avg_users": 1331,
-      "rooms": 43
-    },
-    {
-      "tag": "pvt",
-      "avg_users": 1325,
-      "rooms": 290
+      "avg_users": 1540,
+      "rooms": 171
     },
     {
       "tag": "dirtytalk",
-      "avg_users": 1312,
-      "rooms": 133
+      "avg_users": 1535,
+      "rooms": 135
+    },
+    {
+      "tag": "sexy",
+      "avg_users": 1469,
+      "rooms": 168
+    },
+    {
+      "tag": "twerk",
+      "avg_users": 1423,
+      "rooms": 79
+    },
+    {
+      "tag": "kinky",
+      "avg_users": 1417,
+      "rooms": 61
+    },
+    {
+      "tag": "young",
+      "avg_users": 1404,
+      "rooms": 1193
+    },
+    {
+      "tag": "dance",
+      "avg_users": 1393,
+      "rooms": 68
+    },
+    {
+      "tag": "teen",
+      "avg_users": 1321,
+      "rooms": 1695
     }
   ],
   "top_titles": [
     {
-      "avg_users": 14768,
+      "avg_users": 14506,
       "subject": "nude only on OF/FANSLY (bio) | Goal: shower show *-* »  [ 3366 tokens left ] | #bigboobs #teen #nonude"
     },
     {
@@ -265,44 +265,44 @@
       "subject": "Ticket Show is over - Thanks everyone for joining!"
     },
     {
-      "avg_users": 10237,
-      "subject": "Make me cum [2031 tokens left] #18 #latina #teen #squirt #bigass"
+      "avg_users": 11258,
+      "subject": "Special levels 222 * 444 * 888 * 1234 - Multi-Goal :   ❤️lick pussy/squirt show❤️ #18 #young #teen #petite #student"
     },
     {
       "avg_users": 9929,
       "subject": "🎀 merry friyay 💗 goal : chair tease 😈 💖 #teen #bigboobs #bigass #new #18  [4593 tokens remaining]"
     },
     {
-      "avg_users": 9546,
-      "subject": "ClassicTicket: Hidden Cam show is over.  Type /cmds to see all commands."
+      "avg_users": 9763,
+      "subject": "Make me cum [2031 tokens left] #18 #latina #teen #squirt #bigass"
     },
     {
-      "avg_users": 9285,
-      "subject": "Special levels 222 * 444 * 888 * 1234 - Multi-Goal :   ❤️lick pussy/squirt show❤️ #18 #young #teen #petite #student"
+      "avg_users": 9546,
+      "subject": "ClassicTicket: Hidden Cam show is over.  Type /cmds to see all commands."
     },
     {
       "avg_users": 9203,
       "subject": "Click to watch me ❤ // My favourite patterns 120, 160, 222, 301 // #new #lovense #teen #natural #18"
     },
     {
+      "avg_users": 8577,
+      "subject": "I'am back! Goal:  get me to orgasm 🦊 #18 #blonde #new #young #shy ❤ [0 tokens remaining]"
+    },
+    {
+      "avg_users": 8480,
+      "subject": "I am Eva and I wanna reach 500 👍 Orgasm  :> #new #shy #cute #young #18  [295 tokens remaining]"
+    },
+    {
+      "avg_users": 8320,
+      "subject": "SEE TITTS + WET [1174 tokens left] SHH GARAGE TIME/menu💙CHECK BIO💙 favorite VIBES 99,123,499,999   #new #squirt #18 #big"
+    },
+    {
       "avg_users": 8281,
       "subject": "Hey, I’m Masha! Look at my tip menu and let’s have fun! #18 #feet #teen #lush #young"
     },
     {
-      "avg_users": 8084,
-      "subject": "I'am back! Goal:  get me to orgasm 🦊 #18 #blonde #new #young #shy ❤ [197 tokens remaining]"
-    },
-    {
-      "avg_users": 7992,
-      "subject": "I am Eva and I wanna reach 500 👍 Rub my pussy panties on my knees :> #new #shy #cute #young #18  [0 tokens remaining]"
-    },
-    {
       "avg_users": 7946,
       "subject": "Goal: topless witch shimmer+ bodytoor💕 💦 how are u? 💦 #new #shy #natural #skinny #flexible"
-    },
-    {
-      "avg_users": 7619,
-      "subject": "goal FLASH ASSHOLE   | wheel - 80| #feet #natural #pvt [350 tokens remaining]"
     },
     {
       "avg_users": 7132,
@@ -313,11 +313,11 @@
       "subject": "GOAL: CUMM!!! ❤️ DILDO DEEP AND FASTER🩷 #anal #cum #feet #teen #young"
     },
     {
-      "avg_users": 6867,
-      "subject": "CrazyTicket: PAW IS BACK! 😈 JUST SENSUAL STRIP LONG SHOW + ORGASM AT END WITH MIC 😈 | TICKET PRICE: 289"
+      "avg_users": 7041,
+      "subject": "'CrazyTicket': Hidden Cam show has ended"
     },
     {
-      "avg_users": 6761,
+      "avg_users": 6764,
       "subject": "nice guys make girls cum first"
     },
     {
@@ -325,82 +325,82 @@
       "subject": "Disney Princess <3 - Multi-Goal :  ⭐BIG SQUIRT⭐ #asian #lovense #squirt #teen #shy"
     },
     {
-      "avg_users": 6557,
-      "subject": "SEE TITTS + WET [1059 tokens left] SHH GARAGE TIME/menu💙CHECK BIO💙 favorite VIBES 99,123,499,999   #new #squirt #18 #big"
-    },
-    {
-      "avg_users": 6387,
+      "avg_users": 6367,
       "subject": "GOAL: squirt [568 tokens remaining] hot show #pvt #brunette #lovense #lesbian #squirt"
     },
     {
       "avg_users": 6292,
       "subject": "🫦 lotion chest + booty w hard spanks #teen #new #18 #brunette #petite [2153 tokens remaining]"
+    },
+    {
+      "avg_users": 6143,
+      "subject": "Norman/OKC"
     }
   ],
   "economy": {
-    "goal_median": 708,
-    "goal_p25": 319,
-    "goal_p75": 1516,
-    "goal_samples": 3008,
+    "goal_median": 702,
+    "goal_p25": 317,
+    "goal_p75": 1500,
+    "goal_samples": 3003,
     "top_patterns": [
       {
         "value": 111,
-        "count": 101
+        "count": 100
       },
       {
         "value": 222,
         "count": 97
       },
       {
+        "value": 333,
+        "count": 67
+      },
+      {
         "value": 100,
         "count": 67
       },
       {
-        "value": 333,
-        "count": 62
-      },
-      {
         "value": 99,
-        "count": 44
-      },
-      {
-        "value": 25,
-        "count": 41
+        "count": 49
       },
       {
         "value": 55,
-        "count": 39
+        "count": 45
       },
       {
-        "value": 200,
-        "count": 32
+        "value": 25,
+        "count": 38
       },
       {
         "value": 38,
+        "count": 34
+      },
+      {
+        "value": 50,
         "count": 32
       },
       {
-        "value": 69,
-        "count": 32
+        "value": 200,
+        "count": 31
       }
     ],
-    "multi_goal_share": 0.068,
+    "multi_goal_share": 0.067,
     "with_goal_share": 0.542,
-    "with_price_share": 0.672
+    "with_price_share": 0.673
   },
   "recommendation": {
     "tags": [
+      "student",
       "english",
       "snowbunny",
-      "student",
-      "pale",
       "big",
       "chat",
       "fuck",
+      "exhibitionist",
       "ginger",
       "19",
-      "love"
+      "ohmibod"
     ],
-    "low_competition_tag": "fuck"
+    "low_competition_tag": "exhibitionist"
   }
 }
