@@ -1,106 +1,106 @@
 {
-  "generated_at": "2026-08-30T20:01:03Z",
+  "generated_at": "2026-08-30T21:01:02Z",
   "tag": "girls",
   "hours_covered": 24.0,
   "snapshots": 104,
-  "rooms_seen": 3028,
+  "rooms_seen": 3030,
   "preliminary": false,
   "best_hours_utc": [
     {
       "hour": 0,
-      "score": 179
+      "score": 86
     },
     {
       "hour": 1,
-      "score": 172
+      "score": 84
     },
     {
       "hour": 2,
-      "score": 178
+      "score": 81
     },
     {
       "hour": 3,
-      "score": 195
+      "score": 87
     },
     {
       "hour": 4,
-      "score": 200
+      "score": 89
     },
     {
       "hour": 5,
-      "score": 216
+      "score": 102
     },
     {
       "hour": 6,
-      "score": 228
+      "score": 107
     },
     {
       "hour": 7,
-      "score": 230
+      "score": 100
     },
     {
       "hour": 8,
-      "score": 225
+      "score": 100
     },
     {
       "hour": 9,
-      "score": 211
+      "score": 95
     },
     {
       "hour": 10,
-      "score": 214
+      "score": 106
     },
     {
       "hour": 11,
-      "score": 213
+      "score": 101
     },
     {
       "hour": 12,
-      "score": 224
+      "score": 110
     },
     {
       "hour": 13,
-      "score": 257
+      "score": 118
     },
     {
       "hour": 14,
-      "score": 275
+      "score": 117
     },
     {
       "hour": 15,
-      "score": 259
+      "score": 107
     },
     {
       "hour": 16,
-      "score": 242
+      "score": 104
     },
     {
       "hour": 17,
-      "score": 261
+      "score": 117
     },
     {
       "hour": 18,
-      "score": 236
+      "score": 110
     },
     {
       "hour": 19,
-      "score": 225
+      "score": 101
     },
     {
       "hour": 20,
-      "score": 218
+      "score": 103
     },
     {
       "hour": 21,
-      "score": 232
+      "score": 94
     },
     {
       "hour": 22,
-      "score": 214
+      "score": 90
     },
     {
       "hour": 23,
-      "score": 188
+      "score": 88
     }
   ]
 }
