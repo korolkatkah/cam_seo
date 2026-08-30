@@ -4,6 +4,187 @@ Running log of daily/session-based SEO & promotion action plans. Newest entry on
 
 ---
 
+## 2026-08-30
+
+### Search Console baseline — first real pull on the `ewohub.com` property (28 days: 2026-07-30 → 2026-08-27)
+
+This is the first GSC data pulled against `sc-domain:ewohub.com` since the domain migration (2026-07-21) —
+not directly comparable to the older `ewo.cam`-property numbers logged on 2026-07-10/07-19, which are a
+different, now-inactive property. Treat this as a fresh baseline, not a continuation of that trendline.
+
+**Site-wide totals:** 25 impressions, 1 click, CTR 4%, avg position 22.2. Sitemap (`sitemap-index.xml`)
+submitted 2026-07-21, last downloaded 2026-08-23, 0 errors/0 warnings — indexing plumbing is confirmed
+healthy, so low volume is a demand/ranking problem, not a crawl problem.
+
+**Data caveat worth flagging**: the totals row (25 impressions) doesn't reconcile with the sum of the
+per-page breakdown (51 impressions across the 18 pages below) — roughly double, not sampling noise. Likely
+a `searchType` filter difference between the two queries in `fetch-search-console.mjs` (e.g. totals scoped
+to `web` only, page breakdown unscoped) rather than a real anomaly. Worth a quick look at the script next
+time it's touched, but doesn't change the qualitative read below — treat the per-page numbers as the more
+granular, trustworthy source when the two disagree.
+
+**Query-level data is still almost empty**: only 2 queries recorded, both branded/typo — `eohub` (3
+impressions, position 88) and `ewo` (1 impression, position 69). No topical/content query has enough volume
+yet to surface as its own row. This confirms: none of the published articles are currently pulling
+measurable search demand for the phrases they were written around — the site is still below GSC's reporting
+threshold for almost everything except its own (misspelled) brand name.
+
+**Page-level data is the useful signal this round — 18 pages got impressions, several ranking well:**
+
+| Page | Impr | Pos | Notes |
+|---|---|---|---|
+| `/` (homepage) | 17 | 31.5 | Most impressions of any page, but buried on page 3-4; only actual click on the whole account (1, from Romania, position 1 — reads as a branded lookup, not organic discovery) |
+| `/how-cam-algorithm-ranks-rooms` | 4 | 2 | Cross-platform algorithm explainer; 139 internal links pointing to it, most of any content page |
+| `/stripscore-cam-rank-explained` (root) | 4 | 3.25 | |
+| `/ro/stripscore-cam-rank-explained` | 4 | 3.5 | Same cluster ranking pos 2-4 in **3 separate locales** simultaneously (root/ro/uk) — see below |
+| `/uk/stripscore-cam-rank-explained` | 1 | 3 | |
+| `/ro/platforms-we-work-with` | 4 | 3 | |
+| `/best-streaming-times-by-region` | 3 | 3.3 | |
+| `/new-model-growth` | 2 | 2 | 106 internal links |
+| `/uk/raise-your-room-ranking-score` | 2 | 4 | Confirms the historic EN-only gap on this page (flagged 2026-07-10/07-19, CLAUDE.md "known gaps") is now actually fixed — page exists and ranks in all 8 locales |
+| `/de/stripchat-promo` | 2 | 3.5 | |
+| `/model-promotion` | 1 | 2 | Core commercial page, 189 internal links — **most-linked page on the whole site** |
+| `/studio-traffic` | 1 | 3 | 70 internal links |
+| `/ro/studio-scaling` | 1 | 4 | |
+| `/ro/webcam-model-income-guide` | 1 | 5 | |
+| `/es/stripchat-promo` | 1 | 4 | |
+| `/ro/stripchat-promo` | 1 | 6 | |
+| `/ro/stripchat-ai-model-recommendations` | 1 | 7 | |
+| `/ro/webcam-earnings-by-platform` | 1 | 6 | |
+
+Device split: mobile CTR 14% (1/7) vs desktop 0% (0/18) — directionally interesting but the sample is far
+too small (8 total clicks-eligible impressions) to act on. Country split: impressions scattered 1-2 each
+across 10 countries (ROU, ARG, COL, DEU, ECU, FRA, IND, IRN, MYS, NLD) with zero concentration anywhere;
+Romania is the only country that converted an impression into a click.
+
+### Reading the signal: position is good, volume is the bottleneck — not content quantity
+
+The headline pattern: **6 pages are already sitting at position 2-7** (basically top-of-page-1), across
+2-4 different locale variants in some cases, yet each gets only 1-4 impressions in 28 days. That is not a
+ranking problem — Google already trusts these pages enough to place them above most of the internet for
+whatever phrase currently triggers them. It's a **keyword-breadth problem**: the phrases these pages are
+currently matching have near-zero real search volume. Meanwhile the homepage gets the most impressions
+(17) of anything on the site but sits at position 31 — the inverse failure mode, broad-enough terms but not
+enough authority yet to rank for them.
+
+Net conclusion for this round: **new article production is not the current bottleneck — strengthening and
+re-targeting the small set of pages that already prove Google will rank this site's content is the higher-
+leverage move right now.** Concretely:
+
+**Priority 1 — `stripscore-cam-rank-explained` is the strongest proven cluster on the site.** It's the only
+topic ranking pos 2-4 in three locales at once (root/ro/uk), yet it has the *fewest* internal links (64
+files) of any of the six top-2-7 pages — link equity hasn't caught up to how well it's already performing.
+Two moves, both within the Stripchat-pipeline scope where applicable:
+  - Add more contextual internal links to it from Stripchat-tagged blog articles (currently under-linked
+    relative to its performance) — this is fair game for the daily pipeline (new/edited Stripchat articles
+    can link to it) without violating the Stripchat-only scope.
+  - Its title (`What Is Stripscore? Cam Rank Explained Across Chaturbate, Stripchat, BongaCams &
+    LiveJasmin`) is a glossary/definitional framing, which is inherently low-volume. Consider whether a
+    broader, more query-matching angle exists ("stripchat ranking algorithm", "chaturbate score checker")
+    without duplicating `/how-cam-algorithm-ranks-rooms`'s existing signal-breakdown scope — this needs a
+    content-strategy decision, not just a title tweak, so flagging rather than prescribing the exact
+    rewrite.
+
+**Priority 2 — `/model-promotion` and `/studio-traffic` show the biggest mismatch between link investment
+and search return.** These are the site's core commercial pages (189 and 70 internal links respectively —
+`/model-promotion` is the single most-linked page on the entire site) but return only 1 impression each.
+They already rank position 2-3 for *something* — the problem is that something is almost certainly a
+narrow long-tail phrase, not the actual competitive commercial terms (recall the 2026-07-10 competitor
+pass: arunatalent.com, seocircular.com, bird.marketing, trafficpills.com etc. are actively ranking for
+"webcam model promotion service" / "cam model traffic growth service" type queries). Recommend a title/meta
+and on-page H2 pass to explicitly cover those higher-volume commercial phrases alongside the current copy,
+rather than writing new pages to chase the same intent.
+
+  **Scope flag, not a decision I'm making unilaterally**: `/model-promotion` and `/studio-traffic` are
+  general service pages, not Stripchat-specific — they fall outside the daily autonomous pipeline's hard
+  Stripchat-only scope (per CLAUDE.md). Strengthening them (title/meta rewrite, section expansion) needs to
+  happen as manual/session work, not via the scheduled tasks, unless the user wants to explicitly widen the
+  pipeline's scope to include periodic refresh passes on existing high-value non-Stripchat pages. Raising
+  this as a question rather than changing the scope myself.
+
+**Priority 3 — Romania is quietly the best-performing locale.** 6 of the 18 impression-generating pages are
+`/ro/` routes (platforms-we-work-with, studio-scaling, webcam-model-income-guide,
+stripchat-ai-model-recommendations, stripchat-promo, stripscore-cam-rank-explained) — more than any other
+single locale, including English. Combined with the already-built Romania geo page and the RO-specific
+content research from 2026-07-27 (multi-platform studio angle), this reinforces Romania as the market where
+the site's content is landing best right now. Worth a closer look next session at whether this is organic
+pull or an artifact of a specific referral/backlink; if organic, worth double-checking RO's `blog.astro`/
+`resources.astro` listings and internal linking are as complete as EN's before assuming parity.
+
+**Priority 4 — homepage: authority problem, not copy problem.** 17 impressions (most of any page) but
+position 31.5 and the only click on the account was a likely-branded Romania search. Title
+(`Webcam Model & Studio Promotion Platform`) and description are reasonably broad already — this reads as a
+domain-authority/backlink gap rather than something a meta-description rewrite fixes. Not an immediate
+action item, just don't waste effort re-wording homepage copy expecting it to move position 31→10 on its
+own.
+
+**Priority 5 — geo backlog stays queued behind the above.** France/Poland/Sweden remain the best next
+targets per the 2026-07-10 competitor research (open markets, no entrenched local agency competitor), and
+geo pages target a structurally different long-tail (country + service intent) genuinely absent from the
+site today — that's still worth doing, just sequenced after the higher-signal strengthening work above
+since GSC is explicitly telling us existing content isn't the constraint right now.
+
+### Sample-size caveat
+
+Every number above is 1-4 impressions per page over 28 days on a property with only ~5-6 weeks of history
+since the `ewohub.com` migration. Directionally useful (position clustering at 2-7 across a specific topic
+is a real signal even at n=4), but don't over-fit exact position/CTR figures. Re-pull in 3-4 weeks once more
+data has accumulated, and reconcile the totals-vs-byPage discrepancy noted above if it recurs.
+
+### Not done this session
+No site content was changed, no pages created/edited, no commits made — data pull and planning only.
+Competitor search (step 2.5 of the standing process) was not re-run this session; see 2026-07-10 entry for
+the last full competitor pass, still current as far as known.
+
+### Shipped (later same day)
+
+Follow-up session implementing Priority 1 and Priority 2 from the analysis above, with one scope
+correction to Priority 2 (see below). Build verified clean (`npm run build`, 260 pages, zero errors) and
+spot-checked via local preview (homepage, `/model-promotion` + `/de/model-promotion`, `/studio-traffic` +
+`/ro/studio-traffic`, `/stripchat-promo` + `/de/stripchat-promo`) before pushing.
+
+**A) Internal linking to `stripscore-cam-rank-explained` (Priority 1).** Added one natural in-body
+contextual link per page, inside existing prose (not a new card/section):
+- `stripchat-promo.astro` — all 8 locales (root, de, es, ro, uk, ru, fr, pt) — link added inside the
+  "How to Raise Your Stripscore With This Bot" section (or its translated equivalent).
+- `how-stripscore-works.astro` — all 8 locales — link added in the hero lead paragraph, playing off the
+  page's own "not what the term means" framing.
+- `stripchat-ai-model-recommendations.astro` — all 8 locales — link added where the page first names the
+  live-signal ranking metric (StripScore) driving Popular rankings.
+- `stripchat-popular-new-model-visibility.astro` — all 8 locales — link added where the page names
+  "current viewer count" as the core signal feeding the ranking metric.
+- `stripchat-goals-tip-menu-structure.astro` — all 8 locales — link added as a second link inside the
+  existing FAQ answer about whether goal/tip structure affects StripScore (alongside the existing link to
+  `how-stripscore-works`).
+
+`stripchat-vr-shows-worth-it` and `stripchat-model-news-studio-admin` were checked and deliberately
+skipped — no natural topical tie-in (equipment cost / product update content, not ranking content).
+
+**B) `/model-promotion` title/meta broadened for commercial search phrases (Priority 2), all 8 locales.**
+EN title/description:
+- title: "Webcam Model Promotion Service & Traffic Growth"
+- description: "Professional webcam model promotion service: audience growth strategy, targeted
+  marketing, and real traffic growth across Chaturbate, Stripchat, and more platforms."
+
+Also added one sentence to each locale's `art-intro` paragraph naturally introducing a "traffic growth
+service" equivalent phrase. de/es/ro/uk/ru/fr/pt titles and descriptions were adapted (not replaced) from
+each locale's existing copy to cover the equivalent commercial phrase in that language.
+
+**C) `/studio-traffic` title/meta sharpened — scope correction from the Priority 2 framing above.**
+On reading the actual page, `/studio-traffic` is a free live-analytics tool hub (streaming hours, tags,
+titles, show prices — no CTA, no service pitch), not a paid commercial service page. Rebranding it as a
+"traffic growth service" would have misrepresented the page and cannibalized `/studio-scaling`'s existing
+SEO target (the real paid studio-growth page). Instead sharpened toward what it actually is, for
+long-tail matching, all 8 locales. EN title/description:
+- title: "Free Chaturbate Analytics for Webcam Studios"
+- description: "Live Chaturbate data for studio admins: best streaming hours, top tags, top titles, and
+  average show prices — free, updated daily to help schedule models and grow traffic."
+
+**Deliberately not touched:** `stripscore-cam-rank-explained.astro`'s title/description, in any locale —
+flagged in Priority 1 above as needing a separate content-strategy decision, out of scope for this pass.
+
+---
+
 ## 2026-07-27
 
 ### Shipped: "VR Shows on Stripchat: Is the Equipment Worth It?" (all 6 languages)
