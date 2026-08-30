@@ -183,6 +183,24 @@ long-tail matching, all 8 locales. EN title/description:
 **Deliberately not touched:** `stripscore-cam-rank-explained.astro`'s title/description, in any locale —
 flagged in Priority 1 above as needing a separate content-strategy decision, out of scope for this pass.
 
+### Shipped (later same day, second follow-up): `stripscore-cam-rank-explained` retitled, all 8 locales
+
+User approved "Option A" of two title proposals for the open question flagged above — reposition the
+title away from the low-volume "Stripscore" brand term toward platform-name + generic score/rank
+terms. Title/meta/H1/hero-lead only; body sections, H2s, section ids, TOC links, and FAQ untouched
+(TOC still resolves to the same anchors).
+
+EN: old title `What Is Stripscore? Cam Rank Explained Across Chaturbate, Stripchat, BongaCams &
+LiveJasmin` → new title `Stripchat Score, Cam Rank & Room Rank Explained (All Platforms)`. Old
+description `Stripscore, cam rank, room rank — what these terms actually mean, whether every platform
+has one, and how the concept differs between Chaturbate, Stripchat, BongaCams, and LiveJasmin.` → new
+description `What "Stripchat score," cam rank, and room rank actually mean — and how the concept
+differs across Chaturbate, Stripchat, BongaCams, and LiveJasmin.` de/es/ro/uk/ru/fr/pt titles and
+descriptions adapted to the same platform-name-first framing in each language, matching each page's
+existing tone. Build verified clean (`npm run build`, 260 pages, zero errors); spot-checked via local
+preview on root, `/de`, `/ro`, and `/uk` — new title/H1 render correctly, TOC sidebar link
+(`#platform-cam-rank`) still scrolls to the right section.
+
 ---
 
 ## 2026-07-27
