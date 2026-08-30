@@ -110,22 +110,22 @@ def build_summary(rows, now_ts):
     hours_covered = (ts_all[-1] - ts_all[0]) / 3600 if len(ts_all) > 1 else 0
     n_snaps = len(ts_all)
 
-    # Average the viewers-per-room ratio *within each snapshot* first, then
-    # average those ratios across snapshots per hour. Summing raw viewer
-    # counts across snapshots (old approach) inflates the score for hours
-    # that happen to have more snapshots, since the same rooms keep getting
-    # re-counted while the unique-room denominator barely grows.
+    # Use the *median* room's viewer count within each snapshot, then average
+    # those medians across snapshots per hour. A plain mean (sum of viewers /
+    # room count) gets dragged way up by a handful of mega-popular rooms
+    # (thousands of viewers) sitting alongside hundreds of ordinary ones
+    # (tens of viewers), so it doesn't represent what a typical room sees.
+    # The median is robust to those outliers.
     by_ts = defaultdict(list)
     for r in public_rows:
         by_ts[r["ts"]].append(r)
-    snap_ratios = defaultdict(list)
+    snap_medians = defaultdict(list)
     for ts, snap_rows in by_ts.items():
         h = datetime.fromtimestamp(ts, tz=timezone.utc).hour
-        total_users = sum(r.get("num_users") or 0 for r in snap_rows)
-        n_rooms = len({r["username"] for r in snap_rows})
-        if n_rooms:
-            snap_ratios[h].append(total_users / n_rooms)
-    score = {h: statistics.mean(v) for h, v in snap_ratios.items()}
+        users_per_room = [r.get("num_users") or 0 for r in snap_rows]
+        if users_per_room:
+            snap_medians[h].append(statistics.median(users_per_room))
+    score = {h: round(statistics.mean(v)) for h, v in snap_medians.items()}
     best_hours = sorted(score, key=score.get, reverse=True)
 
     tag_users, tag_rooms = defaultdict(list), defaultdict(set)

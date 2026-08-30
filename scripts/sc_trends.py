@@ -87,21 +87,20 @@ def build_summary(rows):
     ts_all = sorted({r["ts"] for r in rows})
     hours_covered = (ts_all[-1] - ts_all[0]) / 3600 if len(ts_all) > 1 else 0
 
-    # Average viewers-per-room within each snapshot first, then average
-    # those per-snapshot averages across snapshots per hour. This avoids
-    # the same accumulation bug we hit on the Chaturbate collector: summing
-    # raw viewer counts across snapshots inflates hours that happen to have
-    # more snapshots in the window.
+    # Use the median room's viewer count within each snapshot, then average
+    # those medians across snapshots per hour — same fix as the Chaturbate
+    # collector: a plain mean gets dragged way up by a handful of
+    # mega-popular rooms, so it doesn't represent what a typical room sees.
     by_ts = defaultdict(list)
     for r in rows:
         by_ts[r["ts"]].append(r)
-    snap_avgs = defaultdict(list)
+    snap_medians = defaultdict(list)
     for ts, snap_rows in by_ts.items():
         h = datetime.fromtimestamp(ts, tz=timezone.utc).hour
         viewers = [r["viewers"] for r in snap_rows]
         if viewers:
-            snap_avgs[h].append(statistics.mean(viewers))
-    score = {h: statistics.mean(v) for h, v in snap_avgs.items()}
+            snap_medians[h].append(statistics.median(viewers))
+    score = {h: statistics.mean(v) for h, v in snap_medians.items()}
 
     return {
         "generated_at": datetime.now(tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
