@@ -1,0 +1,190 @@
+---
+import trends from '../data/cb-trends.json';
+
+interface Props {
+  lang?: string;
+}
+const { lang = 'en' } = Astro.props;
+
+const STR: Record<string, Record<string, string>> = {
+  en: {
+    liveNow: 'rooms online right now', private: 'in private shows',
+    updatedNow: 'Updated just now', updatedAgo: 'Updated {n} min ago',
+    trending: 'Trending tags', winner: "Today's top room", viewers: 'viewers',
+    traffic24h: 'Last 24h traffic',
+  },
+  de: {
+    liveNow: 'Räume gerade online', private: 'im Privatmodus',
+    updatedNow: 'Gerade eben aktualisiert', updatedAgo: 'Vor {n} Min. aktualisiert',
+    trending: 'Angesagte Tags', winner: 'Top-Raum heute', viewers: 'Zuschauer',
+    traffic24h: 'Traffic der letzten 24 Std.',
+  },
+  es: {
+    liveNow: 'salas en línea ahora mismo', private: 'en modo privado',
+    updatedNow: 'Actualizado justo ahora', updatedAgo: 'Actualizado hace {n} min',
+    trending: 'Tags en tendencia', winner: 'Sala top de hoy', viewers: 'espectadores',
+    traffic24h: 'Tráfico de las últimas 24h',
+  },
+  ro: {
+    liveNow: 'camere online chiar acum', private: 'în modul privat',
+    updatedNow: 'Actualizat chiar acum', updatedAgo: 'Actualizat acum {n} min',
+    trending: 'Taguri în tendințe', winner: 'Camera de top azi', viewers: 'spectatori',
+    traffic24h: 'Trafic din ultimele 24h',
+  },
+  uk: {
+    liveNow: 'кімнат онлайн просто зараз', private: 'у приватному режимі',
+    updatedNow: 'Оновлено щойно', updatedAgo: 'Оновлено {n} хв тому',
+    trending: 'Популярні теги', winner: 'Топ-кімната сьогодні', viewers: 'глядачів',
+    traffic24h: 'Трафік за останні 24 год',
+  },
+  ru: {
+    liveNow: 'комнат онлайн прямо сейчас', private: 'в приватном режиме',
+    updatedNow: 'Обновлено только что', updatedAgo: 'Обновлено {n} мин назад',
+    trending: 'Популярные теги', winner: 'Топ-комната сегодня', viewers: 'зрителей',
+    traffic24h: 'Трафик за последние 24ч',
+  },
+  fr: {
+    liveNow: 'salons en ligne à l’instant', private: 'en mode privé',
+    updatedNow: 'Mis à jour à l’instant', updatedAgo: 'Mis à jour il y a {n} min',
+    trending: 'Tags tendance', winner: 'Salon n°1 aujourd’hui', viewers: 'spectateurs',
+    traffic24h: 'Trafic des dernières 24h',
+  },
+  pt: {
+    liveNow: 'salas online agora', private: 'em modo privado',
+    updatedNow: 'Atualizado agora mesmo', updatedAgo: 'Atualizado há {n} min',
+    trending: 'Tags em alta', winner: 'Sala número 1 hoje', viewers: 'espectadores',
+    traffic24h: 'Tráfego das últimas 24h',
+  },
+};
+const t = STR[lang] ?? STR.en;
+
+const live = (trends as any).live ?? null;
+const trendingTags = (trends as any).trending_tags ?? [];
+const winner = (trends.top_titles ?? [])[0] ?? null;
+
+const hoursMap = new Map((trends.best_hours_utc ?? []).map((h: { hour: number; score: number }) => [h.hour, h.score]));
+const hours24 = Array.from({ length: 24 }, (_, i) => ({ hour: i, score: hoursMap.get(i) ?? 0 }));
+const maxScore = Math.max(1, ...hours24.map((h) => h.score));
+const sparkPoints = hours24
+  .map((h, i) => {
+    const x = (i / (hours24.length - 1)) * 240;
+    const y = 36 - (h.score / maxScore) * 32;
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  })
+  .join(' ');
+const hasSparkData = hours24.some((h) => h.score > 0);
+
+const freshTs = live?.generated_at ?? trends.generated_at ?? null;
+const hasAnyStat = live || trendingTags.length > 0 || winner || hasSparkData;
+---
+
+{hasAnyStat && (
+<section class="hero-stats">
+  <div class="hero-stats-inner">
+    {live && (
+      <div class="hstat-card">
+        <span class="hstat-dot"></span>
+        <span class="hstat-num">{live.rooms_online.toLocaleString()}</span>
+        <span class="hstat-label">{t.liveNow}</span>
+        {live.pct_private != null && (
+          <span class="hstat-sub">{live.pct_private}% {t.private}</span>
+        )}
+      </div>
+    )}
+
+    {trendingTags.length > 0 && (
+      <div class="hstat-card">
+        <span class="hstat-label">{t.trending}</span>
+        <div class="hstat-tags">
+          {trendingTags.map((tag: { tag: string; growth_pct: number }) => (
+            <span class="hstat-tag">{`#${tag.tag} `}<b>+{tag.growth_pct}%</b></span>
+          ))}
+        </div>
+      </div>
+    )}
+
+    {winner && (
+      <div class="hstat-card">
+        <span class="hstat-label">{t.winner}</span>
+        <span class="hstat-num">{`~${winner.avg_users.toLocaleString()} `}<small>{t.viewers}</small></span>
+        <span class="hstat-sub hstat-sub--clip">{winner.subject}</span>
+      </div>
+    )}
+
+    {hasSparkData && (
+      <div class="hstat-card hstat-spark">
+        <span class="hstat-label">{t.traffic24h}</span>
+        <svg viewBox="0 0 240 40" class="hstat-spark-svg" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points={sparkPoints} fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+    )}
+  </div>
+
+  {freshTs && (
+    <p class="hstat-updated" data-hstat-updated data-ts={freshTs} data-now={t.updatedNow} data-ago={t.updatedAgo}></p>
+  )}
+</section>
+)}
+
+<script>
+  function pad(n: number): string {
+    return String(n).padStart(2, '0');
+  }
+  document.querySelectorAll<HTMLElement>('[data-hstat-updated]').forEach((el) => {
+    const ts = el.dataset.ts;
+    if (!ts) return;
+    const render = () => {
+      const mins = Math.max(0, Math.floor((Date.now() - new Date(ts!).getTime()) / 60000));
+      el.textContent = mins < 1 ? (el.dataset.now ?? '') : (el.dataset.ago ?? '').replace('{n}', String(mins));
+    };
+    render();
+    setInterval(render, 60000);
+  });
+  void pad;
+</script>
+
+<style>
+  .hero-stats { padding: 0 clamp(1.25rem, 4vw, 2rem); margin-top: -0.5rem; position: relative; z-index: 5; }
+  .hero-stats-inner {
+    max-width: 1000px; margin-inline: auto;
+    display: grid; grid-template-columns: 1fr; gap: 0.75rem;
+  }
+  @media (min-width: 720px) {
+    .hero-stats-inner { grid-template-columns: repeat(4, 1fr); }
+  }
+  .hstat-card {
+    background: var(--bg-raised); border: 1px solid var(--border);
+    border-radius: 14px; padding: 0.9rem 1.1rem;
+    display: flex; flex-direction: column; gap: 0.2rem;
+  }
+  .hstat-dot {
+    width: 7px; height: 7px; background: #34d399; border-radius: 50%;
+    animation: hstat-pulse 2s infinite; display: inline-block; margin-right: 4px;
+  }
+  @keyframes hstat-pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
+  .hstat-label {
+    font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase;
+    color: var(--fg-faint); order: -1;
+  }
+  .hstat-num {
+    font-family: var(--font-heading, 'Josefin Sans', sans-serif); font-weight: 700; font-size: 1.375rem;
+    color: var(--fg);
+  }
+  .hstat-num small { font-family: var(--font-body); font-weight: 700; font-size: 0.75rem; color: var(--fg-muted); }
+  .hstat-sub { font-size: 0.75rem; color: var(--fg-muted); font-weight: 600; }
+  .hstat-sub--clip { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .hstat-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .hstat-tag {
+    font-size: 0.75rem; font-weight: 700; color: var(--fg);
+    background: var(--tag-bg); border: 1px solid var(--border);
+    border-radius: 99px; padding: 2px 9px;
+  }
+  .hstat-tag b { color: #16a34a; font-weight: 800; }
+  .hstat-spark { color: var(--fg); }
+  .hstat-spark-svg { width: 100%; height: 34px; }
+  .hstat-updated {
+    text-align: center; font-size: 0.6875rem; color: var(--fg-faint); font-weight: 600;
+    margin-top: 0.6rem;
+  }
+</style>
