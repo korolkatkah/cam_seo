@@ -11,49 +11,49 @@ const STR: Record<string, Record<string, string>> = {
     liveNow: 'rooms online right now', private: 'in private shows',
     updatedNow: 'Updated just now', updatedAgo: 'Updated {n} min ago',
     trending: 'Trending tags', winner: "Today's top room", viewers: 'viewers',
-    traffic24h: 'Last 24h traffic', exploreLink: 'Search models & see today’s leaderboard →',
+    traffic24h: 'Last 24h traffic', exploreLink: 'See today’s leaderboard →',
   },
   de: {
     liveNow: 'Räume gerade online', private: 'im Privatmodus',
     updatedNow: 'Gerade eben aktualisiert', updatedAgo: 'Vor {n} Min. aktualisiert',
     trending: 'Angesagte Tags', winner: 'Top-Raum heute', viewers: 'Zuschauer',
-    traffic24h: 'Traffic der letzten 24 Std.', exploreLink: 'Models suchen & Bestenliste ansehen →',
+    traffic24h: 'Traffic der letzten 24 Std.', exploreLink: 'Heutige Bestenliste ansehen →',
   },
   es: {
     liveNow: 'salas en línea ahora mismo', private: 'en modo privado',
     updatedNow: 'Actualizado justo ahora', updatedAgo: 'Actualizado hace {n} min',
     trending: 'Tags en tendencia', winner: 'Sala top de hoy', viewers: 'espectadores',
-    traffic24h: 'Tráfico de las últimas 24h', exploreLink: 'Busca modelos y ve el ranking de hoy →',
+    traffic24h: 'Tráfico de las últimas 24h', exploreLink: 'Ver el ranking de hoy →',
   },
   ro: {
     liveNow: 'camere online chiar acum', private: 'în modul privat',
     updatedNow: 'Actualizat chiar acum', updatedAgo: 'Actualizat acum {n} min',
     trending: 'Taguri în tendințe', winner: 'Camera de top azi', viewers: 'spectatori',
-    traffic24h: 'Trafic din ultimele 24h', exploreLink: 'Caută modele și vezi clasamentul de azi →',
+    traffic24h: 'Trafic din ultimele 24h', exploreLink: 'Vezi clasamentul de azi →',
   },
   uk: {
     liveNow: 'кімнат онлайн просто зараз', private: 'у приватному режимі',
     updatedNow: 'Оновлено щойно', updatedAgo: 'Оновлено {n} хв тому',
     trending: 'Популярні теги', winner: 'Топ-кімната сьогодні', viewers: 'глядачів',
-    traffic24h: 'Трафік за останні 24 год', exploreLink: 'Шукай моделей і дивись сьогоднішній рейтинг →',
+    traffic24h: 'Трафік за останні 24 год', exploreLink: 'Дивитись сьогоднішній рейтинг →',
   },
   ru: {
     liveNow: 'комнат онлайн прямо сейчас', private: 'в приватном режиме',
     updatedNow: 'Обновлено только что', updatedAgo: 'Обновлено {n} мин назад',
     trending: 'Популярные теги', winner: 'Топ-комната сегодня', viewers: 'зрителей',
-    traffic24h: 'Трафик за последние 24ч', exploreLink: 'Искать моделей и смотреть рейтинг сегодня →',
+    traffic24h: 'Трафик за последние 24ч', exploreLink: 'Смотреть рейтинг сегодня →',
   },
   fr: {
     liveNow: 'salons en ligne à l’instant', private: 'en mode privé',
     updatedNow: 'Mis à jour à l’instant', updatedAgo: 'Mis à jour il y a {n} min',
     trending: 'Tags tendance', winner: 'Salon n°1 aujourd’hui', viewers: 'spectateurs',
-    traffic24h: 'Trafic des dernières 24h', exploreLink: 'Rechercher des modèles et voir le classement du jour →',
+    traffic24h: 'Trafic des dernières 24h', exploreLink: 'Voir le classement du jour →',
   },
   pt: {
     liveNow: 'salas online agora', private: 'em modo privado',
     updatedNow: 'Atualizado agora mesmo', updatedAgo: 'Atualizado há {n} min',
     trending: 'Tags em alta', winner: 'Sala número 1 hoje', viewers: 'espectadores',
-    traffic24h: 'Tráfego das últimas 24h', exploreLink: 'Buscar modelos e ver o ranking de hoje →',
+    traffic24h: 'Tráfego das últimas 24h', exploreLink: 'Ver o ranking de hoje →',
   },
 };
 const t = STR[lang] ?? STR.en;
@@ -73,6 +73,7 @@ const sparkPoints = hours24
   })
   .join(' ');
 const hasSparkData = hours24.some((h) => h.score > 0);
+const sparkTickHours = [0, 6, 12, 18, 23];
 
 const freshTs = live?.generated_at ?? trends.generated_at ?? null;
 const hasAnyStat = live || trendingTags.length > 0 || winner || hasSparkData;
@@ -118,6 +119,11 @@ const lookupHref = lang === 'en' ? '/live-model-lookup' : `/${lang}/live-model-l
         <svg viewBox="0 0 240 40" class="hstat-spark-svg" preserveAspectRatio="none" aria-hidden="true">
           <polyline points={sparkPoints} fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
+        <div class="hstat-spark-axis" data-hstat-spark-axis>
+          {sparkTickHours.map((h) => (
+            <span class="hstat-spark-tick" data-utc-hour={h}>{String(h).padStart(2, '0')}:00</span>
+          ))}
+        </div>
       </div>
     )}
   </div>
@@ -144,7 +150,14 @@ const lookupHref = lang === 'en' ? '/live-model-lookup' : `/${lang}/live-model-l
     render();
     setInterval(render, 60000);
   });
-  void pad;
+
+  const tzOffsetMin = new Date().getTimezoneOffset();
+  document.querySelectorAll<HTMLElement>('[data-hstat-spark-axis] .hstat-spark-tick[data-utc-hour]').forEach((el) => {
+    const utcHour = Number(el.dataset.utcHour);
+    if (Number.isNaN(utcHour)) return;
+    const startTotal = (((utcHour * 60 - tzOffsetMin) % 1440) + 1440) % 1440;
+    el.textContent = `${pad(Math.floor(startTotal / 60))}:${pad(startTotal % 60)}`;
+  });
 </script>
 
 <style>
@@ -186,6 +199,10 @@ const lookupHref = lang === 'en' ? '/live-model-lookup' : `/${lang}/live-model-l
   .hstat-tag b { color: #16a34a; font-weight: 800; }
   .hstat-spark { color: var(--fg); }
   .hstat-spark-svg { width: 100%; height: 34px; }
+  .hstat-spark-axis {
+    display: flex; justify-content: space-between; margin-top: 2px;
+  }
+  .hstat-spark-tick { font-size: 0.625rem; font-weight: 600; color: var(--fg-faint); white-space: nowrap; }
   .hstat-updated {
     text-align: center; font-size: 0.6875rem; color: var(--fg-faint); font-weight: 600;
     margin-top: 0.6rem;

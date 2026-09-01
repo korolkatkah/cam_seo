@@ -9,121 +9,81 @@ const { lang = 'en' } = Astro.props;
 
 const STR: Record<string, Record<string, string>> = {
   en: {
-    h1: 'Live Lookup & Leaderboard',
-    lead: 'Search any username for its live status, compare two rooms side by side, or check who topped the charts each hour today.',
-    tabSearch: 'Search & Compare', tabLeaderboard: "Today's Leaderboard",
-    searchLabel: 'Search by username', searchPlaceholder: 'username', searchBtn: 'Search',
-    compareTitle: 'Compare two models', compareAPlaceholder: 'Model A username', compareBPlaceholder: 'Model B username', compareBtn: 'Compare',
-    onlineWord: 'Online', privateWord: 'Private show', publicWord: 'Public show', viewersWord: 'viewers',
-    notFound: 'Not currently online in today’s public data',
-    enterUsername: 'Enter a username above to check its live status',
+    h1: "Today's Leaderboard",
+    lead: "See today's top rooms and who led the traffic each hour — Chaturbate & Stripchat, updated automatically.",
+    boardNavLabel: 'Jump to section',
     leaderboardTitle: 'Top rooms today', hourlyTitle: 'Who led the traffic each hour',
-    hourCol: 'Hour (your time)', leaderCol: 'Leader', viewersCol: 'Viewers',
+    hourCol: 'Hour (your time)', leaderCol: 'Leader', viewersCol: 'Viewers', viewersWord: 'viewers',
     showMore: 'Show more', hide: 'Hide',
     comingSoon: 'Live index starting soon — check back shortly.',
     platformCb: 'Chaturbate', platformSc: 'Stripchat',
   },
   de: {
-    h1: 'Live-Suche & Bestenliste',
-    lead: 'Suche einen Benutzernamen nach seinem Live-Status, vergleiche zwei Räume nebeneinander oder sieh, wer heute in jeder Stunde die Charts anführte.',
-    tabSearch: 'Suche & Vergleich', tabLeaderboard: 'Heutige Bestenliste',
-    searchLabel: 'Nach Benutzername suchen', searchPlaceholder: 'Benutzername', searchBtn: 'Suchen',
-    compareTitle: 'Zwei Models vergleichen', compareAPlaceholder: 'Benutzername Model A', compareBPlaceholder: 'Benutzername Model B', compareBtn: 'Vergleichen',
-    onlineWord: 'Online', privateWord: 'Privatshow', publicWord: 'Öffentliche Show', viewersWord: 'Zuschauer',
-    notFound: 'Aktuell nicht online in den heutigen öffentlichen Daten',
-    enterUsername: 'Gib oben einen Benutzernamen ein, um den Live-Status zu prüfen',
+    h1: 'Heutige Bestenliste',
+    lead: 'Sieh die Top-Räume heute und wer in jeder Stunde die Charts anführte — Chaturbate & Stripchat, automatisch aktualisiert.',
+    boardNavLabel: 'Zu Abschnitt springen',
     leaderboardTitle: 'Top-Räume heute', hourlyTitle: 'Wer lag in jeder Stunde vorne',
-    hourCol: 'Stunde (deine Zeit)', leaderCol: 'Spitzenreiter', viewersCol: 'Zuschauer',
+    hourCol: 'Stunde (deine Zeit)', leaderCol: 'Spitzenreiter', viewersCol: 'Zuschauer', viewersWord: 'Zuschauer',
     showMore: 'Mehr anzeigen', hide: 'Ausblenden',
     comingSoon: 'Live-Index startet in Kürze — schau bald wieder vorbei.',
     platformCb: 'Chaturbate', platformSc: 'Stripchat',
   },
   es: {
-    h1: 'Búsqueda en Vivo y Ranking',
-    lead: 'Busca cualquier nombre de usuario para ver su estado en vivo, compara dos salas lado a lado, o comprueba quién encabezó las listas cada hora hoy.',
-    tabSearch: 'Buscar y Comparar', tabLeaderboard: 'Ranking de Hoy',
-    searchLabel: 'Buscar por nombre de usuario', searchPlaceholder: 'nombre de usuario', searchBtn: 'Buscar',
-    compareTitle: 'Comparar dos modelos', compareAPlaceholder: 'Usuario Modelo A', compareBPlaceholder: 'Usuario Modelo B', compareBtn: 'Comparar',
-    onlineWord: 'En línea', privateWord: 'Show privado', publicWord: 'Show público', viewersWord: 'espectadores',
-    notFound: 'No está en línea actualmente en los datos públicos de hoy',
-    enterUsername: 'Ingresa un nombre de usuario arriba para ver su estado en vivo',
+    h1: 'Ranking de Hoy',
+    lead: 'Mira las salas top de hoy y quién lideró el tráfico cada hora — Chaturbate y Stripchat, actualizado automáticamente.',
+    boardNavLabel: 'Ir a sección',
     leaderboardTitle: 'Salas top de hoy', hourlyTitle: 'Quién lideró el tráfico cada hora',
-    hourCol: 'Hora (tu zona horaria)', leaderCol: 'Líder', viewersCol: 'Espectadores',
+    hourCol: 'Hora (tu zona horaria)', leaderCol: 'Líder', viewersCol: 'Espectadores', viewersWord: 'espectadores',
     showMore: 'Mostrar más', hide: 'Ocultar',
     comingSoon: 'El índice en vivo empieza pronto — vuelve más tarde.',
     platformCb: 'Chaturbate', platformSc: 'Stripchat',
   },
   ro: {
-    h1: 'Căutare Live și Clasament',
-    lead: 'Caută orice nume de utilizator pentru statusul live, compară două camere una lângă alta, sau verifică cine a fost lider în fiecare oră azi.',
-    tabSearch: 'Căutare și Comparare', tabLeaderboard: 'Clasamentul de Azi',
-    searchLabel: 'Caută după nume de utilizator', searchPlaceholder: 'nume de utilizator', searchBtn: 'Caută',
-    compareTitle: 'Compară două modele', compareAPlaceholder: 'Utilizator Model A', compareBPlaceholder: 'Utilizator Model B', compareBtn: 'Compară',
-    onlineWord: 'Online', privateWord: 'Show privat', publicWord: 'Show public', viewersWord: 'spectatori',
-    notFound: 'Nu este online momentan în datele publice de azi',
-    enterUsername: 'Introdu un nume de utilizator mai sus pentru a verifica statusul live',
+    h1: 'Clasamentul de Azi',
+    lead: 'Vezi camerele de top de azi și cine a condus traficul în fiecare oră — Chaturbate și Stripchat, actualizat automat.',
+    boardNavLabel: 'Sari la secțiune',
     leaderboardTitle: 'Camerele de top azi', hourlyTitle: 'Cine a condus traficul în fiecare oră',
-    hourCol: 'Ora (fusul tău)', leaderCol: 'Lider', viewersCol: 'Spectatori',
+    hourCol: 'Ora (fusul tău)', leaderCol: 'Lider', viewersCol: 'Spectatori', viewersWord: 'spectatori',
     showMore: 'Arată mai multe', hide: 'Ascunde',
     comingSoon: 'Indexul live pornește în curând — revino mai târziu.',
     platformCb: 'Chaturbate', platformSc: 'Stripchat',
   },
   uk: {
-    h1: 'Живий пошук і рейтинг',
-    lead: 'Шукай будь-який нік, щоб перевірити живий статус, порівнюй дві кімнати поруч або перевір, хто очолював рейтинг щогодини сьогодні.',
-    tabSearch: 'Пошук і порівняння', tabLeaderboard: 'Сьогоднішній рейтинг',
-    searchLabel: 'Пошук за ніком', searchPlaceholder: 'нік', searchBtn: 'Шукати',
-    compareTitle: 'Порівняти дві моделі', compareAPlaceholder: 'Нік моделі A', compareBPlaceholder: 'Нік моделі B', compareBtn: 'Порівняти',
-    onlineWord: 'Онлайн', privateWord: 'Приватне шоу', publicWord: 'Публічне шоу', viewersWord: 'глядачів',
-    notFound: 'Зараз не онлайн у сьогоднішніх публічних даних',
-    enterUsername: 'Введи нік вище, щоб перевірити живий статус',
+    h1: 'Сьогоднішній рейтинг',
+    lead: 'Дивись топ-кімнати сьогодні і хто лідирував за трафіком щогодини — Chaturbate і Stripchat, оновлюється автоматично.',
+    boardNavLabel: 'Перейти до розділу',
     leaderboardTitle: 'Топ-кімнати сьогодні', hourlyTitle: 'Хто лідирував за трафіком щогодини',
-    hourCol: 'Година (твій час)', leaderCol: 'Лідер', viewersCol: 'Глядачів',
+    hourCol: 'Година (твій час)', leaderCol: 'Лідер', viewersCol: 'Глядачів', viewersWord: 'глядачів',
     showMore: 'Показати більше', hide: 'Сховати',
     comingSoon: 'Живий індекс скоро запуститься — заглядай пізніше.',
     platformCb: 'Chaturbate', platformSc: 'Stripchat',
   },
   ru: {
-    h1: 'Живой поиск и рейтинг',
-    lead: 'Ищи любой ник, чтобы проверить живой статус, сравнивай две комнаты рядом или проверь, кто возглавлял рейтинг каждый час сегодня.',
-    tabSearch: 'Поиск и сравнение', tabLeaderboard: 'Рейтинг сегодня',
-    searchLabel: 'Поиск по нику', searchPlaceholder: 'ник', searchBtn: 'Искать',
-    compareTitle: 'Сравнить двух моделей', compareAPlaceholder: 'Ник модели A', compareBPlaceholder: 'Ник модели B', compareBtn: 'Сравнить',
-    onlineWord: 'Онлайн', privateWord: 'Приватное шоу', publicWord: 'Публичное шоу', viewersWord: 'зрителей',
-    notFound: 'Сейчас не онлайн в сегодняшних публичных данных',
-    enterUsername: 'Введите ник выше, чтобы проверить живой статус',
+    h1: 'Рейтинг сегодня',
+    lead: 'Смотри топ-комнаты сегодня и кто лидировал по трафику каждый час — Chaturbate и Stripchat, обновляется автоматически.',
+    boardNavLabel: 'Перейти к разделу',
     leaderboardTitle: 'Топ-комнаты сегодня', hourlyTitle: 'Кто лидировал по трафику каждый час',
-    hourCol: 'Час (ваше время)', leaderCol: 'Лидер', viewersCol: 'Зрителей',
+    hourCol: 'Час (ваше время)', leaderCol: 'Лидер', viewersCol: 'Зрителей', viewersWord: 'зрителей',
     showMore: 'Показать ещё', hide: 'Скрыть',
     comingSoon: 'Живой индекс скоро запустится — загляните позже.',
     platformCb: 'Chaturbate', platformSc: 'Stripchat',
   },
   fr: {
-    h1: 'Recherche en Direct et Classement',
-    lead: 'Étudie n’importe quel nom d’utilisateur pour son statut en direct, compare deux salons côte à côte, ou vérifie qui a dominé le classement chaque heure aujourd’hui.',
-    tabSearch: 'Recherche et Comparaison', tabLeaderboard: 'Classement du Jour',
-    searchLabel: 'Rechercher par nom d’utilisateur', searchPlaceholder: 'nom d’utilisateur', searchBtn: 'Rechercher',
-    compareTitle: 'Comparer deux modèles', compareAPlaceholder: 'Utilisateur Modèle A', compareBPlaceholder: 'Utilisateur Modèle B', compareBtn: 'Comparer',
-    onlineWord: 'En ligne', privateWord: 'Show privé', publicWord: 'Show public', viewersWord: 'spectateurs',
-    notFound: 'Actuellement hors ligne dans les données publiques d’aujourd’hui',
-    enterUsername: 'Entrez un nom d’utilisateur ci-dessus pour vérifier son statut en direct',
+    h1: 'Classement du Jour',
+    lead: 'Découvre les meilleurs salons du jour et qui a mené le trafic chaque heure — Chaturbate et Stripchat, mis à jour automatiquement.',
+    boardNavLabel: 'Aller à la section',
     leaderboardTitle: 'Salons les plus populaires aujourd’hui', hourlyTitle: 'Qui a mené le trafic chaque heure',
-    hourCol: 'Heure (votre fuseau)', leaderCol: 'Leader', viewersCol: 'Spectateurs',
+    hourCol: 'Heure (votre fuseau)', leaderCol: 'Leader', viewersCol: 'Spectateurs', viewersWord: 'spectateurs',
     showMore: 'Afficher plus', hide: 'Masquer',
     comingSoon: 'L’index en direct démarre bientôt — revenez plus tard.',
     platformCb: 'Chaturbate', platformSc: 'Stripchat',
   },
   pt: {
-    h1: 'Busca ao Vivo e Ranking',
-    lead: 'Busque qualquer nome de usuário para ver o status ao vivo, compare duas salas lado a lado, ou confira quem liderou o ranking a cada hora hoje.',
-    tabSearch: 'Busca e Comparação', tabLeaderboard: 'Ranking de Hoje',
-    searchLabel: 'Buscar por nome de usuário', searchPlaceholder: 'nome de usuário', searchBtn: 'Buscar',
-    compareTitle: 'Comparar dois modelos', compareAPlaceholder: 'Usuário Modelo A', compareBPlaceholder: 'Usuário Modelo B', compareBtn: 'Comparar',
-    onlineWord: 'Online', privateWord: 'Show privado', publicWord: 'Show público', viewersWord: 'espectadores',
-    notFound: 'No momento não está online nos dados públicos de hoje',
-    enterUsername: 'Digite um nome de usuário acima para verificar o status ao vivo',
+    h1: 'Ranking de Hoje',
+    lead: 'Veja as salas em destaque hoje e quem liderou o tráfego a cada hora — Chaturbate e Stripchat, atualizado automaticamente.',
+    boardNavLabel: 'Ir para a seção',
     leaderboardTitle: 'Salas em destaque hoje', hourlyTitle: 'Quem liderou o tráfego a cada hora',
-    hourCol: 'Hora (seu fuso)', leaderCol: 'Líder', viewersCol: 'Espectadores',
+    hourCol: 'Hora (seu fuso)', leaderCol: 'Líder', viewersCol: 'Espectadores', viewersWord: 'espectadores',
     showMore: 'Mostrar mais', hide: 'Ocultar',
     comingSoon: 'O índice ao vivo começa em breve — volte mais tarde.',
     platformCb: 'Chaturbate', platformSc: 'Stripchat',
@@ -131,15 +91,16 @@ const STR: Record<string, Record<string, string>> = {
 };
 const t = STR[lang] ?? STR.en;
 
-const hasCbIndex = (cbLive.live_index?.length ?? 0) > 0;
-const hasScIndex = (scLive.live_index?.length ?? 0) > 0;
 const hasCbBoard = (cbLive.top_rooms_today?.length ?? 0) > 0 || (cbLive.hourly_leaders?.length ?? 0) > 0;
 const hasScBoard = (scLive.top_rooms_today?.length ?? 0) > 0 || (scLive.hourly_leaders?.length ?? 0) > 0;
-
-// Escape "<" so this can't break out of the <script> tag it's embedded in —
-// room subjects/usernames come from public platform data, not our own copy.
-const cbLiveJson = JSON.stringify(cbLive).replace(/</g, '\\u003c');
-const scLiveJson = JSON.stringify(scLive).replace(/</g, '\\u003c');
+const hasCbHourly = (cbLive.hourly_leaders?.length ?? 0) > 0;
+const hasScHourly = (scLive.hourly_leaders?.length ?? 0) > 0;
+const boardSections = [
+  { id: 'llt-rooms-cb', label: `${t.platformCb} — ${t.leaderboardTitle}` },
+  { id: 'llt-rooms-sc', label: `${t.platformSc} — ${t.leaderboardTitle}` },
+  ...(hasCbHourly ? [{ id: 'llt-hourly-cb', label: `${t.platformCb} — ${t.hourlyTitle}` }] : []),
+  ...(hasScHourly ? [{ id: 'llt-hourly-sc', label: `${t.platformSc} — ${t.hourlyTitle}` }] : []),
+];
 ---
 
 <section class="llt-hero">
@@ -151,232 +112,121 @@ const scLiveJson = JSON.stringify(scLive).replace(/</g, '\\u003c');
 
 <section class="llt-block">
   <div class="llt-inner">
-    <div class="llt-maintabs" role="tablist">
-      <button type="button" class="llt-maintab is-active" data-llt-maintab="search" role="tab" aria-selected="true">{t.tabSearch}</button>
-      <button type="button" class="llt-maintab" data-llt-maintab="board" role="tab" aria-selected="false">{t.tabLeaderboard}</button>
-    </div>
+    {boardSections.length > 0 && (
+      <nav class="llt-board-nav" aria-label={t.boardNavLabel}>
+        {boardSections.map((s) => (
+          <a href={`#${s.id}`} class="llt-board-nav__link" data-llt-board-nav-link>{s.label}</a>
+        ))}
+      </nav>
+    )}
 
-    <div class="llt-mainpanel" data-llt-mainpanel="search">
-      <div class="llt-card">
-        <label class="llt-label" for="llt-search-input">{t.searchLabel}</label>
-        <div class="llt-search-row">
-          <input id="llt-search-input" type="text" class="llt-input" placeholder={t.searchPlaceholder} autocomplete="off" />
-          <button type="button" class="llt-btn" data-llt-search-btn>{t.searchBtn}</button>
-        </div>
-        <div class="llt-results" data-llt-search-results>
-          <p class="llt-hint">{t.enterUsername}</p>
-        </div>
-      </div>
-
-      <div class="llt-card">
-        <p class="llt-label">{t.compareTitle}</p>
-        <div class="llt-compare-row">
-          <input type="text" class="llt-input" data-llt-compare-a placeholder={t.compareAPlaceholder} autocomplete="off" />
-          <input type="text" class="llt-input" data-llt-compare-b placeholder={t.compareBPlaceholder} autocomplete="off" />
-          <button type="button" class="llt-btn" data-llt-compare-btn>{t.compareBtn}</button>
-        </div>
-        <div class="llt-compare-results" data-llt-compare-results></div>
-      </div>
-    </div>
-
-    <div class="llt-mainpanel" data-llt-mainpanel="board" hidden>
-      {(['cb', 'sc'] as const).map((platform) => {
-        const hasBoard = platform === 'cb' ? hasCbBoard : hasScBoard;
-        const label = platform === 'cb' ? t.platformCb : t.platformSc;
-        const data = platform === 'cb' ? cbLive : scLive;
-        const topRooms = data.top_rooms_today ?? [];
-        return (
-          <div class="llt-card">
-            <h3 class="llt-card-title">{label} — {t.leaderboardTitle}</h3>
-            {!hasBoard && <p class="llt-hint">{t.comingSoon}</p>}
-            {hasBoard && (
-              <>
-                <ol class="llt-board-list" data-llt-board-list={platform}>
-                  {topRooms.slice(0, 20).map((r: { username: string; avg_users: number; subject?: string }, i: number) => (
-                    <li class="llt-board-row">
-                      <span class="llt-board-rank">{i + 1}</span>
-                      <span class="llt-board-user">{r.username}</span>
-                      <span class="llt-board-num">~{r.avg_users.toLocaleString()} <small>{t.viewersWord}</small></span>
-                      {r.subject && <span class="llt-board-subject">{r.subject}</span>}
-                    </li>
-                  ))}
-                </ol>
-                {topRooms.length > 20 && (
-                  <>
-                    <button class="llt-more-btn" data-show={t.showMore} data-hide={t.hide} aria-expanded="false">
-                      <span>{t.showMore} ({topRooms.length - 20})</span>
-                    </button>
-                    <ol class="llt-board-list llt-board-list--more" start={21} hidden>
-                      {topRooms.slice(20, 100).map((r: { username: string; avg_users: number; subject?: string }, i: number) => (
-                        <li class="llt-board-row">
-                          <span class="llt-board-rank">{i + 21}</span>
-                          <span class="llt-board-user">{r.username}</span>
-                          <span class="llt-board-num">~{r.avg_users.toLocaleString()} <small>{t.viewersWord}</small></span>
-                          {r.subject && <span class="llt-board-subject">{r.subject}</span>}
-                        </li>
-                      ))}
-                    </ol>
-                  </>
-                )}
-              </>
-            )}
-          </div>
-        );
-      })}
-
-      {(['cb', 'sc'] as const).map((platform) => {
-        const data = platform === 'cb' ? cbLive : scLive;
-        const label = platform === 'cb' ? t.platformCb : t.platformSc;
-        const hours = data.hourly_leaders ?? [];
-        if (hours.length === 0) return null;
-        return (
-          <div class="llt-card">
-            <h3 class="llt-card-title">{label} — {t.hourlyTitle}</h3>
-            <table class="llt-hourly-table" data-llt-hourly-table={platform}>
-              <thead>
-                <tr><th>{t.hourCol}</th><th>{t.leaderCol}</th><th>{t.viewersCol}</th></tr>
-              </thead>
-              <tbody>
-                {hours.map((h: { hour: number; username: string; viewers: number }) => (
-                  <tr data-utc-hour={h.hour}>
-                    <td class="llt-hour-cell">{String(h.hour).padStart(2, '0')}:00 UTC</td>
-                    <td>{h.username}</td>
-                    <td>{h.viewers.toLocaleString()}</td>
-                  </tr>
+    {(['cb', 'sc'] as const).map((platform) => {
+      const hasBoard = platform === 'cb' ? hasCbBoard : hasScBoard;
+      const label = platform === 'cb' ? t.platformCb : t.platformSc;
+      const data = platform === 'cb' ? cbLive : scLive;
+      const topRooms = data.top_rooms_today ?? [];
+      return (
+        <div class="llt-card" id={`llt-rooms-${platform}`}>
+          <h2 class="llt-card-title">{label} — {t.leaderboardTitle}</h2>
+          {!hasBoard && <p class="llt-hint">{t.comingSoon}</p>}
+          {hasBoard && (
+            <>
+              <ol class="llt-board-list" data-llt-board-list={platform}>
+                {topRooms.slice(0, 20).map((r: { username: string; avg_users: number; subject?: string }, i: number) => (
+                  <li class="llt-board-row">
+                    <span class="llt-board-rank">{i + 1}</span>
+                    <span class="llt-board-user">{r.username}</span>
+                    <span class="llt-board-num">~{r.avg_users.toLocaleString()} <small>{t.viewersWord}</small></span>
+                    {r.subject && <span class="llt-board-subject">{r.subject}</span>}
+                  </li>
                 ))}
-              </tbody>
-            </table>
-          </div>
-        );
-      })}
-    </div>
+              </ol>
+              {topRooms.length > 20 && (
+                <>
+                  <button class="llt-more-btn" data-show={t.showMore} data-hide={t.hide} aria-expanded="false">
+                    <span>{t.showMore} ({topRooms.length - 20})</span>
+                  </button>
+                  <ol class="llt-board-list llt-board-list--more" start={21} hidden>
+                    {topRooms.slice(20, 100).map((r: { username: string; avg_users: number; subject?: string }, i: number) => (
+                      <li class="llt-board-row">
+                        <span class="llt-board-rank">{i + 21}</span>
+                        <span class="llt-board-user">{r.username}</span>
+                        <span class="llt-board-num">~{r.avg_users.toLocaleString()} <small>{t.viewersWord}</small></span>
+                        {r.subject && <span class="llt-board-subject">{r.subject}</span>}
+                      </li>
+                    ))}
+                  </ol>
+                </>
+              )}
+            </>
+          )}
+        </div>
+      );
+    })}
+
+    {(['cb', 'sc'] as const).map((platform) => {
+      const data = platform === 'cb' ? cbLive : scLive;
+      const label = platform === 'cb' ? t.platformCb : t.platformSc;
+      const hours = data.hourly_leaders ?? [];
+      if (hours.length === 0) return null;
+      return (
+        <div class="llt-card" id={`llt-hourly-${platform}`}>
+          <h2 class="llt-card-title">{label} — {t.hourlyTitle}</h2>
+          <table class="llt-hourly-table" data-llt-hourly-table={platform}>
+            <thead>
+              <tr><th>{t.hourCol}</th><th>{t.leaderCol}</th><th>{t.viewersCol}</th></tr>
+            </thead>
+            <tbody>
+              {hours.map((h: { hour: number; username: string; viewers: number }) => (
+                <tr data-utc-hour={h.hour}>
+                  <td class="llt-hour-cell">{String(h.hour).padStart(2, '0')}:00 UTC</td>
+                  <td>{h.username}</td>
+                  <td>{h.viewers.toLocaleString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      );
+    })}
   </div>
 </section>
 
-<script type="application/json" id="llt-cb-data" set:html={cbLiveJson} />
-<script type="application/json" id="llt-sc-data" set:html={scLiveJson} />
-
-<script define:vars={{ t: { onlineWord: t.onlineWord, privateWord: t.privateWord, publicWord: t.publicWord, viewersWord: t.viewersWord, notFound: t.notFound, platformCb: t.platformCb, platformSc: t.platformSc } }}>
-  function pad(n) { return String(n).padStart(2, '0'); }
-
-  function readJson(id) {
-    const el = document.getElementById(id);
-    if (!el) return null;
-    try { return JSON.parse(el.textContent || 'null'); } catch { return null; }
-  }
-  const cbData = readJson('llt-cb-data');
-  const scData = readJson('llt-sc-data');
-
-  function findMatches(query) {
-    const q = query.trim().toLowerCase();
-    if (!q) return [];
-    const out = [];
-    for (const [platform, data, label] of [['cb', cbData, t.platformCb], ['sc', scData, t.platformSc]]) {
-      const idx = data?.live_index ?? [];
-      for (const r of idx) {
-        if (r.username && r.username.toLowerCase().includes(q)) {
-          out.push({ platform, label, ...r });
-        }
-      }
-    }
-    return out.slice(0, 12);
+<script>
+  function pad(n: number): string {
+    return String(n).padStart(2, '0');
   }
 
-  function findExact(username, platform) {
-    const q = username.trim().toLowerCase();
-    if (!q) return null;
-    const data = platform === 'cb' ? cbData : scData;
-    const idx = data?.live_index ?? [];
-    return idx.find((r) => r.username && r.username.toLowerCase() === q) ?? null;
-  }
-
-  function renderCard(r) {
-    const statusWord = r.private === true ? t.privateWord : (r.private === false ? t.publicWord : t.onlineWord);
-    const div = document.createElement('div');
-    div.className = 'llt-result-card';
-    div.innerHTML = `
-      <span class="llt-result-platform">${r.label}</span>
-      <span class="llt-result-user">${r.username}</span>
-      <span class="llt-result-status">${statusWord}</span>
-      <span class="llt-result-viewers">~${(r.viewers ?? 0).toLocaleString()} ${t.viewersWord}</span>
-    `;
-    return div;
-  }
-
-  document.querySelectorAll('[data-llt-maintab]').forEach((tab) => {
-    tab.addEventListener('click', () => {
-      const target = tab.dataset.lltMaintab;
-      document.querySelectorAll('[data-llt-maintab]').forEach((tb) => {
-        tb.classList.toggle('is-active', tb === tab);
-        tb.setAttribute('aria-selected', tb === tab ? 'true' : 'false');
-      });
-      document.querySelectorAll('[data-llt-mainpanel]').forEach((panel) => {
-        panel.hidden = panel.dataset.lltMainpanel !== target;
-      });
+  document.querySelectorAll<HTMLAnchorElement>('[data-llt-board-nav-link]').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      const id = link.getAttribute('href')?.slice(1);
+      const target = id ? document.getElementById(id) : null;
+      if (!target) return;
+      e.preventDefault();
+      const top = target.getBoundingClientRect().top + window.scrollY - 100;
+      window.scrollTo({ top, behavior: 'smooth' });
     });
   });
 
-  const searchInput = document.getElementById('llt-search-input');
-  const searchResults = document.querySelector('[data-llt-search-results]');
-  const searchBtn = document.querySelector('[data-llt-search-btn]');
-  function runSearch() {
-    if (!searchInput || !searchResults) return;
-    const matches = findMatches(searchInput.value);
-    searchResults.innerHTML = '';
-    if (!searchInput.value.trim()) return;
-    if (matches.length === 0) {
-      const p = document.createElement('p');
-      p.className = 'llt-hint';
-      p.textContent = t.notFound;
-      searchResults.appendChild(p);
-      return;
-    }
-    matches.forEach((r) => searchResults.appendChild(renderCard(r)));
-  }
-  searchBtn?.addEventListener('click', runSearch);
-  searchInput?.addEventListener('keydown', (e) => { if (e.key === 'Enter') runSearch(); });
-
-  const compareBtn = document.querySelector('[data-llt-compare-btn]');
-  const compareA = document.querySelector('[data-llt-compare-a]');
-  const compareB = document.querySelector('[data-llt-compare-b]');
-  const compareResults = document.querySelector('[data-llt-compare-results]');
-  compareBtn?.addEventListener('click', () => {
-    if (!compareResults) return;
-    compareResults.innerHTML = '';
-    [compareA, compareB].forEach((input) => {
-      if (!input || !input.value.trim()) return;
-      const cb = findExact(input.value, 'cb');
-      const sc = findExact(input.value, 'sc');
-      if (cb) compareResults.appendChild(renderCard({ ...cb, platform: 'cb', label: t.platformCb }));
-      if (sc) compareResults.appendChild(renderCard({ ...sc, platform: 'sc', label: t.platformSc }));
-      if (!cb && !sc) {
-        const p = document.createElement('p');
-        p.className = 'llt-hint';
-        p.textContent = `${input.value} — ${t.notFound}`;
-        compareResults.appendChild(p);
-      }
-    });
-  });
-
-  document.querySelectorAll('.llt-more-btn').forEach((btn) => {
-    const list = btn.nextElementSibling;
+  document.querySelectorAll<HTMLButtonElement>('.llt-more-btn').forEach((btn) => {
+    const list = btn.nextElementSibling as HTMLElement;
     const labelEl = btn.querySelector('span');
     btn.addEventListener('click', () => {
       const open = list.hidden;
       list.hidden = !open;
       btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-      if (labelEl) labelEl.textContent = open ? btn.dataset.hide : `${btn.dataset.show} (${list.querySelectorAll('.llt-board-row').length})`;
+      if (labelEl) labelEl.textContent = open ? btn.dataset.hide! : `${btn.dataset.show} (${list.querySelectorAll('.llt-board-row').length})`;
     });
   });
 
   const tzOffsetMin = new Date().getTimezoneOffset();
-  document.querySelectorAll('[data-llt-hourly-table]').forEach((table) => {
-    table.querySelectorAll('tr[data-utc-hour]').forEach((row) => {
+  document.querySelectorAll<HTMLElement>('[data-llt-hourly-table]').forEach((table) => {
+    table.querySelectorAll<HTMLElement>('tr[data-utc-hour]').forEach((row) => {
       const utcHour = Number(row.dataset.utcHour);
       if (Number.isNaN(utcHour)) return;
       const startTotal = (((utcHour * 60 - tzOffsetMin) % 1440) + 1440) % 1440;
-      const fmt = (m) => `${pad(Math.floor(m / 60))}:${pad(m % 60)}`;
-      const cell = row.querySelector('.llt-hour-cell');
+      const fmt = (m: number) => `${pad(Math.floor(m / 60))}:${pad(m % 60)}`;
+      const cell = row.querySelector<HTMLElement>('.llt-hour-cell');
       if (cell) cell.textContent = fmt(startTotal);
     });
   });
@@ -394,51 +244,37 @@ const scLiveJson = JSON.stringify(scLive).replace(/</g, '\\u003c');
   .llt-block { padding: 1rem clamp(1.25rem, 4vw, 2rem) 3.5rem; }
   .llt-inner { max-width: 900px; margin-inline: auto; }
 
-  .llt-maintabs {
-    display: inline-flex; gap: 0.25rem; margin-bottom: 1.5rem;
-    background: var(--card-bg); border: 1px solid var(--border);
-    border-radius: 99px; padding: 4px;
+  .llt-board-nav {
+    position: sticky; top: 88px; z-index: 4;
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+    background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+    padding: 0.6rem; margin-bottom: 1rem;
   }
-  .llt-maintab {
-    font-family: 'Josefin Sans', system-ui, sans-serif; font-size: 0.8125rem; font-weight: 700;
-    color: var(--fg-muted); background: transparent; border: none;
-    padding: 0.5rem 1.2rem; border-radius: 99px; cursor: pointer;
+  .llt-board-nav__link {
+    font-size: 0.75rem; font-weight: 700; color: var(--fg-muted);
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 99px;
+    padding: 0.4rem 0.85rem; text-decoration: none; white-space: nowrap;
+    transition: color 0.15s, border-color 0.15s;
   }
-  .llt-maintab.is-active { color: var(--btn-fg); background: var(--btn-bg); }
+  .llt-board-nav__link:hover { color: var(--fg); border-color: var(--fg-faint); }
 
   .llt-card {
     background: var(--bg-raised); border: 1px solid var(--border); border-radius: 16px;
-    padding: 1.5rem; margin-bottom: 1rem;
+    padding: 1.5rem; margin-bottom: 1rem; scroll-margin-top: 100px;
   }
   .llt-card-title { font-weight: 700; font-size: 1.125rem; color: var(--fg); margin-bottom: 1rem; }
-  .llt-label { display: block; font-size: 0.8125rem; font-weight: 700; color: var(--fg); margin-bottom: 0.6rem; }
-  .llt-search-row, .llt-compare-row { display: flex; flex-wrap: wrap; gap: 0.6rem; }
-  .llt-input {
-    flex: 1 1 180px; padding: 0.7rem 0.9rem; border-radius: 10px;
-    border: 1px solid var(--border); background: var(--bg); color: var(--fg); font-size: 0.9375rem;
-  }
-  .llt-btn {
-    background: var(--btn-bg); color: var(--btn-fg); border: none; border-radius: 10px;
-    padding: 0.7rem 1.3rem; font-weight: 700; font-size: 0.875rem; cursor: pointer;
-  }
   .llt-hint { color: var(--fg-faint); font-size: 0.875rem; margin-top: 0.75rem; }
-  .llt-results, .llt-compare-results { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem; }
 
-  .llt-result-card, .llt-board-row {
-    display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 0.6rem;
+  .llt-board-row {
+    display: grid; grid-template-columns: 1.5rem auto auto 1fr; align-items: center; gap: 0.6rem;
     background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 0.6rem 0.9rem;
     font-size: 0.875rem;
   }
-  .llt-result-platform {
-    font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; color: var(--fg-faint);
-  }
-  .llt-result-user, .llt-board-user { font-weight: 700; color: var(--fg); }
-  .llt-result-status { color: var(--fg-muted); font-size: 0.8125rem; }
-  .llt-result-viewers, .llt-board-num { font-weight: 700; color: #16a34a; white-space: nowrap; }
+  .llt-board-user { font-weight: 700; color: var(--fg); }
+  .llt-board-num { font-weight: 700; color: #16a34a; white-space: nowrap; }
   .llt-board-num small { color: var(--fg-muted); font-weight: 600; }
 
   .llt-board-list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
-  .llt-board-row { grid-template-columns: 1.5rem auto auto 1fr; }
   .llt-board-rank { color: var(--fg-faint); font-weight: 700; font-size: 0.75rem; }
   .llt-board-subject {
     grid-column: 1 / -1; color: var(--fg-muted); font-size: 0.8125rem; line-height: 1.4;
