@@ -1,0 +1,23 @@
+---
+import Base from '@/layouts/Base.astro';
+import LiveLookupTool from '@/components/LiveLookupTool.astro';
+const site = 'https://www.ewohub.com';
+const slug = 'live-model-lookup';
+---
+<Base
+  title="Căutare Live Modele și Clasament — Chaturbate și Stripchat"
+  description="Caută statusul live după nume de utilizator, compară două modele una lângă alta, sau vezi cine a condus traficul în fiecare oră azi pe Chaturbate și Stripchat. Actualizat automat, fără cont necesar."
+  lang="ro"
+  hreflang={[
+    { lang: 'en', url: `${site}/${slug}` },
+    { lang: 'de', url: `${site}/de/${slug}` },
+    { lang: 'es', url: `${site}/es/${slug}` },
+    { lang: 'ro', url: `${site}/ro/${slug}` },
+    { lang: 'uk', url: `${site}/uk/${slug}` },
+    { lang: 'ru', url: `${site}/ru/${slug}` },
+    { lang: 'fr', url: `${site}/fr/${slug}` },
+    { lang: 'pt', url: `${site}/pt/${slug}` },
+  ]}
+>
+  <LiveLookupTool lang="ro" />
+</Base>
