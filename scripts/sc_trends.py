@@ -41,6 +41,7 @@ USER_ID = os.environ.get("SC_USER_ID", "")
 TAG = os.environ.get("SC_TAG", "girls")
 RAW_PATH = Path(os.environ.get("SC_RAW_PATH", ROOT / ".cache" / "sc-raw.jsonl"))
 OUT_PATH = Path(os.environ.get("SC_OUT_PATH", ROOT / "src" / "data" / "sc-trends.json"))
+LIVE_OUT_PATH = Path(os.environ.get("SC_LIVE_OUT_PATH", ROOT / "src" / "data" / "sc-live.json"))
 WINDOW_HOURS = float(os.environ.get("SC_WINDOW_HOURS", "24"))
 
 API = "https://go.whitetrafsa.com/api/models"
@@ -82,7 +83,25 @@ def save_raw(rows):
 
 def build_summary(rows):
     if not rows:
-        return None
+        return None, None
+
+    # Live snapshot: latest collection only (not the whole window). SC's
+    # model-list API doesn't expose a private/away status in what this
+    # script currently keeps (only username + viewers), so unlike Chaturbate
+    # there's no pct_private here — just the online count.
+    latest_ts = max(r["ts"] for r in rows)
+    latest_by_user = {r["username"]: r for r in rows if r["ts"] == latest_ts}
+    live = {
+        "generated_at": datetime.fromtimestamp(latest_ts, tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "rooms_online": len(latest_by_user),
+    }
+    live_index = sorted(
+        (
+            {"username": u, "viewers": r.get("viewers", 0), "online": True}
+            for u, r in latest_by_user.items()
+        ),
+        key=lambda x: x["viewers"], reverse=True,
+    )
 
     ts_all = sorted({r["ts"] for r in rows})
     hours_covered = (ts_all[-1] - ts_all[0]) / 3600 if len(ts_all) > 1 else 0
@@ -102,15 +121,48 @@ def build_summary(rows):
             snap_medians[h].append(statistics.median(viewers))
     score = {h: statistics.mean(v) for h, v in snap_medians.items()}
 
-    return {
+    # Who had the most viewers in each UTC hour-of-day bucket. No room title
+    # is collected for SC, so the leaderboard is username + viewers only.
+    hour_best: dict = {}
+    for r in rows:
+        h = datetime.fromtimestamp(r["ts"], tz=timezone.utc).hour
+        v = r.get("viewers", 0)
+        cur = hour_best.get(h)
+        if cur is None or v > cur["viewers"]:
+            hour_best[h] = {"viewers": v, "username": r["username"]}
+    hourly_leaders = [
+        {"hour": h, "username": v["username"], "viewers": v["viewers"]}
+        for h, v in sorted(hour_best.items())
+    ]
+
+    room_sum = defaultdict(int)
+    for r in rows:
+        room_sum[r["username"]] += r.get("viewers", 0)
+    n_snaps = len(ts_all)
+    top_rooms_today = sorted(
+        ({"username": u, "avg_users": round(s / n_snaps)} for u, s in room_sum.items()),
+        key=lambda x: x["avg_users"], reverse=True,
+    )[:100]
+
+    summary = {
         "generated_at": datetime.now(tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "tag": TAG,
         "hours_covered": round(hours_covered, 1),
         "snapshots": len(ts_all),
         "rooms_seen": len({r["username"] for r in rows}),
         "preliminary": hours_covered < 20,
+        "live": live,
         "best_hours_utc": [{"hour": h, "score": round(score[h])} for h in sorted(score)],
     }
+
+    live_extra = {
+        "generated_at": summary["generated_at"],
+        "hourly_leaders": hourly_leaders,
+        "top_rooms_today": top_rooms_today,
+        "live_index": live_index,
+    }
+
+    return summary, live_extra
 
 
 def should_publish(summary, out_path):
@@ -155,7 +207,7 @@ def main():
     save_raw(rows)
     print(f"{datetime.now():%H:%M} — {len(new_rows)} models fetched, {len(rows)} rows in {WINDOW_HOURS}h window")
 
-    summary = build_summary(rows)
+    summary, live_extra = build_summary(rows)
     if summary is None:
         print("no rows yet — not writing summary", file=sys.stderr)
         return 0
@@ -167,6 +219,10 @@ def main():
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUT_PATH.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"wrote {OUT_PATH}")
+
+    LIVE_OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    LIVE_OUT_PATH.write_text(json.dumps(live_extra, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"wrote {LIVE_OUT_PATH}")
     return 0
 
 

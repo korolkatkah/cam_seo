@@ -41,7 +41,9 @@ WM = os.environ.get("CB_WM", "")
 GENDER = os.environ.get("CB_GENDER", "f")
 RAW_PATH = Path(os.environ.get("CB_RAW_PATH", ROOT / ".cache" / "cb-raw.jsonl"))
 OUT_PATH = Path(os.environ.get("CB_OUT_PATH", ROOT / "src" / "data" / "cb-trends.json"))
+LIVE_OUT_PATH = Path(os.environ.get("CB_LIVE_OUT_PATH", ROOT / "src" / "data" / "cb-live.json"))
 WINDOW_HOURS = float(os.environ.get("CB_WINDOW_HOURS", "24"))
+RECENT_HOURS = 6.0
 
 API = "https://chaturbate.com/api/public/affiliates/onlinerooms/"
 
@@ -104,7 +106,39 @@ def save_raw(rows):
 def build_summary(rows, now_ts):
     public_rows = [r for r in rows if r.get("gender") == GENDER and r.get("current_show") == "public"]
     if not public_rows:
-        return None
+        return None, None
+
+    # Live snapshot: latest collection only (not the whole window), across
+    # every current_show status so private/group rooms count toward the
+    # online total even though they're excluded from public_rows above.
+    gender_rows = [r for r in rows if r.get("gender") == GENDER]
+    latest_ts = max((r["ts"] for r in gender_rows), default=None)
+    live, live_index = None, []
+    if latest_ts is not None:
+        latest_by_user = {}
+        for r in gender_rows:
+            if r["ts"] == latest_ts and r.get("username"):
+                latest_by_user[r["username"]] = r
+        rooms_online = len(latest_by_user)
+        rooms_public = sum(1 for r in latest_by_user.values() if r.get("current_show") == "public")
+        live = {
+            "generated_at": datetime.fromtimestamp(latest_ts, tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "rooms_online": rooms_online,
+            "rooms_public": rooms_public,
+            "pct_private": round((rooms_online - rooms_public) / rooms_online * 100, 1) if rooms_online else None,
+        }
+        live_index = sorted(
+            (
+                {
+                    "username": u,
+                    "viewers": r.get("num_users") or 0,
+                    "online": True,
+                    "private": r.get("current_show") != "public",
+                }
+                for u, r in latest_by_user.items()
+            ),
+            key=lambda x: x["viewers"], reverse=True,
+        )
 
     ts_all = sorted({r["ts"] for r in public_rows})
     hours_covered = (ts_all[-1] - ts_all[0]) / 3600 if len(ts_all) > 1 else 0
@@ -138,6 +172,54 @@ def build_summary(rows, now_ts):
     top_tags = sorted(
         (t for t in tag_users if len(tag_rooms[t]) >= 5),
         key=lambda t: statistics.mean(tag_users[t]), reverse=True)[:30]
+
+    # Trending tags: compare the last RECENT_HOURS against the rest of the
+    # window. Needs both sides to clear the same 5-room sample-size guard as
+    # top_tags, or a tag with one lucky room would look like a huge "trend".
+    recent_cutoff = now_ts - RECENT_HOURS * 3600
+    tag_users_recent, tag_rooms_recent = defaultdict(list), defaultdict(set)
+    tag_users_prior, tag_rooms_prior = defaultdict(list), defaultdict(set)
+    for r in public_rows:
+        bucket_users = tag_users_recent if r["ts"] >= recent_cutoff else tag_users_prior
+        bucket_rooms = tag_rooms_recent if r["ts"] >= recent_cutoff else tag_rooms_prior
+        for t in r.get("tags") or []:
+            t = t.strip().lower()
+            if t:
+                bucket_users[t].append(r.get("num_users") or 0)
+                bucket_rooms[t].add(r["username"])
+    trending_tags = []
+    for t in tag_users_recent:
+        if len(tag_rooms_recent[t]) < 5 or len(tag_rooms_prior[t]) < 5:
+            continue
+        prior_avg = statistics.mean(tag_users_prior[t])
+        if prior_avg <= 0:
+            continue
+        recent_avg = statistics.mean(tag_users_recent[t])
+        trending_tags.append({
+            "tag": t,
+            "avg_users_recent": round(recent_avg),
+            "growth_pct": round((recent_avg - prior_avg) / prior_avg * 100, 1),
+        })
+    trending_tags = sorted(trending_tags, key=lambda x: x["growth_pct"], reverse=True)[:3]
+    trending_tags = [x for x in trending_tags if x["growth_pct"] > 0]
+
+    # Who had the most viewers in each UTC hour-of-day bucket, across every
+    # snapshot that falls in that bucket within the rolling window.
+    hour_best: dict = {}
+    for r in public_rows:
+        h = datetime.fromtimestamp(r["ts"], tz=timezone.utc).hour
+        nu = r.get("num_users") or 0
+        cur = hour_best.get(h)
+        if cur is None or nu > cur["num_users"]:
+            hour_best[h] = {
+                "num_users": nu,
+                "username": r.get("username", ""),
+                "subject": re.sub(r"\s*-\s*All\s*$", "", r.get("room_subject") or "").strip()[:120],
+            }
+    hourly_leaders = [
+        {"hour": h, "username": v["username"], "viewers": v["num_users"], "subject": v["subject"]}
+        for h, v in sorted(hour_best.items())
+    ]
 
     room_sum, last_subj = defaultdict(int), {}
     for r in public_rows:
@@ -181,13 +263,15 @@ def build_summary(rows, now_ts):
         reverse=True)
     reco_tags += ratio_sorted[:4]
 
-    return {
+    summary = {
         "generated_at": datetime.now(tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "gender": GENDER,
         "hours_covered": round(hours_covered, 1),
         "snapshots": n_snaps,
         "rooms_seen": len(room_sum),
         "preliminary": hours_covered < 20,
+        "live": live,
+        "trending_tags": trending_tags,
         "best_hours_utc": [{"hour": h, "score": round(score[h])} for h in sorted(best_hours)],
         "top_tags": [
             {"tag": t, "avg_users": round(statistics.mean(tag_users[t])), "rooms": len(tag_rooms[t])}
@@ -212,6 +296,18 @@ def build_summary(rows, now_ts):
             "low_competition_tag": ratio_sorted[0] if ratio_sorted else None,
         },
     }
+
+    live_extra = {
+        "generated_at": summary["generated_at"],
+        "hourly_leaders": hourly_leaders,
+        "top_rooms_today": [
+            {"username": u, "avg_users": round(room_sum[u] / n_snaps), "subject": last_subj[u][:120]}
+            for u in leaders[:100]
+        ],
+        "live_index": live_index,
+    }
+
+    return summary, live_extra
 
 
 def should_publish(summary, out_path):
@@ -260,7 +356,7 @@ def main():
     save_raw(rows)
     print(f"{datetime.now():%H:%M} — {len(new_rows)} rooms fetched, {len(rows)} rows in {WINDOW_HOURS}h window")
 
-    summary = build_summary(rows, now_ts)
+    summary, live_extra = build_summary(rows, now_ts)
     if summary is None:
         print("no public rows yet for this niche — not writing summary", file=sys.stderr)
         return 0
@@ -272,6 +368,10 @@ def main():
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUT_PATH.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"wrote {OUT_PATH}")
+
+    LIVE_OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    LIVE_OUT_PATH.write_text(json.dumps(live_extra, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"wrote {LIVE_OUT_PATH}")
     return 0
 
 
