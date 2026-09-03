@@ -1,31 +1,31 @@
 {
-  "generated_at": "2026-09-03T06:01:28Z",
+  "generated_at": "2026-09-03T07:01:25Z",
   "gender": "f",
   "hours_covered": 24.0,
   "snapshots": 104,
-  "rooms_seen": 9765,
+  "rooms_seen": 9795,
   "preliminary": false,
   "live": {
-    "generated_at": "2026-09-03T06:01:23Z",
-    "rooms_online": 743,
-    "rooms_public": 635,
-    "pct_private": 14.5
+    "generated_at": "2026-09-03T07:01:21Z",
+    "rooms_online": 750,
+    "rooms_public": 673,
+    "pct_private": 10.3
   },
   "trending_tags": [
     {
+      "tag": "college",
+      "avg_users_recent": 5517,
+      "growth_pct": 16556.4
+    },
+    {
       "tag": "twerk",
-      "avg_users_recent": 5986,
-      "growth_pct": 6473.2
+      "avg_users_recent": 5631,
+      "growth_pct": 6119.1
     },
     {
       "tag": "kinky",
-      "avg_users_recent": 3766,
-      "growth_pct": 6149.8
-    },
-    {
-      "tag": "anime",
-      "avg_users_recent": 2854,
-      "growth_pct": 4570.2
+      "avg_users_recent": 3760,
+      "growth_pct": 4352.9
     }
   ],
   "best_hours_utc": [
@@ -55,11 +55,11 @@
     },
     {
       "hour": 6,
-      "score": 67
+      "score": 64
     },
     {
       "hour": 7,
-      "score": 62
+      "score": 63
     },
     {
       "hour": 8,
@@ -134,103 +134,108 @@
     },
     {
       "tag": "19",
-      "avg_users": 9976,
+      "avg_users": 10220,
       "rooms": 14
     },
     {
       "tag": "creamy",
-      "avg_users": 8690,
+      "avg_users": 8754,
       "rooms": 20
     },
     {
       "tag": "smile",
-      "avg_users": 5844,
-      "rooms": 24
+      "avg_users": 5860,
+      "rooms": 26
     },
     {
       "tag": "bj",
-      "avg_users": 5733,
-      "rooms": 10
-    },
-    {
-      "tag": "ohmibod",
-      "avg_users": 5278,
+      "avg_users": 4968,
       "rooms": 11
     },
     {
       "tag": "nude",
-      "avg_users": 4447,
-      "rooms": 27
-    },
-    {
-      "tag": "aussie",
-      "avg_users": 4110,
-      "rooms": 33
+      "avg_users": 4543,
+      "rooms": 26
     },
     {
       "tag": "boobs",
-      "avg_users": 3921,
-      "rooms": 64
+      "avg_users": 3883,
+      "rooms": 63
     },
     {
-      "tag": "thick",
-      "avg_users": 3421,
-      "rooms": 18
+      "tag": "aussie",
+      "avg_users": 3877,
+      "rooms": 35
+    },
+    {
+      "tag": "ohmibod",
+      "avg_users": 3636,
+      "rooms": 11
     },
     {
       "tag": "college",
-      "avg_users": 3269,
+      "avg_users": 3324,
       "rooms": 12
     },
     {
+      "tag": "thick",
+      "avg_users": 3197,
+      "rooms": 19
+    },
+    {
       "tag": "dance",
-      "avg_users": 3154,
+      "avg_users": 3146,
       "rooms": 70
     },
     {
       "tag": "naked",
-      "avg_users": 2802,
-      "rooms": 37
+      "avg_users": 2758,
+      "rooms": 38
     },
     {
       "tag": "fun",
-      "avg_users": 2183,
+      "avg_users": 2132,
       "rooms": 8
     },
     {
       "tag": "twerk",
-      "avg_users": 2046,
+      "avg_users": 2015,
       "rooms": 79
     },
     {
       "tag": "lesbian",
-      "avg_users": 1928,
+      "avg_users": 1948,
       "rooms": 53
     },
     {
       "tag": "pawg",
-      "avg_users": 1849,
+      "avg_users": 1832,
       "rooms": 82
     },
     {
       "tag": "bigbooty",
-      "avg_users": 1487,
-      "rooms": 20
+      "avg_users": 1486,
+      "rooms": 19
     },
     {
       "tag": "pussy",
-      "avg_users": 1478,
-      "rooms": 107
-    },
-    {
-      "tag": "lush",
-      "avg_users": 1451,
-      "rooms": 238
+      "avg_users": 1474,
+      "rooms": 106
     },
     {
       "tag": "fit",
-      "avg_users": 1397,
-      "rooms": 158
+      "avg_users": 1394,
+      "rooms": 155
+    },
+    {
+      "tag": "lush",
+      "avg_users": 1359,
+      "rooms": 237
+    },
+    {
+      "tag": "sexy",
+      "avg_users": 1349,
+      "rooms": 193
     },
     {
       "tag": "english",
@@ -238,44 +243,39 @@
       "rooms": 7
     },
     {
-      "tag": "blonde",
-      "avg_users": 1265,
-      "rooms": 634
+      "tag": "teen",
+      "avg_users": 1280,
+      "rooms": 1767
     },
     {
-      "tag": "teen",
-      "avg_users": 1256,
-      "rooms": 1754
+      "tag": "blonde",
+      "avg_users": 1239,
+      "rooms": 641
     },
     {
       "tag": "private",
-      "avg_users": 1221,
-      "rooms": 72
-    },
-    {
-      "tag": "sexy",
-      "avg_users": 1212,
-      "rooms": 190
+      "avg_users": 1220,
+      "rooms": 69
     },
     {
       "tag": "kinky",
-      "avg_users": 1202,
-      "rooms": 56
+      "avg_users": 1208,
+      "rooms": 55
     },
     {
-      "tag": "joi",
-      "avg_users": 1067,
-      "rooms": 176
+      "tag": "brunette",
+      "avg_users": 1178,
+      "rooms": 172
     },
     {
       "tag": "cum",
-      "avg_users": 1067,
-      "rooms": 359
+      "avg_users": 1072,
+      "rooms": 375
     },
     {
-      "tag": "tease",
-      "avg_users": 1040,
-      "rooms": 313
+      "tag": "joi",
+      "avg_users": 1062,
+      "rooms": 172
     }
   ],
   "top_titles": [
@@ -300,16 +300,12 @@
       "subject": "📚"
     },
     {
-      "avg_users": 8629,
-      "subject": "feeling cute, flirty & ready to have fun💕 #new #teen #young #blonde"
-    },
-    {
-      "avg_users": 8527,
+      "avg_users": 8871,
       "subject": "Disney Princess <3 - Multi-Goal :  ⭐BIG SQUIRT⭐ #asian #lovense #squirt #teen #shy"
     },
     {
-      "avg_users": 8402,
-      "subject": "🫦  slippery hand bra and slippery ass slaps #blonde #petite #teen #new [0 tokens remaining]"
+      "avg_users": 8629,
+      "subject": "feeling cute, flirty & ready to have fun💕 #new #teen #young #blonde"
     },
     {
       "avg_users": 8339,
@@ -336,7 +332,7 @@
       "subject": "🎀 fav:44/120/222/444 #anal #squirt #fuckmachine #double #creamy"
     },
     {
-      "avg_users": 7261,
+      "avg_users": 7264,
       "subject": "i will stream more cookies // tip 33, 66, 111, 421 - patterns // pm for private - Goal reached!  #cute #18 #lovense #ski"
     },
     {
@@ -352,64 +348,68 @@
       "subject": "Remove my top  💖✨😍 #latina #bigboobs #bigass #sexy #twerk [0 tokens remaining]"
     },
     {
+      "avg_users": 6904,
+      "subject": "🫦  slippery hand bra and slippery ass slaps #blonde #petite #teen #new [0 tokens remaining]"
+    },
+    {
       "avg_users": 6771,
       "subject": "hihi im Avrora :) i'm with you again today and glad to see you on my stream>< 0_0 // All goals completed!  Thanks to all"
     },
     {
-      "avg_users": 6348,
-      "subject": "💦 𝑫𝒓𝒐𝒑𝒔 𝒐𝒇 𝒑𝒍𝒆𝒂𝒔𝒖𝒓𝒆 𝒘𝒊𝒕𝒉  31 - 81 - 111 - 333 - 999 💦 - All Goals reached! Thanks to all tippers! #squirt #latina #asian"
+      "avg_users": 6228,
+      "subject": "#lovense #blowjob #bigboobs #cute #feet"
     }
   ],
   "economy": {
-    "goal_median": 675,
+    "goal_median": 681,
     "goal_p25": 314,
-    "goal_p75": 1380,
-    "goal_samples": 3049,
+    "goal_p75": 1348,
+    "goal_samples": 3046,
     "top_patterns": [
       {
         "value": 111,
-        "count": 115
+        "count": 117
       },
       {
         "value": 222,
-        "count": 96
+        "count": 100
       },
       {
         "value": 100,
-        "count": 75
+        "count": 74
       },
       {
         "value": 333,
-        "count": 70
+        "count": 68
       },
       {
         "value": 99,
-        "count": 49
+        "count": 51
       },
       {
         "value": 55,
-        "count": 41
+        "count": 40
       },
       {
         "value": 25,
         "count": 40
       },
       {
-        "value": 33,
-        "count": 37
+        "value": 38,
+        "count": 38
       },
       {
-        "value": 38,
-        "count": 37
+        "value": 33,
+        "count": 36
       },
       {
         "value": 200,
-        "count": 34
+        "count": 33
       }
     ],
     "multi_goal_share": 0.066,
     "with_goal_share": 0.539,
-    "with_price_share": 0.664
+    "with_price_share": 0.663
   },
   "recommendation": {
     "tags": [
@@ -418,12 +418,12 @@
       "creamy",
       "smile",
       "bj",
+      "nude",
       "ohmibod",
-      "fun",
       "college",
-      "thick",
+      "fun",
       "english"
     ],
-    "low_competition_tag": "fun"
+    "low_competition_tag": "ohmibod"
   }
 }
