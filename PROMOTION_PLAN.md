@@ -4,6 +4,85 @@ Running log of daily/session-based SEO & promotion action plans. Newest entry on
 
 ---
 
+## 2026-09-03
+
+### Shipped: execution of the 2026-08-30 prioritized action list, items 1-4
+
+Follow-up session to the 2026-08-30 "Full audit" prioritized action list — all 4 items were approved for
+execution. Build verified clean (268 pages, up from prior baselines as content has grown) before shipping.
+
+1. **`raise-your-room-ranking-score` blog listing gap — fixed, 5 files.** Added the missing card entry to
+   `blog.astro`'s articles array in `src/pages/de/blog.astro`, `es/blog.astro`, `ro/blog.astro`,
+   `ru/blog.astro`, and `uk/blog.astro`, matching the shape already present in root/fr/pt. Same `tag:
+   'Ranking'` and `date: '2026-07-09'` across all locales per the CLAUDE.md parity rule; `title`/`desc`
+   translated per locale (not copy-pasted English), `mins` unit matched to each file's existing convention
+   (`Min.`/`min`/`мин`/`хв`), `href` locale-prefixed. The page is now listed in all 8 locale blog pages.
+
+2. **Geo-page titles/descriptions shortened — 6 pages, 12 files.** All 6 built geo pages
+   (usa/germany/romania/colombia/spain/ukraine, root + their locale variant(s)) had `<title>` at 73-85 chars
+   and meta descriptions at 169-180 chars. Rewrote both in every file to the `/model-promotion` /
+   `/studio-traffic` length pattern — titles now measure 32-42 chars, descriptions 132-154 chars, all in each
+   page's own language. Dropped the "— How to Grow American Viewers" / "— Publikumsaufbau Deutschland"-style
+   suffixes rather than relocating them into the hero, since the existing `art-lead` paragraph on every page
+   already covers that ground — kept body copy and links otherwise untouched.
+
+3. **Internal links to the two best-performing hub pages added — same 12 files.** Added 1-2 natural
+   contextual links per geo page (root + locale variant(s)) to that locale's own
+   `/stripscore-cam-rank-explained` and `/best-streaming-times-by-region`, verified all 12 target hub-page
+   files exist before linking. Several locale variants (de/ro/ru/uk Germany/Romania/Ukraine pages) already
+   linked to `best-streaming-times-by-region` via their "Related Pages" card grid — for those, only the
+   missing `stripscore-cam-rank-explained` link was added in-body, per the "if a page already links to one,
+   just add the other" instruction. All existing links to `webcam-earnings-by-platform` /
+   `platforms-we-work-with` / `webcam-model-income-guide` left intact — purely additive.
+
+4. **FAQPage JSON-LD moved from client-side to build-time — done, `Base.astro` only.** Replaced the
+   DOMContentLoaded `<script>` that scanned `.faq-item` elements and injected schema via
+   `document.head.appendChild` with a build-time parser: `Astro.slots.render('default')` captures the
+   rendered body HTML, a small balanced-tag scanner extracts each `.faq-item` block, and question/answer
+   text is pulled via a 3-way fallback chain (`<summary>`, then `<h3>`, then `<button class="faq-chevron">`
+   for the question; a `.faq-body` wrapper's `<p>` or the first following `<p>` for the answer) — the extra
+   `<h3>` branch was necessary because that's the actual markup on `stripscore-cam-rank-explained` and
+   similar TOC-variant pages, which the old client script's selectors silently never matched (a pre-existing
+   gap, now fixed as a side effect). The whole extraction is wrapped in try/catch and skips per-block or
+   per-page on any parse miss rather than risking malformed JSON-LD or a build failure. Verified via a real
+   build: swept all 268 built pages — **170 pages now carry valid `FAQPage` JSON-LD, 0 malformed, 0
+   leftover instances of the old client-side script**, and spot-checked extracted question/answer text
+   against visible markup on `model-promotion`, `stripscore-cam-rank-explained`, and `de/model-promotion`
+   (one of each markup variant) with no truncation, tags, or unescaped entities.
+
+**File counts:** item 1 touched 5 files, items 2+3 touched 12 files (combined edit pass, as suggested),
+item 4 touched 1 file (`Base.astro`). No item was skipped or left partial — all 4 shipped in the same
+commit after a clean build and dist-output verification pass.
+
+---
+
+## 2026-08-31
+
+### Page Indexing report review (GSC UI, `sc-domain:ewohub.com`)
+
+Followed up on the 2026-08-30 GSC baseline by opening the actual **Page Indexing** report in the Search
+Console UI (not just Search Analytics) to see how much of the site Google has actually chosen to index.
+
+**Overall: 76 indexed / 184 not indexed**, broken down by reason:
+
+| Reason | Pages | Verdict |
+|---|---|---|
+| Page with redirect | 53 | **Not a problem** — confirmed via `curl` that `ewohub.com` (no `www`) and `http://` variants correctly 308-redirect to `https://www.ewohub.com`. Google finding and excluding these is expected/correct behavior for a redirect setup, not something to fix. |
+| Crawled — currently not indexed | **125** | **The real bottleneck.** Spot-checked 7 URLs via the URL Inspection API — only the homepage came back "Submitted and indexed" (PASS); everything else (`/ru/studio-scaling`, `/ru/stripchat-ai-model-recommendations`, `/es/raise-your-room-ranking-score`, `/ro/stripchat-ai-model-recommendations`, `/uk/stripchat-first-14-days-guide`, `/ro/raise-your-room-ranking-score`) came back "Crawled - currently not indexed" with no technical block (`robotsTxtState: ALLOWED`, `indexingState: INDEXING_ALLOWED`, correct self-referencing canonical). Google read these pages and chose not to index them — consistent with the 2026-08-30 read that this is a young/low-trust-domain problem, not a content or crawl problem. |
+| Variant page with canonical tag | 5 | **False alarm, already fixed, just stale.** The 3 examples checked (`/best-streaming-times-by-region`, `/how-cam-algorithm-ranks-rooms`, `/new-model-growth`) show Google's recorded canonical as `https://ewohub.com/...` (no `www`) — but `curl`-ing the live pages confirms the canonical tag is already correctly `https://www.ewohub.com/...` right now. This is a stale snapshot from right around the 2026-07-21 domain migration that Google hasn't refreshed. Also verified all 3 URLs are present in the live `sitemap-0.xml` — the URL Inspection panel's "no referring sitemap" note was itself stale/wrong, not a real sitemap gap. **Action taken:** manually submitted all 3 for re-indexing via Search Console → Проверка URL → Запросить индексирование. Expect these to self-correct within 1-2 weeks; the other 2 unchecked pages in this bucket should resolve the same way without separate action. |
+| Not found (404) | 1 | Trivial, not investigated this session. |
+
+**Why not just "Request Indexing" the 125 crawled-not-indexed pages too?** There's no technical error to fix on
+those — GSC's own diagnostics say indexing is allowed and nothing is blocking crawl. Manually requesting
+indexing doesn't change Google's quality/trust judgment, and the daily request quota is limited, so it's not
+a scalable fix for a 125-page bucket. The lever that actually moves this number is the same one flagged
+2026-08-30/08-31-earlier-in-session for raising traffic generally: **external backlinks to raise domain
+trust.** Until that improves, expect the indexed/not-indexed ratio to stay skewed — and publishing more new
+content on top of an already-mostly-unindexed corpus would dilute crawl/trust budget further rather than
+help, reinforcing the 2026-08-30 call to prioritize strengthening existing pages over new volume.
+
+---
+
 ## 2026-08-30
 
 ### Search Console baseline — first real pull on the `ewohub.com` property (28 days: 2026-07-30 → 2026-08-27)
@@ -200,6 +279,168 @@ descriptions adapted to the same platform-name-first framing in each language, m
 existing tone. Build verified clean (`npm run build`, 260 pages, zero errors); spot-checked via local
 preview on root, `/de`, `/ro`, and `/uk` — new title/H1 render correctly, TOC sidebar link
 (`#platform-cam-rank`) still scrolls to the right section.
+
+### Full audit (later same day, third session): comprehensive technical + content + locale-parity pass
+
+Planning-only session, explicitly requested as a broader "analyze everything" pass rather than a
+continuation of the content-freshness angle from earlier today. No site content changed, no pages
+created/edited, no commits made. Findings below are grounded in direct inspection of `src/pages`,
+live-site fetches, and 4 fresh competitor searches — GSC was **not** re-pulled (same-day baseline already
+captured above; too early for a meaningful delta).
+
+**Method note:** re-verified every "known gap" CLAUDE.md flags as re-check-worthy. Two of the three
+turned out to still be accurate as described; one (locale mirroring) needed a more precise breakdown than
+the doc currently gives.
+
+#### Prioritized action list
+
+1. **Fix the `raise-your-room-ranking-score` blog listing gap — 5 locales, trivial change.** The page
+   *file* exists and is correctly built in all 8 locales (confirmed via GSC: `/uk/raise-your-room-ranking-score`
+   is actively ranking pos 4). But its entry in `blog.astro`'s articles array is missing in **de, es, ro,
+   ru, uk** — present only in root (en), fr, and pt. This is exactly the "page exists, listing doesn't"
+   failure mode CLAUDE.md warns about, just inverted from the historical direction (page used to be
+   EN-only; now the page is universal but the *listing* lags in 5 of 8 locales). Concretely: the page is
+   invisible from `/de/blog`, `/es/blog`, `/ro/blog`, `/ru/blog`, `/uk/blog` even though it's live and
+   indexable at those URLs directly. Fix: add the missing entry to the blog array in those 5 files, same
+   card shape as the fr/pt/root entries (tag, date `2026-...` — check `git log --follow --diff-filter=A`
+   for the real first-publish date per CLAUDE.md's rule, don't guess).
+
+2. **Geo-page titles are systemically oversized — all 6 built pages, not a one-off.** Measured byte-length
+   of every geo-page `<title>`:
+
+   | Page | Title length |
+   |---|---|
+   | `model-promotion-usa` | 77 |
+   | `model-promotion-germany` (de) | 85 |
+   | `model-promotion-romania` (ro) | 74 |
+   | `model-promotion-colombia` (es) | 77 |
+   | `model-promotion-spain` (es) | 73 |
+   | `model-promotion-ukraine` (ru/uk) | not measured, same pattern expected |
+
+   All are 70-85 characters against a ~50-60 char practical limit before Google truncates in SERPs —
+   the "— How to Grow American Viewers" / "— Publikumsaufbau Deutschland" style suffix is the recurring
+   culprit (title + subtitle crammed into one `<title>` tag instead of splitting concept across title vs.
+   H1). Meta descriptions on the same pages run 169-180 chars (target ~150-160), also over. This is a
+   template-level pattern, not a per-page mistake, so worth fixing as a batch pass across all 6 existing
+   geo pages *and* applying the shorter pattern to whichever countries get built next (item 6 below) rather
+   than repeating it. Contrast: `/model-promotion` and `/studio-traffic`'s titles from today's earlier
+   shipped work are 50-53 chars — already the right length, use those as the template.
+
+3. **Internal linking from geo pages to the site's best-performing hub pages is inconsistent and
+   incomplete.** Checked all 6 geo pages for links to the 4 pages GSC shows performing best
+   (`webcam-model-income-guide`, `best-streaming-times-by-region`, `stripscore-cam-rank-explained`,
+   `new-model-growth`):
+   - `model-promotion-usa`, `model-promotion-germany`, `model-promotion-ukraine` (the original 3-country
+     batch) link to **none** of the four — they link to `webcam-earnings-by-platform` and
+     `platforms-we-work-with` instead, plus cross-links to each other.
+   - `model-promotion-romania`, `model-promotion-colombia`, `model-promotion-spain` (the later batch) link
+     to `webcam-model-income-guide` but still miss the other three.
+   - None of the 6 link to `stripscore-cam-rank-explained` or `best-streaming-times-by-region` — the two
+     pages Priority 1/3 in this morning's session identified as the strongest-proven and best-performing
+     locale cluster respectively. Given `/model-promotion`'s own link equity problem was already flagged
+     today, feeding it (and its geo variants) more contextual links to the pages Google already trusts is
+     a low-effort, high-plausibility move. Add 1-2 natural contextual links per geo page to
+     `stripscore-cam-rank-explained` and `best-streaming-times-by-region`, mirrored across each page's
+     locale pair.
+
+4. **No BreadcrumbList or Article/BlogPosting structured data — confirmed still true, and confirmed the
+   existing FAQPage schema is client-side-injected, not server-rendered.** `Base.astro` only emits static
+   `Organization` + `WebSite` JSON-LD server-side; `FAQPage` schema is generated by a `<script>` block that
+   runs in-browser after DOMContentLoaded and appends the `<script type="application/ld+json">` tag via
+   `document.head.appendChild` (`Base.astro` ~line 1107-1122). Googlebot does execute JS so this likely
+   still gets picked up, but it's a weaker/slower signal than server-rendering the same JSON at build time
+   — Astro is static output, so there's no technical reason it needs to be client-side; it's almost
+   certainly just how it was first built. Since Astro already has the FAQ content at build time (it's
+   rendered into `.faq-item` markup server-side), moving this to build-time generation is a mechanical
+   refactor, not new design work. Separately, no page emits `BreadcrumbList` (would help rich-result
+   breadcrumbs and reinforces the site's hierarchy signal to Google) or `Article`/`BlogPosting` (would add
+   `datePublished` structured data — useful since CLAUDE.md already mandates a real `date` field per blog
+   card, so the data exists, it's just not exposed as schema). Recommend, in priority order: (a) move
+   FAQPage to build-time/server-side, (b) add `BlogPosting` schema to blog/resources articles using the
+   existing `date` field, (c) add `BreadcrumbList` sitewide via `Base.astro` using the existing nav/URL
+   structure. None of this was touched this session (planning only).
+
+5. **BongaCams/MyFreeCams/LiveJasmin/CamSoda content gap confirmed, and uneven even within the gap.**
+   Grepped every root page for platform mentions: Stripchat (26 pages), Chaturbate (22), LiveJasmin (12),
+   BongaCams (8), CamSoda (1), MyFreeCams (1) — all passing/comparison mentions, zero dedicated pages for
+   any of the four. LiveJasmin and BongaCams at least get referenced as comparison points regularly;
+   MyFreeCams and CamSoda are each mentioned exactly once sitewide, meaning the site currently has almost
+   no comparison-content signal for two platforms that show up repeatedly in "cam site comparison" search
+   intent. Not urgent given GSC's finding that new-content volume isn't the bottleneck (see item 8), but
+   flag LiveJasmin specifically as the best next-candidate *if* a comparison-content push happens — it
+   already has the most secondary mentions (12) of the four, meaning existing pages already assume reader
+   familiarity with it without ever landing them on a dedicated LiveJasmin page.
+
+6. **Geo backlog: France/Poland/Sweden reconfirmed as the right next targets — no reordering needed.**
+   Re-ran the competitor searches: "webcam traffic promotion service SEO marketing agency" still surfaces
+   the same recurring set (bird.marketing, seocircular.com, trafficpills.com) plus one newly-noticed
+   recurring name, **prostarseo.com** (Adult SEO, North America-first positioning) — worth adding to the
+   competitor watchlist. "Cam model traffic growth service France" and "webcam model promotion marketing
+   agency Poland Sweden" both still return zero specialized local competitors — Poland/Sweden results are
+   generic marketing/PR/influencer agencies and (for Sweden) CM Models, a traditional fashion agency, none
+   of which compete on cam-specific promotion. This matches the 2026-07-10 read exactly; no new entrant
+   has appeared in either market. Romania's GSC overperformance (item 7 below) is a signal about content
+   *and existing page* strength, not a reason to reprioritize which *new* countries to build — Romania is
+   already built. Recommendation stands: **France next, then Poland or Sweden**, each with the
+   differentiation angle already scoped in the 2026-07-10 entry (France: no dedicated local agency,
+   large EU market; Sweden: no cam-specific agency, only generic fashion/influencer players; Poland:
+   legal/tax content dominates search, no agency competitor). Apply the shorter-title lesson from item 2
+   when building these.
+
+7. **Romania locale-parity check: RO's blog/resources listings are fully at parity with EN — the earlier
+   "worth a closer look" question is resolved, no gap found.** Systematically diffed `blog.astro` and
+   `resources.astro` listings across all 8 locales. `resources.astro` is identical everywhere (1 entry,
+   `stripchat-first-14-days-guide`, present in all 8). `blog.astro` has exactly one discrepancy sitewide —
+   the `raise-your-room-ranking-score` gap in item 1 above — and **RO is one of the 5 locales missing that
+   one entry**, same as de/es/ru/uk. So RO isn't uniquely behind; it has the identical, sitewide gap. Page
+   *files* are at 100% parity across all 8 locales for every non-geo page (diffed file listings directly,
+   zero discrepancies beyond the geo pages, which are intentionally locale-scoped per the 2026-07-19 design
+   decision already logged — geo pages exist in English root + the country's native-language locale only,
+   not all 8, and that's correct, not a bug). Conclusion: Romania's GSC overperformance is genuinely
+   organic content/topic-fit, not an artifact of better internal plumbing than other locales — the plumbing
+   is equally good (or equally has the one shared gap) everywhere.
+
+8. **Content strategy call: pause new-topic sprawl, keep the pipeline running but redirect it toward
+   strengthening existing proven pages.** This directly answers the open question from this morning's
+   session. Recommendation: **do not pause the daily pipeline, but change what "an article" means for the
+   next 2-3 weeks.** GSC's core finding — 6 pages already at position 2-7 with near-zero volume, one page
+   (homepage) with volume but no authority — means the bottleneck is keyword breadth and link equity on
+   existing pages, not the count of published articles. A hard pause risks losing publishing cadence and
+   momentum for no benefit; a full pipeline redirect would violate the Stripchat-only scope boundary
+   (CLAUDE.md) without an explicit re-authorization. The pragmatic middle path, within the existing
+   Stripchat-only scope: bias the next several scheduled-task topic choices toward angles that would
+   naturally justify **new internal links into the 6 proven pages** (item 3's targets) rather than
+   standalone topics that only link to each other — e.g., a Stripchat article about ranking/visibility
+   mechanics has a natural, non-forced link into `stripscore-cam-rank-explained`; a scheduling/timing
+   article has a natural link into `best-streaming-times-by-region`. This isn't a scope change, just a
+   topic-selection bias within the existing scope, so no scheduled-task prompt edit is strictly required —
+   flagging as a preference to apply manually next time topics are picked, and worth encoding into the task
+   prompt if it proves out over a few cycles. Separately, and outside pipeline scope: `/model-promotion`
+   and `/studio-traffic` link-equity work (item 3) plus the geo-page title fix (item 2) are the
+   highest-leverage manual-session items queued behind this.
+
+9. **Minor/cosmetic, no action needed:** `ru/contact.astro` and `uk/contact.astro` share an identical
+   `<title>` string ("Контакт – EWO Webcam Promotion") — checked, and it's coincidental, not a translation
+   bug: "Контакт" is spelled identically in Russian and Ukrainian, and the rest of both pages (meta
+   description, H1, body, FAQ) are fully and correctly translated per-language (diffed directly). Not
+   worth touching.
+
+10. **Technical hygiene otherwise clean.** Live-fetched homepage, `/blog`, `/ro/stripscore-cam-rank-explained`,
+    `/model-promotion`, `/studio-traffic`, `/model-promotion-usa`, `/de/model-promotion-germany`,
+    `/sitemap-index.xml`, `/robots.txt` — all 200s. Single `<h1>` on every page checked, canonical tag
+    present and correct (`https://www.ewohub.com/...`) on every page checked. `robots.txt` and
+    `vercel.json` both consistent with CLAUDE.md's canonical-domain claim: `ewo.cam`/`www.ewo.cam` →
+    `www.ewohub.com` 301s in `vercel.json`, `robots.txt` points its `Sitemap:` line at
+    `https://www.ewohub.com/sitemap-index.xml`. No duplicate `<title>` or `<meta description>` strings
+    found anywhere in `src/pages/**` beyond the one coincidental/harmless case in item 9. `top-performing-titles-chaturbate`
+    and `chaturbate-show-prices` are each linked from only 1 other root page (thin internal linking,
+    presumably just the `studio-traffic` hub card) — not broken, but worth a link or two from relevant
+    Chaturbate blog content if any gets written.
+
+#### What this session did not do
+No GSC re-pull (too early since this morning's baseline). No fix applied to the `raise-your-room-ranking-score`
+listing gap, geo-page titles, internal links, or structured data — all flagged above for a future execution
+session, per this task's planning-only scope. No new pages built.
 
 ---
 

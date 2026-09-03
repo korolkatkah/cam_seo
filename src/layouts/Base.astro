@@ -153,6 +153,121 @@ const footerRegionHrefs = ['/model-promotion-usa', '/model-promotion-germany', '
 const footerServices = fd.services.map((label, i) => ({ href: `${langPrefix}${footerServiceHrefs[i]}`, label }));
 const footerResources = fd.resources.map((label, i) => ({ href: `${langPrefix}${footerResourceHrefs[i]}`, label }));
 const footerRegions = fd.regions.map((label, i) => ({ href: footerRegionHrefs[i], label }));
+
+// --- Build-time FAQPage schema ---
+// Scans the rendered body HTML for .faq-item blocks and emits FAQPage JSON-LD
+// server-side instead of the old client-side DOMContentLoaded script. Wrapped so a
+// parsing miss on any one page just skips schema for that page — never breaks the build.
+function decodeEntities(s: string): string {
+  return s
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&rsquo;/gi, '’')
+    .replace(/&lsquo;/gi, '‘')
+    .replace(/&rdquo;/gi, '”')
+    .replace(/&ldquo;/gi, '“')
+    .replace(/&mdash;/gi, '—')
+    .replace(/&ndash;/gi, '–')
+    .replace(/&hellip;/gi, '…')
+    .replace(/&quot;/gi, '"')
+    .replace(/&#0?39;/gi, "'")
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/&amp;/gi, '&');
+}
+
+function stripTags(html: string): string {
+  return decodeEntities(html.replace(/<[^>]*>/g, ' ')).replace(/\s+/g, ' ').trim();
+}
+
+function findMatchingClose(html: string, tag: string, searchFrom: number): number {
+  const openRe = new RegExp(`<${tag}\\b`, 'gi');
+  const closeRe = new RegExp(`<\\/${tag}>`, 'gi');
+  let depth = 1;
+  let idx = searchFrom;
+  while (depth > 0) {
+    openRe.lastIndex = idx;
+    closeRe.lastIndex = idx;
+    const nextOpen = openRe.exec(html);
+    const nextClose = closeRe.exec(html);
+    if (!nextClose) return -1;
+    if (nextOpen && nextOpen.index < nextClose.index) {
+      depth++;
+      idx = nextOpen.index + nextOpen[0].length;
+    } else {
+      depth--;
+      idx = nextClose.index + nextClose[0].length;
+      if (depth === 0) return nextClose.index;
+    }
+  }
+  return -1;
+}
+
+interface FaqQA { '@type': 'Question'; name: string; acceptedAnswer: { '@type': 'Answer'; text: string } }
+
+function extractFaqItems(html: string): FaqQA[] {
+  const items: FaqQA[] = [];
+  const blockOpenRe = /<(div|details)\s+class="faq-item">/gi;
+  let m: RegExpExecArray | null;
+  while ((m = blockOpenRe.exec(html))) {
+    const tag = m[1].toLowerCase();
+    const contentStart = blockOpenRe.lastIndex;
+    const closeIdx = findMatchingClose(html, tag, contentStart);
+    if (closeIdx === -1) continue; // malformed — skip just this block, keep scanning
+    const inner = html.slice(contentStart, closeIdx);
+    blockOpenRe.lastIndex = closeIdx;
+
+    // Question: try <summary> (details variant), then <h3> (div + heading variant),
+    // then <button class="faq-chevron"> (div + button variant) — mirrors the fallback
+    // chain the old client-side script used.
+    let qHtml: string | null = null;
+    let qEnd = 0;
+    let mm = /<summary>([\s\S]*?)<\/summary>/i.exec(inner);
+    if (mm) { qHtml = mm[1]; qEnd = mm.index + mm[0].length; }
+    if (qHtml === null) {
+      mm = /<h3[^>]*>([\s\S]*?)<\/h3>/i.exec(inner);
+      if (mm) { qHtml = mm[1]; qEnd = mm.index + mm[0].length; }
+    }
+    if (qHtml === null) {
+      mm = /<button\s+class="faq-chevron"[^>]*>([\s\S]*?)<\/button>/i.exec(inner);
+      if (mm) { qHtml = mm[1]; qEnd = mm.index + mm[0].length; }
+    }
+    if (qHtml === null) continue;
+
+    qHtml = qHtml.replace(/<svg[\s\S]*?<\/svg>/gi, '').replace(/<span class="faq-chevron"[^>]*>[\s\S]*?<\/span>/gi, '');
+    const question = stripTags(qHtml);
+    if (!question) continue;
+
+    // Answer: prefer a .faq-body wrapper's <p> (or its own text), else the first <p>
+    // that follows the question container.
+    let aHtml: string | null = null;
+    mm = /<div class="faq-body">([\s\S]*?)<\/div>/i.exec(inner);
+    if (mm) {
+      const pm = /<p>([\s\S]*?)<\/p>/i.exec(mm[1]);
+      aHtml = pm ? pm[1] : mm[1];
+    }
+    if (aHtml === null) {
+      const pm = /<p>([\s\S]*?)<\/p>/i.exec(inner.slice(qEnd));
+      if (pm) aHtml = pm[1];
+    }
+    if (aHtml === null) continue;
+    const answer = stripTags(aHtml);
+    if (!answer) continue;
+
+    items.push({ '@type': 'Question', name: question, acceptedAnswer: { '@type': 'Answer', text: answer } });
+  }
+  return items;
+}
+
+let faqSchema: { '@context': string; '@type': string; mainEntity: FaqQA[] } | null = null;
+try {
+  const bodyHtml = await Astro.slots.render('default');
+  const faqItems = extractFaqItems(bodyHtml);
+  if (faqItems.length > 0) {
+    faqSchema = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqItems };
+  }
+} catch (e) {
+  faqSchema = null;
+}
 ---
 
 <!doctype html>
@@ -208,6 +323,8 @@ const footerRegions = fd.regions.map((label, i) => ({ href: footerRegionHrefs[i]
       "name": "EWOhub",
       "url": "https://www.ewohub.com"
     })} />
+
+    {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -1102,26 +1219,6 @@ const footerRegions = fd.regions.map((label, i) => ({ href: footerRegionHrefs[i]
       btn.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
   });
-</script>
-
-<script>
-  // FAQPage schema — auto-generated from .faq-item elements on the page
-  (function () {
-    var items = [];
-    document.querySelectorAll('.faq-item').forEach(function (item) {
-      var btn = item.querySelector('.faq-chevron span, .faq-chevron > span, summary');
-      var body = item.querySelector('.faq-body p, .faq-body, details > p');
-      if (!btn || !body) return;
-      var q = btn.textContent.trim();
-      var a = body.textContent.trim();
-      if (q && a) items.push({ '@type': 'Question', 'name': q, 'acceptedAnswer': { '@type': 'Answer', 'text': a } });
-    });
-    if (items.length === 0) return;
-    var script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.text = JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', 'mainEntity': items });
-    document.head.appendChild(script);
-  })();
 </script>
 
 
