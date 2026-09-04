@@ -446,9 +446,14 @@ const scMaxScore24 = Math.max(1, ...scHours24.map(h => h.score));
   </div>
 </section>
 
-<script>
-  document.querySelectorAll<HTMLElement>('.trends-block').forEach((block) => {
-    const tabs = block.querySelectorAll<HTMLButtonElement>('.platform-tab');
+<script is:inline>
+  // is:inline — Astro's hoisted-script bundling silently drops scripts that
+  // live inside a component rendered through <Base>'s slot (see
+  // https://github.com/withastro/astro/issues/6057 and related issues), so
+  // this stays inline and plain-JS rather than a bundled/typed module.
+  (function () {
+  document.querySelectorAll('.trends-block').forEach((block) => {
+    const tabs = block.querySelectorAll('.platform-tab');
     tabs.forEach((tab) => {
       tab.addEventListener('click', () => {
         const platform = tab.dataset.platform;
@@ -456,42 +461,38 @@ const scMaxScore24 = Math.max(1, ...scHours24.map(h => h.score));
           tb.classList.toggle('is-active', tb === tab);
           tb.setAttribute('aria-selected', tb === tab ? 'true' : 'false');
         });
-        block.querySelectorAll<HTMLElement>('.platform-panel').forEach((panel) => {
+        block.querySelectorAll('.platform-panel').forEach((panel) => {
           panel.hidden = panel.dataset.panel !== platform;
         });
       });
     });
   });
 
-  function pad(n: number): string {
+  function pad(n) {
     return String(n).padStart(2, '0');
   }
 
   const tzOffsetMin = new Date().getTimezoneOffset();
   const localNowHour = new Date().getHours();
 
-  document.querySelectorAll<HTMLElement>('.hours-list[id]').forEach((list) => {
-    const card = list.closest<HTMLElement>('.trends-card');
+  document.querySelectorAll('.hours-list[id]').forEach((list) => {
+    const card = list.closest('.trends-card');
     if (!card) return;
 
-    const rows = Array.from(list.querySelectorAll<HTMLElement>('.hours-row[data-utc-hour]'));
-    const historyRows: HTMLElement[] = [];
-    let nowRow: HTMLElement | null = null;
-    // map localStartHour → row
-    const rowByLocal = new Map<number, HTMLElement>();
+    const rows = Array.from(list.querySelectorAll('.hours-row[data-utc-hour]'));
+    const historyRows = [];
+    let nowRow = null;
 
     rows.forEach((row) => {
       const utcHour = Number(row.dataset.utcHour);
       if (Number.isNaN(utcHour)) return;
       const startTotal = (((utcHour * 60 - tzOffsetMin) % 1440) + 1440) % 1440;
       const endTotal = (startTotal + 60) % 1440;
-      const fmt = (m: number) => `${pad(Math.floor(m / 60))}:${pad(m % 60)}`;
+      const fmt = (m) => `${pad(Math.floor(m / 60))}:${pad(m % 60)}`;
       const localStartHour = Math.floor(startTotal / 60);
 
-      const rangeEl = row.querySelector<HTMLElement>('.hours-range');
+      const rangeEl = row.querySelector('.hours-range');
       if (rangeEl) rangeEl.textContent = `${fmt(startTotal)}–${fmt(endTotal)}`;
-
-      rowByLocal.set(localStartHour, row);
 
       if (localStartHour === localNowHour) {
         nowRow = row;
@@ -512,18 +513,18 @@ const scMaxScore24 = Math.max(1, ...scHours24.map(h => h.score));
 
     // Insert "now note" right after current row
     if (nowRow) {
-      const nowNote = card.querySelector<HTMLElement>('.hours-yesterday-note');
+      const nowNote = card.querySelector('.hours-yesterday-note');
       if (nowNote) {
         nowNote.hidden = false;
-        (nowRow as HTMLElement).after(nowNote);
+        nowRow.after(nowNote);
       }
     }
 
     // Move non-visible rows into history panel
-    const historyWrap = card.querySelector<HTMLElement>('.hours-history-wrap');
-    const historyPanel = card.querySelector<HTMLElement>('.hours-history-panel');
-    const historyList = card.querySelector<HTMLElement>('.hours-list--history');
-    const historyLabelEl = card.querySelector<HTMLElement>('[data-history-label]');
+    const historyWrap = card.querySelector('.hours-history-wrap');
+    const historyPanel = card.querySelector('.hours-history-panel');
+    const historyList = card.querySelector('.hours-list--history');
+    const historyLabelEl = card.querySelector('[data-history-label]');
 
     if (historyRows.length > 0 && historyWrap && historyPanel && historyList && historyLabelEl) {
       historyRows.forEach(r => historyList.appendChild(r));
@@ -534,9 +535,9 @@ const scMaxScore24 = Math.max(1, ...scHours24.map(h => h.score));
       if (nowRow) {
         const yesterdayAbove = historyWrap.dataset.yesterdayAbove ?? '↑ yesterday';
         const yesterdayBelow = historyWrap.dataset.yesterdayBelow ?? '↓ yesterday';
-        let insertBefore: Element | null = null;
+        let insertBefore = null;
         for (const child of Array.from(historyList.children)) {
-          const el = child as HTMLElement;
+          const el = child;
           const utcH = Number(el.dataset.utcHour);
           if (Number.isNaN(utcH)) continue;
           const startMin = (((utcH * 60 - tzOffsetMin) % 1440) + 1440) % 1440;
@@ -548,7 +549,7 @@ const scMaxScore24 = Math.max(1, ...scHours24.map(h => h.score));
         sepAbove.textContent = yesterdayAbove;
         const nowDup = document.createElement('div');
         nowDup.className = 'hours-now-dup';
-        const clone = (nowRow as HTMLElement).cloneNode(true) as HTMLElement;
+        const clone = nowRow.cloneNode(true);
         nowDup.appendChild(clone);
         const sepBelow = document.createElement('div');
         sepBelow.className = 'hours-now-sep';
@@ -565,7 +566,7 @@ const scMaxScore24 = Math.max(1, ...scHours24.map(h => h.score));
 
         // Insert clones of now+1 and now+2 right after the ↓ yesterday separator
         const afterSepRef = sepBelow.nextElementSibling;
-        const nextClones: {d: number; el: HTMLElement}[] = [];
+        const nextClones = [];
         rows.forEach((row) => {
           const utcH = Number(row.dataset.utcHour);
           if (Number.isNaN(utcH)) return;
@@ -573,7 +574,7 @@ const scMaxScore24 = Math.max(1, ...scHours24.map(h => h.score));
           const localH = Math.floor(startMin / 60);
           const d = (localH - localNowHour + 24) % 24;
           if (d === 1 || d === 2) {
-            nextClones.push({ d, el: (row as HTMLElement).cloneNode(true) as HTMLElement });
+            nextClones.push({ d, el: row.cloneNode(true) });
           }
         });
         nextClones.sort((a, b) => a.d - b.d);
@@ -583,36 +584,37 @@ const scMaxScore24 = Math.max(1, ...scHours24.map(h => h.score));
         });
       }
 
-      const histBtn = historyWrap.querySelector<HTMLButtonElement>('.hours-history-btn');
+      const histBtn = historyWrap.querySelector('.hours-history-btn');
       if (histBtn) {
         histBtn.addEventListener('click', () => {
           const open = historyPanel.hidden;
           historyPanel.hidden = !open;
           histBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-          const chev = histBtn.querySelector<HTMLElement>('.hist-chevron');
+          const chev = histBtn.querySelector('.hist-chevron');
           if (chev) chev.style.transform = open ? 'rotate(180deg)' : '';
         });
       }
     }
   });
 
-  document.querySelectorAll<HTMLButtonElement>('.tags-more-btn').forEach((btn) => {
-    const panel = btn.nextElementSibling as HTMLElement;
-    const labelEl = btn.querySelector('span')!;
+  document.querySelectorAll('.tags-more-btn').forEach((btn) => {
+    const panel = btn.nextElementSibling;
+    const labelEl = btn.querySelector('span');
     btn.addEventListener('click', () => {
       const open = panel.hidden;
       panel.hidden = !open;
       btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-      labelEl.textContent = open ? btn.dataset.hide! : `${btn.dataset.show} (${panel.querySelectorAll('.tag-cell').length})`;
+      labelEl.textContent = open ? btn.dataset.hide : `${btn.dataset.show} (${panel.querySelectorAll('.tag-cell').length})`;
     });
   });
 
-  document.querySelectorAll<HTMLElement>('[data-hours-local-note]').forEach((el) => {
+  document.querySelectorAll('[data-hours-local-note]').forEach((el) => {
     el.hidden = false;
   });
-  document.querySelectorAll<HTMLElement>('[data-hours-legend]').forEach((el) => {
+  document.querySelectorAll('[data-hours-legend]').forEach((el) => {
     el.hidden = false;
   });
+  })();
 </script>
 
 <style>

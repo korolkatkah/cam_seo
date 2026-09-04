@@ -136,15 +136,18 @@ const lookupHref = lang === 'en' ? '/live-model-lookup' : `/${lang}/live-model-l
 </section>
 )}
 
-<script>
-  function pad(n: number): string {
+<script is:inline>
+  // is:inline — see the note in TrendsBlock.astro: Astro's build silently
+  // drops hoisted scripts from components rendered inside <Base>'s slot.
+  (function () {
+  function pad(n) {
     return String(n).padStart(2, '0');
   }
-  document.querySelectorAll<HTMLElement>('[data-hstat-updated]').forEach((el) => {
+  document.querySelectorAll('[data-hstat-updated]').forEach((el) => {
     const ts = el.dataset.ts;
     if (!ts) return;
     const render = () => {
-      const mins = Math.max(0, Math.floor((Date.now() - new Date(ts!).getTime()) / 60000));
+      const mins = Math.max(0, Math.floor((Date.now() - new Date(ts).getTime()) / 60000));
       el.textContent = mins < 1 ? (el.dataset.now ?? '') : (el.dataset.ago ?? '').replace('{n}', String(mins));
     };
     render();
@@ -152,12 +155,13 @@ const lookupHref = lang === 'en' ? '/live-model-lookup' : `/${lang}/live-model-l
   });
 
   const tzOffsetMin = new Date().getTimezoneOffset();
-  document.querySelectorAll<HTMLElement>('[data-hstat-spark-axis] .hstat-spark-tick[data-utc-hour]').forEach((el) => {
+  document.querySelectorAll('[data-hstat-spark-axis] .hstat-spark-tick[data-utc-hour]').forEach((el) => {
     const utcHour = Number(el.dataset.utcHour);
     if (Number.isNaN(utcHour)) return;
     const startTotal = (((utcHour * 60 - tzOffsetMin) % 1440) + 1440) % 1440;
     el.textContent = `${pad(Math.floor(startTotal / 60))}:${pad(startTotal % 60)}`;
   });
+  })();
 </script>
 
 <style>

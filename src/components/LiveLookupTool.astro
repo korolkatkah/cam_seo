@@ -192,12 +192,15 @@ const boardSections = [
   </div>
 </section>
 
-<script>
-  function pad(n: number): string {
+<script is:inline>
+  // is:inline — see the note in TrendsBlock.astro: Astro's build silently
+  // drops hoisted scripts from components rendered inside <Base>'s slot.
+  (function () {
+  function pad(n) {
     return String(n).padStart(2, '0');
   }
 
-  document.querySelectorAll<HTMLAnchorElement>('[data-llt-board-nav-link]').forEach((link) => {
+  document.querySelectorAll('[data-llt-board-nav-link]').forEach((link) => {
     link.addEventListener('click', (e) => {
       const id = link.getAttribute('href')?.slice(1);
       const target = id ? document.getElementById(id) : null;
@@ -208,28 +211,29 @@ const boardSections = [
     });
   });
 
-  document.querySelectorAll<HTMLButtonElement>('.llt-more-btn').forEach((btn) => {
-    const list = btn.nextElementSibling as HTMLElement;
+  document.querySelectorAll('.llt-more-btn').forEach((btn) => {
+    const list = btn.nextElementSibling;
     const labelEl = btn.querySelector('span');
     btn.addEventListener('click', () => {
       const open = list.hidden;
       list.hidden = !open;
       btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-      if (labelEl) labelEl.textContent = open ? btn.dataset.hide! : `${btn.dataset.show} (${list.querySelectorAll('.llt-board-row').length})`;
+      if (labelEl) labelEl.textContent = open ? btn.dataset.hide : `${btn.dataset.show} (${list.querySelectorAll('.llt-board-row').length})`;
     });
   });
 
   const tzOffsetMin = new Date().getTimezoneOffset();
-  document.querySelectorAll<HTMLElement>('[data-llt-hourly-table]').forEach((table) => {
-    table.querySelectorAll<HTMLElement>('tr[data-utc-hour]').forEach((row) => {
+  document.querySelectorAll('[data-llt-hourly-table]').forEach((table) => {
+    table.querySelectorAll('tr[data-utc-hour]').forEach((row) => {
       const utcHour = Number(row.dataset.utcHour);
       if (Number.isNaN(utcHour)) return;
       const startTotal = (((utcHour * 60 - tzOffsetMin) % 1440) + 1440) % 1440;
-      const fmt = (m: number) => `${pad(Math.floor(m / 60))}:${pad(m % 60)}`;
-      const cell = row.querySelector<HTMLElement>('.llt-hour-cell');
+      const fmt = (m) => `${pad(Math.floor(m / 60))}:${pad(m % 60)}`;
+      const cell = row.querySelector('.llt-hour-cell');
       if (cell) cell.textContent = fmt(startTotal);
     });
   });
+  })();
 </script>
 
 <style>
