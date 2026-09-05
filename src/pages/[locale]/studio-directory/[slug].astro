@@ -120,14 +120,14 @@ const countryNameInPhrase = locativeCountry[lang]?.[countryKey] ?? countryName;
   <div class="art-body">
     <div class="container">
 
-      <p class="art-intro">
+      <p style="margin-bottom:1.5rem;font-size:.9rem;">
         <a href={backHref}>{backLabel[lang].replace('{c}', countryNameInPhrase)}</a>
       </p>
 
       <p class="art-intro">{studio.about[lang]}</p>
 
       {studio.facts && (
-        <section class="section">
+        <div style="margin:2rem 0;">
           <div class="glass-card">
             <div style="font-size:.9rem;color:var(--fg-muted);line-height:2;">
               {studio.facts.earnings && <div><strong style="color:var(--fg);">{factLabels.earnings[lang]}:</strong> {studio.facts.earnings}</div>}
@@ -151,14 +151,14 @@ const countryNameInPhrase = locativeCountry[lang]?.[countryKey] ?? countryName;
             )}
             <a href={studio.website} target="_blank" rel="noopener noreferrer nofollow" style="display:inline-block;margin-top:1.25rem;font-size:.9rem;font-weight:600;color:var(--fg);">{websiteLabel[lang]}</a>
           </div>
-        </section>
+        </div>
       )}
 
-      <section class="section">
+      <div style="margin:2rem 0;">
         <div class="highlight-box">
           <p set:html={disclaimerHtml} />
         </div>
-      </section>
+      </div>
 
       <section class="art-cta section">
         <div class="art-cta__orb"></div>
@@ -174,7 +174,7 @@ const countryNameInPhrase = locativeCountry[lang]?.[countryKey] ?? countryName;
       </section>
 
       {siblings.length > 0 && (
-        <section class="section">
+        <div style="margin:2rem 0;">
           <h2>{moreStudiosTpl[lang].replace('{c}', countryNameInPhrase)}</h2>
           <div class="related-grid">
             {siblings.map((s) => (
@@ -188,7 +188,7 @@ const countryNameInPhrase = locativeCountry[lang]?.[countryKey] ?? countryName;
               <span>{fullCatalogLabel[lang]}</span>
             </a>
           </div>
-        </section>
+        </div>
       )}
 
     </div>
