@@ -1,0 +1,133 @@
+---
+import Base from '@/layouts/Base.astro';
+import { studioDirectory, countryNames } from '@/data/studios';
+const site = 'https://www.ewohub.com';
+const slug = 'studio-directory';
+const lang = 'de';
+---
+
+<Base
+  title="Webcam-Studio-Verzeichnis nach Ländern"
+  description="Ein verifiziertes Verzeichnis von Webcam-Studios nach Ländern — nur echte Adressen und aktive Websites. Lass dich vom EWO-Support mit dem richtigen Studio verbinden."
+  lang={lang}
+  hreflang={[
+    { lang: 'en', url: `${site}/${slug}` },
+    { lang: 'de', url: `${site}/de/${slug}` },
+    { lang: 'es', url: `${site}/es/${slug}` },
+    { lang: 'ro', url: `${site}/ro/${slug}` },
+    { lang: 'uk', url: `${site}/uk/${slug}` },
+    { lang: 'ru', url: `${site}/ru/${slug}` },
+    { lang: 'fr', url: `${site}/fr/${slug}` },
+    { lang: 'pt', url: `${site}/pt/${slug}` },
+  ]}
+>
+
+  <section class="art-hero">
+    <div class="art-orb art-orb--1"></div>
+    <div class="art-orb art-orb--2"></div>
+    <div class="art-grid"></div>
+    <div class="art-hero__inner container">
+      <div class="art-meta">
+        <span class="art-tag art-tag--blue">Verzeichnis</span>
+      </div>
+      <h1 class="art-title">Webcam-Studio-<span class="art-grad">Verzeichnis</span> nach Ländern</h1>
+      <p class="art-lead">
+        Eine laufend wachsende Liste von Webcam-Studios, die wir unabhängig verifizieren konnten — eine
+        echte Adresse, eine aktive, vom Studio selbst betriebene Website, nicht nur ein Eintrag in einem
+        fremden Aggregator. Nach Ländern geordnet, wird mit der Zeit erweitert.
+      </p>
+    </div>
+  </section>
+
+  <div class="art-body">
+    <div class="container">
+
+      <section class="section" style="margin-bottom:0;">
+        <a href="/contact" style="display:flex;flex-wrap:wrap;align-items:center;gap:1.5rem;text-decoration:none;border-radius:16px;padding:1.75rem 2rem;background:linear-gradient(135deg,#7c3aed,#ec4899 55%,#f59e0b);box-shadow:0 10px 30px rgba(124,58,237,.25);">
+          <div style="flex:1 1 320px;">
+            <p style="font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.85);margin-bottom:.5rem;">Not sure where to sign?</p>
+            <h2 style="font-size:1.4rem;font-weight:700;color:#fff;margin-bottom:.5rem;">Get matched with a top-rated studio</h2>
+            <p style="font-size:.9rem;color:rgba(255,255,255,.92);margin:0;line-height:1.6;">Talk to our support team — we'll help you pick the right studio for your country and goals, free of charge.</p>
+          </div>
+          <span style="flex-shrink:0;background:#fff;color:#7c3aed;font-weight:700;font-size:.9rem;padding:.75rem 1.5rem;border-radius:10px;white-space:nowrap;">Talk to Support →</span>
+        </a>
+      </section>
+
+      <p class="art-intro">
+        Die hier gelisteten Studios stammen aus öffentlichen Quellen — offiziellen Studio-Websites,
+        Branchenberichten und studioeigenen Seiten — und spiegeln wider, was jedes Studio über sich
+        selbst veröffentlicht, nicht eine Empfehlung von EWO. Die Abdeckung beginnt dort, wo
+        verifizierbare Studiokultur am stärksten ist, und wird mit der Zeit erweitert.
+      </p>
+
+      {studioDirectory.map((entry) => (
+        <section class="section" id={entry.key}>
+          <h2>{countryNames[entry.key][lang]}</h2>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;margin-top:1.25rem;">
+            {entry.studios.map((s) => (
+              <div class="glass-card">
+                <h3 style="font-size:1.05rem;font-weight:700;color:var(--fg);margin-bottom:.25rem;">{s.name}</h3>
+                <p style="font-size:.8rem;color:var(--fg-faint);margin-bottom:.625rem;">{s.city}</p>
+                <p style="font-size:.875rem;color:var(--fg-muted);line-height:1.6;margin-bottom:.875rem;">{s.blurb}</p>
+                <a href={s.website} target="_blank" rel="noopener noreferrer nofollow" style="font-size:.85rem;font-weight:600;color:var(--fg);">Visit website →</a>
+              </div>
+            ))}
+          </div>
+        </section>
+      ))}
+
+      <section class="section">
+        <div class="highlight-box">
+          <p>
+            Bevor du bei einem Studio unterschreibst — auch bei einem hier gelisteten — lies unsere
+            <a href="/de/how-to-choose-a-webcam-studio">Warnsignal-Checkliste für Studios</a>. Angaben
+            ändern sich häufig und sind die eigenen Aussagen des Studios, nicht von EWO verifiziert.
+            Betreibst du ein Studio und möchtest gelistet, korrigiert oder entfernt werden?
+            <a href="/de/contact">Kontaktiere uns</a>.
+          </p>
+        </div>
+      </section>
+
+      <section class="art-cta section">
+        <div class="art-cta__orb"></div>
+        <div class="art-cta__inner">
+          <span class="art-cta__badge">Models</span>
+          <h2>Brauchst du eine zweite Meinung, bevor du unterschreibst?</h2>
+          <p>Sag unserem Support-Team dein Land und deine Situation — wir helfen dir, ein Studio-Angebot einzuschätzen, oder besprechen unabhängiges Streaming mit EWO als Traffic-Treiber.</p>
+          <div class="art-cta__actions">
+            <a href="/de/contact" class="art-cta__btn art-cta__btn--primary">Support kontaktieren →</a>
+            <a href="/de/how-to-choose-a-webcam-studio" class="art-cta__btn art-cta__btn--ghost">Warnsignal-Checkliste lesen</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Weiterführende Artikel</h2>
+        <div class="related-grid">
+          <a href="/de/how-to-choose-a-webcam-studio" class="related-card">
+            <span class="related-card__icon">🚩</span>
+            <span>Wie du ein Webcam-Studio wählst</span>
+          </a>
+          <a href="/de/studio-scaling" class="related-card">
+            <span class="related-card__icon">📈</span>
+            <span>Studio-Skalierung</span>
+          </a>
+          <a href="/de/studio-traffic" class="related-card">
+            <span class="related-card__icon">🖥️</span>
+            <span>Studio-Traffic-Analytics</span>
+          </a>
+          <a href="/de/webcam-model-income-guide" class="related-card">
+            <span class="related-card__icon">💰</span>
+            <span>Einkommens-Guide für Models</span>
+          </a>
+          <a href="/de/for-models" class="related-card">
+            <span class="related-card__icon">🎯</span>
+            <span>Als Model mit EWO arbeiten</span>
+          </a>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+</Base>

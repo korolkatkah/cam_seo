@@ -1,0 +1,133 @@
+---
+import Base from '@/layouts/Base.astro';
+import { studioDirectory, countryNames } from '@/data/studios';
+const site = 'https://www.ewohub.com';
+const slug = 'studio-directory';
+const lang = 'uk';
+---
+
+<Base
+  title="Каталог Вебкам-Студій за Країнами"
+  description="Перевірений каталог вебкам-студій за країнами — лише реальні адреси й активні сайти. Отримайте допомогу підтримки EWO у виборі правильної студії."
+  lang={lang}
+  hreflang={[
+    { lang: 'en', url: `${site}/${slug}` },
+    { lang: 'de', url: `${site}/de/${slug}` },
+    { lang: 'es', url: `${site}/es/${slug}` },
+    { lang: 'ro', url: `${site}/ro/${slug}` },
+    { lang: 'uk', url: `${site}/uk/${slug}` },
+    { lang: 'ru', url: `${site}/ru/${slug}` },
+    { lang: 'fr', url: `${site}/fr/${slug}` },
+    { lang: 'pt', url: `${site}/pt/${slug}` },
+  ]}
+>
+
+  <section class="art-hero">
+    <div class="art-orb art-orb--1"></div>
+    <div class="art-orb art-orb--2"></div>
+    <div class="art-grid"></div>
+    <div class="art-hero__inner container">
+      <div class="art-meta">
+        <span class="art-tag art-tag--blue">Каталог</span>
+      </div>
+      <h1 class="art-title">Каталог Вебкам-Студій <span class="art-grad">за Країнами</span></h1>
+      <p class="art-lead">
+        Список вебкам-студій, які ми змогли незалежно перевірити — реальна адреса, активний сайт, що
+        належить самій студії, а не просто запис у чужому агрегаторі. Впорядковано за країнами,
+        поповнюється з часом.
+      </p>
+    </div>
+  </section>
+
+  <div class="art-body">
+    <div class="container">
+
+      <section class="section" style="margin-bottom:0;">
+        <a href="/contact" style="display:flex;flex-wrap:wrap;align-items:center;gap:1.5rem;text-decoration:none;border-radius:16px;padding:1.75rem 2rem;background:linear-gradient(135deg,#7c3aed,#ec4899 55%,#f59e0b);box-shadow:0 10px 30px rgba(124,58,237,.25);">
+          <div style="flex:1 1 320px;">
+            <p style="font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.85);margin-bottom:.5rem;">Not sure where to sign?</p>
+            <h2 style="font-size:1.4rem;font-weight:700;color:#fff;margin-bottom:.5rem;">Get matched with a top-rated studio</h2>
+            <p style="font-size:.9rem;color:rgba(255,255,255,.92);margin:0;line-height:1.6;">Talk to our support team — we'll help you pick the right studio for your country and goals, free of charge.</p>
+          </div>
+          <span style="flex-shrink:0;background:#fff;color:#7c3aed;font-weight:700;font-size:.9rem;padding:.75rem 1.5rem;border-radius:10px;white-space:nowrap;">Talk to Support →</span>
+        </a>
+      </section>
+
+      <p class="art-intro">
+        Студії тут зібрані з публічних джерел — офіційних сайтів студій, галузевих матеріалів і власних
+        сторінок студій — і відображають те, що кожна студія публікує про себе, а не рекомендацію від
+        EWO. Покриття починається там, де студійну культуру найлегше перевірити, і розширюватиметься з
+        часом.
+      </p>
+
+      {studioDirectory.map((entry) => (
+        <section class="section" id={entry.key}>
+          <h2>{countryNames[entry.key][lang]}</h2>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;margin-top:1.25rem;">
+            {entry.studios.map((s) => (
+              <div class="glass-card">
+                <h3 style="font-size:1.05rem;font-weight:700;color:var(--fg);margin-bottom:.25rem;">{s.name}</h3>
+                <p style="font-size:.8rem;color:var(--fg-faint);margin-bottom:.625rem;">{s.city}</p>
+                <p style="font-size:.875rem;color:var(--fg-muted);line-height:1.6;margin-bottom:.875rem;">{s.blurb}</p>
+                <a href={s.website} target="_blank" rel="noopener noreferrer nofollow" style="font-size:.85rem;font-weight:600;color:var(--fg);">Visit website →</a>
+              </div>
+            ))}
+          </div>
+        </section>
+      ))}
+
+      <section class="section">
+        <div class="highlight-box">
+          <p>
+            Перш ніж підписувати договір з будь-якою студією — включно з тими, що тут вказані —
+            прочитайте наш <a href="/uk/how-to-choose-a-webcam-studio">чекліст тривожних сигналів для
+            студій</a>. Деталі часто змінюються і є твердженнями самої студії, не перевіреними EWO.
+            Керуєте студією і хочете додати, виправити чи прибрати запис?
+            <a href="/uk/contact">Зв'яжіться з нами</a>.
+          </p>
+        </div>
+      </section>
+
+      <section class="art-cta section">
+        <div class="art-cta__orb"></div>
+        <div class="art-cta__inner">
+          <span class="art-cta__badge">Моделі</span>
+          <h2>Потрібна друга думка перед підписанням?</h2>
+          <p>Розкажіть нашій команді підтримки свою країну й ситуацію — ми допоможемо оцінити пропозицію студії або обговоримо незалежний стрімінг з EWO, що приводить трафік.</p>
+          <div class="art-cta__actions">
+            <a href="/uk/contact" class="art-cta__btn art-cta__btn--primary">Написати в Підтримку →</a>
+            <a href="/uk/how-to-choose-a-webcam-studio" class="art-cta__btn art-cta__btn--ghost">Прочитати чекліст тривожних сигналів</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Схожі Статті</h2>
+        <div class="related-grid">
+          <a href="/uk/how-to-choose-a-webcam-studio" class="related-card">
+            <span class="related-card__icon">🚩</span>
+            <span>Як Обрати Вебкам-Студію</span>
+          </a>
+          <a href="/uk/studio-scaling" class="related-card">
+            <span class="related-card__icon">📈</span>
+            <span>Масштабування Студій</span>
+          </a>
+          <a href="/uk/studio-traffic" class="related-card">
+            <span class="related-card__icon">🖥️</span>
+            <span>Аналітика Трафіку для Студій</span>
+          </a>
+          <a href="/uk/webcam-model-income-guide" class="related-card">
+            <span class="related-card__icon">💰</span>
+            <span>Гід по Доходу для Моделей</span>
+          </a>
+          <a href="/uk/for-models" class="related-card">
+            <span class="related-card__icon">🎯</span>
+            <span>Працюй Моделлю з EWO</span>
+          </a>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+</Base>
