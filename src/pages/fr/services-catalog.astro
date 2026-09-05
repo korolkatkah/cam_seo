@@ -84,7 +84,11 @@ const badgeColor: Record<string, string> = {
                   <div style="padding:.65rem 0;border-bottom:1px solid rgba(0,0,0,0.06);display:grid;grid-template-columns:minmax(150px,220px) 1fr;gap:.15rem 1rem;">
                     <div>
                       <div style="font-weight:700;">{svc.name}{svc.flag && <span style={`margin-left:.4rem;font-size:.68rem;padding:.05rem .4rem;border-radius:5px;font-weight:700;color:${badgeColor[svc.flag]};background:rgba(0,0,0,0.05);`}>{svc.flag === 'warn' ? ui.flagWarn : ui.flagThin}</span>}</div>
-                      <span style="font-family:monospace;font-size:.78rem;color:var(--fg-faint);word-break:break-all;">{svc.url}</span>
+                      {/\s/.test(svc.url) ? (
+                        <span style="font-family:monospace;font-size:.78rem;color:var(--fg-faint);word-break:break-all;">{svc.url}</span>
+                      ) : (
+                        <a href={svc.url.startsWith('http') ? svc.url : `https://${svc.url}`} target="_blank" rel="noopener noreferrer nofollow" style="font-family:monospace;font-size:.78rem;color:var(--fg-faint);word-break:break-all;text-decoration:underline;text-underline-offset:2px;">{svc.url}</a>
+                      )}
                     </div>
                     <div style="color:var(--fg-muted);font-size:.92rem;">{svc.desc}</div>
                   </div>

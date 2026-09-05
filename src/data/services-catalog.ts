@@ -236,9 +236,7 @@ export const servicesCatalog: CatalogCategory[] = [
         badge: 'warn',
         label: { en: 'Chaturbate Promotion', de: 'Chaturbate-Promotion', es: 'Promoción de Chaturbate', ro: 'Promovare Chaturbate', uk: 'Просування на Chaturbate', ru: 'Продвижение на Chaturbate', fr: 'Promotion Chaturbate', pt: 'Promoção do Chaturbate' },
         services: [
-          { name: 'CameliteBoost', url: 'cameliteboost.com', desc: 'Sells "real" Chaturbate traffic to lift room ranking.', flag: 'warn' },
           { name: 'WebModelsTraffic', url: 'webmodelstraffic.com', desc: 'Chaturbate-focused traffic and promotion/boost tooling.' },
-          { name: 'Chaturbate-Bots.com', url: 'chaturbate-bots.com', desc: 'Sells traffic and bots / "real viewers".', flag: 'warn' },
           { name: 'ViewerBot', url: 'viewerbot.webcam', desc: 'Viewer bots across Chaturbate, BongaCams, CamSoda, Stripchat, Cam4.', flag: 'warn' },
           { name: 'Aruna Talent', url: 'arunatalent.com', desc: 'Legitimate agency: broadcast-schedule optimization and management.' },
         ],
@@ -313,26 +311,6 @@ export const servicesCatalog: CatalogCategory[] = [
           { name: 'SirenCY', url: 'sirency.com', desc: 'Manages content strategy across channels including YouTube.' },
           { name: 'Aruna Talent', url: 'arunatalent.com', desc: 'SFW lifestyle-content funnel guidance bridging YouTube to OnlyFans.' },
           { name: 'TDM Management', url: 'tdmmanagement.com', desc: 'Marketing templates spanning YouTube alongside TikTok.' },
-        ],
-      },
-      {
-        slug: 'prodvizhenie_webcam',
-        badge: 'thin',
-        note: {
-          en: 'No large branded agency surfaced — results skew toward general SMM-agency directories rather than webcam-vertical specialists.',
-          de: 'Keine große Markenagentur gefunden — Ergebnisse neigen zu allgemeinen SMM-Agentur-Verzeichnissen statt Webcam-Spezialisten.',
-          es: 'No apareció ninguna agencia de marca grande — los resultados se inclinan hacia directorios generales de agencias SMM en vez de especialistas en webcam.',
-          ro: 'Nu a apărut nicio agenție mare de brand — rezultatele înclină spre directoare generale de agenții SMM, nu specialiste în webcam.',
-          uk: 'Великого брендового агентства не знайдено — результати схиляються до загальних каталогів SMM-агентств, а не спеціалістів з вебкаму.',
-          ru: 'Крупного брендового агентства не найдено — результаты склоняются к общим каталогам SMM-агентств, а не специалистам по вебкаму.',
-          fr: 'Aucune grande agence de marque n’est apparue — les résultats penchent vers des annuaires généraux d’agences SMM plutôt que des spécialistes webcam.',
-          pt: 'Nenhuma grande agência de marca apareceu — os resultados tendem a diretórios gerais de agências de SMM, não especialistas em webcam.',
-        },
-        label: { en: 'Webcam Promotion (RU Market)', de: 'Webcam-Promotion (russischer Markt)', es: 'Promoción Webcam (Mercado Ruso)', ro: 'Promovare Webcam (Piața Rusă)', uk: 'Просування вебкаму (рос. ринок)', ru: 'Продвижение вебкама (рынок РФ)', fr: 'Promotion Webcam (Marché Russe)', pt: 'Promoção de Webcam (Mercado Russo)' },
-        services: [
-          { name: 'Студия ЯЛ (Studio YAL)', url: 'yalstudio.ru', desc: 'Digital agency with a published SEO case study for webcam studios.' },
-          { name: 'Cherry SPB', url: 'cherryspb.ru', desc: 'Studio publishing material on promoting webcam models.' },
-          { name: 'Liza Adver (vc.ru)', url: 'vc.ru/u/1408653-liza-adver', desc: 'Independent marketer with a case study on Yandex.Direct studio promotion.' },
         ],
       },
       {
