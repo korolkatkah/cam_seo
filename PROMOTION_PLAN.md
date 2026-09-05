@@ -4,6 +4,46 @@ Running log of daily/session-based SEO & promotion action plans. Newest entry on
 
 ---
 
+## 2026-09-05
+
+### Recurring automation set up: 3 scheduled tasks recreated/created
+
+Discovered the two daily-article scheduled tasks documented in CLAUDE.md (`ewo-daily-article` 10:00,
+`ewo-daily-article-pm` 15:00) no longer existed in this app's scheduled-tasks store (neither the local
+mechanism nor the cloud `RemoteTrigger` routines list showed them) — likely lost in a prior reset/reinstall.
+Recreated both via `mcp__scheduled-tasks__create_scheduled_task` (the local task mechanism, which runs in
+this app on this machine — not the isolated-cloud-sandbox `RemoteTrigger` routines, which have no access to
+local files or the local git checkout and were the wrong tool for this). Both tasks read `CLAUDE.md` fresh
+each run for conventions, check recent git history/`PROMOTION_PLAN.md` to avoid duplicate topics between the
+AM/PM slots, enforce the Stripchat-only hard scope, ship all 8 locales, verify build + browser before
+pushing — same behavior as documented, just re-created from scratch.
+
+Also created a new third task, **`ewo-seo-monitoring`** (08:00 daily, read-only) — rotates through the
+weekly SEO health-check cadence discussed this session (Monday: full GSC Search Analytics + indexing spot-
+check + sitemap/canonical check; Tue/Wed/Sat: light check on newly-published articles; Thursday: week-over-
+week snapshot + "position 5-15" candidate list; Sunday: weekly retrospective). This task is hard-scoped to
+**never edit pages, run a build, commit, or push** — it only reads (GSC API, curl, repo files) and appends
+findings to this file, so a bad automated finding can't silently ship a bad change. The GSC service-account
+key used for the API was moved from this session's ephemeral scratchpad to a stable location,
+`C:\Users\shche\.claude\ewohub-secrets\gsc-key.json`, outside the git repo, so the recurring task has a
+durable path to read from (the previous scratchpad path is session-specific and would have disappeared).
+
+**Operational note:** all 3 tasks may pause on their first automatic run waiting for tool-use permission
+(build, git push, browser control) unless manually run once first via "Run now" in the Scheduled sidebar to
+pre-approve — flagged to the user.
+
+### Shipped: PWA support (manifest + icons) — today's item from the new weekly content-strengthening rotation
+
+Added `public/manifest.json` (name/short_name "EWOhub", `background_color`/`theme_color` matching the site's
+grayscale tokens `#fafaf8`/`#0a0a0a`, icons 192/512), generated `icon-192.png`, `icon-512.png`, and
+`apple-touch-icon.png` (180×180) from the existing `public/logo-neon.png` (1024×1024 source) via `sharp`
+(already a project dependency), and linked `<link rel="manifest">`, `<link rel="apple-touch-icon">`, and
+`<meta name="theme-color">` in `Base.astro`'s `<head>`. Lets mobile users add the site to their home screen.
+Build verified clean (268 pages), spot-checked in dev preview — manifest/icons serve correctly, homepage
+renders unaffected.
+
+---
+
 ## 2026-09-03
 
 ### Shipped: execution of the 2026-08-30 prioritized action list, items 1-4
