@@ -60,12 +60,6 @@ export const studioDirectory: CountryEntry[] = [
         website: 'https://webcammodelua.com',
         blurb: 'Model agency with an office in central Kyiv, recruiting for international webcam platforms.',
       },
-      {
-        name: 'Trinity (Webcam Studiya)',
-        city: 'Kyiv',
-        website: 'https://webcamstudiya.com',
-        blurb: 'One of the earlier webcam studios operating in Kyiv, with over a decade active on major platforms.',
-      },
     ],
   },
   {
