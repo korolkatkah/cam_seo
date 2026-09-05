@@ -70,7 +70,7 @@ const lang = 'pt';
           <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;margin-top:1.25rem;">
             {entry.studios.map((s) => (
               <div class="glass-card">
-                <h3 style="font-size:1.05rem;font-weight:700;color:var(--fg);margin-bottom:.25rem;">{s.name}</h3>
+                <h3 style="font-size:1.05rem;font-weight:700;margin-bottom:.25rem;"><a href={`/pt/studio-directory/${s.slug}`} style="color:var(--fg);text-decoration:none;">{s.name}</a></h3>
                 <p style="font-size:.8rem;color:var(--fg-faint);margin-bottom:.625rem;">{s.city}</p>
                 <p style="font-size:.875rem;color:var(--fg-muted);line-height:1.6;margin-bottom:.875rem;">{s.blurb[lang]}</p>
                 {s.facts && (

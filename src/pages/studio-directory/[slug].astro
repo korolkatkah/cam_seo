@@ -1,0 +1,133 @@
+---
+import Base from '@/layouts/Base.astro';
+import { studioDirectory, countryNames, factLabels, experienceYearsUnit, payoutLabels, perkLabels, reviewWord, type Studio, type CountryKey } from '@/data/studios';
+
+export function getStaticPaths() {
+  const paths: { params: { slug: string }; props: { studio: Studio; countryKey: CountryKey; siblings: Studio[] } }[] = [];
+  for (const entry of studioDirectory) {
+    for (const studio of entry.studios) {
+      paths.push({
+        params: { slug: studio.slug },
+        props: { studio, countryKey: entry.key, siblings: entry.studios.filter((s) => s.slug !== studio.slug) },
+      });
+    }
+  }
+  return paths;
+}
+
+const { studio, countryKey, siblings } = Astro.props as { studio: Studio; countryKey: CountryKey; siblings: Studio[] };
+const site = 'https://www.ewohub.com';
+const lang = 'en';
+const slug = studio.slug;
+const countryName = countryNames[countryKey][lang];
+const metaDescription = studio.about[lang].length > 155 ? `${studio.about[lang].slice(0, 152)}...` : studio.about[lang];
+---
+
+<Base
+  title={`${studio.name} — ${reviewWord[lang]} (${countryName})`}
+  description={metaDescription}
+  lang={lang}
+  hreflang={[
+    { lang: 'en', url: `${site}/studio-directory/${slug}` },
+    { lang: 'de', url: `${site}/de/studio-directory/${slug}` },
+    { lang: 'es', url: `${site}/es/studio-directory/${slug}` },
+    { lang: 'ro', url: `${site}/ro/studio-directory/${slug}` },
+    { lang: 'uk', url: `${site}/uk/studio-directory/${slug}` },
+    { lang: 'ru', url: `${site}/ru/studio-directory/${slug}` },
+    { lang: 'fr', url: `${site}/fr/studio-directory/${slug}` },
+    { lang: 'pt', url: `${site}/pt/studio-directory/${slug}` },
+  ]}
+>
+
+  <section class="art-hero">
+    <div class="art-orb art-orb--1"></div>
+    <div class="art-orb art-orb--2"></div>
+    <div class="art-grid"></div>
+    <div class="art-hero__inner container">
+      <div class="art-meta">
+        <span class="art-tag art-tag--blue">{countryName}</span>
+      </div>
+      <h1 class="art-title">{studio.name}</h1>
+      <p class="art-lead">{studio.city}</p>
+    </div>
+  </section>
+
+  <div class="art-body">
+    <div class="container">
+
+      <p class="art-intro">
+        <a href="/studio-directory">← All studios in {countryName}</a>
+      </p>
+
+      <p class="art-intro">{studio.about[lang]}</p>
+
+      {studio.facts && (
+        <section class="section">
+          <div class="glass-card">
+            <div style="font-size:.9rem;color:var(--fg-muted);line-height:2;">
+              {studio.facts.earnings && <div><strong style="color:var(--fg);">{factLabels.earnings[lang]}:</strong> {studio.facts.earnings}</div>}
+              {studio.facts.experienceYears && <div><strong style="color:var(--fg);">{factLabels.experience[lang]}:</strong> {studio.facts.experienceYears}+ {experienceYearsUnit[lang]}</div>}
+              {studio.facts.rooms && <div><strong style="color:var(--fg);">{factLabels.rooms[lang]}:</strong> {studio.facts.rooms}</div>}
+              {studio.facts.models && <div><strong style="color:var(--fg);">{factLabels.models[lang]}:</strong> {studio.facts.models}</div>}
+              {studio.facts.platforms && <div><strong style="color:var(--fg);">{factLabels.platforms[lang]}:</strong> {studio.facts.platforms.join(', ')}</div>}
+              {studio.facts.payout && <div><strong style="color:var(--fg);">{factLabels.payout[lang]}:</strong> {payoutLabels[studio.facts.payout][lang]}</div>}
+              {studio.facts.locations && studio.facts.locations.length > 1 && <div><strong style="color:var(--fg);">{factLabels.locations[lang]}:</strong> {studio.facts.locations.join(', ')}</div>}
+            </div>
+            {studio.facts.perks && studio.facts.perks.length > 0 && (
+              <div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1rem;">
+                {studio.facts.perks.map((p) => (
+                  <span style="font-size:.78rem;font-weight:600;background:rgba(0,0,0,0.05);border:1px solid rgba(0,0,0,0.1);color:var(--fg-muted);padding:.25rem .65rem;border-radius:999px;">{perkLabels[p][lang]}</span>
+                ))}
+              </div>
+            )}
+            <a href={studio.website} target="_blank" rel="noopener noreferrer nofollow" style="display:inline-block;margin-top:1.25rem;font-size:.9rem;font-weight:600;color:var(--fg);">Visit official website →</a>
+          </div>
+        </section>
+      )}
+
+      <section class="section">
+        <div class="highlight-box">
+          <p>
+            These details come from {studio.name}'s own website and public sources — not verified by EWO,
+            and subject to change. Before signing with any studio, read our
+            <a href="/how-to-choose-a-webcam-studio">studio red-flags checklist</a>. Run this studio and
+            spotted something wrong or outdated? <a href="https://t.me/ewo_agency" target="_blank" rel="noopener noreferrer">Tell us on Telegram</a>.
+          </p>
+        </div>
+      </section>
+
+      <section class="art-cta section">
+        <div class="art-cta__orb"></div>
+        <div class="art-cta__inner">
+          <span class="art-cta__badge">Models</span>
+          <h2>Want a second opinion before you sign?</h2>
+          <p>Tell our support team your country and situation — we'll help you weigh a studio offer, or talk through streaming independently with EWO driving your traffic instead.</p>
+          <div class="art-cta__actions">
+            <a href="https://t.me/ewo_agency" target="_blank" rel="noopener noreferrer" class="art-cta__btn art-cta__btn--primary">Talk to Support →</a>
+            <a href="/how-to-choose-a-webcam-studio" class="art-cta__btn art-cta__btn--ghost">Read the red-flags checklist</a>
+          </div>
+        </div>
+      </section>
+
+      {siblings.length > 0 && (
+        <section class="section">
+          <h2>More Studios in {countryName}</h2>
+          <div class="related-grid">
+            {siblings.map((s) => (
+              <a href={`/studio-directory/${s.slug}`} class="related-card">
+                <span class="related-card__icon">🎬</span>
+                <span>{s.name}</span>
+              </a>
+            ))}
+            <a href="/studio-directory" class="related-card">
+              <span class="related-card__icon">📋</span>
+              <span>Full Studio Catalog</span>
+            </a>
+          </div>
+        </section>
+      )}
+
+    </div>
+  </div>
+
+</Base>
