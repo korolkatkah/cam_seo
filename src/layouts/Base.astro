@@ -4,6 +4,11 @@ interface HreflangEntry {
   url: string;
 }
 
+interface ArticleMeta {
+  datePublished: string;
+  dateModified?: string;
+}
+
 interface Props {
   title: string;
   description: string;
@@ -11,6 +16,7 @@ interface Props {
   noindex?: boolean;
   hreflang?: HreflangEntry[];
   lang?: string;
+  articleMeta?: ArticleMeta;
 }
 
 const {
@@ -21,6 +27,7 @@ const {
   hreflang = [],
   lang = 'en',
   bodyClass = '',
+  articleMeta,
 } = Astro.props;
 
 const siteName = 'EWO';
@@ -270,6 +277,28 @@ try {
 } catch (e) {
   faqSchema = null;
 }
+
+// --- Build-time BlogPosting schema ---
+// Only emitted when the calling page explicitly passes `articleMeta` (real blog/guide
+// articles listed in blog.astro/resources.astro). Every other page is unaffected.
+let blogPostingSchema: Record<string, unknown> | null = null;
+if (articleMeta) {
+  const headline = title.length > 110 ? `${title.slice(0, 107).trimEnd()}...` : title;
+  blogPostingSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline,
+    datePublished: articleMeta.datePublished,
+    dateModified: articleMeta.dateModified ?? articleMeta.datePublished,
+    author: { '@type': 'Organization', name: 'EWOhub' },
+    publisher: {
+      '@type': 'Organization',
+      name: 'EWOhub',
+      logo: { '@type': 'ImageObject', url: 'https://www.ewohub.com/logo-neon.png' },
+    },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalUrl },
+  };
+}
 ---
 
 <!doctype html>
@@ -330,6 +359,9 @@ try {
     })} />
 
     {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+
+    <!-- BlogPosting schema (only present when the page passes articleMeta) -->
+    {blogPostingSchema && <script type="application/ld+json" set:html={JSON.stringify(blogPostingSchema)} />}
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

@@ -42,6 +42,54 @@ grayscale tokens `#fafaf8`/`#0a0a0a`, icons 192/512), generated `icon-192.png`, 
 Build verified clean (268 pages), spot-checked in dev preview — manifest/icons serve correctly, homepage
 renders unaffected.
 
+### Shipped: BlogPosting JSON-LD + visible byline on all blog/guide articles (AI-search-optimization follow-up to today's FAQPage work)
+
+Follow-up to the build-time FAQPage schema shipped earlier today — added `Article`/`BlogPosting` structured
+data and a visible author byline to every genuine content article (anything listed in `blog.astro` or
+`resources.astro`), aimed at how AI answer engines (ChatGPT, Perplexity, Google AI Overviews) and Google
+itself parse and cite this content. `public/llms.txt` (added separately this session) was not touched.
+
+**Scope:** 19 slugs × 8 locales = **152 article files** got both changes in one pass (only locales where a
+slug is actually listed — parity is 8/8 for all 19 slugs after the 2026-09-03 `raise-your-room-ranking-score`
+fix, so no page was skipped for a missing listing entry). Service/product pages, geo pages, and the homepage
+were deliberately left untouched — confirmed via a dist sweep (see below).
+
+1. **`Base.astro`** — added an optional `articleMeta?: { datePublished: string; dateModified?: string }` prop.
+   When a calling page passes it, a `BlogPosting` JSON-LD block is emitted as its own separate
+   `<script type="application/ld+json">` tag (headline = the page's `title` prop, trimmed to schema.org's
+   ~110-char practical limit; `author`/`publisher` both `Organization: EWOhub`; `mainEntityOfPage` pointing at
+   `canonicalUrl`). This sits alongside — never merged into — the existing build-time FAQPage extraction
+   logic from earlier today; that logic was not modified.
+2. **152 article files** (root + de/es/ro/uk/ru/fr/pt variants of all 19 in-scope slugs) — each now passes
+   `articleMeta={{ datePublished: 'YYYY-MM-DD' }}` to its `<Base>` call, using the exact date already recorded
+   for that slug in its own locale's `blog.astro`/`resources.astro` entry (dates turned out identical across
+   all 8 locales for every slug, so one date-per-slug mapping covered every file). Same 152 files also got a
+   small muted byline paragraph — reusing the existing `.card-date` class (the same style already used for
+   card dates on `/blog`/`/resources`) rather than inventing new CSS — reading "EWOhub Editorial Team ·
+   Published {date}" in English and a natural per-locale translation elsewhere (e.g. "EWOhub Redaktionsteam ·
+   Veröffentlicht am {date}" in German, "Редакція EWOhub · Опубліковано {date}" in Ukrainian), with the date
+   formatted via the same `Intl.DateTimeFormat`/`dateLocale` convention already used by each locale's
+   `fmtDate()` helper on `/blog`. Placement follows the article's actual markup shape — three anchor patterns
+   covered all 152 files with no manual one-offs needed: right after `<p class="art-intro">` (the common
+   case), as the first child of `<main class="art-main">` on the handful of TOC-variant pages that open
+   straight into a `<section>` with no intro paragraph, and right after `<p class="lead">` on the older
+   "page-header" layout used by `stripchat-promo` and the older `why-low-viewers-webcam` variant in five
+   locales.
+3. **Verification:** `npm run build` completed clean at 348 pages. Swept `dist/` for
+   `"@type":"BlogPosting"` — exactly **152 pages** carry it (matching the 152 edited files exactly, verified
+   by diffing the grep results against the file list), 0 elsewhere. Spot-checked `datePublished` on 3 pages
+   across different locales (`uk/stripchat-first-14-days-guide`, `fr/stripchat-vr-shows-worth-it`,
+   `webcam-earnings-by-platform`) against their locale's own blog/resources listing entry — exact match on
+   all 3. Confirmed **zero** BlogPosting schema on homepage, `model-promotion-usa`, `model-promotion-germany`,
+   `studio-traffic`, `studio-scaling`, and both `en`/`de` homepages. Confirmed FAQPage schema is untouched and
+   still emits correctly alongside the new BlogPosting block as a separate script tag (checked
+   `stripscore-cam-rank-explained`: Organization + WebSite + FAQPage + BlogPosting all present as 4 distinct
+   `<script type="application/ld+json">` tags, not merged). Browser-verified the byline renders correctly and
+   doesn't break layout on 3 real pages via the `ewo-dev` preview server: a Variant B/TOC page
+   (`uk/stripchat-first-14-days-guide`), a Variant A/flat page (`de/model-promotion`), and the older
+   page-header layout (`es/platforms-we-work-with`) — byline text appears in the correct language, in the
+   right position (after the intro, before the first content section), on all three.
+
 ---
 
 ## 2026-09-03
