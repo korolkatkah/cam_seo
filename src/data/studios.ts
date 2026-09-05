@@ -20,6 +20,10 @@ export interface StudioFacts {
   rooms?: number;
   models?: string; // e.g. "150+" — not translated
   perks?: PerkKey[];
+  address?: string; // street address — not translated, mini-page only
+  phone?: string; // not translated, mini-page only
+  email?: string; // not translated, mini-page only
+  hours?: string; // e.g. "24/7" or shift times — not translated, mini-page only
 }
 
 export interface Studio {
@@ -80,6 +84,7 @@ export const studioDirectory: CountryEntry[] = [
           rooms: 80,
           models: '150+',
           perks: ['housing', 'freeBeauty'],
+          phone: '+40 740 206 010',
         },
       },
       {
@@ -114,6 +119,7 @@ export const studioDirectory: CountryEntry[] = [
           platforms: ['LiveJasmin'],
           models: '100+',
           perks: ['legalContract', 'training'],
+          phone: '0784 707 080',
         },
       },
       {
@@ -146,6 +152,8 @@ export const studioDirectory: CountryEntry[] = [
           locations: ['Bucharest', 'Brașov', 'Cluj-Napoca', 'Timișoara', 'Pitești', 'Ploiești', 'Bogotá', 'Los Angeles'],
           platforms: ['LiveJasmin (GOLD Certified)', 'Flirt4Free'],
           perks: ['legalContract'],
+          address: 'Nerva Traian Street 3, 5th floor, Sector 3, Bucharest (HQ)',
+          phone: '+40 786 070 050',
         },
       },
       {
@@ -178,6 +186,8 @@ export const studioDirectory: CountryEntry[] = [
           locations: ['Bucharest'],
           platforms: ['LiveJasmin'],
           perks: ['freeBeauty', 'referralBonus'],
+          address: 'Strada Ion Nistor 4, Sector 3, Bucharest',
+          phone: '0773 80 90 10',
         },
       },
       {
@@ -209,6 +219,8 @@ export const studioDirectory: CountryEntry[] = [
           earnings: '$3,000+/mo guaranteed',
           locations: ['Bucharest'],
           perks: ['remoteOption', 'paidTrip', 'freeBeauty'],
+          phone: '+40 739 411 765',
+          email: 'bellemodels99@gmail.com',
         },
       },
     ],
@@ -246,6 +258,7 @@ export const studioDirectory: CountryEntry[] = [
           locations: ['Kyiv'],
           payout: 'weekly',
           perks: ['support247', 'training'],
+          hours: '08:00–16:00, 16:00–23:00, 23:00–08:00 (3 shifts)',
         },
       },
     ],
@@ -285,6 +298,8 @@ export const studioDirectory: CountryEntry[] = [
           models: '700+',
           payout: 'biweekly',
           perks: ['vrTech', 'support247'],
+          phone: '+34 624 456 472',
+          email: 'rosaestudioinfo@gmail.com',
         },
       },
       {
@@ -318,6 +333,9 @@ export const studioDirectory: CountryEntry[] = [
           locations: ['Valencia'],
           payout: 'twiceMonthly',
           perks: ['housing', 'remoteOption'],
+          phone: '+34 695 652 676',
+          email: 'info@webmodel-valencia.com',
+          hours: '24/7',
         },
       },
     ],
@@ -330,7 +348,7 @@ export const countryNames: Record<CountryKey, Record<string, string>> = {
   spain: { en: 'Spain', de: 'Spanien', es: 'España', ro: 'Spania', uk: 'Іспанія', ru: 'Испания', fr: 'Espagne', pt: 'Espanha' },
 };
 
-export const factLabels: Record<'earnings' | 'experience' | 'locations' | 'platforms' | 'payout' | 'rooms' | 'models', Record<string, string>> = {
+export const factLabels: Record<'earnings' | 'experience' | 'locations' | 'platforms' | 'payout' | 'rooms' | 'models' | 'address' | 'phone' | 'email' | 'hours', Record<string, string>> = {
   earnings: { en: 'Earnings', de: 'Verdienst', es: 'Ingresos', ro: 'Câștiguri', uk: 'Заробіток', ru: 'Заработок', fr: 'Revenus', pt: 'Ganhos' },
   experience: { en: 'Experience', de: 'Erfahrung', es: 'Experiencia', ro: 'Experiență', uk: 'Досвід', ru: 'Опыт', fr: 'Expérience', pt: 'Experiência' },
   locations: { en: 'Locations', de: 'Standorte', es: 'Ubicaciones', ro: 'Locații', uk: 'Локації', ru: 'Локации', fr: 'Emplacements', pt: 'Localizações' },
@@ -338,6 +356,10 @@ export const factLabels: Record<'earnings' | 'experience' | 'locations' | 'platf
   payout: { en: 'Payout', de: 'Auszahlung', es: 'Pago', ro: 'Plată', uk: 'Виплати', ru: 'Выплаты', fr: 'Paiement', pt: 'Pagamento' },
   rooms: { en: 'Rooms', de: 'Räume', es: 'Salas', ro: 'Camere', uk: 'Кімнати', ru: 'Комнаты', fr: 'Salles', pt: 'Salas' },
   models: { en: 'Models', de: 'Models', es: 'Modelos', ro: 'Modele', uk: 'Моделі', ru: 'Модели', fr: 'Modèles', pt: 'Modelos' },
+  address: { en: 'Address', de: 'Adresse', es: 'Dirección', ro: 'Adresă', uk: 'Адреса', ru: 'Адрес', fr: 'Adresse', pt: 'Endereço' },
+  phone: { en: 'Phone', de: 'Telefon', es: 'Teléfono', ro: 'Telefon', uk: 'Телефон', ru: 'Телефон', fr: 'Téléphone', pt: 'Telefone' },
+  email: { en: 'Email', de: 'E-Mail', es: 'Correo', ro: 'E-mail', uk: 'Пошта', ru: 'Почта', fr: 'E-mail', pt: 'E-mail' },
+  hours: { en: 'Hours', de: 'Öffnungszeiten', es: 'Horario', ro: 'Program', uk: 'Графік', ru: 'График', fr: 'Horaires', pt: 'Horário' },
 };
 
 export const experienceYearsUnit: Record<string, string> = {
@@ -365,4 +387,9 @@ export const perkLabels: Record<PerkKey, Record<string, string>> = {
 export const reviewWord: Record<string, string> = {
   en: 'Webcam Studio Review', de: 'Webcam-Studio Bewertung', es: 'Reseña de Estudio Webcam', ro: 'Recenzie Studio Webcam',
   uk: 'Огляд Вебкам-Студії', ru: 'Обзор Вебкам-Студии', fr: 'Avis Studio Webcam', pt: 'Avaliação de Estúdio Webcam',
+};
+
+export const fullReviewLabel: Record<string, string> = {
+  en: 'Full review →', de: 'Vollständige Bewertung →', es: 'Reseña completa →', ro: 'Recenzie completă →',
+  uk: 'Повний огляд →', ru: 'Полный обзор →', fr: 'Avis complet →', pt: 'Avaliação completa →',
 };

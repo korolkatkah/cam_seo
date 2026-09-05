@@ -1,6 +1,6 @@
 ---
 import Base from '@/layouts/Base.astro';
-import { studioDirectory, countryNames, factLabels, experienceYearsUnit, payoutLabels, perkLabels } from '@/data/studios';
+import { studioDirectory, countryNames, factLabels, experienceYearsUnit, payoutLabels, perkLabels, fullReviewLabel } from '@/data/studios';
 const site = 'https://www.ewohub.com';
 const slug = 'studio-directory';
 const lang = 'uk';
@@ -97,7 +97,7 @@ const lang = 'uk';
                     ))}
                   </div>
                 )}
-                <a href={s.website} target="_blank" rel="noopener noreferrer nofollow" style="font-size:.85rem;font-weight:600;color:var(--fg);">Visit website →</a>
+                <a href={`/uk/studio-directory/${s.slug}`} style="font-size:.85rem;font-weight:600;color:var(--fg);">{fullReviewLabel[lang]}</a>
               </div>
             ))}
           </div>

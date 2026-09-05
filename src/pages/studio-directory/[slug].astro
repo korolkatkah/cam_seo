@@ -72,6 +72,10 @@ const metaDescription = studio.about[lang].length > 155 ? `${studio.about[lang].
               {studio.facts.platforms && <div><strong style="color:var(--fg);">{factLabels.platforms[lang]}:</strong> {studio.facts.platforms.join(', ')}</div>}
               {studio.facts.payout && <div><strong style="color:var(--fg);">{factLabels.payout[lang]}:</strong> {payoutLabels[studio.facts.payout][lang]}</div>}
               {studio.facts.locations && studio.facts.locations.length > 1 && <div><strong style="color:var(--fg);">{factLabels.locations[lang]}:</strong> {studio.facts.locations.join(', ')}</div>}
+              {studio.facts.address && <div><strong style="color:var(--fg);">{factLabels.address[lang]}:</strong> {studio.facts.address}</div>}
+              {studio.facts.phone && <div><strong style="color:var(--fg);">{factLabels.phone[lang]}:</strong> {studio.facts.phone}</div>}
+              {studio.facts.email && <div><strong style="color:var(--fg);">{factLabels.email[lang]}:</strong> {studio.facts.email}</div>}
+              {studio.facts.hours && <div><strong style="color:var(--fg);">{factLabels.hours[lang]}:</strong> {studio.facts.hours}</div>}
             </div>
             {studio.facts.perks && studio.facts.perks.length > 0 && (
               <div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1rem;">
