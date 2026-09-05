@@ -38,15 +38,15 @@ const langLabels: Record<string, string> = {
 
 const langPrefix = lang === 'en' ? '' : `/${lang}`;
 
-const navLabels: Record<string, {models: string, studios: string, directory: string, blog: string, guides: string}> = {
-  en: { models: 'For Models', studios: 'For Studios', directory: 'Studios Catalog', blog: 'Blog', guides: 'Guides' },
-  de: { models: 'Für Models', studios: 'Für Studios', directory: 'Studio-Katalog', blog: 'Blog', guides: 'Guides' },
-  es: { models: 'Para Modelos', studios: 'Para Estudios', directory: 'Catálogo de Estudios', blog: 'Blog', guides: 'Guías' },
-  ro: { models: 'Pentru Modele', studios: 'Pentru Studiouri', directory: 'Catalog de Studiouri', blog: 'Blog', guides: 'Ghiduri' },
-  uk: { models: 'Для Моделей', studios: 'Для Студій', directory: 'Каталог Студій', blog: 'Блог', guides: 'Гайди' },
-  ru: { models: 'Для Моделей', studios: 'Для Студий', directory: 'Каталог Студий', blog: 'Блог', guides: 'Гайды' },
-  fr: { models: 'Pour les Modèles', studios: 'Pour les Studios', directory: 'Catalogue des Studios', blog: 'Blog', guides: 'Guides' },
-  pt: { models: 'Para Modelos', studios: 'Para Estúdios', directory: 'Catálogo de Estúdios', blog: 'Blog', guides: 'Guias' },
+const navLabels: Record<string, {models: string, studios: string, directory: string, blog: string, guides: string, catalog: string}> = {
+  en: { models: 'For Models', studios: 'For Studios', directory: 'Studios Catalog', blog: 'Blog', guides: 'Guides', catalog: 'Services Catalog' },
+  de: { models: 'Für Models', studios: 'Für Studios', directory: 'Studio-Katalog', blog: 'Blog', guides: 'Guides', catalog: 'Service-Katalog' },
+  es: { models: 'Para Modelos', studios: 'Para Estudios', directory: 'Catálogo de Estudios', blog: 'Blog', guides: 'Guías', catalog: 'Catálogo de Servicios' },
+  ro: { models: 'Pentru Modele', studios: 'Pentru Studiouri', directory: 'Catalog de Studiouri', blog: 'Blog', guides: 'Ghiduri', catalog: 'Catalog de Servicii' },
+  uk: { models: 'Для Моделей', studios: 'Для Студій', directory: 'Каталог Студій', blog: 'Блог', guides: 'Гайди', catalog: 'Каталог Сервісів' },
+  ru: { models: 'Для Моделей', studios: 'Для Студий', directory: 'Каталог Студий', blog: 'Блог', guides: 'Гайды', catalog: 'Каталог Сервисов' },
+  fr: { models: 'Pour les Modèles', studios: 'Pour les Studios', directory: 'Catalogue des Studios', blog: 'Blog', guides: 'Guides', catalog: 'Catalogue de Services' },
+  pt: { models: 'Para Modelos', studios: 'Para Estúdios', directory: 'Catálogo de Estúdios', blog: 'Blog', guides: 'Guias', catalog: 'Catálogo de Serviços' },
 };
 const nl = navLabels[lang] ?? navLabels.en;
 
@@ -65,7 +65,8 @@ const nav = [
   { href: `${langPrefix}/for-models`, label: nl.models },
   { href: `${langPrefix}/studio-traffic`, label: nl.studios },
   { href: `${langPrefix}/studio-directory`, label: nl.directory },
-{ href: `${langPrefix}/resources`, label: nl.guides },
+  { href: `${langPrefix}/services-catalog`, label: nl.catalog },
+  { href: `${langPrefix}/resources`, label: nl.guides },
 ];
 
 interface FooterLabels {
