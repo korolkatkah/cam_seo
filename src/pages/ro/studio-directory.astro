@@ -1,6 +1,6 @@
 ---
 import Base from '@/layouts/Base.astro';
-import { studioDirectory, countryNames } from '@/data/studios';
+import { studioDirectory, countryNames, factLabels, experienceYearsUnit, payoutLabels, perkLabels } from '@/data/studios';
 const site = 'https://www.ewohub.com';
 const slug = 'studio-directory';
 const lang = 'ro';
@@ -73,6 +73,24 @@ const lang = 'ro';
                 <h3 style="font-size:1.05rem;font-weight:700;color:var(--fg);margin-bottom:.25rem;">{s.name}</h3>
                 <p style="font-size:.8rem;color:var(--fg-faint);margin-bottom:.625rem;">{s.city}</p>
                 <p style="font-size:.875rem;color:var(--fg-muted);line-height:1.6;margin-bottom:.875rem;">{s.blurb[lang]}</p>
+                {s.facts && (
+                  <div style="font-size:.78rem;color:var(--fg-muted);line-height:1.9;margin-bottom:.75rem;">
+                    {s.facts.earnings && <div><strong style="color:var(--fg);">{factLabels.earnings[lang]}:</strong> {s.facts.earnings}</div>}
+                    {s.facts.experienceYears && <div><strong style="color:var(--fg);">{factLabels.experience[lang]}:</strong> {s.facts.experienceYears}+ {experienceYearsUnit[lang]}</div>}
+                    {s.facts.rooms && <div><strong style="color:var(--fg);">{factLabels.rooms[lang]}:</strong> {s.facts.rooms}</div>}
+                    {s.facts.models && <div><strong style="color:var(--fg);">{factLabels.models[lang]}:</strong> {s.facts.models}</div>}
+                    {s.facts.platforms && <div><strong style="color:var(--fg);">{factLabels.platforms[lang]}:</strong> {s.facts.platforms.join(', ')}</div>}
+                    {s.facts.payout && <div><strong style="color:var(--fg);">{factLabels.payout[lang]}:</strong> {payoutLabels[s.facts.payout][lang]}</div>}
+                    {s.facts.locations && s.facts.locations.length > 1 && <div><strong style="color:var(--fg);">{factLabels.locations[lang]}:</strong> {s.facts.locations.join(', ')}</div>}
+                  </div>
+                )}
+                {s.facts?.perks && s.facts.perks.length > 0 && (
+                  <div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.875rem;">
+                    {s.facts.perks.map((p) => (
+                      <span style="font-size:.72rem;font-weight:600;background:rgba(0,0,0,0.05);border:1px solid rgba(0,0,0,0.1);color:var(--fg-muted);padding:.2rem .55rem;border-radius:999px;">{perkLabels[p][lang]}</span>
+                    ))}
+                  </div>
+                )}
                 <a href={s.website} target="_blank" rel="noopener noreferrer nofollow" style="font-size:.85rem;font-weight:600;color:var(--fg);">Visit website →</a>
               </div>
             ))}
