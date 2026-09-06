@@ -39,6 +39,26 @@ import Base from '@/layouts/Base.astro';
       </form>
     </div>
 
+    <div class="glass-card import-card">
+      <h2>Instagram targets database</h2>
+      <p class="import-status" id="import-status">Idle.</p>
+      <button id="run-import-btn" class="import-btn">Run import now</button>
+    </div>
+
+    <div class="targets-header">
+      <h2 class="section-title">Instagram targets (<span id="targets-total">0</span>)</h2>
+      <button id="refresh-targets-btn" class="ghost-btn">Refresh</button>
+    </div>
+    <div class="targets-table-wrap">
+      <table class="targets-table">
+        <thead>
+          <tr><th>Username</th><th>Source</th><th>Added</th></tr>
+        </thead>
+        <tbody id="targets-body"></tbody>
+      </table>
+    </div>
+    <p id="targets-empty" hidden>No targets scraped yet.</p>
+
     <h2 class="section-title">All tasks</h2>
     <div class="filter-row">
       <button data-filter="reported" class="filter-btn is-active">Awaiting review</button>
@@ -147,12 +167,74 @@ import Base from '@/layouts/Base.astro';
   }
   .assign-form button:hover { opacity: 0.85; }
 
+  .import-card {
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .import-card h2 {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    margin: 0 0 0.5rem;
+    color: var(--fg);
+  }
+  .import-status {
+    font-size: 0.85rem;
+    color: var(--fg-muted);
+    margin: 0 0 1rem;
+  }
+  .import-btn {
+    font: inherit;
+    font-weight: 600;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    border: none;
+    background: var(--accent);
+    color: var(--bg);
+    cursor: pointer;
+  }
+  .import-btn:hover { opacity: 0.85; }
+  .import-btn:disabled { opacity: 0.5; cursor: default; }
+
   .section-title {
     font-family: var(--font-heading);
     font-size: 1.2rem;
     color: var(--fg);
     margin: 0 0 1rem;
   }
+  .targets-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  .targets-header .section-title { margin: 0; }
+  .targets-table-wrap {
+    overflow-x: auto;
+    margin-bottom: 2.5rem;
+    border: 1px solid var(--bg-subtle);
+    border-radius: 12px;
+  }
+  .targets-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+  .targets-table th,
+  .targets-table td {
+    text-align: left;
+    padding: 0.6rem 0.9rem;
+    border-bottom: 1px solid var(--bg-subtle);
+    white-space: nowrap;
+  }
+  .targets-table th {
+    color: var(--fg-muted);
+    font-weight: 600;
+    background: var(--bg-raised);
+  }
+  .targets-table tr:last-child td { border-bottom: none; }
+  .targets-table td.username { font-weight: 600; color: var(--fg); }
+  .targets-table td.source a { color: var(--fg-muted); text-decoration: none; }
+  .targets-table td.source a:hover { text-decoration: underline; }
   .filter-row {
     display: flex;
     gap: 0.5rem;
@@ -390,6 +472,72 @@ import Base from '@/layouts/Base.astro';
     }
   });
 
+  // --- Instagram targets database + manual import ---
+
+  const importStatusEl = document.getElementById('import-status');
+  const runImportBtn = document.getElementById('run-import-btn');
+  const targetsBody = document.getElementById('targets-body');
+  const targetsTotalEl = document.getElementById('targets-total');
+  const targetsEmptyEl = document.getElementById('targets-empty');
+  let pollTimer = null;
+
+  function formatStatus(state) {
+    if (state.running) return 'Import running...';
+    if (state.last_result?.error) return `Last run failed: ${state.last_result.error}`;
+    if (state.last_result) {
+      const { fetched = 0, saved = 0, skipped = 0 } = state.last_result;
+      return `Last run: fetched ${fetched}, saved ${saved} new, skipped ${skipped}.`;
+    }
+    return 'Idle.';
+  }
+
+  async function loadTargets() {
+    const res = await authedFetch('/admin/targets?limit=100');
+    if (!res.ok) return;
+    const data = await res.json();
+    targetsTotalEl.textContent = data.total;
+    targetsBody.innerHTML = '';
+    targetsEmptyEl.hidden = data.items.length > 0;
+    for (const t of data.items) {
+      const tr = document.createElement('tr');
+      const added = new Date(t.created_at).toLocaleString();
+      tr.innerHTML = `
+        <td class="username">@${t.username}</td>
+        <td class="source">${t.source ? `<a href="${t.source}" target="_blank" rel="noopener">${t.source}</a>` : ''}</td>
+        <td>${added}</td>
+      `;
+      targetsBody.appendChild(tr);
+    }
+  }
+
+  async function pollImportStatus() {
+    const res = await authedFetch('/admin/import/status');
+    if (!res.ok) return;
+    const state = await res.json();
+    importStatusEl.textContent = formatStatus(state);
+    runImportBtn.disabled = state.running;
+    runImportBtn.textContent = state.running ? 'Running...' : 'Run import now';
+
+    if (state.running) {
+      if (!pollTimer) pollTimer = setInterval(pollImportStatus, 4000);
+    } else if (pollTimer) {
+      clearInterval(pollTimer);
+      pollTimer = null;
+      await loadTargets();
+    }
+  }
+
+  runImportBtn.addEventListener('click', async () => {
+    runImportBtn.disabled = true;
+    const res = await authedFetch('/admin/import/run', { method: 'POST' });
+    const state = await res.json();
+    importStatusEl.textContent = formatStatus(state);
+    runImportBtn.textContent = 'Running...';
+    if (!pollTimer) pollTimer = setInterval(pollImportStatus, 4000);
+  });
+
+  document.getElementById('refresh-targets-btn').addEventListener('click', loadTargets);
+
   async function init() {
     try {
       const res = await authedFetch('/auth/me');
@@ -401,6 +549,8 @@ import Base from '@/layouts/Base.astro';
       }
       contentEl.hidden = false;
       await loadTasks();
+      await loadTargets();
+      await pollImportStatus();
     } catch {
       deniedEl.hidden = false;
     }
