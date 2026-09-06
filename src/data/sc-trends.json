@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-09-06T18:01:03Z",
+  "generated_at": "2026-09-06T19:01:06Z",
   "tag": "girls",
   "hours_covered": 23.8,
-  "snapshots": 104,
-  "rooms_seen": 3068,
+  "snapshots": 105,
+  "rooms_seen": 3063,
   "preliminary": false,
   "live": {
-    "generated_at": "2026-09-06T18:01:02Z",
-    "rooms_online": 315
+    "generated_at": "2026-09-06T19:01:05Z",
+    "rooms_online": 322
   },
   "best_hours_utc": [
     {
@@ -84,11 +84,11 @@
     },
     {
       "hour": 18,
-      "score": 105
+      "score": 103
     },
     {
       "hour": 19,
-      "score": 97
+      "score": 99
     },
     {
       "hour": 20,
