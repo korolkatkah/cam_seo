@@ -3,26 +3,26 @@ import Base from '@/layouts/Base.astro';
 ---
 
 <Base
-  title="Worker Login | EWO"
-  description="Log in to the EWO worker cabinet."
+  title="Worker Registration | EWO"
+  description="Create your EWO worker cabinet account."
   lang="en"
   noindex={true}
 >
 
 <div class="cabinet-wrap">
-  <form id="login-form" class="cabinet-card">
-    <h1>Worker Login</h1>
+  <form id="register-form" class="cabinet-card">
+    <h1>Worker Registration</h1>
     <label>
       Email
       <input type="email" id="email" required autocomplete="username" />
     </label>
     <label>
       Password
-      <input type="password" id="password" required autocomplete="current-password" />
+      <input type="password" id="password" required autocomplete="new-password" minlength="8" />
     </label>
-    <button type="submit">Log in</button>
+    <button type="submit">Create account</button>
     <p id="error" class="cabinet-error" hidden></p>
-    <p class="cabinet-alt-link">No account? <a href="/cabinet/register">Register</a></p>
+    <p class="cabinet-alt-link">Already have an account? <a href="/cabinet/login">Log in</a></p>
   </form>
 </div>
 
@@ -102,7 +102,7 @@ import Base from '@/layouts/Base.astro';
 <script>
   const API_BASE = 'https://worker-cabinet-production.up.railway.app';
 
-  const form = document.getElementById('login-form');
+  const form = document.getElementById('register-form');
   const errorEl = document.getElementById('error');
 
   form.addEventListener('submit', async (e) => {
@@ -112,24 +112,21 @@ import Base from '@/layouts/Base.astro';
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
-    const body = new URLSearchParams();
-    body.set('username', email);
-    body.set('password', password);
-
     try {
-      const res = await fetch(`${API_BASE}/auth/login`, {
+      const res = await fetch(`${API_BASE}/auth/register`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
       });
       if (!res.ok) {
-        throw new Error('Invalid email or password');
+        const data = await res.json().catch(() => null);
+        throw new Error(data?.detail || 'Registration failed');
       }
       const data = await res.json();
       localStorage.setItem('cabinet_token', data.access_token);
       window.location.href = '/cabinet';
     } catch (err) {
-      errorEl.textContent = err instanceof Error ? err.message : 'Login failed';
+      errorEl.textContent = err instanceof Error ? err.message : 'Registration failed';
       errorEl.hidden = false;
     }
   });
