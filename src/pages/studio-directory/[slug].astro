@@ -1,6 +1,6 @@
 ---
 import Base from '@/layouts/Base.astro';
-import { studioDirectory, countryNames, factLabels, experienceYearsUnit, payoutLabels, perkLabels, reviewWord, type Studio, type CountryKey } from '@/data/studios';
+import { studioDirectory, countryNames, factLabels, experienceYearsUnit, payoutLabels, perkLabels, reviewWord, faqHeading, faqTemplates, homeLabel, catalogLabel, type Studio, type CountryKey } from '@/data/studios';
 
 export function getStaticPaths() {
   const paths: { params: { slug: string }; props: { studio: Studio; countryKey: CountryKey; siblings: Studio[] } }[] = [];
@@ -21,6 +21,68 @@ const lang = 'en';
 const slug = studio.slug;
 const countryName = countryNames[countryKey][lang];
 const metaDescription = studio.about[lang].length > 155 ? `${studio.about[lang].slice(0, 152)}...` : studio.about[lang];
+const pageUrl = `${site}/studio-directory/${slug}`;
+
+const hasEarningsSection = !!(studio.facts?.earnings || studio.facts?.experienceYears || studio.facts?.rooms || studio.facts?.models);
+const hasLocationSection = !!(
+  (studio.facts?.locations && studio.facts.locations.length > 1) ||
+  studio.facts?.address || studio.facts?.phone || studio.facts?.email || studio.facts?.hours || studio.facts?.payout
+);
+
+const faqItems: { q: string; a: string }[] = [];
+if (studio.facts?.earnings) {
+  faqItems.push({
+    q: faqTemplates.payQ[lang].replace('{n}', studio.name),
+    a: faqTemplates.payA[lang].replace('{n}', studio.name).replace('{v}', studio.facts.earnings),
+  });
+}
+{
+  const locVal = studio.facts?.locations?.join(', ') || studio.city;
+  faqItems.push({
+    q: faqTemplates.locationQ[lang].replace('{n}', studio.name),
+    a: faqTemplates.locationA[lang].replace('{n}', studio.name).replace('{v}', locVal),
+  });
+}
+if (studio.facts?.platforms?.length) {
+  faqItems.push({
+    q: faqTemplates.platformsQ[lang].replace('{n}', studio.name),
+    a: faqTemplates.platformsA[lang].replace('{n}', studio.name).replace('{v}', studio.facts.platforms.join(', ')),
+  });
+}
+if (studio.facts?.payout) {
+  faqItems.push({
+    q: faqTemplates.payoutQ[lang].replace('{n}', studio.name),
+    a: faqTemplates.payoutA[lang].replace('{n}', studio.name).replace('{v}', payoutLabels[studio.facts.payout][lang]),
+  });
+}
+
+const address: Record<string, string> = { '@type': 'PostalAddress', addressLocality: studio.city, addressCountry: countryName };
+if (studio.facts?.address) address.streetAddress = studio.facts.address;
+const localBusinessSchema: Record<string, unknown> = {
+  '@type': 'LocalBusiness', name: studio.name, url: studio.website, description: studio.blurb[lang], address,
+};
+if (studio.facts?.phone) localBusinessSchema.telephone = studio.facts.phone;
+if (studio.facts?.email) localBusinessSchema.email = studio.facts.email;
+
+const breadcrumbSchema = {
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: homeLabel[lang], item: `${site}/` },
+    { '@type': 'ListItem', position: 2, name: catalogLabel[lang], item: `${site}/studio-directory` },
+    { '@type': 'ListItem', position: 3, name: countryName, item: `${site}/studio-directory#${countryKey}` },
+    { '@type': 'ListItem', position: 4, name: studio.name, item: pageUrl },
+  ],
+};
+
+const faqSchema = faqItems.length > 0 ? {
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+} : null;
+
+const schemaGraph = {
+  '@context': 'https://schema.org',
+  '@graph': [breadcrumbSchema, localBusinessSchema, ...(faqSchema ? [faqSchema] : [])],
+};
 ---
 
 <Base
@@ -38,6 +100,8 @@ const metaDescription = studio.about[lang].length > 155 ? `${studio.about[lang].
     { lang: 'pt', url: `${site}/pt/studio-directory/${slug}` },
   ]}
 >
+
+  <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
 
   <section class="art-hero">
     <div class="art-orb art-orb--1"></div>
@@ -64,29 +128,64 @@ const metaDescription = studio.about[lang].length > 155 ? `${studio.about[lang].
       {studio.facts && (
         <div style="margin:2rem 0;">
           <div class="glass-card">
-            <div style="font-size:.9rem;color:var(--fg-muted);line-height:2;">
-              {studio.facts.earnings && <div><strong style="color:var(--fg);">{factLabels.earnings[lang]}:</strong> {studio.facts.earnings}</div>}
-              {studio.facts.experienceYears && <div><strong style="color:var(--fg);">{factLabels.experience[lang]}:</strong> {studio.facts.experienceYears}+ {experienceYearsUnit[lang]}</div>}
-              {studio.facts.rooms && <div><strong style="color:var(--fg);">{factLabels.rooms[lang]}:</strong> {studio.facts.rooms}</div>}
-              {studio.facts.models && <div><strong style="color:var(--fg);">{factLabels.models[lang]}:</strong> {studio.facts.models}</div>}
-              {studio.facts.platforms && <div><strong style="color:var(--fg);">{factLabels.platforms[lang]}:</strong> {studio.facts.platforms.join(', ')}</div>}
-              {studio.facts.payout && <div><strong style="color:var(--fg);">{factLabels.payout[lang]}:</strong> {payoutLabels[studio.facts.payout][lang]}</div>}
-              {studio.facts.locations && studio.facts.locations.length > 1 && <div><strong style="color:var(--fg);">{factLabels.locations[lang]}:</strong> {studio.facts.locations.join(', ')}</div>}
-              {studio.facts.address && <div><strong style="color:var(--fg);">{factLabels.address[lang]}:</strong> {studio.facts.address}</div>}
-              {studio.facts.phone && <div><strong style="color:var(--fg);">{factLabels.phone[lang]}:</strong> {studio.facts.phone}</div>}
-              {studio.facts.email && <div><strong style="color:var(--fg);">{factLabels.email[lang]}:</strong> {studio.facts.email}</div>}
-              {studio.facts.hours && <div><strong style="color:var(--fg);">{factLabels.hours[lang]}:</strong> {studio.facts.hours}</div>}
-            </div>
+            {hasEarningsSection && (
+              <>
+                <h2 style="font-size:1.1rem;font-weight:700;color:var(--fg);margin-bottom:.75rem;">{factLabels.earnings[lang]}</h2>
+                <div style="font-size:.9rem;color:var(--fg-muted);line-height:2;margin-bottom:1.5rem;">
+                  {studio.facts.earnings && <div>{studio.facts.earnings}</div>}
+                  {studio.facts.experienceYears && <div><strong style="color:var(--fg);">{factLabels.experience[lang]}:</strong> {studio.facts.experienceYears}+ {experienceYearsUnit[lang]}</div>}
+                  {studio.facts.rooms && <div><strong style="color:var(--fg);">{factLabels.rooms[lang]}:</strong> {studio.facts.rooms}</div>}
+                  {studio.facts.models && <div><strong style="color:var(--fg);">{factLabels.models[lang]}:</strong> {studio.facts.models}</div>}
+                </div>
+              </>
+            )}
+
+            {hasLocationSection && (
+              <>
+                <h2 style="font-size:1.1rem;font-weight:700;color:var(--fg);margin-bottom:.75rem;">{factLabels.locations[lang]}</h2>
+                <div style="font-size:.9rem;color:var(--fg-muted);line-height:2;margin-bottom:1.5rem;">
+                  {studio.facts.locations && studio.facts.locations.length > 1 && <div>{studio.facts.locations.join(', ')}</div>}
+                  {studio.facts.address && <div><strong style="color:var(--fg);">{factLabels.address[lang]}:</strong> {studio.facts.address}</div>}
+                  {studio.facts.phone && <div><strong style="color:var(--fg);">{factLabels.phone[lang]}:</strong> {studio.facts.phone}</div>}
+                  {studio.facts.email && <div><strong style="color:var(--fg);">{factLabels.email[lang]}:</strong> {studio.facts.email}</div>}
+                  {studio.facts.hours && <div><strong style="color:var(--fg);">{factLabels.hours[lang]}:</strong> {studio.facts.hours}</div>}
+                  {studio.facts.payout && <div><strong style="color:var(--fg);">{factLabels.payout[lang]}:</strong> {payoutLabels[studio.facts.payout][lang]}</div>}
+                </div>
+              </>
+            )}
+
+            {studio.facts.platforms && (
+              <>
+                <h2 style="font-size:1.1rem;font-weight:700;color:var(--fg);margin-bottom:.75rem;">{factLabels.platforms[lang]}</h2>
+                <div style="font-size:.9rem;color:var(--fg-muted);line-height:2;margin-bottom:1.5rem;">{studio.facts.platforms.join(', ')}</div>
+              </>
+            )}
+
             {studio.facts.perks && studio.facts.perks.length > 0 && (
-              <div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1rem;">
+              <div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.25rem;">
                 {studio.facts.perks.map((p) => (
                   <span style="font-size:.78rem;font-weight:600;background:rgba(0,0,0,0.05);border:1px solid rgba(0,0,0,0.1);color:var(--fg-muted);padding:.25rem .65rem;border-radius:999px;">{perkLabels[p][lang]}</span>
                 ))}
               </div>
             )}
-            <a href={studio.website} target="_blank" rel="noopener noreferrer nofollow" style="display:inline-block;margin-top:1.25rem;font-size:.9rem;font-weight:600;color:var(--fg);">Visit official website →</a>
+            <a href={studio.website} target="_blank" rel="noopener noreferrer nofollow" style="display:inline-block;font-size:.9rem;font-weight:600;color:var(--fg);">Visit official website →</a>
           </div>
         </div>
+      )}
+
+      {faqItems.length > 0 && (
+        <section class="faq-section section">
+          <h2>{faqHeading[lang]}</h2>
+          {faqItems.map((f) => (
+            <div class="faq-item">
+              <button class="faq-chevron" aria-expanded="false">
+                <span>{f.q}</span>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <div class="faq-body"><p>{f.a}</p></div>
+            </div>
+          ))}
+        </section>
       )}
 
       <div style="margin:2rem 0;">

@@ -549,3 +549,54 @@ export const fullReviewLabel: Record<string, string> = {
   en: 'Full review →', de: 'Vollständige Bewertung →', es: 'Reseña completa →', ro: 'Recenzie completă →',
   uk: 'Повний огляд →', ru: 'Полный обзор →', fr: 'Avis complet →', pt: 'Avaliação completa →',
 };
+
+export const homeLabel: Record<string, string> = {
+  en: 'Home', de: 'Startseite', es: 'Inicio', ro: 'Acasă', uk: 'Головна', ru: 'Главная', fr: 'Accueil', pt: 'Início',
+};
+
+export const catalogLabel: Record<string, string> = {
+  en: 'Studios Catalog', de: 'Studio-Katalog', es: 'Catálogo de Estudios', ro: 'Catalog de Studiouri',
+  uk: 'Каталог Студій', ru: 'Каталог Студий', fr: 'Catalogue des Studios', pt: 'Catálogo de Estúdios',
+};
+
+export const faqHeading: Record<string, string> = {
+  en: 'Frequently Asked Questions', de: 'Häufig gestellte Fragen', es: 'Preguntas Frecuentes', ro: 'Întrebări Frecvente',
+  uk: 'Часті Запитання', ru: 'Часто Задаваемые Вопросы', fr: 'Questions Fréquentes', pt: 'Perguntas Frequentes',
+};
+
+// {n} = studio name, {v} = the fact value being asked about. Values (earnings,
+// locations, platforms, payout label) are inserted as-is — see StudioFacts notes.
+export const faqTemplates: Record<'payQ' | 'payA' | 'locationQ' | 'locationA' | 'platformsQ' | 'platformsA' | 'payoutQ' | 'payoutA', Record<string, string>> = {
+  payQ: {
+    en: 'What does {n} pay?', de: 'Was zahlt {n}?', es: '¿Cuánto paga {n}?', ro: 'Cât plătește {n}?',
+    uk: 'Скільки платить {n}?', ru: 'Сколько платит {n}?', fr: 'Combien paie {n} ?', pt: 'Quanto a {n} paga?',
+  },
+  payA: {
+    en: '{n} advertises: {v}.', de: '{n} wirbt mit: {v}.', es: '{n} anuncia: {v}.', ro: '{n} promovează: {v}.',
+    uk: '{n} рекламує: {v}.', ru: '{n} рекламирует: {v}.', fr: '{n} annonce : {v}.', pt: '{n} anuncia: {v}.',
+  },
+  locationQ: {
+    en: 'Where is {n} located?', de: 'Wo befindet sich {n}?', es: '¿Dónde está ubicado {n}?', ro: 'Unde este situat {n}?',
+    uk: 'Де розташована {n}?', ru: 'Где находится {n}?', fr: 'Où est situé {n} ?', pt: 'Onde fica a {n}?',
+  },
+  locationA: {
+    en: '{n} is based in {v}.', de: '{n} hat seinen Sitz in {v}.', es: '{n} tiene su sede en {v}.', ro: '{n} are sediul în {v}.',
+    uk: '{n} розташована в {v}.', ru: '{n} находится в {v}.', fr: '{n} est basé à {v}.', pt: '{n} está sediada em {v}.',
+  },
+  platformsQ: {
+    en: 'Which platforms does {n} work with?', de: 'Mit welchen Plattformen arbeitet {n}?', es: '¿Con qué plataformas trabaja {n}?', ro: 'Cu ce platforme lucrează {n}?',
+    uk: 'З якими платформами працює {n}?', ru: 'С какими платформами работает {n}?', fr: 'Avec quelles plateformes travaille {n} ?', pt: 'Com quais plataformas a {n} trabalha?',
+  },
+  platformsA: {
+    en: '{n} streams on: {v}.', de: '{n} streamt auf: {v}.', es: '{n} transmite en: {v}.', ro: '{n} transmite pe: {v}.',
+    uk: '{n} транслює на: {v}.', ru: '{n} транслирует на: {v}.', fr: '{n} diffuse sur : {v}.', pt: '{n} transmite em: {v}.',
+  },
+  payoutQ: {
+    en: 'How often does {n} pay models?', de: 'Wie oft zahlt {n} die Models aus?', es: '¿Con qué frecuencia paga {n} a las modelos?', ro: 'Cât de des plătește {n} modelele?',
+    uk: 'Як часто {n} виплачує моделям?', ru: 'Как часто {n} выплачивает моделям?', fr: 'À quelle fréquence {n} paie-t-il les modèles ?', pt: 'Com que frequência a {n} paga as modelos?',
+  },
+  payoutA: {
+    en: 'Payout schedule: {v}.', de: 'Auszahlungsplan: {v}.', es: 'Calendario de pago: {v}.', ro: 'Program de plată: {v}.',
+    uk: 'Графік виплат: {v}.', ru: 'График выплат: {v}.', fr: 'Calendrier de paiement : {v}.', pt: 'Cronograma de pagamento: {v}.',
+  },
+};
