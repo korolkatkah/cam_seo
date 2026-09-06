@@ -1,31 +1,31 @@
 {
-  "generated_at": "2026-09-06T07:01:24Z",
+  "generated_at": "2026-09-06T08:01:27Z",
   "gender": "f",
   "hours_covered": 24.0,
   "snapshots": 105,
-  "rooms_seen": 9031,
+  "rooms_seen": 9009,
   "preliminary": false,
   "live": {
-    "generated_at": "2026-09-06T07:01:19Z",
-    "rooms_online": 751,
-    "rooms_public": 639,
-    "pct_private": 14.9
+    "generated_at": "2026-09-06T08:01:23Z",
+    "rooms_online": 750,
+    "rooms_public": 634,
+    "pct_private": 15.5
   },
   "trending_tags": [
     {
       "tag": "brunette",
-      "avg_users_recent": 2084,
-      "growth_pct": 1976.6
+      "avg_users_recent": 2520,
+      "growth_pct": 2423.9
     },
     {
-      "tag": "boobs",
-      "avg_users_recent": 5025,
-      "growth_pct": 1200.4
+      "tag": "goth",
+      "avg_users_recent": 1259,
+      "growth_pct": 1111.7
     },
     {
-      "tag": "aussie",
-      "avg_users_recent": 11713,
-      "growth_pct": 1010.1
+      "tag": "c2c",
+      "avg_users_recent": 724,
+      "growth_pct": 1020.3
     }
   ],
   "best_hours_utc": [
@@ -59,11 +59,11 @@
     },
     {
       "hour": 7,
-      "score": 74
+      "score": 72
     },
     {
       "hour": 8,
-      "score": 68
+      "score": 69
     },
     {
       "hour": 9,
@@ -134,108 +134,113 @@
     },
     {
       "tag": "snowbunny",
-      "avg_users": 9967,
+      "avg_users": 9966,
       "rooms": 7
     },
     {
       "tag": "college",
-      "avg_users": 7978,
-      "rooms": 8
+      "avg_users": 9661,
+      "rooms": 7
+    },
+    {
+      "tag": "multisquirt",
+      "avg_users": 8103,
+      "rooms": 5
     },
     {
       "tag": "19",
-      "avg_users": 6936,
-      "rooms": 16
+      "avg_users": 6974,
+      "rooms": 15
     },
     {
       "tag": "bj",
-      "avg_users": 5656,
+      "avg_users": 5719,
       "rooms": 10
     },
     {
       "tag": "ohmibod",
-      "avg_users": 5376,
+      "avg_users": 5552,
       "rooms": 12
     },
     {
       "tag": "aussie",
-      "avg_users": 5181,
+      "avg_users": 5186,
       "rooms": 23
     },
     {
+      "tag": "thick",
+      "avg_users": 5044,
+      "rooms": 14
+    },
+    {
       "tag": "smile",
-      "avg_users": 4402,
-      "rooms": 36
+      "avg_users": 4377,
+      "rooms": 35
     },
     {
       "tag": "twerk",
-      "avg_users": 4302,
-      "rooms": 72
-    },
-    {
-      "tag": "thick",
-      "avg_users": 4113,
-      "rooms": 15
+      "avg_users": 4205,
+      "rooms": 73
     },
     {
       "tag": "wet",
-      "avg_users": 3252,
+      "avg_users": 3081,
       "rooms": 15
     },
     {
       "tag": "pretty",
-      "avg_users": 3007,
-      "rooms": 13
+      "avg_users": 3064,
+      "rooms": 12
     },
     {
       "tag": "slim",
-      "avg_users": 3004,
-      "rooms": 57
+      "avg_users": 2983,
+      "rooms": 58
     },
     {
       "tag": "pawg",
-      "avg_users": 2900,
-      "rooms": 88
+      "avg_users": 2880,
+      "rooms": 90
     },
     {
       "tag": "domi",
-      "avg_users": 2821,
-      "rooms": 75
+      "avg_users": 2871,
+      "rooms": 73
     },
     {
       "tag": "sensual",
-      "avg_users": 2818,
-      "rooms": 51
-    },
-    {
-      "tag": "british",
-      "avg_users": 2528,
-      "rooms": 86
-    },
-    {
-      "tag": "sexy",
-      "avg_users": 2485,
-      "rooms": 149
-    },
-    {
-      "tag": "tall",
-      "avg_users": 2467,
-      "rooms": 26
-    },
-    {
-      "tag": "erotic",
-      "avg_users": 2466,
-      "rooms": 79
-    },
-    {
-      "tag": "hairyarmpits",
-      "avg_users": 2388,
-      "rooms": 48
+      "avg_users": 2777,
+      "rooms": 49
     },
     {
       "tag": "lesbian",
-      "avg_users": 2205,
-      "rooms": 61
+      "avg_users": 2535,
+      "rooms": 60
+    },
+    {
+      "tag": "british",
+      "avg_users": 2533,
+      "rooms": 89
+    },
+    {
+      "tag": "erotic",
+      "avg_users": 2485,
+      "rooms": 79
+    },
+    {
+      "tag": "tall",
+      "avg_users": 2477,
+      "rooms": 26
+    },
+    {
+      "tag": "hairyarmpits",
+      "avg_users": 2346,
+      "rooms": 47
+    },
+    {
+      "tag": "sexy",
+      "avg_users": 2279,
+      "rooms": 147
     },
     {
       "tag": "gymgirl",
@@ -244,38 +249,33 @@
     },
     {
       "tag": "fit",
-      "avg_users": 1989,
-      "rooms": 154
-    },
-    {
-      "tag": "lush",
-      "avg_users": 1923,
-      "rooms": 218
-    },
-    {
-      "tag": "ahegao",
-      "avg_users": 1916,
-      "rooms": 267
+      "avg_users": 1948,
+      "rooms": 152
     },
     {
       "tag": "boobs",
-      "avg_users": 1867,
-      "rooms": 50
+      "avg_users": 1913,
+      "rooms": 48
+    },
+    {
+      "tag": "ahegao",
+      "avg_users": 1897,
+      "rooms": 266
     },
     {
       "tag": "creamy",
-      "avg_users": 1854,
-      "rooms": 22
+      "avg_users": 1889,
+      "rooms": 21
+    },
+    {
+      "tag": "lush",
+      "avg_users": 1888,
+      "rooms": 211
     },
     {
       "tag": "daddysgirl",
-      "avg_users": 1652,
-      "rooms": 254
-    },
-    {
-      "tag": "tease",
-      "avg_users": 1629,
-      "rooms": 307
+      "avg_users": 1664,
+      "rooms": 258
     }
   ],
   "top_titles": [
@@ -292,16 +292,16 @@
       "subject": "Current Goal: 🍑🍆 ANAL FINAL BOSS (DILDO) 🍆🍑  #anal #asian #squirt #bigboobs #latina once countdown reaches zero -- ✨YOUR"
     },
     {
+      "avg_users": 11993,
+      "subject": "ᴀᴛ ɢᴏᴀʟ 𝗣𝗢𝗩 𝗜 𝗥𝗜𝗗𝗘 𝗬𝗢𝗨 𝗜𝗡 𝗔 𝗖𝗢𝗪𝗚𝗜𝗥𝗟【𝟭𝟭𝟵𝟲 ᴛᴋ ʟᴇꜰᴛ】 Imagine #bigass #latina is in your room, what would you do?? #squirt #"
+    },
+    {
       "avg_users": 11813,
       "subject": "Goal Reached! #lovense #teen #anal #skinny #bigboobs"
     },
     {
       "avg_users": 11646,
       "subject": "Shena_nomy's room"
-    },
-    {
-      "avg_users": 11482,
-      "subject": "Imagine #bigass #latina is in your room, what would you do?? #squirt #teen #lovense"
     },
     {
       "avg_users": 10964,
@@ -348,23 +348,23 @@
       "subject": "4 tingerts ass in doggy +twerk [2257 tokens left] SHH MOM HOUSE /menu💙CHECK BIO💙 favorite VIBES 99,123,499,999   #new #s"
     },
     {
-      "avg_users": 7978,
-      "subject": "GOAL: I can feel how much you want me... so fuck me in POV.🩷// Hi, I'm Mila and I want to drive you crazy.🤪❤ #new #blond"
+      "avg_users": 7958,
+      "subject": "GOAL: My body is uncovered; only a soft light illuminates me.🩷// Hi, I'm Mila and I want to drive you crazy.🤪❤ #new #blo"
+    },
+    {
+      "avg_users": 7781,
+      "subject": "Disney Princess <3 - Multi-Goal :  ⭐CUMSHOW⭐ #asian #lovense #squirt #teen #shy"
     },
     {
       "avg_users": 7380,
       "subject": "make me cum  [593 tokens left] Hey, I’m Masha! Look at my tip menu and let’s have fun! #18 #feet #teen #lush #young"
-    },
-    {
-      "avg_users": 7343,
-      "subject": "UwU Goal Completed! ➞ ❤💋"
     }
   ],
   "economy": {
-    "goal_median": 700,
+    "goal_median": 698,
     "goal_p25": 333,
-    "goal_p75": 1417,
-    "goal_samples": 2881,
+    "goal_p75": 1419,
+    "goal_samples": 2866,
     "top_patterns": [
       {
         "value": 111,
@@ -372,43 +372,43 @@
       },
       {
         "value": 222,
-        "count": 81
+        "count": 83
       },
       {
         "value": 100,
-        "count": 69
+        "count": 66
       },
       {
         "value": 333,
-        "count": 64
+        "count": 65
       },
       {
         "value": 25,
-        "count": 47
+        "count": 48
       },
       {
         "value": 99,
-        "count": 38
+        "count": 43
       },
       {
         "value": 33,
-        "count": 35
+        "count": 38
       },
       {
         "value": 77,
-        "count": 35
+        "count": 33
       },
       {
         "value": 38,
-        "count": 31
+        "count": 32
       },
       {
-        "value": 66,
+        "value": 88,
         "count": 30
       }
     ],
-    "multi_goal_share": 0.073,
-    "with_goal_share": 0.55,
+    "multi_goal_share": 0.072,
+    "with_goal_share": 0.548,
     "with_price_share": 0.665
   },
   "recommendation": {
@@ -416,14 +416,14 @@
       "fuckpussy",
       "snowbunny",
       "college",
+      "multisquirt",
       "19",
       "bj",
       "ohmibod",
       "gymgirl",
       "thick",
-      "pretty",
-      "aussie"
+      "pretty"
     ],
-    "low_competition_tag": "gymgirl"
+    "low_competition_tag": "ohmibod"
   }
 }
