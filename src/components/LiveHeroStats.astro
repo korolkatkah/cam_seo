@@ -194,15 +194,17 @@ const lookupHref = lang === 'en' ? '/live-model-lookup' : `/${lang}/live-model-l
 
     const axis = card.querySelector('[data-hstat-spark-axis]');
     if (!axis) return;
+    // Reuse the existing (server-rendered) tick spans instead of creating
+    // new ones — new elements don't get Astro's scoped-CSS attribute, so
+    // they'd fall back to the browser default font size and overflow.
+    const tickEls = axis.querySelectorAll('.hstat-spark-tick');
     const tickIdx = [0, 6, 12, 18, 23];
-    axis.innerHTML = '';
-    tickIdx.forEach((idx) => {
+    tickIdx.forEach((idx, i) => {
+      const el = tickEls[i];
+      if (!el) return;
       const utcHour = (nowUtcHour + 1 + idx) % 24;
       const startTotal = (((utcHour * 60 - tzOffsetMin) % 1440) + 1440) % 1440;
-      const span = document.createElement('span');
-      span.className = 'hstat-spark-tick';
-      span.textContent = `${pad(Math.floor(startTotal / 60))}:${pad(startTotal % 60)}`;
-      axis.appendChild(span);
+      el.textContent = `${pad(Math.floor(startTotal / 60))}:${pad(startTotal % 60)}`;
     });
   });
   })();
