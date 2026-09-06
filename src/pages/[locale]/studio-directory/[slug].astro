@@ -82,8 +82,8 @@ const disclaimerHtml = disclaimerTpl[lang].replace('{n}', studio.name);
 // Russian and Ukrainian need locative case ("in Romania" -> "в Румынии") that
 // differs from the nominative form used elsewhere (e.g. "Romania" itself).
 const locativeCountry: Record<string, Record<CountryKey, string>> = {
-  ru: { romania: 'Румынии', ukraine: 'Украине', spain: 'Испании' },
-  uk: { romania: 'Румунії', ukraine: 'Україні', spain: 'Іспанії' },
+  ru: { romania: 'Румынии', ukraine: 'Украине', spain: 'Испании', russia: 'России', usa: 'США', germany: 'Германии', france: 'Франции' },
+  uk: { romania: 'Румунії', ukraine: 'Україні', spain: 'Іспанії', russia: 'Росії', usa: 'США', germany: 'Німеччині', france: 'Франції' },
 };
 const countryNameInPhrase = locativeCountry[lang]?.[countryKey] ?? countryName;
 ---

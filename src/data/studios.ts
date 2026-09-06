@@ -9,7 +9,7 @@ export type PerkKey =
   | 'paidTrip'
   | 'referralBonus';
 
-export type PayoutKey = 'weekly' | 'biweekly' | 'twiceMonthly';
+export type PayoutKey = 'weekly' | 'biweekly' | 'twiceMonthly' | 'daily';
 
 export interface StudioFacts {
   earnings?: string; // numbers/currency/% only — not translated
@@ -36,7 +36,7 @@ export interface Studio {
   facts?: StudioFacts;
 }
 
-export type CountryKey = 'romania' | 'ukraine' | 'spain';
+export type CountryKey = 'romania' | 'ukraine' | 'spain' | 'russia' | 'usa' | 'germany' | 'france';
 
 export interface CountryEntry {
   key: CountryKey;
@@ -340,12 +340,167 @@ export const studioDirectory: CountryEntry[] = [
       },
     ],
   },
+  {
+    key: 'russia',
+    studios: [
+      {
+        slug: 'andromeda-studio',
+        name: 'Andromeda Studio',
+        city: 'Saint Petersburg',
+        website: 'https://andromedastudio.ru',
+        blurb: {
+          en: 'St. Petersburg studio near two metro stations, working with Chaturbate, Stripchat, Flirt4Free, and CamSoda.',
+          de: 'Studio in St. Petersburg nahe zwei Metrostationen, das mit Chaturbate, Stripchat, Flirt4Free und CamSoda zusammenarbeitet.',
+          es: 'Estudio en San Petersburgo cerca de dos estaciones de metro, que trabaja con Chaturbate, Stripchat, Flirt4Free y CamSoda.',
+          ro: 'Studio din Sankt Petersburg, aproape de două stații de metrou, care lucrează cu Chaturbate, Stripchat, Flirt4Free și CamSoda.',
+          uk: 'Студія в Санкт-Петербурзі біля двох станцій метро, що працює з Chaturbate, Stripchat, Flirt4Free та CamSoda.',
+          ru: 'Студия в Санкт-Петербурге рядом с двумя станциями метро, работающая с Chaturbate, Stripchat, Flirt4Free и CamSoda.',
+          fr: 'Studio à Saint-Pétersbourg près de deux stations de métro, travaillant avec Chaturbate, Stripchat, Flirt4Free et CamSoda.',
+          pt: 'Estúdio em São Petersburgo perto de duas estações de metrô, trabalhando com Chaturbate, Stripchat, Flirt4Free e CamSoda.',
+        },
+        about: {
+          en: 'Andromeda Studio operates a physical office in central Saint Petersburg, near both Ploshchad Alexandra Nevskogo and Ploshchad Vosstaniya metro stations. New models receive a 5,000 ruble guarantee after their first shift, with commission climbing to as much as 70%, plus a 10% bonus for taking extra shifts. Payouts are available daily. The studio streams on foreign platforms — Chaturbate, Stripchat, Flirt4Free, and CamSoda — with geo-blocking to keep models anonymous from viewers in Russia and the CIS, and works under stage names rather than real identities. Contact is handled through Telegram and email rather than a public phone line.',
+          de: 'Andromeda Studio betreibt ein physisches Büro im Zentrum von St. Petersburg, nahe den Metrostationen Ploschtschad Alexandra Newskogo und Ploschtschad Wosstanija. Neue Models erhalten nach ihrer ersten Schicht eine Garantie von 5.000 Rubel, wobei die Provision auf bis zu 70 % steigen kann, plus einen 10-%-Bonus für zusätzliche Schichten. Auszahlungen sind täglich möglich. Das Studio streamt auf ausländischen Plattformen — Chaturbate, Stripchat, Flirt4Free und CamSoda — mit Geoblocking, damit Models für Zuschauer aus Russland und der GUS anonym bleiben, und arbeitet mit Künstlernamen statt echten Identitäten. Der Kontakt läuft über Telegram und E-Mail statt über eine öffentliche Telefonnummer.',
+          es: 'Andromeda Studio opera una oficina física en el centro de San Petersburgo, cerca de las estaciones de metro Ploshchad Alexandra Nevskogo y Ploshchad Vosstaniya. Las nuevas modelos reciben una garantía de 5.000 rublos tras su primer turno, con una comisión que puede llegar al 70%, más un bono del 10% por turnos adicionales. Los pagos están disponibles a diario. El estudio transmite en plataformas extranjeras — Chaturbate, Stripchat, Flirt4Free y CamSoda — con geobloqueo para mantener a las modelos anónimas ante espectadores de Rusia y la CEI, y trabaja con nombres artísticos en lugar de identidades reales. El contacto se gestiona por Telegram y correo electrónico, sin línea telefónica pública.',
+          ro: 'Andromeda Studio operează un birou fizic în centrul Sankt Petersburgului, aproape de stațiile de metrou Ploshchad Alexandra Nevskogo și Ploshchad Vosstaniya. Modelele noi primesc o garanție de 5.000 de ruble după prima tură, cu un comision care poate ajunge la 70%, plus un bonus de 10% pentru ture suplimentare. Plățile sunt disponibile zilnic. Studioul transmite pe platforme străine — Chaturbate, Stripchat, Flirt4Free și CamSoda — cu geo-blocare pentru a păstra anonimatul modelelor față de privitorii din Rusia și CSI, și lucrează cu nume de scenă, nu cu identități reale. Contactul se face prin Telegram și e-mail, fără linie telefonică publică.',
+          uk: 'Andromeda Studio працює з фізичного офісу в центрі Санкт-Петербурга, поблизу станцій метро Площа Олександра Невського та Площа Повстання. Нові моделі отримують гарантію 5000 рублів після першої зміни, а комісія може зростати до 70%, плюс 10% бонус за додаткові зміни. Виплати доступні щодня. Студія транслює на закордонних платформах — Chaturbate, Stripchat, Flirt4Free та CamSoda — з гео-блокуванням, щоб зберегти анонімність моделей від глядачів з Росії та СНД, і працює під сценічними іменами, а не реальними. Контакт — через Telegram та email, без публічного телефону.',
+          ru: 'Andromeda Studio работает из физического офиса в центре Санкт-Петербурга, рядом со станциями метро Площадь Александра Невского и Площадь Восстания. Новые модели получают гарантию 5000 рублей после первой смены, а комиссия может вырасти до 70%, плюс 10% бонус за дополнительные смены. Выплаты доступны ежедневно. Студия транслирует на зарубежных платформах — Chaturbate, Stripchat, Flirt4Free и CamSoda — с гео-блокировкой, чтобы сохранить анонимность моделей от зрителей из России и СНГ, и работает под сценическими именами, а не реальными. Связь — через Telegram и email, без публичного телефона.',
+          fr: 'Andromeda Studio exploite un bureau physique dans le centre de Saint-Pétersbourg, près des stations de métro Ploshchad Alexandra Nevskogo et Ploshchad Vosstaniya. Les nouvelles modèles reçoivent une garantie de 5 000 roubles après leur premier service, avec une commission pouvant atteindre 70 %, plus un bonus de 10 % pour les services supplémentaires. Les paiements sont disponibles quotidiennement. Le studio diffuse sur des plateformes étrangères — Chaturbate, Stripchat, Flirt4Free et CamSoda — avec un géo-blocage pour préserver l\'anonymat des modèles vis-à-vis des spectateurs de Russie et de la CEI, et fonctionne avec des pseudonymes plutôt que des identités réelles. Le contact se fait via Telegram et e-mail, sans ligne téléphonique publique.',
+          pt: 'A Andromeda Studio opera um escritório físico no centro de São Petersburgo, perto das estações de metrô Ploshchad Alexandra Nevskogo e Ploshchad Vosstaniya. Novas modelos recebem uma garantia de 5.000 rublos após o primeiro turno, com comissão que pode chegar a 70%, além de um bônus de 10% por turnos extras. Os pagamentos estão disponíveis diariamente. O estúdio transmite em plataformas estrangeiras — Chaturbate, Stripchat, Flirt4Free e CamSoda — com bloqueio geográfico para manter as modelos anônimas para espectadores da Rússia e da CEI, e trabalha com nomes artísticos em vez de identidades reais. O contato é feito por Telegram e e-mail, sem linha telefônica pública.',
+        },
+        facts: {
+          earnings: 'Up to 70% split + 5,000 RUB guarantee after 1st shift',
+          locations: ['Saint Petersburg'],
+          platforms: ['Chaturbate', 'Stripchat', 'Flirt4Free', 'CamSoda'],
+          payout: 'daily',
+          email: 'andromedastudio.hr@gmail.com',
+        },
+      },
+    ],
+  },
+  {
+    key: 'usa',
+    studios: [
+      {
+        slug: 'new-industry-models',
+        name: 'New Industry Models',
+        city: 'Los Angeles',
+        website: 'https://newindustrymodels.com',
+        blurb: {
+          en: 'Los Angeles studio with private cam rooms, operating since 2010 with over 2,000 models worked with.',
+          de: 'Studio in Los Angeles mit privaten Cam-Räumen, aktiv seit 2010 mit über 2.000 betreuten Models.',
+          es: 'Estudio en Los Ángeles con salas privadas de cámara, operando desde 2010 con más de 2.000 modelos.',
+          ro: 'Studio din Los Angeles cu camere private, activ din 2010, cu peste 2.000 de modele.',
+          uk: 'Студія в Лос-Анджелесі з приватними кімнатами, працює з 2010 року, понад 2000 моделей.',
+          ru: 'Студия в Лос-Анджелесе с приватными комнатами, работает с 2010 года, более 2000 моделей.',
+          fr: 'Studio à Los Angeles avec cabines privées, actif depuis 2010 avec plus de 2 000 modèles.',
+          pt: 'Estúdio em Los Angeles com salas privadas, ativo desde 2010 com mais de 2.000 modelos.',
+        },
+        about: {
+          en: 'New Industry Models runs private cam rooms out of a discreet, secured office building on the top floor in Los Angeles, California, with access restricted to models only — no on-site manager walking the floor. The studio has operated since 2010 and says it has worked with over 2,000 webcam models to date, with the main platform reporting more than 5 million daily visitors. It advertises average earnings of $75 an hour, with active models clearing $6,000 or more a month, paid in full with no deductions via Zelle, Google Pay, or Cash App on a weekly schedule. Support runs through Telegram, and rooms come equipped with high-end computers, HD webcams, and professional lighting already set up.',
+          de: 'New Industry Models betreibt private Cam-Räume in einem diskreten, gesicherten Bürogebäude im obersten Stockwerk in Los Angeles, Kalifornien, mit Zugang ausschließlich für Models — kein Manager, der vor Ort patrouilliert. Das Studio ist seit 2010 aktiv und gibt an, bisher mit über 2.000 Webcam-Models gearbeitet zu haben, wobei die Hauptplattform über 5 Millionen tägliche Besucher meldet. Es wirbt mit einem Durchschnittsverdienst von 75 US-Dollar pro Stunde, wobei aktive Models 6.000 US-Dollar oder mehr im Monat erzielen, vollständig ohne Abzüge ausgezahlt per Zelle, Google Pay oder Cash App auf wöchentlicher Basis. Der Support läuft über Telegram, und die Räume sind bereits mit leistungsstarken Computern, HD-Webcams und professioneller Beleuchtung ausgestattet.',
+          es: 'New Industry Models opera salas privadas de cámara en un edificio de oficinas discreto y seguro, en el último piso, en Los Ángeles, California, con acceso restringido únicamente a las modelos — sin un gerente rondando el lugar. El estudio funciona desde 2010 y afirma haber trabajado con más de 2.000 modelos webcam hasta la fecha, con la plataforma principal reportando más de 5 millones de visitantes diarios. Anuncia ganancias promedio de 75 dólares por hora, con modelos activas que superan los 6.000 dólares al mes, pagados en su totalidad sin deducciones vía Zelle, Google Pay o Cash App semanalmente. El soporte se ofrece por Telegram, y las salas ya cuentan con ordenadores de alta gama, cámaras HD e iluminación profesional.',
+          ro: 'New Industry Models operează camere private pentru cam la ultimul etaj al unei clădiri de birouri discrete și securizate din Los Angeles, California, cu acces restricționat doar pentru modele — fără un manager care să supravegheze locul. Studioul funcționează din 2010 și afirmă că a lucrat cu peste 2.000 de modele webcam până acum, platforma principală raportând peste 5 milioane de vizitatori zilnici. Promovează câștiguri medii de 75 de dolari pe oră, modelele active depășind 6.000 de dolari pe lună, plătite integral, fără deduceri, prin Zelle, Google Pay sau Cash App, săptămânal. Suportul se oferă prin Telegram, iar camerele vin deja echipate cu calculatoare performante, camere web HD și iluminat profesional.',
+          uk: 'New Industry Models працює з приватними кімнатами на останньому поверсі непримітної, охоронюваної офісної будівлі в Лос-Анджелесі, Каліфорнія, з доступом лише для моделей — без менеджера, що ходить по студії. Студія працює з 2010 року і заявляє про співпрацю з понад 2000 вебкам-моделей, а основна платформа повідомляє про понад 5 мільйонів відвідувачів щодня. Рекламує середній заробіток 75 доларів на годину, активні моделі отримують 6000 доларів і більше на місяць, виплата повна, без відрахувань, через Zelle, Google Pay чи Cash App щотижня. Підтримка — через Telegram, а кімнати вже обладнані потужними комп\'ютерами, HD-камерами та професійним освітленням.',
+          ru: 'New Industry Models работает с приватными комнатами на последнем этаже неприметного охраняемого офисного здания в Лос-Анджелесе, Калифорния, с доступом только для моделей — без менеджера, ходящего по студии. Студия работает с 2010 года и заявляет о сотрудничестве более чем с 2000 вебкам-моделей, а основная платформа сообщает о более чем 5 миллионах посетителей ежедневно. Рекламирует средний заработок 75 долларов в час, активные модели получают 6000 долларов и больше в месяц, выплата полная, без вычетов, через Zelle, Google Pay или Cash App еженедельно. Поддержка — через Telegram, а комнаты уже оснащены мощными компьютерами, HD-камерами и профессиональным освещением.',
+          fr: 'New Industry Models exploite des cabines privées au dernier étage d\'un immeuble de bureaux discret et sécurisé à Los Angeles, en Californie, avec un accès réservé uniquement aux modèles — sans manager qui patrouille sur place. Le studio est actif depuis 2010 et affirme avoir travaillé avec plus de 2 000 modèles webcam à ce jour, la plateforme principale rapportant plus de 5 millions de visiteurs quotidiens. Il annonce des gains moyens de 75 dollars de l\'heure, les modèles actives dépassant 6 000 dollars par mois, payés intégralement sans déduction via Zelle, Google Pay ou Cash App, chaque semaine. Le support se fait via Telegram, et les cabines sont déjà équipées d\'ordinateurs performants, de webcams HD et d\'un éclairage professionnel.',
+          pt: 'A New Industry Models opera salas privadas no último andar de um discreto e seguro prédio de escritórios em Los Angeles, Califórnia, com acesso restrito apenas às modelos — sem gerente circulando pelo local. O estúdio funciona desde 2010 e afirma já ter trabalhado com mais de 2.000 modelos webcam, com a plataforma principal registrando mais de 5 milhões de visitantes diários. Anuncia ganhos médios de $75 por hora, com modelos ativas ultrapassando $6.000 por mês, pagos integralmente sem descontos via Zelle, Google Pay ou Cash App, semanalmente. O suporte é feito pelo Telegram, e as salas já vêm equipadas com computadores potentes, webcams HD e iluminação profissional.',
+        },
+        facts: {
+          earnings: '$75/hr avg, $6,000+/mo for active models',
+          experienceYears: 16,
+          locations: ['Los Angeles'],
+          models: '2,000+ (all-time)',
+          payout: 'weekly',
+          phone: '818-660-6467',
+        },
+      },
+    ],
+  },
+  {
+    key: 'germany',
+    studios: [
+      {
+        slug: 'webcammaedchen',
+        name: 'Webcammädchen.org',
+        city: 'Darmstadt (near Frankfurt)',
+        website: 'https://webcammaedchen.org',
+        blurb: {
+          en: 'Home-based webcam agency near Frankfurt offering formal, social-insured employment with base salary plus bonuses.',
+          de: 'Heimbasierte Webcam-Agentur bei Frankfurt mit sozialversicherter Festanstellung, Grundgehalt plus Bonus.',
+          es: 'Agencia webcam desde casa cerca de Fráncfort con empleo formal asegurado, salario base más bonos.',
+          ro: 'Agenție webcam de acasă lângă Frankfurt, cu angajare formală asigurată, salariu de bază plus bonusuri.',
+          uk: 'Домашнє вебкам-агентство біля Франкфурта з офіційним працевлаштуванням, базовою зарплатою і бонусами.',
+          ru: 'Домашнее вебкам-агентство рядом с Франкфуртом с официальным трудоустройством, базовой зарплатой и бонусами.',
+          fr: 'Agence webcam à domicile près de Francfort avec emploi formel assuré, salaire de base plus primes.',
+          pt: 'Agência de webcam em casa perto de Frankfurt com emprego formal segurado, salário base mais bônus.',
+        },
+        about: {
+          en: 'Webcammädchen.org is a home-based webcam agency operating out of Darmstadt, near Frankfurt am Main, with 15 years in the business. Unlike most webcam arrangements, it hires models under a fully social-insured permanent employment contract — a fixed base salary plus a performance bonus model, rather than a pure revenue split, with visibility into all earnings. Benefits include paid sick leave and vacation pay, which is unusual for the industry. Models work from their own home rather than an on-site studio, with technical support and training provided remotely. Contact runs through a callback request or email, and the agency recruits from anywhere in Germany, not just the Frankfurt area.',
+          de: 'Webcammädchen.org ist eine heimbasierte Webcam-Agentur mit Sitz in Darmstadt bei Frankfurt am Main und 15 Jahren Erfahrung im Geschäft. Anders als bei den meisten Webcam-Modellen werden Models hier unter einer voll sozialversicherten Festanstellung beschäftigt — ein festes Grundgehalt plus ein Bonusmodell statt einer reinen Umsatzbeteiligung, mit Einblick in alle Umsätze. Zu den Leistungen zählen Krankengeld und Urlaubsgeld, was in der Branche unüblich ist. Models arbeiten von zu Hause statt in einem Vor-Ort-Studio, mit technischem Support und Schulung aus der Ferne. Der Kontakt läuft über einen Rückruf-Wunsch oder per E-Mail, und die Agentur rekrutiert deutschlandweit, nicht nur im Raum Frankfurt.',
+          es: 'Webcammädchen.org es una agencia webcam desde casa con sede en Darmstadt, cerca de Fráncfort del Meno, con 15 años en el negocio. A diferencia de la mayoría de acuerdos webcam, contrata a las modelos bajo un empleo fijo con seguridad social plena — un salario base fijo más un modelo de bonos por rendimiento, en lugar de un simple reparto de ingresos, con visibilidad total de las ganancias. Los beneficios incluyen baja por enfermedad pagada y vacaciones pagadas, algo inusual en la industria. Las modelos trabajan desde su propia casa en lugar de un estudio físico, con soporte técnico y formación a distancia. El contacto se realiza mediante solicitud de devolución de llamada o correo electrónico, y la agencia recluta en toda Alemania, no solo en el área de Fráncfort.',
+          ro: 'Webcammädchen.org este o agenție webcam de acasă cu sediul în Darmstadt, lângă Frankfurt am Main, cu 15 ani în domeniu. Spre deosebire de majoritatea aranjamentelor webcam, angajează modelele printr-un contract de muncă permanent, complet asigurat social — un salariu de bază fix plus un model de bonusuri de performanță, în loc de o simplă împărțire a veniturilor, cu vizibilitate completă asupra câștigurilor. Beneficiile includ concediu medical plătit și concediu de odihnă plătit, ceva neobișnuit în industrie. Modelele lucrează de acasă, nu într-un studio fizic, cu suport tehnic și instruire la distanță. Contactul se face prin solicitare de apel sau e-mail, iar agenția recrutează din toată Germania, nu doar din zona Frankfurt.',
+          uk: 'Webcammädchen.org — це домашнє вебкам-агентство з базою в Дармштадті, поблизу Франкфурта-на-Майні, з 15-річним досвідом у галузі. На відміну від більшості вебкам-угод, тут моделей наймають за повністю соціально застрахованим постійним трудовим договором — фіксована базова зарплата плюс бонусна модель за результатами, а не проста частка від доходу, з повною видимістю заробітку. Пільги включають оплачувану лікарняну та оплачувану відпустку, що незвично для індустрії. Моделі працюють з дому, а не в фізичній студії, з технічною підтримкою та навчанням віддалено. Контакт — через запит на дзвінок або email, агентство набирає по всій Німеччині, а не лише в районі Франкфурта.',
+          ru: 'Webcammädchen.org — это домашнее вебкам-агентство с базой в Дармштадте, рядом с Франкфуртом-на-Майне, с 15-летним опытом в индустрии. В отличие от большинства вебкам-соглашений, здесь моделей нанимают по полностью социально застрахованному постоянному трудовому договору — фиксированная базовая зарплата плюс бонусная модель по результатам, а не простая доля от дохода, с полной прозрачностью заработка. Льготы включают оплачиваемый больничный и оплачиваемый отпуск, что необычно для индустрии. Модели работают из дома, а не в физической студии, с технической поддержкой и обучением удалённо. Контакт — через запрос обратного звонка или email, агентство набирает по всей Германии, а не только в районе Франкфурта.',
+          fr: 'Webcammädchen.org est une agence webcam à domicile basée à Darmstadt, près de Francfort-sur-le-Main, avec 15 ans d\'expérience dans le secteur. Contrairement à la plupart des arrangements webcam, elle embauche les modèles sous un contrat d\'emploi permanent entièrement assuré socialement — un salaire de base fixe plus un modèle de primes de performance, plutôt qu\'un simple partage des revenus, avec une visibilité totale sur les gains. Les avantages incluent des congés maladie payés et des congés payés, ce qui est inhabituel dans le secteur. Les modèles travaillent depuis leur propre domicile plutôt que dans un studio physique, avec support technique et formation à distance. Le contact se fait par demande de rappel ou par e-mail, et l\'agence recrute dans toute l\'Allemagne, pas seulement dans la région de Francfort.',
+          pt: 'Webcammädchen.org é uma agência de webcam em casa, sediada em Darmstadt, perto de Frankfurt am Main, com 15 anos no setor. Diferente da maioria dos acordos de webcam, ela contrata modelos sob um contrato de trabalho permanente totalmente segurado — salário-base fixo mais um modelo de bônus por desempenho, em vez de uma simples divisão de receita, com visibilidade total sobre os ganhos. Os benefícios incluem licença médica remunerada e férias remuneradas, algo incomum no setor. As modelos trabalham de sua própria casa, não em um estúdio físico, com suporte técnico e treinamento remotos. O contato é feito por solicitação de retorno de chamada ou e-mail, e a agência recruta em toda a Alemanha, não apenas na região de Frankfurt.',
+        },
+        facts: {
+          earnings: 'Base salary + performance bonus (not a flat split)',
+          experienceYears: 15,
+          locations: ['Darmstadt', 'Frankfurt am Main area'],
+          email: 'hallo@webcammaedchen.org',
+          perks: ['legalContract', 'remoteOption', 'training'],
+        },
+      },
+    ],
+  },
+  {
+    key: 'france',
+    studios: [
+      {
+        slug: 'modele-webcam',
+        name: 'Modèle Webcam',
+        city: 'Remote (France-wide)',
+        website: 'https://modelewebcam.fr',
+        blurb: {
+          en: 'France-wide home-based webcam recruiting site offering free training and weekly payments.',
+          de: 'Landesweite französische Heimarbeits-Plattform für Webcam-Models mit kostenlosem Training und wöchentlicher Auszahlung.',
+          es: 'Plataforma francesa de reclutamiento webcam desde casa, con formación gratuita y pagos semanales.',
+          ro: 'Platformă franceză de recrutare webcam de acasă, cu instruire gratuită și plăți săptămânale.',
+          uk: 'Французька платформа для домашньої вебкам-роботи з безкоштовним навчанням і щотижневими виплатами.',
+          ru: 'Французская платформа для домашней вебкам-работы с бесплатным обучением и еженедельными выплатами.',
+          fr: 'Plateforme française de recrutement webcam à domicile, avec formation gratuite et paiements hebdomadaires.',
+          pt: 'Plataforma francesa de recrutamento de webcam em casa, com treinamento gratuito e pagamentos semanais.',
+        },
+        about: {
+          en: "Modèle Webcam is a France-wide recruiting site for home-based webcam work, open to both beginners and experienced models with no nationality or appearance requirement. It advertises free training, weekly secure payments, and 24/7 support, along with full anonymity for models who want it. Unlike the studio-based listings elsewhere on this page, there's no physical location to visit — models sign up and work entirely from their own home on their own schedule. The site does not publish a specific commission split or founding date, so treat those details as unconfirmed until you ask directly during onboarding.",
+          de: 'Modèle Webcam ist eine landesweite französische Plattform für die Anwerbung von Webcam-Models für die Arbeit von zu Hause, offen für Anfängerinnen wie erfahrene Models, ohne Anforderungen an Nationalität oder Aussehen. Sie wirbt mit kostenlosem Training, sicheren wöchentlichen Auszahlungen und 24/7-Support sowie voller Anonymität für Models, die das wünschen. Anders als bei den Studio-Einträgen weiter oben auf dieser Seite gibt es hier keinen physischen Ort zum Besuchen — Models melden sich an und arbeiten komplett von zu Hause aus, nach eigenem Zeitplan. Die Seite veröffentlicht keinen konkreten Provisionssatz oder ein Gründungsdatum, behandle diese Details also als unbestätigt, bis du beim Onboarding direkt nachfragst.',
+          es: 'Modèle Webcam es una plataforma francesa de reclutamiento a nivel nacional para trabajo webcam desde casa, abierta tanto a principiantes como a modelos con experiencia, sin requisitos de nacionalidad o apariencia. Anuncia formación gratuita, pagos semanales seguros y soporte 24/7, junto con anonimato total para quienes lo deseen. A diferencia de los estudios listados en esta página, aquí no hay un lugar físico que visitar — las modelos se registran y trabajan totalmente desde su propia casa, con su propio horario. El sitio no publica una comisión específica ni una fecha de fundación, así que trata esos detalles como no confirmados hasta preguntarlos directamente durante el proceso de incorporación.',
+          ro: 'Modèle Webcam este o platformă franceză la nivel național pentru recrutarea de modele webcam pentru munca de acasă, deschisă atât începătoarelor, cât și modelelor cu experiență, fără cerințe de naționalitate sau aspect. Promovează instruire gratuită, plăți săptămânale sigure și suport 24/7, plus anonimat complet pentru cine îl dorește. Spre deosebire de studiourile listate mai sus pe această pagină, aici nu există o locație fizică de vizitat — modelele se înscriu și lucrează complet de acasă, după propriul program. Site-ul nu publică un comision specific sau o dată de înființare, așa că tratează aceste detalii ca neconfirmate până le întrebi direct în perioada de integrare.',
+          uk: 'Modèle Webcam — це французька платформа для набору вебкам-моделей для роботи з дому по всій країні, відкрита як для початківців, так і для досвідчених моделей, без вимог до національності чи зовнішності. Рекламує безкоштовне навчання, безпечні щотижневі виплати та підтримку 24/7, а також повну анонімність для тих, хто цього хоче. На відміну від студій, перелічених вище на цій сторінці, тут немає фізичного місця для відвідування — моделі реєструються і працюють повністю з дому, за власним графіком. Сайт не публікує конкретний відсоток комісії чи дату заснування, тому вважайте ці деталі непідтвердженими, доки не запитаєте напряму під час оформлення.',
+          ru: 'Modèle Webcam — это французская платформа для набора вебкам-моделей для работы из дома по всей стране, открытая как для новичков, так и для опытных моделей, без требований к национальности или внешности. Рекламирует бесплатное обучение, безопасные еженедельные выплаты и поддержку 24/7, а также полную анонимность для желающих. В отличие от студий, перечисленных выше на этой странице, здесь нет физического места для посещения — модели регистрируются и работают полностью из дома, по собственному графику. Сайт не публикует конкретный процент комиссии или дату основания, так что считайте эти детали неподтверждёнными, пока не спросите напрямую при оформлении.',
+          fr: "Modèle Webcam est une plateforme française de recrutement à l'échelle nationale pour le travail webcam à domicile, ouverte aux débutantes comme aux modèles expérimentées, sans exigence de nationalité ou d'apparence. Elle annonce une formation gratuite, des paiements hebdomadaires sécurisés et un support 24/7, ainsi qu'un anonymat total pour celles qui le souhaitent. Contrairement aux studios listés plus haut sur cette page, il n'y a ici aucun lieu physique à visiter — les modèles s'inscrivent et travaillent entièrement depuis leur domicile, selon leur propre emploi du temps. Le site ne publie pas de commission précise ni de date de création, à considérer donc ces détails comme non confirmés tant que vous ne les demandez pas directement lors de l'intégration.",
+          pt: 'Modèle Webcam é uma plataforma francesa de recrutamento em todo o país para trabalho de webcam em casa, aberta tanto a iniciantes quanto a modelos experientes, sem exigência de nacionalidade ou aparência. Anuncia treinamento gratuito, pagamentos semanais seguros e suporte 24/7, além de anonimato total para quem desejar. Diferente dos estúdios listados anteriormente nesta página, aqui não há um local físico para visitar — as modelos se cadastram e trabalham totalmente de casa, no próprio horário. O site não publica uma comissão específica nem uma data de fundação, portanto trate esses detalhes como não confirmados até perguntar diretamente durante o cadastro.',
+        },
+        facts: {
+          locations: ['Remote — France-wide'],
+          payout: 'weekly',
+          perks: ['training', 'remoteOption', 'support247'],
+        },
+      },
+    ],
+  },
 ];
 
 export const countryNames: Record<CountryKey, Record<string, string>> = {
   romania: { en: 'Romania', de: 'Rumänien', es: 'Rumanía', ro: 'România', uk: 'Румунія', ru: 'Румыния', fr: 'Roumanie', pt: 'Romênia' },
   ukraine: { en: 'Ukraine', de: 'Ukraine', es: 'Ucrania', ro: 'Ucraina', uk: 'Україна', ru: 'Украина', fr: 'Ukraine', pt: 'Ucrânia' },
   spain: { en: 'Spain', de: 'Spanien', es: 'España', ro: 'Spania', uk: 'Іспанія', ru: 'Испания', fr: 'Espagne', pt: 'Espanha' },
+  russia: { en: 'Russia', de: 'Russland', es: 'Rusia', ro: 'Rusia', uk: 'Росія', ru: 'Россия', fr: 'Russie', pt: 'Rússia' },
+  usa: { en: 'USA', de: 'USA', es: 'EE. UU.', ro: 'SUA', uk: 'США', ru: 'США', fr: 'États-Unis', pt: 'EUA' },
+  germany: { en: 'Germany', de: 'Deutschland', es: 'Alemania', ro: 'Germania', uk: 'Німеччина', ru: 'Германия', fr: 'Allemagne', pt: 'Alemanha' },
+  france: { en: 'France', de: 'Frankreich', es: 'Francia', ro: 'Franța', uk: 'Франція', ru: 'Франция', fr: 'France', pt: 'França' },
 };
 
 export const factLabels: Record<'earnings' | 'experience' | 'locations' | 'platforms' | 'payout' | 'rooms' | 'models' | 'address' | 'phone' | 'email' | 'hours', Record<string, string>> = {
@@ -370,6 +525,7 @@ export const payoutLabels: Record<PayoutKey, Record<string, string>> = {
   weekly: { en: 'Weekly', de: 'Wöchentlich', es: 'Semanal', ro: 'Săptămânal', uk: 'Щотижня', ru: 'Еженедельно', fr: 'Hebdomadaire', pt: 'Semanal' },
   biweekly: { en: 'Biweekly', de: 'Alle zwei Wochen', es: 'Quincenal', ro: 'La două săptămâni', uk: 'Раз на два тижні', ru: 'Раз в две недели', fr: 'Toutes les deux semaines', pt: 'Quinzenal' },
   twiceMonthly: { en: 'Twice monthly', de: 'Zweimal monatlich', es: 'Dos veces al mes', ro: 'De două ori pe lună', uk: 'Двічі на місяць', ru: 'Дважды в месяц', fr: 'Deux fois par mois', pt: 'Duas vezes por mês' },
+  daily: { en: 'Daily', de: 'Täglich', es: 'Diario', ro: 'Zilnic', uk: 'Щодня', ru: 'Ежедневно', fr: 'Quotidien', pt: 'Diário' },
 };
 
 export const perkLabels: Record<PerkKey, Record<string, string>> = {
