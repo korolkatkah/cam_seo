@@ -1,0 +1,248 @@
+---
+import Base from '@/layouts/Base.astro';
+---
+
+<Base
+  title="Worker Cabinet | EWO"
+  description="Your assigned Instagram outreach tasks."
+  lang="en"
+  noindex={true}
+>
+
+<div class="cabinet-wrap container">
+  <div class="cabinet-header">
+    <h1>My Tasks</h1>
+    <button id="logout-btn" class="ghost-btn">Log out</button>
+  </div>
+
+  <p id="empty-state" hidden>No tasks assigned yet.</p>
+  <p id="load-error" class="cabinet-error" hidden></p>
+
+  <div id="task-list"></div>
+</div>
+
+<template id="task-row-template">
+  <div class="task-row">
+    <div class="task-row__main">
+      <span class="task-row__target">@<span data-field="target"></span></span>
+      <span class="task-row__status" data-field="status"></span>
+    </div>
+    <p class="task-row__message" data-field="message"></p>
+    <div class="task-row__actions">
+      <input type="file" data-field="screenshot" accept="image/png,image/jpeg,image/webp" />
+      <button data-field="report-btn">Mark as sent</button>
+    </div>
+    <p class="task-row__note" data-field="note" hidden></p>
+  </div>
+</template>
+
+<style>
+  .cabinet-wrap {
+    padding: 3rem 1.5rem;
+    max-width: 720px;
+  }
+  .cabinet-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+  .cabinet-header h1 {
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    color: var(--fg);
+    margin: 0;
+  }
+  .ghost-btn {
+    font: inherit;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--bg-subtle);
+    background: transparent;
+    color: var(--fg-muted);
+    cursor: pointer;
+  }
+  .ghost-btn:hover {
+    color: var(--fg);
+  }
+  .cabinet-error {
+    color: #c0392b;
+  }
+  #task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .task-row {
+    background: var(--bg-raised);
+    border: 1px solid var(--bg-subtle);
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
+  .task-row__main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+  .task-row__target {
+    font-weight: 700;
+    color: var(--fg);
+  }
+  .task-row__status {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    background: var(--bg-subtle);
+    color: var(--fg-muted);
+  }
+  .task-row__status--reported { background: #fff3cd; color: #7a5c00; }
+  .task-row__status--approved { background: #d4edda; color: #1e6b34; }
+  .task-row__status--rejected { background: #f8d7da; color: #a12a2a; }
+  .task-row__message {
+    color: var(--fg-muted);
+    font-size: 0.9rem;
+    margin: 0 0 0.9rem;
+  }
+  .task-row__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .task-row__actions input[type="file"] {
+    font-size: 0.8rem;
+    color: var(--fg-muted);
+  }
+  .task-row__actions button {
+    font: inherit;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: none;
+    background: var(--accent);
+    color: var(--bg);
+    cursor: pointer;
+  }
+  .task-row__actions button:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+  .task-row__note {
+    margin: 0.6rem 0 0;
+    font-size: 0.85rem;
+    color: var(--fg-muted);
+  }
+</style>
+
+</Base>
+
+<script>
+  const API_BASE = 'https://worker-cabinet-production.up.railway.app';
+
+  const token = localStorage.getItem('cabinet_token');
+  if (!token) {
+    window.location.href = '/cabinet/login';
+  }
+
+  const listEl = document.getElementById('task-list') as HTMLDivElement;
+  const emptyEl = document.getElementById('empty-state') as HTMLParagraphElement;
+  const errorEl = document.getElementById('load-error') as HTMLParagraphElement;
+  const template = document.getElementById('task-row-template') as HTMLTemplateElement;
+
+  document.getElementById('logout-btn')!.addEventListener('click', () => {
+    localStorage.removeItem('cabinet_token');
+    window.location.href = '/cabinet/login';
+  });
+
+  type Task = {
+    id: number;
+    target_username: string;
+    message_text: string | null;
+    status: 'pending' | 'reported' | 'approved' | 'rejected';
+    review_note: string | null;
+  };
+
+  async function authedFetch(path: string, options: RequestInit = {}) {
+    const res = await fetch(`${API_BASE}${path}`, {
+      ...options,
+      headers: { ...(options.headers || {}), Authorization: `Bearer ${token}` },
+    });
+    if (res.status === 401) {
+      localStorage.removeItem('cabinet_token');
+      window.location.href = '/cabinet/login';
+      throw new Error('Session expired');
+    }
+    return res;
+  }
+
+  function renderTask(task: Task) {
+    const node = template.content.cloneNode(true) as DocumentFragment;
+    const row = node.querySelector('.task-row') as HTMLDivElement;
+    row.querySelector('[data-field="target"]')!.textContent = task.target_username;
+    row.querySelector('[data-field="message"]')!.textContent = task.message_text || '';
+
+    const statusEl = row.querySelector('[data-field="status"]') as HTMLSpanElement;
+    statusEl.textContent = task.status;
+    statusEl.classList.add(`task-row__status--${task.status}`);
+
+    const fileInput = row.querySelector('[data-field="screenshot"]') as HTMLInputElement;
+    const reportBtn = row.querySelector('[data-field="report-btn"]') as HTMLButtonElement;
+    const noteEl = row.querySelector('[data-field="note"]') as HTMLParagraphElement;
+
+    if (task.status !== 'pending' && task.status !== 'rejected') {
+      fileInput.disabled = true;
+      reportBtn.disabled = true;
+      reportBtn.textContent = task.status === 'reported' ? 'Awaiting review' : 'Reviewed';
+    }
+
+    if (task.review_note) {
+      noteEl.textContent = `Admin note: ${task.review_note}`;
+      noteEl.hidden = false;
+    }
+
+    reportBtn.addEventListener('click', async () => {
+      reportBtn.disabled = true;
+      reportBtn.textContent = 'Sending...';
+      // Only send a multipart body when a file is actually attached — an
+      // empty FormData produces a body the backend's multipart parser rejects.
+      let body: FormData | undefined;
+      if (fileInput.files?.[0]) {
+        body = new FormData();
+        body.append('screenshot', fileInput.files[0]);
+      }
+      try {
+        const res = await authedFetch(`/tasks/${task.id}/report`, {
+          method: 'POST',
+          body,
+        });
+        if (!res.ok) throw new Error('Failed to report task');
+        await loadTasks();
+      } catch {
+        reportBtn.disabled = false;
+        reportBtn.textContent = 'Mark as sent';
+      }
+    });
+
+    listEl.appendChild(row);
+  }
+
+  async function loadTasks() {
+    listEl.innerHTML = '';
+    errorEl.hidden = true;
+    try {
+      const res = await authedFetch('/tasks');
+      if (!res.ok) throw new Error('Failed to load tasks');
+      const tasks: Task[] = await res.json();
+      emptyEl.hidden = tasks.length > 0;
+      tasks.forEach(renderTask);
+    } catch (err) {
+      errorEl.textContent = err instanceof Error ? err.message : 'Failed to load tasks';
+      errorEl.hidden = false;
+    }
+  }
+
+  loadTasks();
+</script>
