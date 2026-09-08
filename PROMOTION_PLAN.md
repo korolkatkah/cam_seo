@@ -4,6 +4,47 @@ Running log of daily/session-based SEO & promotion action plans. Newest entry on
 
 ---
 
+## 2026-09-08
+
+### Shipped (AM slot): "Stripchat's Recording Tool: Turn Clips Into Content That Sells" (all 8 locales)
+
+First actual run of the `ewo-daily-article` AM pipeline task since it was recreated on 2026-09-05 — no
+Stripchat article had shipped since 2026-07-27 (VR shows / Model News for studio admins), so no dedup
+conflicts against today's history existed yet.
+
+Checked existing Stripchat coverage (Stripscore/rank, tip menus, AI model recommendations, Popular-bias,
+VR shows, Model News for studios, the traffic-bot review, first-14-days guide) — none covered Stripchat's
+in-platform show-recording tool. Web search confirmed it's a real, current feature (BCAMS Magazine,
+2025-06, still current per follow-up coverage): performers can record and trim Public, Group, and Ticket
+Shows directly in-platform, up to 20 minutes of saved footage per day, with a built-in editor (trim slider,
+rename, custom cover image). Picked this as a fresh, dual-audience, grounded-in-fact topic — no cross-
+platform scope violation, Stripchat-only per the hard scope rule.
+
+**Slug:** `stripchat-show-recording-guide`. **Structure:** Variant B (sticky TOC sidebar), 5 content
+sections (what the tool does, the 20-minute daily budget, trimming/renaming/cover images, where the clips
+pay off — profile content, direct sales, promo material — and a studio-focused section on standardizing
+the workflow across a roster) + FAQ, matching the established pattern from `stripchat-vr-shows-worth-it`.
+Included the "Trending right now" promo block (linking `/stripchat-promo`) and the standard dual-CTA
+(`art-cta__btn`/`--primary`/`--ghost`, model-promotion + studio-traffic).
+
+**Locales:** shipped in all 8 (root/en, de, es, ro, uk, ru, fr, pt) in this same session — each with its
+own translated title/description/body, not machine-copied English, following the per-locale TOC label and
+byline conventions already documented in `CLAUDE.md` (fr "Contenu"/"Obtenir de l'aide →", pt
+"Conteúdo"/"Obter ajuda →" — matched against the existing `stripchat-vr-shows-worth-it` fr/pt files since
+CLAUDE.md flagged those two as not yet formally established). Added a matching `blog.astro` listing entry
+in all 8 locales with `tag: 'Stripchat'` and `date: '2026-09-08'` (identical across locales).
+
+**Verification:** `npm run build` completed clean — 392 pages (up from 384 baseline, +8 for the new
+article). Dev preview wasn't available in this unattended scheduled-task run (no interactive approval for
+starting a dev server), so verification was done via a `dist/` sweep instead: confirmed all 8 article HTML
+files exist, all 8 `blog/index.html` listings reference the new slug once each, and the root article page
+carries correct `BlogPosting` JSON-LD (`datePublished":"2026-09-08"`), the byline, the TOC list, the
+Stripchat-promo block, and `FAQPage` schema — all present exactly once as expected.
+
+Committed and pushed to `main` per the standing auto-push-after-verify preference.
+
+---
+
 ## 2026-09-05
 
 ### Recurring automation set up: 3 scheduled tasks recreated/created
