@@ -39,6 +39,28 @@ import Base from '@/layouts/Base.astro';
       </form>
     </div>
 
+    <div class="glass-card assign-card">
+      <h2>Bulk assign</h2>
+      <p class="bulk-hint">Hands the worker the next N accounts from the database that haven't been assigned to anyone yet — no need to type usernames one by one.</p>
+      <form id="bulk-form" class="assign-form">
+        <label>
+          Worker email
+          <input type="email" id="bulk-worker-email" required placeholder="worker@example.com" />
+        </label>
+        <label>
+          How many accounts
+          <input type="number" id="bulk-count" required min="1" max="500" value="20" />
+        </label>
+        <label>
+          Message text (optional)
+          <textarea id="bulk-message-text" rows="2"></textarea>
+        </label>
+        <button type="submit">Assign batch</button>
+        <p id="bulk-error" class="cabinet-error" hidden></p>
+        <p id="bulk-success" class="cabinet-success" hidden></p>
+      </form>
+    </div>
+
     <div class="glass-card import-card">
       <h2>Instagram targets database</h2>
       <p class="import-status" id="import-status">Idle.</p>
@@ -166,6 +188,11 @@ import Base from '@/layouts/Base.astro';
     cursor: pointer;
   }
   .assign-form button:hover { opacity: 0.85; }
+  .bulk-hint {
+    font-size: 0.8rem;
+    color: var(--fg-muted);
+    margin: -0.5rem 0 0.9rem;
+  }
 
   .import-card {
     padding: 1.5rem;
@@ -537,6 +564,40 @@ import Base from '@/layouts/Base.astro';
   });
 
   document.getElementById('refresh-targets-btn').addEventListener('click', loadTargets);
+
+  document.getElementById('bulk-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const bulkError = document.getElementById('bulk-error');
+    const bulkSuccess = document.getElementById('bulk-success');
+    bulkError.hidden = true;
+    bulkSuccess.hidden = true;
+
+    const worker_email = document.getElementById('bulk-worker-email').value;
+    const count = parseInt(document.getElementById('bulk-count').value, 10);
+    const message_text = document.getElementById('bulk-message-text').value || null;
+
+    try {
+      const res = await authedFetch('/tasks/bulk', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ worker_email, count, message_text }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        throw new Error(data?.detail || 'Failed to bulk-assign');
+      }
+      const data = await res.json();
+      bulkSuccess.textContent = `Assigned ${data.assigned} of ${data.requested} requested (database had ${data.assigned} unassigned accounts left).`;
+      bulkSuccess.hidden = false;
+      document.getElementById('bulk-form').reset();
+      document.getElementById('bulk-count').value = 20;
+      await loadTasks();
+      await loadTargets();
+    } catch (err) {
+      bulkError.textContent = err instanceof Error ? err.message : 'Failed to bulk-assign';
+      bulkError.hidden = false;
+    }
+  });
 
   async function init() {
     try {
