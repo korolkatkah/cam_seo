@@ -6,6 +6,44 @@ Running log of daily/session-based SEO & promotion action plans. Newest entry on
 
 ## 2026-09-08
 
+### Shipped (PM slot): "Stripchat Fan Club Pricing: How to Set Tiers That Actually Convert" (all 8 locales)
+
+**Note on the AM entry below:** it claimed "committed and pushed to main," but `git status` at the start of
+this PM run showed those 17 files still staged and uncommitted — the AM session never actually pushed
+despite logging that it did. Committed and pushed that work first (rebased onto ~100 unrelated
+`chore: update sc/cb trends data` commits that had landed on `origin/main` in the meantime — trivial,
+automated, no conflicts), confirmed with `npm run build`, then proceeded with today's PM article on top.
+
+Checked the AM article's topic (Stripchat's in-platform show-recording tool) plus all existing Stripchat
+coverage on the site (Stripscore/rank, tip menus, AI model recommendations, Popular-bias, VR shows, Model
+News for studios, the traffic-bot review, first-14-days guide) — none covered Fan Club pricing. Web search
+turned up a real, current, dated feature change (BCAMS Magazine, 2026-04, "Stripchat: Custom Fan Club
+Pricing Boosts Model Earnings"): Fan Club tiers (Soldier/Lord/Prince) now support a custom price per tier
+instead of picking from Stripchat-defined presets, alongside 3/6/12-month subscription terms on top of the
+existing monthly option. Distinct topic from the AM article, dual-audience (model pricing strategy + studio
+roster standardization), Stripchat-only per the hard scope rule.
+
+**Slug:** `stripchat-fan-club-pricing-guide`. **Structure:** Variant B (sticky TOC sidebar), 5 content
+sections (what changed with custom per-tier pricing, how to price the Soldier/Lord/Prince ladder, monthly vs.
+3/6/12-month terms, which perks justify the price, and a studio-focused section on standardizing tier
+structure/pricing framework across a roster) + FAQ. Included the "Trending right now" promo block and the
+standard dual-CTA (`art-cta__btn`/`--primary`/`--ghost`).
+
+**Locales:** shipped in all 8 (root/en, de, es, ro, uk, ru, fr, pt) in this same session, each with its own
+translated title/description/body (not machine-copied English), reusing the established per-locale TOC/CTA
+label conventions from `stripchat-show-recording-guide`. Added a matching `blog.astro` listing entry in all 8
+locales with `tag: 'Stripchat'` and `date: '2026-09-08'` (identical across locales, matching the AM article's
+date since both shipped today).
+
+**Verification:** `npm run build` completed clean — 400 pages (up from 392 after the AM article landed, +8
+for this article). Dev preview wasn't available in this unattended scheduled-task run (no interactive
+approval for starting a dev server), so verification was done via a `dist/` sweep: confirmed all 8 article
+HTML files exist, all 8 `blog/index.html` listings reference the new slug exactly once, and the root article
+carries correct `BlogPosting` JSON-LD (`datePublished":"2026-09-08"`), the byline, the TOC, the Stripchat-
+promo block, and `FAQPage` schema — all present exactly once as expected.
+
+Committed and pushed to `main`.
+
 ### Shipped (AM slot): "Stripchat's Recording Tool: Turn Clips Into Content That Sells" (all 8 locales)
 
 First actual run of the `ewo-daily-article` AM pipeline task since it was recreated on 2026-09-05 — no
