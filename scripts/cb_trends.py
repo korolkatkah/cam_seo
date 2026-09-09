@@ -252,9 +252,9 @@ def build_summary(rows, now_ts):
             elif v <= 400:
                 patterns.append(v)
     goals = [g for g in goals if 100 <= g <= 100000]
-    patterns = [p for p in patterns if 10 <= p <= 500]
+    patterns = [p for p in patterns if p >= 10]
 
-    top_patterns = Counter(patterns).most_common(10)
+    top_patterns = Counter(patterns).most_common(None)
 
     reco_tags = list(top_tags[:6])
     ratio_sorted = sorted(

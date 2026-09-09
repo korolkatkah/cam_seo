@@ -233,7 +233,7 @@ const hours24 = Array.from({ length: 24 }, (_, i) => ({ hour: i, score: hoursMap
 const maxScore24 = Math.max(1, ...hours24.map(h => h.score));
 const topTags = (trends.top_tags ?? []).slice(0, 30);
 const topTitles = (trends.top_titles ?? []).slice(0, 6);
-const topPatterns = (trends.economy?.top_patterns ?? []).slice(0, 10);
+const topPatterns = trends.economy?.top_patterns ?? [];
 
 const hasScData = (scTrends.best_hours_utc?.length ?? 0) > 0;
 const scHoursMap = new Map((scTrends.best_hours_utc ?? []).map((h: { hour: number; score: number }) => [h.hour, h.score]));
@@ -764,7 +764,7 @@ const scMaxScore24 = Math.max(1, ...scHours24.map(h => h.score));
     font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
     color: #6b6b67; margin-bottom: 0.6rem;
   }
-  .price-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  .price-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; max-height: 420px; overflow-y: auto; padding-right: 4px; }
   .price-row { display: flex; align-items: baseline; gap: 0.5rem; font-size: 0.875rem; }
   .price-tag { color: var(--fg-muted); font-weight: 600; white-space: nowrap; }
   .price-dots {
