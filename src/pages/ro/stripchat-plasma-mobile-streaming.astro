@@ -1,0 +1,238 @@
+---
+import Base from '@/layouts/Base.astro';
+const site = 'https://www.ewohub.com';
+const slug = 'stripchat-plasma-mobile-streaming';
+---
+<Base
+  title="Aplicația Plasma Streaming de la Stripchat: mai ai nevoie de OBS?"
+  description="Aplicația Plasma Streaming de la Stripchat îți permite să transmiți direct de pe telefon — fără placă de captură, fără configurare OBS. Ce face de fapt, când are sens streamingul mobil și cum ar trebui să gândească studiourile un roster care transmite de pe telefoane."
+  lang="ro"
+  hreflang={[
+    { lang: 'en', url: `${site}/${slug}` },
+    { lang: 'de', url: `${site}/de/${slug}` },
+    { lang: 'es', url: `${site}/es/${slug}` },
+    { lang: 'ro', url: `${site}/ro/${slug}` },
+    { lang: 'uk', url: `${site}/uk/${slug}` },
+    { lang: 'ru', url: `${site}/ru/${slug}` },
+    { lang: 'fr', url: `${site}/fr/${slug}` },
+    { lang: 'pt', url: `${site}/pt/${slug}` },
+  ]}
+  articleMeta={{ datePublished: '2026-09-09' }}
+>
+
+  <section class="art-hero">
+    <div class="art-orb art-orb--1"></div>
+    <div class="art-orb art-orb--2"></div>
+    <div class="art-grid"></div>
+    <div class="art-hero__inner container">
+      <div class="art-meta">
+        <span class="art-tag">Stripchat</span>
+        <span class="art-tag art-tag--green">Actualizare platformă</span>
+      </div>
+      <h1 class="art-title">Plasma Streaming de la Stripchat: <span class="art-grad">telefon în loc de rig</span></h1>
+      <p class="art-lead">Stripchat are acum propria aplicație de streaming mobil, Plasma Streaming — apeși și intri live, fără placă de captură și fără scenă OBS de configurat. Nu înlocuiește un setup real, dar schimbă ce presupune azi „a transmite”. Iată ce face exact și unde se potrivește cu adevărat.</p>
+    </div>
+  </section>
+
+  <div class="art-body container">
+    <div class="art-layout">
+      <aside class="art-toc">
+        <p class="art-toc__title">Cuprins</p>
+        <ol class="art-toc__list">
+          <li><a href="#what-is-it">Ce este de fapt Plasma Streaming</a></li>
+          <li><a href="#setup">Cum o pui în funcțiune</a></li>
+          <li><a href="#tradeoffs">Ce câștigi, ce pierzi față de OBS</a></li>
+          <li><a href="#when-to-use">Când streamingul mobil chiar are sens</a></li>
+          <li><a href="#for-studios">Pentru studiouri: un roster care transmite de pe telefoane</a></li>
+          <li><a href="#faq">Întrebări frecvente</a></li>
+        </ol>
+        <a href="#cta" class="art-toc__cta">Obține ajutor →</a>
+      </aside>
+
+      <main class="art-main">
+
+      <p class="art-intro">Majoritatea sfaturilor despre streaming presupun încă un birou, o placă de captură și o colecție de scene OBS. Plasma Streaming sare peste toate astea — e aplicația proprie a Stripchat, gratuită pe iOS și Android, făcută să pună camera telefonului live fără nimic din configurarea aceea. Acum e o opțiune reală, nu un compromis, și merită să știi exact ce sacrifici înainte să-ți construiești o rutină pe ea.</p>
+      <p class="card-date" style="margin:0 0 1.75rem;">Echipa editorială EWOhub · Publicat pe 9 sep. 2026</p>
+
+      <section class="section" id="what-is-it">
+        <h2>Ce este de fapt Plasma Streaming</h2>
+        <div class="glass-card" style="margin-top:1.25rem;">
+          <p>Plasma Streaming este o aplicație mobilă construită de Stripchat pentru a transmite direct de pe telefon — o deschizi, apeși pentru a intra live, fără scenă de configurat și fără hardware între tine și platformă. Susține schimbare rapidă a camerei, rapoarte de aspect ajustabile, calitate de streaming până la 1080p și Picture-in-Picture, ca show-ul să continue cât verifici mesajele în altă aplicație.</p>
+          <p style="margin-bottom:0;">Nu e un compromis de browser — Stripchat a construit-o și o întreține special pentru că video-ul de la camera telefonului printr-un tab de browser a arătat și s-a comportat mereu mai slab decât o aplicație dedicată. Plasma este răspunsul propriu al platformei la acest gol, nu un instrument terț.</p>
+        </div>
+      </section>
+
+      <section class="section" id="setup">
+        <h2>Cum o pui în funcțiune</h2>
+        <div class="glass-card" style="margin-top:1.25rem;">
+          <p>Deschide Broadcasting Center din browserul telefonului, găsește panoul „Download the app” și urmează instrucțiunile de pe ecran — aplicația se leagă direct de contul tău existent, fără o înregistrare separată. După instalare, a intra live e un singur tap din aplicație; nu există meniu de scenă, sursă sau bitrate de parcurs înainte.</p>
+          <p style="margin-bottom:0;">Această simplitate e toată ideea. Tot ce te pune OBS să configurezi manual — rezoluție, sursă de cameră, intrare audio — Plasma alege automat valori implicite rezonabile. Pierzi controlul asupra acelor valori în schimbul faptului că nu trebuie să le atingi.</p>
+        </div>
+      </section>
+
+      <section class="section" id="tradeoffs">
+        <h2>Ce câștigi, ce pierzi față de OBS</h2>
+
+        <div class="two-col-box">
+          <div class="two-col-box__item two-col-box__item--good">
+            <h3>Ce îți oferă telefon + Plasma</h3>
+            <ul class="checklist">
+              <li>Live în câteva minute fără nicio configurare — fără scene, fără placă de captură, fără PC dedicat streamingului</li>
+              <li>Mobilitate reală: transmiți de oriunde ai semnal, nu doar de la un birou fix</li>
+              <li>Picture-in-Picture ține show-ul în funcțiune cât te ocupi de chat, notițe sau mesaje în altă parte</li>
+              <li>Un punct de eșec mai puțin — fără conexiune de captură căzută sau scenă OBS blocată la jumătatea show-ului</li>
+            </ul>
+          </div>
+          <div class="two-col-box__item two-col-box__item--bad">
+            <h3>Ce îți oferă un rig real și telefonul nu</h3>
+            <ul class="checklist">
+              <li>Iluminare personalizată, unghiuri multiple de cameră și overlay-uri — camera telefonului e un singur obiectiv fix</li>
+              <li>Control fin asupra bitrate-ului și rezoluției când conexiunea e instabilă</li>
+              <li>Overlay-uri de chat, alerte și widget-uri de goal integrate direct în scenă</li>
+              <li>Cadraj constant — imaginile ținute în mână sau sprijinite se mișcă în feluri în care un rig montat nu se mișcă</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="when-to-use">
+        <h2>Când streamingul mobil chiar are sens</h2>
+
+        <div class="reason-card" style="margin-top:1.25rem;">
+          <div class="reason-num">01</div>
+          <div class="reason-content">
+            <h3>Când călătorești sau ești între setup-uri</h3>
+            <p>Un show anulat pentru că ești departe de birou e un show anulat — Plasma îl transformă într-unul cu producție mai slabă, nu într-unul ratat. Consecvența programului tău (vezi <a href="/ro/best-streaming-times-by-region">cele mai bune ore de streaming pe regiune →</a>) contează pentru urmăritori mai mult decât rafinamentul unei singure sesiuni.</p>
+          </div>
+        </div>
+
+        <div class="reason-card">
+          <div class="reason-num">02</div>
+          <div class="reason-content">
+            <h3>Testezi un al doilea interval zilnic fără să cumperi echipament nou</h3>
+            <p>E ușor să încerci o sesiune scurtă în plus, la altă oră, cu telefonul — și scump s-o încerci duplicând un rig întreg. Dacă intervalul mobil funcționează, e o dovadă pe care o poți folosi în orice direcție: o dezvolți serios sau o lași mobilă, pentru că deja merge așa.</p>
+          </div>
+        </div>
+
+        <div class="reason-card">
+          <div class="reason-num">03</div>
+          <div class="reason-content">
+            <h3>Îți revii după o defecțiune de echipament</h3>
+            <p>O placă de captură moartă sau o instalare OBS căzută însemna înainte anularea zilei. Plasma e un plan de rezervă real, care ține un show live la calitate de producție redusă, în loc să-l anuleze complet — merită instalată înainte să ai nevoie de ea, nu după.</p>
+          </div>
+        </div>
+
+        <div class="reason-card">
+          <div class="reason-num">04</div>
+          <div class="reason-content">
+            <h3>Unde e alegerea greșită: show-ul tău principal de zi cu zi</h3>
+            <p>Urmăritorii care urmăresc un model pentru un anumit look, o anumită lumină și un anumit decor observă scăderea calității. Plasma e un instrument real pentru goluri și cazuri excepționale — folosirea ei permanentă ca înlocuitor al unui setup real la sesiunile principale schimbă calitatea producției pe un confort de care de fapt nu aveai nevoie.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="for-studios">
+        <div class="highlight-box">
+          <h2>Pentru studiouri: un roster care transmite de pe telefoane</h2>
+          <p style="margin-bottom:0;">O opțiune mobilă gratuită și fără configurare schimbă calculul unui studio într-un mod concret: coboară pragul de echipament pentru integrarea unui model nou (vezi <a href="/ro/stripchat-first-14-days-guide">ghidul primelor 14 zile →</a>) și le dă modelelor care călătoresc sau schimbă locația o cale de a-și respecta programul fără să rateze sesiuni. Nu este, de la sine, un motiv să renunți la investiția în rig-uri reale pentru modelele care transmit regulat — diferențele de calitate dintre setup-urile de telefon și cele de rig sunt vizibile, iar roster-ul de bază al unui studio care concurează la clasamentul Popular are în continuare nevoie de avantajul de producție. Folosește Plasma cu intenție: pentru a acoperi goluri de integrare, continuitate în călătorii și rezervă la defecțiuni de echipament — nu ca înlocuitor permanent pentru echipamentul oferit de studio.</p>
+        </div>
+      </section>
+
+      <section class="faq-section section" id="faq">
+        <h2>Întrebări frecvente</h2>
+
+        <div class="faq-item">
+          <button class="faq-chevron" aria-expanded="false">
+            <span>Plasma Streaming costă ceva?</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-body">
+            <p>E o descărcare gratuită pentru iOS și Android, legată direct de contul tău Stripchat existent prin Broadcasting Center — nu există o achiziție sau un abonament separat pentru a o folosi.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-chevron" aria-expanded="false">
+            <span>Streamingul de pe telefon afectează clasamentul față de un setup desktop?</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-body">
+            <p>Semnalele de clasament în sine — numărul de spectatori, retenția, interacțiunea din chat, frecvența tips-urilor — nu verifică din ce aplicație transmiți (vezi <a href="/ro/how-cam-algorithm-ranks-rooms">detalierea semnalelor de clasament →</a>). Ce te poate afecta indirect e o calitate video mai slabă sau un setup mai puțin atrăgător care îți costă retenție — asta e o problemă de producție, nu o penalizare a platformei.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-chevron" aria-expanded="false">
+            <span>Poți folosi Plasma alături de un setup desktop obișnuit, sau e ori-ori?</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-body">
+            <p>Ambele — și acesta e tiparul mai des întâlnit: un rig desktop pentru sesiunile programate regulat, Plasma instalată și pregătită pentru zilele de călătorie, defecțiuni de echipament sau o sesiune rapidă în plus care altfel nici n-ar avea loc.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>În tendințe acum</h2>
+        <p style="color:var(--fg-muted);margin:-0.5rem 0 1.25rem;">Serviciul de promovare despre care ne întreabă cel mai des clienții luna aceasta.</p>
+        <a href="/ro/stripchat-promo" class="glass-card" style="display:flex;flex-wrap:wrap;overflow:hidden;padding:0;text-decoration:none;">
+          <div style="flex:1 1 280px;min-height:200px;">
+            <img src="/images/stripchat-traffic-promo-banner.webp" alt="Stripchat traffic promo — mai mulți spectatori și un stripscore mai mare" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
+          </div>
+          <div style="flex:1 1 320px;padding:1.75rem;display:flex;flex-direction:column;justify-content:center;">
+            <span class="art-tag" style="width:fit-content;margin-bottom:.875rem;">Stripchat</span>
+            <h3 style="font-size:1.3rem;font-weight:700;color:var(--fg);margin-bottom:.625rem;">Stripchat Traffic Promo</h3>
+            <p style="font-size:.9rem;color:var(--fg-muted);line-height:1.65;margin-bottom:0;">Plasează-ți room-ul în categoria Popular de pe Stripchat, crește-ți stripscore-ul și obține spectatori reali. Vezi cum funcționează promovarea, prețul și playbook-ul pentru a scoate maximum din ea.</p>
+            <span style="font-size:.875rem;font-weight:600;color:var(--fg);margin-top:.875rem;">Citește recenzia completă →</span>
+          </div>
+        </a>
+      </section>
+
+      <section id="cta" class="art-cta section">
+        <div class="art-cta__orb"></div>
+        <div class="art-cta__inner">
+          <span class="art-cta__badge">Modele și studiouri</span>
+          <h2>Indiferent de pe ce transmiți, traficul tot trebuie să apară</h2>
+          <p>Și telefonul, și un rig complet au nevoie de spectatori care să găsească room-ul de la bun început. Dacă vrei ajutor să transformi sesiuni consecvente — mobile sau nu — într-o audiență reală, în creștere, lucrăm exact la asta cu modele independente și studiouri.</p>
+          <div class="art-cta__actions">
+            <a href="/ro/model-promotion" class="art-cta__btn art-cta__btn--primary">Servicii de promovare pentru modele →</a>
+            <a href="/ro/studio-traffic" class="art-cta__btn art-cta__btn--ghost">Servicii de trafic pentru studiouri →</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Articole similare</h2>
+        <div class="related-grid">
+          <a href="/ro/stripchat-first-14-days-guide" class="related-card">
+            <span class="related-card__icon">🗓️</span>
+            <span>Primele tale 14 zile pe Stripchat</span>
+          </a>
+          <a href="/ro/stripchat-show-recording-guide" class="related-card">
+            <span class="related-card__icon">🎬</span>
+            <span>Instrumentul de înregistrare al Stripchat</span>
+          </a>
+          <a href="/ro/how-cam-algorithm-ranks-rooms" class="related-card">
+            <span class="related-card__icon">⚙️</span>
+            <span>Cum clasează algoritmii de cam room-urile</span>
+          </a>
+          <a href="/ro/why-low-viewers-webcam" class="related-card">
+            <span class="related-card__icon">📉</span>
+            <span>De ce ai puțini spectatori</span>
+          </a>
+          <a href="/ro/studio-scaling" class="related-card">
+            <span class="related-card__icon">📈</span>
+            <span>Scalarea unui studio</span>
+          </a>
+          <a href="/ro/stripchat-new-model-30-day-window" class="related-card">
+            <span class="related-card__icon">🆕</span>
+            <span>Fereastra de model nou de la Stripchat</span>
+          </a>
+        </div>
+      </section>
+
+      </main>
+    </div>
+  </div>
+
+</Base>

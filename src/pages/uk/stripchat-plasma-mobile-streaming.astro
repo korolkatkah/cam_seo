@@ -1,0 +1,238 @@
+---
+import Base from '@/layouts/Base.astro';
+const site = 'https://www.ewohub.com';
+const slug = 'stripchat-plasma-mobile-streaming';
+---
+<Base
+  title="Додаток Plasma Streaming від Stripchat: чи потрібен ще OBS?"
+  description="Додаток Plasma Streaming від Stripchat дає змогу транслювати прямо з телефону — без карти захоплення, без налаштування OBS. Що він насправді робить, коли мобільний стрімінг має сенс, і як студіям варто думати про ростер, що транслює з телефонів."
+  lang="uk"
+  hreflang={[
+    { lang: 'en', url: `${site}/${slug}` },
+    { lang: 'de', url: `${site}/de/${slug}` },
+    { lang: 'es', url: `${site}/es/${slug}` },
+    { lang: 'ro', url: `${site}/ro/${slug}` },
+    { lang: 'uk', url: `${site}/uk/${slug}` },
+    { lang: 'ru', url: `${site}/ru/${slug}` },
+    { lang: 'fr', url: `${site}/fr/${slug}` },
+    { lang: 'pt', url: `${site}/pt/${slug}` },
+  ]}
+  articleMeta={{ datePublished: '2026-09-09' }}
+>
+
+  <section class="art-hero">
+    <div class="art-orb art-orb--1"></div>
+    <div class="art-orb art-orb--2"></div>
+    <div class="art-grid"></div>
+    <div class="art-hero__inner container">
+      <div class="art-meta">
+        <span class="art-tag">Stripchat</span>
+        <span class="art-tag art-tag--green">Оновлення платформи</span>
+      </div>
+      <h1 class="art-title">Plasma Streaming від Stripchat: <span class="art-grad">телефон замість риґу</span></h1>
+      <p class="art-lead">Stripchat запустив власний застосунок для мобільного стрімінгу — Plasma Streaming: натискаєш і виходиш у прямий ефір, без карти захоплення й без налаштування сцени в OBS. Це не заміна повноцінного сетапу, але вона змінює, що взагалі потрібно, щоб "стрімити сьогодні". Ось що він робить і де він справді доречний.</p>
+    </div>
+  </section>
+
+  <div class="art-body container">
+    <div class="art-layout">
+      <aside class="art-toc">
+        <p class="art-toc__title">Зміст</p>
+        <ol class="art-toc__list">
+          <li><a href="#what-is-it">Що таке Plasma Streaming насправді</a></li>
+          <li><a href="#setup">Як його налаштувати</a></li>
+          <li><a href="#tradeoffs">Що ти отримуєш і що втрачаєш порівняно з OBS</a></li>
+          <li><a href="#when-to-use">Коли мобільний стрімінг справді має сенс</a></li>
+          <li><a href="#for-studios">Для студій: ростер, що транслює з телефонів</a></li>
+          <li><a href="#faq">Часті запитання</a></li>
+        </ol>
+        <a href="#cta" class="art-toc__cta">Отримати допомогу →</a>
+      </aside>
+
+      <main class="art-main">
+
+      <p class="art-intro">Більшість порад щодо стрімінгу досі виходять із того, що є стіл, карта захоплення й набір сцен в OBS. Plasma Streaming обходиться без усього цього — це власний застосунок Stripchat, безкоштовний для iOS і Android, створений, щоб вивести камеру телефону в прямий ефір без жодного з цих налаштувань. Тепер це реальна опція, а не тимчасовий вихід, і варто точно знати, чим доводиться жертвувати, перш ніж будувати на цьому свій графік.</p>
+      <p class="card-date" style="margin:0 0 1.75rem;">Редакція EWOhub · Опубліковано 9 вер. 2026</p>
+
+      <section class="section" id="what-is-it">
+        <h2>Що таке Plasma Streaming насправді</h2>
+        <div class="glass-card" style="margin-top:1.25rem;">
+          <p>Plasma Streaming — це мобільний застосунок, розроблений Stripchat для трансляції прямо з телефону: відкриваєш, натискаєш, щоб вийти в ефір, без сцени й без апаратури між тобою і платформою. Він підтримує швидке перемикання камери, регульоване співвідношення сторін, якість трансляції до 1080p і режим "картинка в картинці", щоб шоу тривало, поки ти перевіряєш повідомлення в іншому застосунку.</p>
+          <p style="margin-bottom:0;">Це не обхідний шлях через браузер — Stripchat спеціально створив і підтримує цей застосунок, бо відео з камери телефону через вкладку браузера завжди виглядало й поводилося гірше, ніж у виділеному застосунку. Plasma — це власна відповідь платформи на цю прогалину, а не інструмент від третьої сторони.</p>
+        </div>
+      </section>
+
+      <section class="section" id="setup">
+        <h2>Як його налаштувати</h2>
+        <div class="glass-card" style="margin-top:1.25rem;">
+          <p>Відкрий Broadcasting Center у браузері телефону, знайди панель "Download the app" і виконай інструкції на екрані — застосунок одразу прив'язується до твого наявного акаунту, окрема реєстрація не потрібна. Після встановлення вихід у прямий ефір — це один дотик у самому застосунку; жодного меню сцени, джерела чи бітрейту перед цим проходити не потрібно.</p>
+          <p style="margin-bottom:0;">У цьому вся суть простоти. Усе, що OBS змушує тебе налаштовувати вручну — роздільну здатність, джерело камери, аудіовхід — Plasma автоматично обирає за розумними значеннями за замовчуванням. Ти втрачаєш контроль над цими значеннями, натомість тобі не потрібно їх чіпати.</p>
+        </div>
+      </section>
+
+      <section class="section" id="tradeoffs">
+        <h2>Що ти отримуєш і що втрачаєш порівняно з OBS</h2>
+
+        <div class="two-col-box">
+          <div class="two-col-box__item two-col-box__item--good">
+            <h3>Що дає телефон + Plasma</h3>
+            <ul class="checklist">
+              <li>Прямий ефір за хвилини без жодного налаштування — без сцен, без карти захоплення, без окремого ПК для стрімінгу</li>
+              <li>Справжня мобільність: транслюй звідусіль, де є сигнал, а не лише з фіксованого столу</li>
+              <li>"Картинка в картинці" тримає шоу активним, поки ти займаєшся чатом, нотатками чи повідомленнями деінде</li>
+              <li>На одну точку відмови менше — не обірветься з'єднання карти захоплення й не впаде сцена OBS посеред шоу</li>
+            </ul>
+          </div>
+          <div class="two-col-box__item two-col-box__item--bad">
+            <h3>Що дає справжній риґ, а телефон — ні</h3>
+            <ul class="checklist">
+              <li>Індивідуальне освітлення, кілька ракурсів камери й накладки — камера телефону це один фіксований об'єктив</li>
+              <li>Тонкий контроль бітрейту й роздільної здатності при нестабільному з'єднанні</li>
+              <li>Накладки чату, сповіщення й віджети цілей, вбудовані прямо в сцену</li>
+              <li>Стабільний кадр — знімки з рук або на підпорці "гуляють" так, як не гуляє змонтований риґ</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="when-to-use">
+        <h2>Коли мобільний стрімінг справді має сенс</h2>
+
+        <div class="reason-card" style="margin-top:1.25rem;">
+          <div class="reason-num">01</div>
+          <div class="reason-content">
+            <h3>У подорожі або між двома сетапами</h3>
+            <p>Скасоване через відсутність за столом шоу — це скасоване шоу. Plasma перетворює його на шоу нижчої якості замість пропущеного. Стабільність графіка (див. <a href="/uk/best-streaming-times-by-region">найкращі години стрімінгу за регіоном →</a>) важить для підписників більше, ніж відточеність однієї окремої сесії.</p>
+          </div>
+        </div>
+
+        <div class="reason-card">
+          <div class="reason-num">02</div>
+          <div class="reason-content">
+            <h3>Тестування другого щоденного слоту без купівлі нового обладнання</h3>
+            <p>Додати коротку додаткову сесію в іншу годину легко спробувати з телефоном і дорого спробувати, дублюючи повний риґ. Якщо мобільний слот працює — це доказ, яким можна скористатися в будь-якому напрямку: розбудувати його як слід або залишити мобільним, бо він уже працює.</p>
+          </div>
+        </div>
+
+        <div class="reason-card">
+          <div class="reason-num">03</div>
+          <div class="reason-content">
+            <h3>Відновлення після поломки обладнання</h3>
+            <p>Мертва карта захоплення чи впала інсталяція OBS раніше означала скасування дня. Plasma — це реальний запасний варіант, який тримає шоу в ефірі зі зниженою якістю виробництва замість того, щоб зовсім його не показувати — варто встановити його заздалегідь, а не тоді, коли він уже знадобився.</p>
+          </div>
+        </div>
+
+        <div class="reason-card">
+          <div class="reason-num">04</div>
+          <div class="reason-content">
+            <h3>Де це неправильний вибір: твоє основне щоденне шоу</h3>
+            <p>Підписники, які стежать за моделлю через певний образ, освітлення й декор, помічають зниження якості. Plasma — це реальний інструмент для прогалин і виняткових ситуацій, а не постійна заміна повноцінному сетапу на основних сесіях — інакше ти міняєш якість виробництва на зручність, яка насправді не була потрібна.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="for-studios">
+        <div class="highlight-box">
+          <h2>Для студій: ростер, що транслює з телефонів</h2>
+          <p style="margin-bottom:0;">Безкоштовна опція без налаштування конкретно змінює математику студії: вона знижує поріг обладнання для онбордингу нової моделі (див. наш <a href="/uk/stripchat-first-14-days-guide">гайд перших 14 днів →</a>) і дає моделям у подорожі чи між локаціями спосіб дотримуватися графіка, не пропускаючи сесій. Це саме по собі не привід відмовлятися від інвестицій у справжні риґи для моделей, які транслюють регулярно — різниця в якості між сетапами з телефону й риґу помітна, а основний ростер студії, що змагається в рейтингу Popular, і надалі потребує переваги у виробництві. Використовуй Plasma свідомо: для покриття прогалин онбордингу, безперервності в подорожах і резерву на випадок поломки обладнання — а не як постійну заміну обладнанню, наданому студією.</p>
+        </div>
+      </section>
+
+      <section class="faq-section section" id="faq">
+        <h2>Часті запитання</h2>
+
+        <div class="faq-item">
+          <button class="faq-chevron" aria-expanded="false">
+            <span>Plasma Streaming коштує щось?</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-body">
+            <p>Це безкоштовне завантаження для iOS і Android, прив'язане прямо до твого наявного акаунту Stripchat через Broadcasting Center — окремої покупки чи підписки для використання не потрібно.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-chevron" aria-expanded="false">
+            <span>Чи шкодить стрімінг із телефону рейтингу порівняно з десктопним сетапом?</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-body">
+            <p>Самі сигнали рейтингу — кількість глядачів, утримання, залученість у чаті, частота донатів — не перевіряють, з якого застосунку ти транслюєш (див. наш <a href="/uk/how-cam-algorithm-ranks-rooms">розбір сигналів рейтингу →</a>). Непрямо нашкодити може нижча якість відео або менш захопливий сетап, що коштує тобі утримання глядачів — а це проблема виробництва, а не штраф платформи.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-chevron" aria-expanded="false">
+            <span>Чи можна використовувати Plasma поряд зі звичайним десктопним сетапом, чи це або-або?</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-body">
+            <p>І те, й інше — і саме такий підхід трапляється найчастіше: десктопний риґ для регулярних запланованих сесій, а Plasma встановлена й готова на дні подорожей, поломки обладнання чи швидку додаткову сесію, якої інакше просто не було б.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Зараз у тренді</h2>
+        <p style="color:var(--fg-muted);margin:-0.5rem 0 1.25rem;">Послуга просування, про яку клієнти запитують найчастіше цього місяця.</p>
+        <a href="/uk/stripchat-promo" class="glass-card" style="display:flex;flex-wrap:wrap;overflow:hidden;padding:0;text-decoration:none;">
+          <div style="flex:1 1 280px;min-height:200px;">
+            <img src="/images/stripchat-traffic-promo-banner.webp" alt="Stripchat traffic promo — більше глядачів і вищий stripscore" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
+          </div>
+          <div style="flex:1 1 320px;padding:1.75rem;display:flex;flex-direction:column;justify-content:center;">
+            <span class="art-tag" style="width:fit-content;margin-bottom:.875rem;">Stripchat</span>
+            <h3 style="font-size:1.3rem;font-weight:700;color:var(--fg);margin-bottom:.625rem;">Stripchat Traffic Promo</h3>
+            <p style="font-size:.9rem;color:var(--fg-muted);line-height:1.65;margin-bottom:0;">Розмісти свій room у категорії Popular на Stripchat, підвищ свій stripscore і отримай реальних глядачів. Дізнайся, як працює просування, скільки коштує, та плейбук, щоб отримати максимум користі.</p>
+            <span style="font-size:.875rem;font-weight:600;color:var(--fg);margin-top:.875rem;">Читати повний огляд →</span>
+          </div>
+        </a>
+      </section>
+
+      <section id="cta" class="art-cta section">
+        <div class="art-cta__orb"></div>
+        <div class="art-cta__inner">
+          <span class="art-cta__badge">Моделі та студії</span>
+          <h2>З чого б ти не транслювала — трафік усе одно потрібен</h2>
+          <p>І телефону, і повноцінному риґу однаково потрібні глядачі, які взагалі знайдуть room. Якщо потрібна допомога перетворити стабільні сесії — мобільні чи ні — на реальну аудиторію, що зростає, ми працюємо саме над цим із незалежними моделями та студіями.</p>
+          <div class="art-cta__actions">
+            <a href="/uk/model-promotion" class="art-cta__btn art-cta__btn--primary">Послуги просування моделей →</a>
+            <a href="/uk/studio-traffic" class="art-cta__btn art-cta__btn--ghost">Послуги трафіку для студій →</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Схожі статті</h2>
+        <div class="related-grid">
+          <a href="/uk/stripchat-first-14-days-guide" class="related-card">
+            <span class="related-card__icon">🗓️</span>
+            <span>Твої перші 14 днів на Stripchat</span>
+          </a>
+          <a href="/uk/stripchat-show-recording-guide" class="related-card">
+            <span class="related-card__icon">🎬</span>
+            <span>Інструмент запису Stripchat</span>
+          </a>
+          <a href="/uk/how-cam-algorithm-ranks-rooms" class="related-card">
+            <span class="related-card__icon">⚙️</span>
+            <span>Як алгоритми кам-платформ ранжують room'и</span>
+          </a>
+          <a href="/uk/why-low-viewers-webcam" class="related-card">
+            <span class="related-card__icon">📉</span>
+            <span>Чому мало глядачів на вебкамі</span>
+          </a>
+          <a href="/uk/studio-scaling" class="related-card">
+            <span class="related-card__icon">📈</span>
+            <span>Масштабування студії</span>
+          </a>
+          <a href="/uk/stripchat-new-model-30-day-window" class="related-card">
+            <span class="related-card__icon">🆕</span>
+            <span>Вікно нової моделі на Stripchat</span>
+          </a>
+        </div>
+      </section>
+
+      </main>
+    </div>
+  </div>
+
+</Base>

@@ -1,0 +1,238 @@
+---
+import Base from '@/layouts/Base.astro';
+const site = 'https://www.ewohub.com';
+const slug = 'stripchat-plasma-mobile-streaming';
+---
+<Base
+  title="L'appli Plasma Streaming de Stripchat : besoin d'OBS encore ?"
+  description="L'appli Plasma Streaming de Stripchat permet de diffuser directement depuis un téléphone — sans carte de capture, sans configuration OBS. Ce qu'elle fait vraiment, quand le streaming mobile a du sens, et comment les studios doivent penser un roster qui diffuse depuis des téléphones."
+  lang="fr"
+  hreflang={[
+    { lang: 'en', url: `${site}/${slug}` },
+    { lang: 'de', url: `${site}/de/${slug}` },
+    { lang: 'es', url: `${site}/es/${slug}` },
+    { lang: 'ro', url: `${site}/ro/${slug}` },
+    { lang: 'uk', url: `${site}/uk/${slug}` },
+    { lang: 'ru', url: `${site}/ru/${slug}` },
+    { lang: 'fr', url: `${site}/fr/${slug}` },
+    { lang: 'pt', url: `${site}/pt/${slug}` },
+  ]}
+  articleMeta={{ datePublished: '2026-09-09' }}
+>
+
+  <section class="art-hero">
+    <div class="art-orb art-orb--1"></div>
+    <div class="art-orb art-orb--2"></div>
+    <div class="art-grid"></div>
+    <div class="art-hero__inner container">
+      <div class="art-meta">
+        <span class="art-tag">Stripchat</span>
+        <span class="art-tag art-tag--green">Mise à jour de la plateforme</span>
+      </div>
+      <h1 class="art-title">Plasma Streaming de Stripchat : <span class="art-grad">un téléphone à la place d'un setup</span></h1>
+      <p class="art-lead">Stripchat propose désormais sa propre appli de diffusion mobile, Plasma Streaming — on appuie et on est en direct, sans carte de capture ni scène OBS à configurer. Ce n'est pas un remplacement pour un vrai setup, mais ça change ce qu'il faut réellement pour "streamer aujourd'hui". Voici ce qu'elle fait et où elle a vraiment sa place.</p>
+    </div>
+  </section>
+
+  <div class="art-body container">
+    <div class="art-layout">
+      <aside class="art-toc">
+        <p class="art-toc__title">Contenu</p>
+        <ol class="art-toc__list">
+          <li><a href="#what-is-it">Ce qu'est vraiment Plasma Streaming</a></li>
+          <li><a href="#setup">Comment la mettre en route</a></li>
+          <li><a href="#tradeoffs">Ce que vous gagnez, ce que vous perdez face à OBS</a></li>
+          <li><a href="#when-to-use">Quand le streaming mobile a vraiment du sens</a></li>
+          <li><a href="#for-studios">Pour les studios : un roster qui diffuse depuis des téléphones</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+        <a href="#cta" class="art-toc__cta">Obtenir de l'aide →</a>
+      </aside>
+
+      <main class="art-main">
+
+      <p class="art-intro">La plupart des conseils de streaming supposent encore un bureau, une carte de capture et une collection de scènes OBS. Plasma Streaming se passe de tout ça — c'est l'appli propre de Stripchat, gratuite sur iOS et Android, conçue pour mettre en direct la caméra d'un téléphone sans toute cette configuration. C'est désormais une vraie option, pas un pis-aller, et il vaut la peine de savoir exactement ce qu'on y perd avant d'en faire une habitude.</p>
+      <p class="card-date" style="margin:0 0 1.75rem;">Équipe éditoriale EWOhub · Publié le 9 sept. 2026</p>
+
+      <section class="section" id="what-is-it">
+        <h2>Ce qu'est vraiment Plasma Streaming</h2>
+        <div class="glass-card" style="margin-top:1.25rem;">
+          <p>Plasma Streaming est une appli mobile construite par Stripchat pour diffuser directement depuis un téléphone — on l'ouvre, on appuie pour passer en direct, sans scène ni matériel entre les deux. Elle prend en charge le changement rapide de caméra, des ratios d'image ajustables, une qualité de diffusion jusqu'à 1080p, et le mode Picture-in-Picture pour que le show continue pendant qu'on consulte des messages dans une autre appli.</p>
+          <p style="margin-bottom:0;">Ce n'est pas un contournement via navigateur — Stripchat l'a construite et la maintient précisément parce que la vidéo caméra d'un téléphone via un onglet de navigateur a toujours eu un rendu et un comportement moins bons qu'une appli dédiée. Plasma est la réponse propre de la plateforme à ce manque, pas un outil tiers.</p>
+        </div>
+      </section>
+
+      <section class="section" id="setup">
+        <h2>Comment la mettre en route</h2>
+        <div class="glass-card" style="margin-top:1.25rem;">
+          <p>Ouvrez le Broadcasting Center depuis le navigateur de votre téléphone, trouvez le panneau "Download the app" et suivez les instructions à l'écran — l'appli se lie directement à votre compte existant, pas besoin d'inscription séparée. Une fois installée, passer en direct est un simple tap depuis l'appli elle-même ; pas de menu de scène, de source ou de bitrate à traverser avant.</p>
+          <p style="margin-bottom:0;">Cette simplicité, c'est tout l'intérêt. Tout ce qu'OBS vous fait configurer à la main — résolution, source caméra, entrée audio — Plasma le choisit automatiquement avec des valeurs par défaut raisonnables. Vous perdez le contrôle sur ces réglages en échange de ne pas avoir à y toucher.</p>
+        </div>
+      </section>
+
+      <section class="section" id="tradeoffs">
+        <h2>Ce que vous gagnez, ce que vous perdez face à OBS</h2>
+
+        <div class="two-col-box">
+          <div class="two-col-box__item two-col-box__item--good">
+            <h3>Ce qu'un téléphone + Plasma vous apporte</h3>
+            <ul class="checklist">
+              <li>En direct en quelques minutes sans aucune configuration — pas de scènes, pas de carte de capture, pas de PC dédié au streaming</li>
+              <li>Une vraie mobilité : diffuser depuis n'importe où avec du signal, pas seulement depuis un bureau fixe</li>
+              <li>Le Picture-in-Picture garde le show actif pendant que vous gérez le chat, des notes ou des messages ailleurs</li>
+              <li>Un point de défaillance en moins — pas de connexion de carte de capture qui lâche ni de scène OBS qui plante en plein show</li>
+            </ul>
+          </div>
+          <div class="two-col-box__item two-col-box__item--bad">
+            <h3>Ce qu'un vrai setup vous apporte et pas le téléphone</h3>
+            <ul class="checklist">
+              <li>Un éclairage personnalisé, plusieurs angles de caméra et des overlays — la caméra du téléphone reste un objectif fixe unique</li>
+              <li>Un contrôle fin du bitrate et de la résolution quand la connexion est instable</li>
+              <li>Des overlays de chat, des alertes et des widgets d'objectifs intégrés directement dans la scène</li>
+              <li>Un cadrage constant — les prises tenues à la main ou posées bougent d'une façon qu'un setup monté ne fait pas</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="when-to-use">
+        <h2>Quand le streaming mobile a vraiment du sens</h2>
+
+        <div class="reason-card" style="margin-top:1.25rem;">
+          <div class="reason-num">01</div>
+          <div class="reason-content">
+            <h3>En déplacement ou entre deux setups</h3>
+            <p>Un show annulé parce qu'on est loin de son bureau reste un show annulé — Plasma en fait un show de production plus modeste au lieu d'un show manqué. La régularité de votre planning (voir nos <a href="/fr/best-streaming-times-by-region">meilleurs horaires de streaming par région →</a>) compte plus pour les abonnés que la finition d'une seule session.</p>
+          </div>
+        </div>
+
+        <div class="reason-card">
+          <div class="reason-num">02</div>
+          <div class="reason-content">
+            <h3>Tester un deuxième créneau quotidien sans acheter plus de matériel</h3>
+            <p>Ajouter une courte session supplémentaire à une autre heure est facile à tester avec un téléphone et coûteux à tester en dupliquant un setup complet. Si un créneau mobile fonctionne, c'est une preuve utilisable dans les deux sens : le développer sérieusement, ou le garder mobile parce qu'il fonctionne déjà comme ça.</p>
+          </div>
+        </div>
+
+        <div class="reason-card">
+          <div class="reason-num">03</div>
+          <div class="reason-content">
+            <h3>Se remettre d'une panne de matériel</h3>
+            <p>Une carte de capture morte ou une installation OBS plantée signifiait avant d'annuler la journée. Plasma est un vrai plan de secours qui garde un show en direct avec une qualité de production réduite au lieu de ne pas être en direct du tout — mieux vaut l'avoir installée avant d'en avoir besoin, pas après.</p>
+          </div>
+        </div>
+
+        <div class="reason-card">
+          <div class="reason-num">04</div>
+          <div class="reason-content">
+            <h3>Où c'est le mauvais choix : votre show principal quotidien</h3>
+            <p>Les abonnés qui suivent une modèle pour un look, un éclairage et un décor précis remarquent la baisse de qualité. Plasma est un vrai outil pour les trous et les cas particuliers — en faire un remplacement permanent d'un vrai setup sur vos sessions principales échange de la qualité de production contre un confort dont vous n'aviez en réalité pas besoin.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="for-studios">
+        <div class="highlight-box">
+          <h2>Pour les studios : un roster qui diffuse depuis des téléphones</h2>
+          <p style="margin-bottom:0;">Une option mobile gratuite et sans configuration change le calcul d'un studio de façon concrète : elle abaisse le seuil matériel pour intégrer une nouvelle modèle (voir notre <a href="/fr/stripchat-first-14-days-guide">guide des 14 premiers jours →</a>) et donne aux modèles en déplacement ou entre deux lieux un moyen de tenir leur planning sans manquer de sessions. Ce n'est pas, en soi, une raison d'arrêter d'investir dans de vrais setups pour les modèles qui diffusent régulièrement — les écarts de qualité entre un setup téléphone et un setup complet sont visibles, et le roster principal d'un studio qui se bat sur le classement Popular a toujours besoin de cet avantage de production. Utilisez Plasma délibérément : pour couvrir des trous d'intégration, assurer une continuité en déplacement et servir de secours en cas de panne de matériel — pas comme substitut permanent au matériel fourni par le studio.</p>
+        </div>
+      </section>
+
+      <section class="faq-section section" id="faq">
+        <h2>Questions fréquentes</h2>
+
+        <div class="faq-item">
+          <button class="faq-chevron" aria-expanded="false">
+            <span>Plasma Streaming coûte-t-elle quelque chose ?</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-body">
+            <p>C'est un téléchargement gratuit pour iOS et Android, lié directement à votre compte Stripchat existant via le Broadcasting Center — aucun achat ni abonnement séparé n'est nécessaire pour l'utiliser.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-chevron" aria-expanded="false">
+            <span>Streamer depuis un téléphone nuit-il au classement par rapport à un setup de bureau ?</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-body">
+            <p>Les signaux de classement eux-mêmes — nombre de spectateurs, rétention, engagement dans le chat, fréquence des pourboires — ne vérifient pas depuis quelle appli vous diffusez (voir notre <a href="/fr/how-cam-algorithm-ranks-rooms">décryptage des signaux de classement →</a>). Ce qui peut nuire indirectement, c'est une qualité vidéo plus basse ou un setup moins engageant qui vous coûte de la rétention — un problème de production, pas une pénalité de la plateforme.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-chevron" aria-expanded="false">
+            <span>Peut-on utiliser Plasma en complément d'un setup de bureau classique, ou est-ce l'un ou l'autre ?</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-body">
+            <p>Les deux — et c'est même le schéma le plus courant : un setup de bureau pour les sessions régulières planifiées, Plasma installée et prête pour les jours de déplacement, les pannes de matériel, ou une session supplémentaire rapide qui n'aurait sinon pas eu lieu du tout.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Tendance en ce moment</h2>
+        <p style="color:var(--fg-muted);margin:-0.5rem 0 1.25rem;">Le service de promotion que nos clients demandent le plus ce mois-ci.</p>
+        <a href="/fr/stripchat-promo" class="glass-card" style="display:flex;flex-wrap:wrap;overflow:hidden;padding:0;text-decoration:none;">
+          <div style="flex:1 1 280px;min-height:200px;">
+            <img src="/images/stripchat-traffic-promo-banner.webp" alt="Stripchat traffic promo — plus de spectateurs et un meilleur stripscore" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
+          </div>
+          <div style="flex:1 1 320px;padding:1.75rem;display:flex;flex-direction:column;justify-content:center;">
+            <span class="art-tag" style="width:fit-content;margin-bottom:.875rem;">Stripchat</span>
+            <h3 style="font-size:1.3rem;font-weight:700;color:var(--fg);margin-bottom:.625rem;">Stripchat Traffic Promo</h3>
+            <p style="font-size:.9rem;color:var(--fg-muted);line-height:1.65;margin-bottom:0;">Placez votre room dans la catégorie Popular de Stripchat, augmentez votre stripscore et obtenez de vrais spectateurs. Découvrez comment fonctionne la promotion, son prix, et le plan pour en tirer le maximum.</p>
+            <span style="font-size:.875rem;font-weight:600;color:var(--fg);margin-top:.875rem;">Lire l'analyse complète →</span>
+          </div>
+        </a>
+      </section>
+
+      <section id="cta" class="art-cta section">
+        <div class="art-cta__orb"></div>
+        <div class="art-cta__inner">
+          <span class="art-cta__badge">Modèles et studios</span>
+          <h2>Quel que soit le matériel utilisé, il faut quand même du trafic</h2>
+          <p>Un téléphone comme un setup complet ont besoin de spectateurs qui trouvent la room au départ. Si vous voulez de l'aide pour transformer des sessions régulières — mobiles ou non — en une audience réelle et croissante, nous travaillons exactement là-dessus avec des modèles indépendantes et des studios.</p>
+          <div class="art-cta__actions">
+            <a href="/fr/model-promotion" class="art-cta__btn art-cta__btn--primary">Services de promotion pour modèles →</a>
+            <a href="/fr/studio-traffic" class="art-cta__btn art-cta__btn--ghost">Services de trafic pour studios →</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Articles liés</h2>
+        <div class="related-grid">
+          <a href="/fr/stripchat-first-14-days-guide" class="related-card">
+            <span class="related-card__icon">🗓️</span>
+            <span>Vos 14 premiers jours sur Stripchat</span>
+          </a>
+          <a href="/fr/stripchat-show-recording-guide" class="related-card">
+            <span class="related-card__icon">🎬</span>
+            <span>L'outil d'enregistrement de Stripchat</span>
+          </a>
+          <a href="/fr/how-cam-algorithm-ranks-rooms" class="related-card">
+            <span class="related-card__icon">⚙️</span>
+            <span>Comment les algorithmes cam classent les rooms</span>
+          </a>
+          <a href="/fr/why-low-viewers-webcam" class="related-card">
+            <span class="related-card__icon">📉</span>
+            <span>Pourquoi peu de spectateurs sur webcam</span>
+          </a>
+          <a href="/fr/studio-scaling" class="related-card">
+            <span class="related-card__icon">📈</span>
+            <span>Faire grandir un studio</span>
+          </a>
+          <a href="/fr/stripchat-new-model-30-day-window" class="related-card">
+            <span class="related-card__icon">🆕</span>
+            <span>La fenêtre nouveau modèle de Stripchat</span>
+          </a>
+        </div>
+      </section>
+
+      </main>
+    </div>
+  </div>
+
+</Base>
