@@ -1,26 +1,26 @@
 {
-  "generated_at": "2026-09-08T14:01:10Z",
+  "generated_at": "2026-09-09T11:01:10Z",
   "tag": "girls",
-  "hours_covered": 24.0,
-  "snapshots": 104,
-  "rooms_seen": 3406,
+  "hours_covered": 23.8,
+  "snapshots": 103,
+  "rooms_seen": 3344,
   "preliminary": false,
   "live": {
-    "generated_at": "2026-09-08T14:01:09Z",
-    "rooms_online": 325
+    "generated_at": "2026-09-09T11:01:09Z",
+    "rooms_online": 343
   },
   "best_hours_utc": [
     {
       "hour": 0,
-      "score": 74
+      "score": 78
     },
     {
       "hour": 1,
-      "score": 75
+      "score": 84
     },
     {
       "hour": 2,
-      "score": 90
+      "score": 96
     },
     {
       "hour": 3,
@@ -28,35 +28,35 @@
     },
     {
       "hour": 4,
-      "score": 98
-    },
-    {
-      "hour": 5,
       "score": 96
     },
     {
+      "hour": 5,
+      "score": 93
+    },
+    {
       "hour": 6,
-      "score": 89
+      "score": 86
     },
     {
       "hour": 7,
-      "score": 82
+      "score": 91
     },
     {
       "hour": 8,
-      "score": 72
+      "score": 81
     },
     {
       "hour": 9,
-      "score": 70
+      "score": 77
     },
     {
       "hour": 10,
-      "score": 73
+      "score": 79
     },
     {
       "hour": 11,
-      "score": 78
+      "score": 79
     },
     {
       "hour": 12,
@@ -68,39 +68,39 @@
     },
     {
       "hour": 14,
-      "score": 115
-    },
-    {
-      "hour": 15,
-      "score": 125
-    },
-    {
-      "hour": 16,
-      "score": 116
-    },
-    {
-      "hour": 17,
-      "score": 111
-    },
-    {
-      "hour": 18,
-      "score": 104
-    },
-    {
-      "hour": 19,
-      "score": 108
-    },
-    {
-      "hour": 20,
       "score": 102
     },
     {
-      "hour": 21,
+      "hour": 15,
+      "score": 113
+    },
+    {
+      "hour": 16,
+      "score": 98
+    },
+    {
+      "hour": 17,
+      "score": 103
+    },
+    {
+      "hour": 18,
       "score": 108
     },
     {
-      "hour": 22,
+      "hour": 19,
+      "score": 112
+    },
+    {
+      "hour": 20,
+      "score": 104
+    },
+    {
+      "hour": 21,
       "score": 96
+    },
+    {
+      "hour": 22,
+      "score": 88
     },
     {
       "hour": 23,
