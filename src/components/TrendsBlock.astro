@@ -30,6 +30,7 @@ const STR: Record<string, Record<string, string>> = {
     pricesTitle: 'Average show prices today on Chaturbate', goalPriceLabel: 'Typical goal price',
     pricesCaption: 'Use this data to set competitive prices',
     rangeWord: 'typical range', tkUnit: 'tk', patternsLabel: 'Common tip-menu prices',
+    goalPatternsLabel: 'Top 10 goal prices',
     modelsWord: 'models',
     noData: 'Live data collection is starting soon — check back shortly.',
     platformCb: 'Chaturbate', platformSc: 'Stripchat',
@@ -56,6 +57,7 @@ const STR: Record<string, Record<string, string>> = {
     pricesTitle: 'Durchschnittliche Show-Preise heute auf Chaturbate', goalPriceLabel: 'Typischer Goal-Preis',
     pricesCaption: 'Nutze diese Daten, um wettbewerbsfähige Preise festzulegen',
     rangeWord: 'typischer Bereich', tkUnit: 'tk', patternsLabel: 'Häufige Tip-Menü-Preise',
+    goalPatternsLabel: 'Top 10 Goal-Preise',
     modelsWord: 'Models',
     noData: 'Die Live-Datenerfassung startet in Kürze — schau bald wieder vorbei.',
     platformCb: 'Chaturbate', platformSc: 'Stripchat',
@@ -82,6 +84,7 @@ const STR: Record<string, Record<string, string>> = {
     pricesTitle: 'Precios promedio de shows hoy en Chaturbate', goalPriceLabel: 'Precio de meta típico',
     pricesCaption: 'Usa estos datos para fijar precios competitivos',
     rangeWord: 'rango típico', tkUnit: 'tk', patternsLabel: 'Precios comunes del menú de propinas',
+    goalPatternsLabel: 'Top 10 precios de goal',
     modelsWord: 'modelos',
     noData: 'La recopilación de datos en vivo comenzará pronto — vuelve más tarde.',
     platformCb: 'Chaturbate', platformSc: 'Stripchat',
@@ -108,6 +111,7 @@ const STR: Record<string, Record<string, string>> = {
     pricesTitle: 'Prețuri medii ale show-urilor astăzi pe Chaturbate', goalPriceLabel: 'Preț obiectiv tipic',
     pricesCaption: 'Folosește aceste date pentru a stabili prețuri competitive',
     rangeWord: 'interval tipic', tkUnit: 'tk', patternsLabel: 'Prețuri comune din meniul de tips',
+    goalPatternsLabel: 'Top 10 prețuri de goal',
     modelsWord: 'modele',
     noData: 'Colectarea datelor live începe în curând — revino mai târziu.',
     platformCb: 'Chaturbate', platformSc: 'Stripchat',
@@ -134,6 +138,7 @@ const STR: Record<string, Record<string, string>> = {
     pricesTitle: 'Середні ціни на шоу сьогодні на Chaturbate', goalPriceLabel: 'Типова ціна цілі',
     pricesCaption: 'Використовуй ці дані, щоб встановити конкурентні ціни',
     rangeWord: 'типовий діапазон', tkUnit: 'tk', patternsLabel: 'Поширені ціни в тип-меню',
+    goalPatternsLabel: 'Топ-10 цін голів',
     modelsWord: 'моделей',
     noData: 'Збір даних у реальному часі скоро розпочнеться — заглядайте пізніше.',
     platformCb: 'Chaturbate', platformSc: 'Stripchat',
@@ -160,6 +165,7 @@ const STR: Record<string, Record<string, string>> = {
     pricesTitle: 'Средние цены на шоу сегодня на Chaturbate', goalPriceLabel: 'Типичная цена цели',
     pricesCaption: 'Используйте эти данные, чтобы выставить конкурентные цены',
     rangeWord: 'типичный диапазон', tkUnit: 'ток', patternsLabel: 'Частые цены в тип-меню',
+    goalPatternsLabel: 'Топ-10 цен голов',
     modelsWord: 'моделей',
     noData: 'Сбор данных в реальном времени скоро начнётся — загляните позже.',
     platformCb: 'Chaturbate', platformSc: 'Stripchat',
@@ -186,6 +192,7 @@ const STR: Record<string, Record<string, string>> = {
     pricesTitle: 'Prix moyens des shows aujourd’hui sur Chaturbate', goalPriceLabel: 'Prix d’objectif typique',
     pricesCaption: 'Utilisez ces données pour fixer des prix compétitifs',
     rangeWord: 'plage typique', tkUnit: 'tk', patternsLabel: 'Prix courants du menu de pourboires',
+    goalPatternsLabel: 'Top 10 des prix de goal',
     modelsWord: 'modèles',
     noData: 'La collecte de données en direct démarre bientôt — revenez plus tard.',
     platformCb: 'Chaturbate', platformSc: 'Stripchat',
@@ -212,6 +219,7 @@ const STR: Record<string, Record<string, string>> = {
     pricesTitle: 'Preços médios de shows hoje no Chaturbate', goalPriceLabel: 'Preço típico da meta',
     pricesCaption: 'Use esses dados para definir preços competitivos',
     rangeWord: 'faixa típica', tkUnit: 'tk', patternsLabel: 'Preços comuns do menu de gorjetas',
+    goalPatternsLabel: 'Top 10 preços de goal',
     modelsWord: 'modelos',
     noData: 'A coleta de dados ao vivo começa em breve — volte mais tarde.',
     platformCb: 'Chaturbate', platformSc: 'Stripchat',
@@ -234,6 +242,7 @@ const maxScore24 = Math.max(1, ...hours24.map(h => h.score));
 const topTags = (trends.top_tags ?? []).slice(0, 30);
 const topTitles = (trends.top_titles ?? []).slice(0, 6);
 const topPatterns = trends.economy?.top_patterns ?? [];
+const topGoalPrices = trends.economy?.top_goal_prices ?? [];
 
 const hasScData = (scTrends.best_hours_utc?.length ?? 0) > 0;
 const scHoursMap = new Map((scTrends.best_hours_utc ?? []).map((h: { hour: number; score: number }) => [h.hour, h.score]));
@@ -385,6 +394,23 @@ const scMaxScore24 = Math.max(1, ...scHours24.map(h => h.score));
                       <span class="price-tag">~{p.value} {t.tkUnit}</span>
                       <span class="price-dots"></span>
                       <span class="price-value">{p.count} {t.modelsWord}</span>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+            {topGoalPrices.length > 0 && (
+              <>
+                <p class="price-by-category-label">{t.goalPatternsLabel}</p>
+                <ul class="goal-price-list">
+                  {topGoalPrices.map((p: { value: number; count: number; example?: string }) => (
+                    <li class="goal-price-row">
+                      <div class="goal-price-head">
+                        <span class="price-tag">~{p.value} {t.tkUnit}</span>
+                        <span class="price-dots"></span>
+                        <span class="price-value">{p.count} {t.modelsWord}</span>
+                      </div>
+                      {p.example && <p class="goal-price-example">{p.example}</p>}
                     </li>
                   ))}
                 </ul>
@@ -765,6 +791,12 @@ const scMaxScore24 = Math.max(1, ...scHours24.map(h => h.score));
     color: #6b6b67; margin-bottom: 0.6rem;
   }
   .price-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; max-height: 420px; overflow-y: auto; padding-right: 4px; }
+
+  .goal-price-list { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; margin-top: 0.75rem; }
+  .goal-price-row { padding-bottom: 0.65rem; border-bottom: 1px solid var(--border); }
+  .goal-price-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .goal-price-head { display: flex; align-items: baseline; gap: 0.5rem; font-size: 0.875rem; }
+  .goal-price-example { font-size: 0.75rem; color: var(--fg-muted); line-height: 1.5; margin-top: 0.25rem; }
   .price-row { display: flex; align-items: baseline; gap: 0.5rem; font-size: 0.875rem; }
   .price-tag { color: var(--fg-muted); font-weight: 600; white-space: nowrap; }
   .price-dots {

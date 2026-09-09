@@ -237,6 +237,7 @@ def build_summary(rows, now_ts):
     with_price = sum(bool(TOKEN_RE.search(s)) for s in subjects) / n
 
     goals, patterns = [], []
+    goal_examples = {}
     multi_cnt = 0
     for s in subjects:
         if MULTI_RE.search(s):
@@ -244,17 +245,21 @@ def build_summary(rows, now_ts):
         for m in LIST_RE.finditer(s):
             patterns += [int(x) for x in re.split(r"\s*,\s*", m.group(1))]
         for m in LEFT_RE.finditer(s):
-            goals.append(int(m.group(1)))
+            v = int(m.group(1))
+            goals.append(v)
+            goal_examples.setdefault(v, s)
         for m in TK_RE.finditer(s):
             v = int(m.group(1))
             if v >= 500:
                 goals.append(v)
+                goal_examples.setdefault(v, s)
             elif v <= 400:
                 patterns.append(v)
     goals = [g for g in goals if 100 <= g <= 100000]
     patterns = [p for p in patterns if p >= 10]
 
     top_patterns = Counter(patterns).most_common(None)
+    top_goal_prices = Counter(goals).most_common(10)
 
     reco_tags = list(top_tags[:6])
     ratio_sorted = sorted(
@@ -287,6 +292,10 @@ def build_summary(rows, now_ts):
             "goal_p75": int(sorted(goals)[len(goals) * 3 // 4]) if goals else None,
             "goal_samples": len(goals),
             "top_patterns": [{"value": v, "count": c} for v, c in top_patterns],
+            "top_goal_prices": [
+                {"value": v, "count": c, "example": goal_examples.get(v, "")[:120]}
+                for v, c in top_goal_prices
+            ],
             "multi_goal_share": round(multi_cnt / n, 3),
             "with_goal_share": round(with_goal, 3),
             "with_price_share": round(with_price, 3),
