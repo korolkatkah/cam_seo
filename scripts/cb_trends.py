@@ -284,7 +284,7 @@ def build_summary(rows, now_ts):
         ],
         "top_titles": [
             {"avg_users": round(room_sum[u] / n_snaps), "subject": last_subj[u][:120]}
-            for u in leaders[:20]
+            for u in leaders[:50]
         ],
         "economy": {
             "goal_median": int(statistics.median(goals)) if goals else None,
