@@ -4,6 +4,35 @@ Running log of daily/session-based SEO & promotion action plans. Newest entry on
 
 ---
 
+## 2026-09-09
+
+### Shipped (AM slot, completed by PM slot session): "Stripchat's New-Model Window Just Went From 14 Days to a Full Month" (all 8 locales)
+
+Found the AM slot's output sitting uncommitted in the working tree at the start of this PM session — all 8 locale article files (`stripchat-new-model-30-day-window.astro` + de/es/ro/uk/ru/fr/pt) and all 8 `blog.astro` listing entries were already written, but never committed/pushed, and no PROMOTION_PLAN entry existed for it. Topic: Stripchat's New tag / New Models category boost window extended from 14 days to 30 — dual-audience angle (week-by-week plan for models, onboarding-cadence rewrite for studios). Variant B (TOC sidebar), promo block, `art-cta__btn` classes, `date: '2026-09-09'` consistent across all 8 locales. Verified `npm run build` passes clean (408 pages), spot-checked built HTML (root + de) for correct `<title>`/H1/TOC. Browser preview unavailable in this unattended session (dev server start requires interactive approval) — verified via build output instead. Committing this now so it isn't lost, then shipping a second, distinct-topic article for the PM slot proper below.
+
+### Daily SEO monitoring — Wednesday light check (read-only, automated)
+
+Checked git log for the last 1-2 days of pipeline output (2026-09-08, both AM/PM slots present — cadence
+intact, one article per slot). Verified both against the site's SEO/structure conventions:
+
+**"Stripchat's Recording Tool" ([stripchat-show-recording-guide.astro](src/pages/stripchat-show-recording-guide.astro), AM slot, blog listing)**
+- Title 67 chars, meta description 194 chars — both over the ~60/~155 target, will truncate in SERP snippets. Not fixed (read-only task); flagging for an active session.
+- 9 internal links in body (studio-scaling, studio-traffic, model-promotion, stripscore, VR shows, tip menu, AI recommendations, webcam earnings comparison, stripchat-promo). Good.
+- `blog.astro` listing entry present and correct in all 8 locales.
+
+**"Stripchat Fan Club Pricing" ([stripchat-fan-club-pricing-guide.astro](src/pages/stripchat-fan-club-pricing-guide.astro), PM slot — shipped to Blog then moved to Guides same session)**
+- Title 66 chars, meta description 239 chars — same issue, description is well over 2x the target and will truncate hard.
+- 9 internal links including a cross-link to the AM article (stripchat-show-recording-guide). Good.
+- Confirmed the Blog→Guides move left zero stale references: `stripchat-fan-club-pricing-guide` no longer appears in any locale's `blog.astro`, and `resources.astro` has exactly one clean entry per locale (8/8).
+
+**Recommendation for next active session:** both new articles' meta descriptions run well past 160 chars (194 and 239) and titles run ~66-67 vs the ~50-60 target — worth trimming both so Google doesn't rewrite the snippet. Not a regression pattern yet (only 2 samples) but worth checking if this recurs in tomorrow's output before treating it as a pipeline-prompt fix.
+
+Git state: local branch is behind `origin/main` by several `chore: update sc/cb trends data` commits (automated, unrelated to articles) — no article work sitting uncommitted, unlike the 2026-09-08 AM/PM incident noted above.
+
+No code changes made (read-only monitoring task).
+
+---
+
 ## 2026-09-08
 
 ### Shipped (PM slot): "Stripchat Fan Club Pricing: How to Set Tiers That Actually Convert" (all 8 locales)
