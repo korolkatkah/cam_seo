@@ -4,6 +4,71 @@ Running log of daily/session-based SEO & promotion action plans. Newest entry on
 
 ---
 
+## 2026-09-10
+
+### Daily SEO monitoring — Thursday week-over-week check (read-only, automated)
+
+Pulled fresh GSC Search Analytics via a throwaway JWT-signed script (same approach as documented on
+2026-08-30/2026-09-05: `createSign('RSA-SHA256')` against the service-account key at
+`C:\Users\shche\.claude\ewohub-secrets\gsc-key.json`, exchanged for a bearer token, queried
+`searchAnalytics/query` directly — key contents never logged). 28-day window **2026-08-13 → 2026-09-09**.
+
+**Comparison caveat:** the only prior GSC snapshot logged in this file is the 2026-08-30 baseline (window
+2026-07-30 → 2026-08-27). The `ewo-seo-monitoring` task itself wasn't created until 2026-09-05, so there is
+no true "last week's Thursday/Monday pull" to diff against yet — this is only the second real snapshot ever,
+~11 days apart with a ~4-day window overlap, not a clean 7-day WoW comparison. Treating it as directional
+only.
+
+**Site-wide totals:** 22 impressions, 0 clicks, CTR 0%, avg position 17.2 — vs. baseline 25 impressions, 1
+click, CTR 4%, avg position 22.2. Impressions flat-to-down slightly (25→22), the one click from baseline
+didn't repeat, but **average position improved meaningfully (22.2→17.2)**. Query-level data stayed almost
+empty: only `ewo` (2 impr, pos 77.5) now vs. `eohub`+`ewo` (3+1 impr) before — still below reporting
+threshold for anything topical.
+
+**Per-page movement (13 pages with impressions now vs. 18 before, matching by URL):**
+
+| Page | Before (impr / pos) | Now (impr / pos) | Read |
+|---|---|---|---|
+| `/` (homepage) | 17 / 31.5 | 13 / 28.2 | Position improved, impressions down — same "authority not copy" read as 2026-08-30 |
+| `/stripscore-cam-rank-explained` (root) | 4 / 3.25 | 6 / **1.33** | Strongest mover — now essentially position 1, impressions up too. The 2026-08-30/09-03 retitle + internal-linking work looks like it's paying off |
+| `/ro/stripscore-cam-rank-explained` | 4 / 3.5 | 3 / 2.0 | Position improved |
+| `/how-cam-algorithm-ranks-rooms` | 4 / 2.0 | 3 / 1.67 | Position improved |
+| `/uk/stripscore-cam-rank-explained` | 1 / 3.0 | 1 / 3.0 | Flat |
+| `/uk/raise-your-room-ranking-score` | 2 / 4.0 | 2 / 4.0 | Flat |
+| `/de/stripchat-promo` | 2 / 3.5 | 2 / 3.5 | Flat |
+| `/es/stripchat-promo` | 1 / 4.0 | 1 / 4.0 | Flat |
+| `/ro/stripchat-promo` | 1 / 6.0 | 1 / 6.0 | Flat, see position 5-15 note below |
+| `/model-promotion` | 1 / 2.0 | 1 / 2.0 | Flat |
+| `/studio-traffic` | 1 / 3.0 | 1 / 3.0 | Flat |
+| `/best-streaming-times-by-region` | 3 / 3.3 | 1 / 4.0 | Down |
+| `/ro/platforms-we-work-with` | 4 / 3.0 | 3 / 3.3 | Down slightly |
+| `/ro/studio-scaling` | 1 / 4.0 | — (no impressions this window) | Dropped off — likely just below n=1 noise floor, not a real regression signal |
+| `/ro/webcam-model-income-guide` | 1 / 5.0 | — | Same |
+| `/ro/stripchat-ai-model-recommendations` | 1 / 7.0 | — | Same |
+| `/ro/webcam-earnings-by-platform` | 1 / 6.0 | — | Same |
+
+**Position 5-15 candidates ("close to breaking into top results"):** only `/ro/stripchat-promo` currently
+sits in this band (position 6.0, flat vs. baseline, 1 impression). No other page in either snapshot falls
+between 5-15 — the site's ranking pages cluster either very close to position 1-4 (the proven cluster) or
+far down (homepage at 28, unranked pages not shown). Given sample sizes are still 1-6 impressions per page,
+treat this as a single candidate to watch, not a list to act on yet.
+
+**Overall read:** consistent with the 2026-08-30 finding — position keeps improving on the already-proven
+small cluster (`stripscore-cam-rank-explained` root now at ~pos 1.3, up from ~3.25), which plausibly
+reflects the 2026-09-03 retitle + internal-linking work landing. Volume is still the binding constraint
+(single-digit impressions per page, zero clicks this window). No new action items beyond what's already
+queued in the 2026-08-30 audit's prioritized list (items 4-6 — structured data, BongaCams/MyFreeCams/
+LiveJasmin/CamSoda content gap, France/Poland/Sweden geo backlog) — nothing in this pull changes that
+priority order.
+
+No site content changed, no build run, no commits made (read-only monitoring task).
+
+### Shipped (AM slot, completed by PM slot session): "Stripchat's Amazon Wishlist Is Back — Here's the Catch" (all 8 locales)
+
+Found the AM slot's output sitting uncommitted in the working tree at the start of this PM session — all 8 locale article files (`stripchat-amazon-wishlist-gifts.astro` + de/es/ro/uk/ru/fr/pt) and all 8 `blog.astro` listing entries were already written, but never committed/pushed, and no PROMOTION_PLAN entry existed for it. Topic: Amazon Wishlist links returning to Stripchat gated behind a new privacy consent step. `date: '2026-09-10'` consistent across all 8 locales. Committing this now so it isn't lost, then shipping a second, distinct-topic article for the PM slot proper below.
+
+---
+
 ## 2026-09-09
 
 ### Shipped (PM slot): "Stripchat's Plasma Streaming App: Do You Still Need OBS?" (all 8 locales)
