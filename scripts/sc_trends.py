@@ -50,12 +50,15 @@ API = "https://go.whitetrafsa.com/api/models"
 MAX_MODELS = 1000
 
 
-def fetch_models():
+NICHES = ["girls", "men", "couples", "trans"]
+
+
+def fetch_models(tag=None):
     # forceClient/applyGeobans/status/strict widen this to the same response
     # shape as Stripcash's "Aggregators API" (tags + status included) without
     # needing a separate Bearer-token domain key — verified live 2026-09-10.
     q = urllib.parse.urlencode({
-        "userId": USER_ID, "tag": TAG, "limit": MAX_MODELS,
+        "userId": USER_ID, "tag": tag or TAG, "limit": MAX_MODELS,
         "forceClient": 0, "applyGeobans": 0, "fields": "tags", "strict": 1,
         "status": "p2p,private,public,groupShow",
     })
@@ -63,6 +66,32 @@ def fetch_models():
     with urllib.request.urlopen(req, timeout=30) as r:
         data = json.loads(r.read().decode())
     return data.get("models", [])[:MAX_MODELS]
+
+
+def tag_counts_for_niche(models, niche):
+    # "girls" needs the same broadcastGender=="female" filter the main
+    # collector uses (the tag also returns couple/group content). The other
+    # niches come back cleanly scoped by the tag param alone — verified live:
+    # men -> broadcastGender=="male", couples -> "group", trans -> mixed
+    # ("tranny" and "female"), so filtering trans by broadcastGender would
+    # drop real trans broadcasters; trust the tag param there instead.
+    #
+    # Models can carry tags from more than one namespace at once (a couples
+    # broadcast tagged both "couples/cam2cam" and "girls/cam2cam" — verified
+    # live), which would otherwise duplicate every row under two prefixes
+    # with identical counts. Only count tags in the requested niche's own
+    # namespace so each tab shows one clean list.
+    counts: dict = defaultdict(int)
+    for m in models:
+        if m.get("status") != "public":
+            continue
+        if niche == "girls" and m.get("broadcastGender") != "female":
+            continue
+        for t in m.get("tags") or []:
+            t = t.strip().lower()
+            if t and (t == niche or t.startswith(niche + "/")):
+                counts[t] += 1
+    return sorted(counts.items(), key=lambda x: x[1], reverse=True)[:20]
 
 
 def load_raw():
@@ -109,17 +138,6 @@ def build_summary(rows):
         ),
         key=lambda x: x["viewers"], reverse=True,
     )
-
-    # How many models are online right now per tag (top 20). Live snapshot
-    # only, same as rooms_online above — this is a "right now" count, not a
-    # 24h-window aggregate.
-    tag_counts: dict = defaultdict(int)
-    for r in latest_by_user.values():
-        for t in r.get("tags") or []:
-            t = t.strip().lower()
-            if t:
-                tag_counts[t] += 1
-    top_tags_now = sorted(tag_counts.items(), key=lambda x: x[1], reverse=True)[:20]
 
     ts_all = sorted({r["ts"] for r in rows})
     hours_covered = (ts_all[-1] - ts_all[0]) / 3600 if len(ts_all) > 1 else 0
@@ -171,7 +189,6 @@ def build_summary(rows):
         "preliminary": hours_covered < 20,
         "live": live,
         "best_hours_utc": [{"hour": h, "score": round(score[h])} for h in sorted(score)],
-        "top_tags_now": [{"tag": t, "models_online": c} for t, c in top_tags_now],
     }
 
     live_extra = {
@@ -239,6 +256,22 @@ def main():
     if summary is None:
         print("no rows yet — not writing summary", file=sys.stderr)
         return 0
+
+    # Per-niche "top 20 tags right now" for the Stripchat tab's category
+    # tabs. Reuse the already-fetched `models` when TAG matches a niche to
+    # avoid an extra request; fetch the other niches fresh (live-only, not
+    # stored in the rolling window).
+    top_tags_by_niche = {}
+    for niche in NICHES:
+        try:
+            niche_models = models if niche == TAG else fetch_models(niche)
+        except Exception as e:  # noqa: BLE001
+            print(f"tag fetch failed for {niche}: {e}", file=sys.stderr)
+            continue
+        top_tags_by_niche[niche] = [
+            {"tag": t, "models_online": c} for t, c in tag_counts_for_niche(niche_models, niche)
+        ]
+    summary["top_tags_by_niche"] = top_tags_by_niche
 
     if not should_publish(summary, OUT_PATH):
         print(f"window still short ({summary['hours_covered']}h) — keeping last published summary", file=sys.stderr)
