@@ -14,6 +14,7 @@ const STR: Record<string, Record<string, string>> = {
     heading: "Analytics to make more profit",
     sub: 'We use this real-time data every day to drive traffic and grow our models\' earnings — pulled from public Chaturbate rooms, refreshed automatically.',
     hoursTitle: 'Best hours to stream on Chaturbate', scHoursTitle: 'Best hours to stream on Stripchat', hoursUnit: 'viewers / room',
+    scTagsTitle: 'Top 20 tags right now on Stripchat', scTagsCaption: 'How many models are online right now, per tag', scTagsModelsWord: 'models online',
     hoursCaption: 'Median viewers per broadcasting room (typical room — not skewed by a few mega-popular ones)',
     hoursLocalNote: 'Times shown in your local time zone',
     hoursNowNote: '↓ below is history from yesterday',
@@ -42,6 +43,7 @@ const STR: Record<string, Record<string, string>> = {
     heading: 'Analysen für mehr Profit',
     sub: 'Wir nutzen diese Echtzeitdaten täglich, um Traffic zu treiben und die Einnahmen unserer Models zu steigern — aus öffentlichen Chaturbate-Räumen, automatisch aktualisiert.',
     hoursTitle: 'Beste Sendezeiten auf Chaturbate', scHoursTitle: 'Beste Sendezeiten auf Stripchat', hoursUnit: 'Zuschauer / Raum',
+    scTagsTitle: 'Top 20 Tags gerade jetzt auf Stripchat', scTagsCaption: 'Wie viele Models sind gerade pro Tag online', scTagsModelsWord: 'Models online',
     hoursCaption: 'Median-Zuschauerzahl pro sendendem Raum (typischer Raum — nicht verzerrt durch wenige Mega-Räume)',
     hoursLocalNote: 'Zeiten in deiner lokalen Zeitzone angezeigt',
     hoursNowNote: '↓ Unten sind die Daten von gestern',
@@ -70,6 +72,7 @@ const STR: Record<string, Record<string, string>> = {
     heading: 'Analítica para ganar más',
     sub: 'Usamos estos datos en tiempo real cada día para generar tráfico y aumentar los ingresos de nuestras modelos — de salas públicas de Chaturbate, actualizados automáticamente.',
     hoursTitle: 'Mejores horas para transmitir en Chaturbate', scHoursTitle: 'Mejores horas para transmitir en Stripchat', hoursUnit: 'espectadores / sala',
+    scTagsTitle: 'Top 20 tags ahora mismo en Stripchat', scTagsCaption: 'Cuántas modelos están en línea ahora mismo, por tag', scTagsModelsWord: 'modelos en línea',
     hoursCaption: 'Espectadores (mediana) por sala en emisión (sala típica, sin distorsión de las mega-salas)',
     hoursLocalNote: 'Horas mostradas en tu zona horaria local',
     hoursNowNote: '↓ Abajo está el historial de ayer',
@@ -98,6 +101,7 @@ const STR: Record<string, Record<string, string>> = {
     heading: 'Analize pentru mai mult profit',
     sub: 'Folosim aceste date în timp real zilnic pentru a genera trafic și a crește veniturile modelelor noastre — din camere publice Chaturbate, actualizate automat.',
     hoursTitle: 'Cele mai bune ore de streaming pe Chaturbate', scHoursTitle: 'Cele mai bune ore de streaming pe Stripchat', hoursUnit: 'spectatori / cameră',
+    scTagsTitle: 'Top 20 taguri chiar acum pe Stripchat', scTagsCaption: 'Câte modele sunt online chiar acum, pe tag', scTagsModelsWord: 'modele online',
     hoursCaption: 'Spectatori (mediană) per cameră activă (camera tipică, fără distorsiune de la mega-camere)',
     hoursLocalNote: 'Orele sunt afișate în fusul tău orar local',
     hoursNowNote: '↓ Mai jos este istoricul de ieri',
@@ -126,6 +130,7 @@ const STR: Record<string, Record<string, string>> = {
     heading: 'Аналітика для більшого прибутку',
     sub: 'Ми використовуємо ці дані в реальному часі щодня, щоб залучати трафік і збільшувати дохід наших моделей — з публічних кімнат Chaturbate, оновлюються автоматично.',
     hoursTitle: 'Найкращі години для стріму на Chaturbate', scHoursTitle: 'Найкращі години для стріму на Stripchat', hoursUnit: 'глядачів / кімнату',
+    scTagsTitle: 'Топ-20 тегів прямо зараз на Stripchat', scTagsCaption: 'Скільки моделей онлайн прямо зараз по кожному тегу', scTagsModelsWord: 'моделей онлайн',
     hoursCaption: 'Медіана глядачів на одну активну кімнату (типова кімната, без спотворення від кількох мега-популярних)',
     hoursLocalNote: 'Час показано у твоєму місцевому часовому поясі',
     hoursNowNote: '↓ Нижче — дані за вчора',
@@ -154,6 +159,7 @@ const STR: Record<string, Record<string, string>> = {
     heading: 'Аналитика для большей прибыли',
     sub: 'Мы используем эти данные в реальном времени каждый день, чтобы привлекать трафик и увеличивать доход наших моделей — из публичных комнат Chaturbate, обновляются автоматически.',
     hoursTitle: 'Лучшие часы для стрима на Chaturbate', scHoursTitle: 'Лучшие часы для стрима на Stripchat', hoursUnit: 'зрителей / комнату',
+    scTagsTitle: 'Топ-20 тегов прямо сейчас на Stripchat', scTagsCaption: 'Сколько моделей онлайн прямо сейчас по каждому тегу', scTagsModelsWord: 'моделей онлайн',
     hoursCaption: 'Медиана зрителей на одну вещающую комнату (типичная комната, без искажения от нескольких мега-популярных)',
     hoursLocalNote: 'Время показано в твоём локальном часовом поясе',
     hoursNowNote: '↓ Ниже — данные за вчера',
@@ -182,6 +188,7 @@ const STR: Record<string, Record<string, string>> = {
     heading: 'Analyses pour plus de profit',
     sub: "Nous utilisons ces données en temps réel chaque jour pour générer du trafic et augmenter les revenus de nos modèles — issues de salons publics Chaturbate, actualisées automatiquement.",
     hoursTitle: 'Meilleures heures pour streamer sur Chaturbate', scHoursTitle: 'Meilleures heures pour streamer sur Stripchat', hoursUnit: 'spectateurs / salon',
+    scTagsTitle: 'Top 20 des tags en ce moment sur Stripchat', scTagsCaption: 'Combien de modèles sont en ligne en ce moment, par tag', scTagsModelsWord: 'modèles en ligne',
     hoursCaption: 'Spectateurs médians par salon en direct (salon typique, non faussé par quelques méga-salons)',
     hoursLocalNote: 'Heures affichées dans votre fuseau horaire local',
     hoursNowNote: '↓ Ci-dessous, l’historique d’hier',
@@ -210,6 +217,7 @@ const STR: Record<string, Record<string, string>> = {
     heading: 'Análises para mais lucro',
     sub: 'Usamos esses dados em tempo real todos os dias para gerar tráfego e aumentar os ganhos das nossas modelos — de salas públicas do Chaturbate, atualizadas automaticamente.',
     hoursTitle: 'Melhores horários para transmitir no Chaturbate', scHoursTitle: 'Melhores horários para transmitir no Stripchat', hoursUnit: 'espectadores / sala',
+    scTagsTitle: 'Top 20 tags agora no Stripchat', scTagsCaption: 'Quantas modelos estão online agora, por tag', scTagsModelsWord: 'modelos online',
     hoursCaption: 'Espectadores (mediana) por sala ao vivo (sala típica, sem distorção de poucas mega-salas)',
     hoursLocalNote: 'Horários exibidos no seu fuso horário local',
     hoursNowNote: '↓ Abaixo está o histórico de ontem',
@@ -256,6 +264,8 @@ const hasScData = (scTrends.best_hours_utc?.length ?? 0) > 0;
 const scHoursMap = new Map((scTrends.best_hours_utc ?? []).map((h: { hour: number; score: number }) => [h.hour, h.score]));
 const scHours24 = Array.from({ length: 24 }, (_, i) => ({ hour: i, score: scHoursMap.get(i) ?? 0 }));
 const scMaxScore24 = Math.max(1, ...scHours24.map(h => h.score));
+const scTopTagsNow = (scTrends as any).top_tags_now ?? [];
+const scMaxTagCount = Math.max(1, ...scTopTagsNow.map((t: { models_online: number }) => t.models_online));
 ---
 
 <section class="trends-block">
@@ -491,6 +501,25 @@ const scMaxScore24 = Math.max(1, ...scHours24.map(h => h.score));
               <p class="hours-history-label" data-history-label={t.hoursHistoryLabel}></p>
               <ul class="hours-list hours-list--history"></ul>
             </div>
+          </div>
+        </div>
+      )}
+
+      {hasScData && scTopTagsNow.length > 0 && (!section || section === 'hours') && (
+        <div class="trends-card trends-card-wide">
+          <h3 class="trends-card-title">{t.scTagsTitle}</h3>
+          <p class="tags-caption">{t.scTagsCaption}</p>
+          <div class="tag-grid">
+            {scTopTagsNow.map((tg: { tag: string; models_online: number }) => {
+              const pct = Math.round((tg.models_online / scMaxTagCount) * 100);
+              return (
+                <div class="tag-cell">
+                  <span class="tag-cell-name">#{tg.tag}</span>
+                  <span class="tag-cell-stats">{tg.models_online} {t.scTagsModelsWord}</span>
+                  <span class="tag-count-bar-track"><span class="tag-count-bar-fill" style={`width:${pct}%`}></span></span>
+                </div>
+              );
+            })}
           </div>
         </div>
       )}
@@ -868,6 +897,8 @@ const scMaxScore24 = Math.max(1, ...scHours24.map(h => h.score));
   }
   .tag-cell-name { color: var(--fg); font-size: 0.875rem; font-weight: 700; }
   .tag-cell-stats { color: var(--fg-faint); font-size: 0.75rem; font-weight: 600; }
+  .tag-count-bar-track { height: 4px; border-radius: 4px; background: rgba(255,255,255,0.06); overflow: hidden; margin-top: 4px; }
+  .tag-count-bar-fill { display: block; height: 100%; border-radius: 4px; background: #22c55e; }
 
 </style>
 

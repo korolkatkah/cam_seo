@@ -51,7 +51,14 @@ MAX_MODELS = 1000
 
 
 def fetch_models():
-    q = urllib.parse.urlencode({"userId": USER_ID, "tag": TAG, "limit": MAX_MODELS})
+    # forceClient/applyGeobans/status/strict widen this to the same response
+    # shape as Stripcash's "Aggregators API" (tags + status included) without
+    # needing a separate Bearer-token domain key — verified live 2026-09-10.
+    q = urllib.parse.urlencode({
+        "userId": USER_ID, "tag": TAG, "limit": MAX_MODELS,
+        "forceClient": 0, "applyGeobans": 0, "fields": "tags", "strict": 1,
+        "status": "p2p,private,public,groupShow",
+    })
     req = urllib.request.Request(API + "?" + q, headers={"User-Agent": "sc-trends/1.0"})
     with urllib.request.urlopen(req, timeout=30) as r:
         data = json.loads(r.read().decode())
@@ -85,10 +92,10 @@ def build_summary(rows):
     if not rows:
         return None, None
 
-    # Live snapshot: latest collection only (not the whole window). SC's
-    # model-list API doesn't expose a private/away status in what this
-    # script currently keeps (only username + viewers), so unlike Chaturbate
-    # there's no pct_private here — just the online count.
+    # Live snapshot: latest collection only (not the whole window). Rows are
+    # already restricted to status=="public" before they reach this
+    # function, so unlike Chaturbate there's no pct_private here — just the
+    # online count.
     latest_ts = max(r["ts"] for r in rows)
     latest_by_user = {r["username"]: r for r in rows if r["ts"] == latest_ts}
     live = {
@@ -102,6 +109,17 @@ def build_summary(rows):
         ),
         key=lambda x: x["viewers"], reverse=True,
     )
+
+    # How many models are online right now per tag (top 20). Live snapshot
+    # only, same as rooms_online above — this is a "right now" count, not a
+    # 24h-window aggregate.
+    tag_counts: dict = defaultdict(int)
+    for r in latest_by_user.values():
+        for t in r.get("tags") or []:
+            t = t.strip().lower()
+            if t:
+                tag_counts[t] += 1
+    top_tags_now = sorted(tag_counts.items(), key=lambda x: x[1], reverse=True)[:20]
 
     ts_all = sorted({r["ts"] for r in rows})
     hours_covered = (ts_all[-1] - ts_all[0]) / 3600 if len(ts_all) > 1 else 0
@@ -153,6 +171,7 @@ def build_summary(rows):
         "preliminary": hours_covered < 20,
         "live": live,
         "best_hours_utc": [{"hour": h, "score": round(score[h])} for h in sorted(score)],
+        "top_tags_now": [{"tag": t, "models_online": c} for t, c in top_tags_now],
     }
 
     live_extra = {
@@ -195,10 +214,19 @@ def main():
     # Restrict to solo female broadcasts to match cb_trends.py's gender=f filter.
     # The "girls" tag also returns couple/group shows (broadcastGender=="group"),
     # which pull in much bigger crowds and were skewing the average upward.
+    # Also restrict to status=="public" (now that the request asks for
+    # p2p/private/groupShow too, to get tags) so private/p2p rooms — whose
+    # viewersCount means something different — don't leak into the existing
+    # viewer-based stats (best hours, live counter, leaderboards).
     new_rows = [
-        {"ts": now_ts, "username": m.get("username", ""), "viewers": m.get("viewersCount", 0)}
+        {
+            "ts": now_ts,
+            "username": m.get("username", ""),
+            "viewers": m.get("viewersCount", 0),
+            "tags": m.get("tags") or [],
+        }
         for m in models
-        if m.get("username") and m.get("broadcastGender") == "female"
+        if m.get("username") and m.get("broadcastGender") == "female" and m.get("status") == "public"
     ]
 
     rows = load_raw() + new_rows
