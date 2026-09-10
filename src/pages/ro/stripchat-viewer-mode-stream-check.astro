@@ -1,0 +1,238 @@
+---
+import Base from '@/layouts/Base.astro';
+const site = 'https://www.ewohub.com';
+const slug = 'stripchat-viewer-mode-stream-check';
+---
+<Base
+  title="Viewer Mode de la Stripchat: vezi-ți streamul cum îl vede audiența ta"
+  description="Stripchat a adăugat un comutator Viewer Mode care arată broadcasterilor streamul exact cum îl văd spectatorii — live, fără un al doilea dispozitiv. Ce face, cum îl folosești pentru verificări OBS și sincronizare, și cum ar trebui studiourile să-l integreze în controlul dinaintea show-ului."
+  lang="ro"
+  hreflang={[
+    { lang: 'en', url: `${site}/${slug}` },
+    { lang: 'de', url: `${site}/de/${slug}` },
+    { lang: 'es', url: `${site}/es/${slug}` },
+    { lang: 'ro', url: `${site}/ro/${slug}` },
+    { lang: 'uk', url: `${site}/uk/${slug}` },
+    { lang: 'ru', url: `${site}/ru/${slug}` },
+    { lang: 'fr', url: `${site}/fr/${slug}` },
+    { lang: 'pt', url: `${site}/pt/${slug}` },
+  ]}
+  articleMeta={{ datePublished: '2026-09-10' }}
+>
+
+  <section class="art-hero">
+    <div class="art-orb art-orb--1"></div>
+    <div class="art-orb art-orb--2"></div>
+    <div class="art-grid"></div>
+    <div class="art-hero__inner container">
+      <div class="art-meta">
+        <span class="art-tag">Stripchat</span>
+        <span class="art-tag art-tag--green">Actualizare de platformă</span>
+      </div>
+      <h1 class="art-title">Viewer Mode de la Stripchat: <span class="art-grad">gata cu ghicitul cum arată room-ul tău</span></h1>
+      <p class="art-lead">Stripchat a adăugat un comutator dintr-o atingere care schimbă fereastra camerei tale din propria ta vedere de broadcast în feedul exact pe care îl urmărește audiența — live, în mijlocul show-ului, fără un al doilea telefon proptit pe un trepied. Iată ce arată de fapt, cum îl folosești corect, și de ce merită inclus în rutina ta.</p>
+    </div>
+  </section>
+
+  <div class="art-body container">
+    <div class="art-layout">
+      <aside class="art-toc">
+        <p class="art-toc__title">Cuprins</p>
+        <ol class="art-toc__list">
+          <li><a href="#what-is-it">Ce arată de fapt Viewer Mode</a></li>
+          <li><a href="#how-to-use">Cum îl activezi</a></li>
+          <li><a href="#why-it-matters">De ce contează un comutator de autovizualizare</a></li>
+          <li><a href="#when-to-check">Când să-l folosești de fapt</a></li>
+          <li><a href="#for-studios">Pentru studiouri: standardizarea controlului dinaintea show-ului</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+        <a href="#cta" class="art-toc__cta">Obține ajutor →</a>
+      </aside>
+
+      <main class="art-main">
+
+      <p class="art-intro">Până acum, ca să vezi cum arată de fapt streamul tău aveai nevoie de un al doilea dispozitiv — un telefon pe un suport, un laptop conectat la propriul room, contul altcuiva deschis într-un alt tab. Noul Viewer Mode de la Stripchat înlocuiește tot asta cu un comutator direct în fereastra de broadcast. Sună mărunt. În practică închide o breșă care i-a costat pe models plângeri legate de întârziere și scene OBS stricate pe care nu le-au observat niciodată live.</p>
+      <p class="card-date" style="margin:0 0 1.75rem;">Echipa Editorială EWOhub · Publicat pe 10 sep. 2026</p>
+
+      <section class="section" id="what-is-it">
+        <h2>Ce arată de fapt Viewer Mode</h2>
+        <div class="glass-card" style="margin-top:1.25rem;">
+          <p>Viewer Mode este un comutator în timp real în fereastra camerei, marcat printr-o iconiță cu o persoană și un ecran în colțul din stânga jos, odată ce ești live. Activându-l, îți înlocuiește propria previzualizare de broadcast cu streamul real pe care îl primește audiența ta — aceeași codificare, aceeași întârziere, aceeași încadrare. Dezactivându-l, revii la vederea ta normală de broadcaster.</p>
+          <p style="margin-bottom:0;">Funcționează indiferent dacă transmiți direct prin site sau trimiți un feed din OBS sau un software similar — și asta contează, pentru că o scenă care arată bine în propria previzualizare a OBS nu are garanția că arată la fel după ce Stripchat a codificat-o și livrat-o.</p>
+        </div>
+      </section>
+
+      <section class="section" id="how-to-use">
+        <h2>Cum îl activezi</h2>
+        <div class="glass-card" style="margin-top:1.25rem;">
+          <p>Pornește-ți show-ul ca de obicei. Odată live, caută iconița Viewer Mode din colțul stânga jos al ferestrei camerei și atinge-o pentru a trece de la vederea Cameră la vederea Spectator. Nu necesită o configurare separată, permisiune sau cont diferit — este integrat în aceeași fereastră din care deja transmiți, atât pentru streaming direct din browser, cât și pentru feed-uri OBS.</p>
+          <p style="margin-bottom:0;">Fiindcă e activ live în cadrul show-ului, poți comuta între vederi de câte ori vrei fără să întrerupi transmisia — verifici feedul de spectator, observi ceva în neregulă, revii la vederea normală, corectezi, verifici din nou.</p>
+        </div>
+      </section>
+
+      <section class="section" id="why-it-matters">
+        <h2>De ce contează un comutator de autovizualizare</h2>
+
+        <div class="two-col-box">
+          <div class="two-col-box__item two-col-box__item--good">
+            <h3>Ce prinde el, ce propria ta previzualizare nu poate</h3>
+            <ul class="checklist">
+              <li>Audio și video care se desincronizează — invizibil într-o previzualizare locală, evident odată ce urmărești streamul codificat și livrat</li>
+              <li>Întârzierea transmisiei — cunoscând lag-ul real îți poți cronometra reacțiile la tips și chat în loc să ghicești</li>
+              <li>Greșeli de scenă în OBS — o sursă greșită, un overlay blocat sau o webcam care încă arată un ecran de încărcare, lucruri pe care propria previzualizare OBS nu ți le semnalează</li>
+              <li>Probleme de decupare și încadrare introduse de codificarea proprie a Stripchat, invizibile într-o previzualizare a sursei brute</li>
+            </ul>
+          </div>
+          <div class="two-col-box__item two-col-box__item--bad">
+            <h3>Ce te costa soluția veche</h3>
+            <ul class="checklist">
+              <li>Un al doilea dispozitiv — telefon, tabletă sau laptop — conectat la propriul room doar ca să-l urmărești</li>
+              <li>Acel dispozitiv aflat undeva în cadru, sau nevoia de a te retrage din cadru ca să-l verifici</li>
+              <li>O întârziere între momentul observării unei probleme pe al doilea dispozitiv și corectarea ei pe setup-ul principal</li>
+              <li>Models fără un dispozitiv de rezervă care transmiteau pur și simplu orbește, sperând că setup-ul ține</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="when-to-check">
+        <h2>Când să-l folosești de fapt</h2>
+
+        <div class="reason-card" style="margin-top:1.25rem;">
+          <div class="reason-num">01</div>
+          <div class="reason-content">
+            <h3>Primele două minute din fiecare show</h3>
+            <p>Chiar după ce intri live este momentul în care greșelile de scenă apar cel mai des — sursă OBS greșită selectată, lumina neajustată încă, intrarea audio netrecută de pe test. O verificare rapidă cu Viewer Mode prinde asta înainte s-o prindă un spectator, nu cinci minute și o duzină de tips ratate mai târziu.</p>
+          </div>
+        </div>
+
+        <div class="reason-card">
+          <div class="reason-num">02</div>
+          <div class="reason-content">
+            <h3>După orice schimbare din mijlocul show-ului</h3>
+            <p>Ținută nouă, cameră mutată, altă scenă OBS pentru un goal sau joc — orice schimbă ce se afișează de fapt merită o verificare de 10 secunde cu Viewer Mode. E mai rapid decât să afli dintr-un mesaj din chat că ceva nu e în regulă.</p>
+          </div>
+        </div>
+
+        <div class="reason-card">
+          <div class="reason-num">03</div>
+          <div class="reason-content">
+            <h3>Cronometrarea goal-urilor, tips-urilor și reacțiilor</h3>
+            <p>Dacă nu-ți cunoști întârzierea reală de transmisie, reacția ta pe ecran la un tip ajunge decalată față de momentul în care spectatorii văd tip-ul înregistrat — pare cu un pas în urmă. Verificând întârzierea reală o dată prin Viewer Mode îți permite să-ți ajustezi timing-ul la ceea ce trăiește de fapt room-ul.</p>
+          </div>
+        </div>
+
+        <div class="reason-card">
+          <div class="reason-num">04</div>
+          <div class="reason-content">
+            <h3>Rezolvarea unei plângeri din chat</h3>
+            <p>„Audioul tău e desincronizat" sau „streamul tot bufferează" e ușor de respins ca fiind o problemă de conexiune a unui singur spectator. Viewer Mode îți permite să verifici streamul livrat efectiv în câteva secunde în loc să ghicești — iar dacă problema e reală, o vezi imediat.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="for-studios">
+        <div class="highlight-box">
+          <h2>Pentru studiouri: standardizarea controlului dinaintea show-ului</h2>
+          <p style="margin-bottom:0;">Este o adăugire ieftină și de mare valoare la onboarding (vezi <a href="/ro/stripchat-first-14-days-guide">ghidul nostru pentru primele 14 zile →</a>) și la orice listă de verificare fixă dinaintea show-ului: transformă o verificare cu Viewer Mode în primele două minute ale fiecărei sesiuni într-un pas obligatoriu, nu opțional. Prinde exact tipul de greșeală de setup — scenă OBS greșită, intrare audio neschimbată, o webcam încă pe ecran de încărcare — despre care un studio altfel află abia peste ore, dintr-o scădere a retenției sau dintr-o plângere a unui spectator. Pentru un roster care transmite prin profiluri OBS partajate sau bazate pe șabloane (vezi <a href="/ro/stripchat-show-recording-guide">ghidul nostru despre unealta de înregistrare →</a> pentru un alt instrument din platformă care merită standardizat la fel), este și cel mai rapid mod de a confirma că un șablon nou chiar se aplică corect înainte ca un model să intre live cu el.</p>
+        </div>
+      </section>
+
+      <section class="faq-section section" id="faq">
+        <h2>Întrebări frecvente</h2>
+
+        <div class="faq-item">
+          <button class="faq-chevron" aria-expanded="false">
+            <span>Trecerea la Viewer Mode pune pauză sau întrerupe transmisia?</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-body">
+            <p>Nu. Comutatorul schimbă doar ce vezi tu în propria fereastră a camerei — transmisia live către audiența ta continuă fără întrerupere cât timp schimbi vederile.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-chevron" aria-expanded="false">
+            <span>Funcționează dacă transmit prin OBS, nu prin browser?</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-body">
+            <p>Da — Viewer Mode funcționează atât pentru transmisii directe prin site, cât și pentru feed-uri din OBS, și acolo este de fapt cel mai util, pentru că propria previzualizare a OBS nu-ți poate arăta ce face codificarea Stripchat cu feedul.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-chevron" aria-expanded="false">
+            <span>Mai am nevoie de un al doilea dispozitiv ca să-mi verific streamul?</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-body">
+            <p>Nu pentru verificări de bază de calitate, sincronizare și scenă — Viewer Mode acoperă asta din aceeași fereastră din care deja transmiți. Un al doilea dispozitiv tot are utilitate (de exemplu, verificarea cum arată room-ul pentru un vizitator neconectat), dar nu mai este necesar pentru o autoverificare de rutină.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>În tendințe acum</h2>
+        <p style="color:var(--fg-muted);margin:-0.5rem 0 1.25rem;">Serviciul de promovare despre care ne întreabă cel mai des clienții luna aceasta.</p>
+        <a href="/ro/stripchat-promo" class="glass-card" style="display:flex;flex-wrap:wrap;overflow:hidden;padding:0;text-decoration:none;">
+          <div style="flex:1 1 280px;min-height:200px;">
+            <img src="/images/stripchat-traffic-promo-banner.webp" alt="Stripchat Traffic Promo — mai mulți spectatori și un stripscore mai mare" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
+          </div>
+          <div style="flex:1 1 320px;padding:1.75rem;display:flex;flex-direction:column;justify-content:center;">
+            <span class="art-tag" style="width:fit-content;margin-bottom:.875rem;">Stripchat</span>
+            <h3 style="font-size:1.3rem;font-weight:700;color:var(--fg);margin-bottom:.625rem;">Stripchat Traffic Promo</h3>
+            <p style="font-size:.9rem;color:var(--fg-muted);line-height:1.65;margin-bottom:0;">Plasează-ți room-ul în categoria Popular de la Stripchat, crește-ți stripscore-ul și obține spectatori reali. Vezi cum funcționează promovarea, prețurile, și playbook-ul ca să obții maximul din ea.</p>
+            <span style="font-size:.875rem;font-weight:600;color:var(--fg);margin-top:.875rem;">Citește recenzia completă →</span>
+          </div>
+        </a>
+      </section>
+
+      <section id="cta" class="art-cta section">
+        <div class="art-cta__orb"></div>
+        <div class="art-cta__inner">
+          <span class="art-cta__badge">Modele și studiouri</span>
+          <h2>Un stream curat tot are nevoie de o audiență care să-l găsească</h2>
+          <p>Verificarea că streamul arată corect este pasul unu — obținerea unui număr suficient de spectatori potriviți care chiar îl urmăresc este cealaltă jumătate. Dacă vrei ajutor să transformi un setup solid și verificat în trafic constant, lucrăm exact la asta cu modele independente și studiouri.</p>
+          <div class="art-cta__actions">
+            <a href="/ro/model-promotion" class="art-cta__btn art-cta__btn--primary">Servicii de promovare pentru modele →</a>
+            <a href="/ro/studio-traffic" class="art-cta__btn art-cta__btn--ghost">Servicii de trafic pentru studiouri →</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Articole similare</h2>
+        <div class="related-grid">
+          <a href="/ro/stripchat-plasma-mobile-streaming" class="related-card">
+            <span class="related-card__icon">📱</span>
+            <span>Aplicația Plasma Streaming de la Stripchat</span>
+          </a>
+          <a href="/ro/stripchat-show-recording-guide" class="related-card">
+            <span class="related-card__icon">🎬</span>
+            <span>Unealta de înregistrare de la Stripchat</span>
+          </a>
+          <a href="/ro/stripchat-first-14-days-guide" class="related-card">
+            <span class="related-card__icon">🗓️</span>
+            <span>Primele tale 14 zile pe Stripchat</span>
+          </a>
+          <a href="/ro/how-cam-algorithm-ranks-rooms" class="related-card">
+            <span class="related-card__icon">⚙️</span>
+            <span>Cum clasează algoritmii cam room-urile</span>
+          </a>
+          <a href="/ro/why-low-viewers-webcam" class="related-card">
+            <span class="related-card__icon">📉</span>
+            <span>De ce ai puțini spectatori</span>
+          </a>
+          <a href="/ro/studio-scaling" class="related-card">
+            <span class="related-card__icon">📈</span>
+            <span>Extinderea unui studio</span>
+          </a>
+        </div>
+      </section>
+
+      </main>
+    </div>
+  </div>
+
+</Base>

@@ -1,0 +1,238 @@
+---
+import Base from '@/layouts/Base.astro';
+const site = 'https://www.ewohub.com';
+const slug = 'stripchat-viewer-mode-stream-check';
+---
+<Base
+  title="Viewer Mode da Stripchat: veja sua stream como sua audiência vê"
+  description="A Stripchat adicionou um botão Viewer Mode que mostra às broadcasters a stream exatamente como os espectadores veem — ao vivo, sem um segundo dispositivo. O que ele faz, como usá-lo para checar OBS e sincronia, e como os estúdios devem incorporar isso ao controle pré-show."
+  lang="pt"
+  hreflang={[
+    { lang: 'en', url: `${site}/${slug}` },
+    { lang: 'de', url: `${site}/de/${slug}` },
+    { lang: 'es', url: `${site}/es/${slug}` },
+    { lang: 'ro', url: `${site}/ro/${slug}` },
+    { lang: 'uk', url: `${site}/uk/${slug}` },
+    { lang: 'ru', url: `${site}/ru/${slug}` },
+    { lang: 'fr', url: `${site}/fr/${slug}` },
+    { lang: 'pt', url: `${site}/pt/${slug}` },
+  ]}
+  articleMeta={{ datePublished: '2026-09-10' }}
+>
+
+  <section class="art-hero">
+    <div class="art-orb art-orb--1"></div>
+    <div class="art-orb art-orb--2"></div>
+    <div class="art-grid"></div>
+    <div class="art-hero__inner container">
+      <div class="art-meta">
+        <span class="art-tag">Stripchat</span>
+        <span class="art-tag art-tag--green">Atualização da plataforma</span>
+      </div>
+      <h1 class="art-title">Viewer Mode da Stripchat: <span class="art-grad">chega de adivinhar como sua room aparece</span></h1>
+      <p class="art-lead">A Stripchat adicionou um botão de um toque que muda sua janela de câmera da sua própria visão de transmissão para o feed exato que a audiência está assistindo — ao vivo, no meio do show, sem um segundo celular apoiado em um tripé. Veja o que ele realmente mostra, como usá-lo direito, e por que vale a pena incorporar isso à sua rotina.</p>
+    </div>
+  </section>
+
+  <div class="art-body container">
+    <div class="art-layout">
+      <aside class="art-toc">
+        <p class="art-toc__title">Conteúdo</p>
+        <ol class="art-toc__list">
+          <li><a href="#what-is-it">O que o Viewer Mode realmente mostra</a></li>
+          <li><a href="#how-to-use">Como ativar</a></li>
+          <li><a href="#why-it-matters">Por que um botão de autovisualização importa</a></li>
+          <li><a href="#when-to-check">Quando realmente usá-lo</a></li>
+          <li><a href="#for-studios">Para estúdios: padronizar o controle pré-show</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+        <a href="#cta" class="art-toc__cta">Obter ajuda →</a>
+      </aside>
+
+      <main class="art-main">
+
+      <p class="art-intro">Até agora, checar como a sua stream realmente aparecia exigia um segundo dispositivo — um celular num suporte, um notebook logado na própria room, a conta de outra pessoa aberta em outra aba. O novo Viewer Mode da Stripchat substitui tudo isso por um botão dentro da própria janela de transmissão. Parece pouco. Na prática, fecha uma lacuna que custou às models reclamações de delay e cenas de OBS quebradas que elas nunca perceberam ao vivo.</p>
+      <p class="card-date" style="margin:0 0 1.75rem;">Equipe Editorial EWOhub · Publicado em 10 de set. de 2026</p>
+
+      <section class="section" id="what-is-it">
+        <h2>O que o Viewer Mode realmente mostra</h2>
+        <div class="glass-card" style="margin-top:1.25rem;">
+          <p>O Viewer Mode é um botão em tempo real na janela de câmera, marcado por um ícone de uma pessoa e uma tela no canto inferior esquerdo assim que você está ao vivo. Ativá-lo substitui sua própria prévia de transmissão pela stream real que a audiência está recebendo — mesma codificação, mesmo delay, mesmo enquadramento. Desativá-lo devolve sua visão normal de broadcaster.</p>
+          <p style="margin-bottom:0;">Funciona tanto se você transmite direto pelo site quanto se envia um feed do OBS ou software parecido — e isso importa, porque uma cena que parece certa na própria prévia do OBS não tem garantia de continuar assim depois que a Stripchat a codifica e entrega.</p>
+        </div>
+      </section>
+
+      <section class="section" id="how-to-use">
+        <h2>Como ativar</h2>
+        <div class="glass-card" style="margin-top:1.25rem;">
+          <p>Comece seu show normalmente. Assim que estiver ao vivo, procure o ícone do Viewer Mode no canto inferior esquerdo da janela de câmera e toque nele para alternar da visão Câmera para a visão Espectador. Não exige configuração separada, permissão ou conta diferente — está embutido na mesma janela de onde você já transmite, tanto no streaming direto pelo navegador quanto em feeds do OBS.</p>
+          <p style="margin-bottom:0;">Como funciona ao vivo dentro do show, você pode alternar entre as visões quantas vezes quiser sem interromper a transmissão — checar o feed do espectador, notar algo errado, voltar à visão normal, corrigir, checar de novo.</p>
+        </div>
+      </section>
+
+      <section class="section" id="why-it-matters">
+        <h2>Por que um botão de autovisualização importa</h2>
+
+        <div class="two-col-box">
+          <div class="two-col-box__item two-col-box__item--good">
+            <h3>O que ele pega que sua própria prévia não consegue</h3>
+            <ul class="checklist">
+              <li>Áudio e vídeo perdendo a sincronia — invisível numa prévia local, óbvio quando você assiste à stream já codificada e entregue</li>
+              <li>O delay da transmissão — saber sua latência real permite calcular o tempo das suas reações a tips e chat em vez de adivinhar</li>
+              <li>Erros de cena no OBS — uma fonte errada, um overlay travado ou uma webcam ainda mostrando tela de carregamento, coisas que sua própria prévia do OBS não aponta</li>
+              <li>Problemas de corte e enquadramento introduzidos pela própria codificação da Stripchat, invisíveis numa prévia da fonte bruta</li>
+            </ul>
+          </div>
+          <div class="two-col-box__item two-col-box__item--bad">
+            <h3>O que a solução antiga custava</h3>
+            <ul class="checklist">
+              <li>Um segundo dispositivo — celular, tablet ou notebook — logado na própria room só para assistir</li>
+              <li>Esse dispositivo em algum lugar do enquadramento, ou precisar sair de quadro para checá-lo</li>
+              <li>Um delay entre notar um problema no segundo dispositivo e corrigi-lo no setup principal</li>
+              <li>Models sem dispositivo reserva simplesmente transmitindo às cegas e torcendo para o setup aguentar</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="when-to-check">
+        <h2>Quando realmente usá-lo</h2>
+
+        <div class="reason-card" style="margin-top:1.25rem;">
+          <div class="reason-num">01</div>
+          <div class="reason-content">
+            <h3>Os dois primeiros minutos de cada show</h3>
+            <p>Logo depois de entrar ao vivo é quando erros de cena são mais comuns — fonte errada do OBS selecionada, iluminação ainda não ajustada, entrada de áudio não trocada depois do teste. Uma checagem rápida com o Viewer Mode pega isso antes de um espectador pegar — não cinco minutos e uma dúzia de tips perdidos depois.</p>
+          </div>
+        </div>
+
+        <div class="reason-card">
+          <div class="reason-num">02</div>
+          <div class="reason-content">
+            <h3>Depois de qualquer mudança no meio do show</h3>
+            <p>Roupa nova, câmera movida, outra cena de OBS para um goal ou jogo — qualquer coisa que muda o que realmente está sendo mostrado vale uma checagem de 10 segundos com o Viewer Mode. É mais rápido do que descobrir por uma mensagem no chat que algo está errado.</p>
+          </div>
+        </div>
+
+        <div class="reason-card">
+          <div class="reason-num">03</div>
+          <div class="reason-content">
+            <h3>Calculando o tempo de goals, tips e reações</h3>
+            <p>Se você não sabe seu delay real de transmissão, sua reação na tela a um tip chega fora de sincronia com o momento em que os espectadores veem o tip registrar — parece um tempo atrasada. Checar seu delay real pelo Viewer Mode uma vez permite ajustar seu timing ao que a room realmente vive.</p>
+          </div>
+        </div>
+
+        <div class="reason-card">
+          <div class="reason-num">04</div>
+          <div class="reason-content">
+            <h3>Resolvendo uma reclamação no chat</h3>
+            <p>"Seu áudio está fora de sincronia" ou "a stream não para de travar" é fácil de descartar como problema de conexão de um único espectador. O Viewer Mode permite checar a stream realmente entregue em segundos em vez de adivinhar — e se o problema for real, você vai ver na hora.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="for-studios">
+        <div class="highlight-box">
+          <h2>Para estúdios: padronizar o controle pré-show</h2>
+          <p style="margin-bottom:0;">É uma adição barata e de alto valor ao onboarding (veja nosso <a href="/pt/stripchat-first-14-days-guide">guia dos primeiros 14 dias →</a>) e a qualquer checklist fixa pré-show: torne uma checagem com o Viewer Mode nos primeiros dois minutos de cada sessão uma etapa obrigatória, não opcional. Ela pega exatamente o tipo de erro de setup — cena errada do OBS, entrada de áudio não trocada, webcam ainda em tela de carregamento — que um estúdio de outro modo só descobre horas depois, por uma queda de retenção ou reclamação de espectador. Para um roster que transmite com perfis de OBS compartilhados ou baseados em template (veja nosso <a href="/pt/stripchat-show-recording-guide">guia da ferramenta de gravação →</a> para outra ferramenta da própria plataforma que merece o mesmo tipo de padronização), também é a forma mais rápida de confirmar que um template novo realmente se aplica corretamente antes de uma model entrar ao vivo com ele.</p>
+        </div>
+      </section>
+
+      <section class="faq-section section" id="faq">
+        <h2>Perguntas frequentes</h2>
+
+        <div class="faq-item">
+          <button class="faq-chevron" aria-expanded="false">
+            <span>Mudar para o Viewer Mode pausa ou interrompe a transmissão?</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-body">
+            <p>Não. O botão só muda o que você vê na sua própria janela de câmera — a transmissão ao vivo para sua audiência continua sem interrupção enquanto você alterna as visões.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-chevron" aria-expanded="false">
+            <span>Funciona se eu transmitir pelo OBS em vez do navegador?</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-body">
+            <p>Sim — o Viewer Mode funciona tanto para transmissões diretas pelo site quanto para feeds do OBS, e é justamente aí que ele é mais útil, já que a própria prévia do OBS não consegue mostrar o que a codificação da Stripchat faz com o feed.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-chevron" aria-expanded="false">
+            <span>Ainda preciso de um segundo dispositivo para checar minha stream?</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-body">
+            <p>Não para checagens básicas de qualidade, sincronia e cena — o Viewer Mode cobre isso a partir da mesma janela de onde você já transmite. Um segundo dispositivo ainda tem utilidade (checar como a room aparece para um visitante deslogado, por exemplo), mas não é mais necessário para uma autochecagem de rotina.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Em alta agora</h2>
+        <p style="color:var(--fg-muted);margin:-0.5rem 0 1.25rem;">O serviço de promoção que nossos clientes mais perguntam este mês.</p>
+        <a href="/pt/stripchat-promo" class="glass-card" style="display:flex;flex-wrap:wrap;overflow:hidden;padding:0;text-decoration:none;">
+          <div style="flex:1 1 280px;min-height:200px;">
+            <img src="/images/stripchat-traffic-promo-banner.webp" alt="Stripchat Traffic Promo — mais espectadores e um stripscore maior" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
+          </div>
+          <div style="flex:1 1 320px;padding:1.75rem;display:flex;flex-direction:column;justify-content:center;">
+            <span class="art-tag" style="width:fit-content;margin-bottom:.875rem;">Stripchat</span>
+            <h3 style="font-size:1.3rem;font-weight:700;color:var(--fg);margin-bottom:.625rem;">Stripchat Traffic Promo</h3>
+            <p style="font-size:.9rem;color:var(--fg-muted);line-height:1.65;margin-bottom:0;">Coloque sua room na categoria Popular da Stripchat, aumente seu stripscore e consiga espectadores reais. Veja como funciona a promoção, o preço, e o playbook para tirar o máximo proveito dela.</p>
+            <span style="font-size:.875rem;font-weight:600;color:var(--fg);margin-top:.875rem;">Ler a análise completa →</span>
+          </div>
+        </a>
+      </section>
+
+      <section id="cta" class="art-cta section">
+        <div class="art-cta__orb"></div>
+        <div class="art-cta__inner">
+          <span class="art-cta__badge">Modelos e estúdios</span>
+          <h2>Uma stream limpa ainda precisa de uma audiência que a encontre</h2>
+          <p>Checar se sua stream aparece certa é o primeiro passo — conseguir espectadores certos suficientes que realmente assistam é a outra metade. Se você quiser ajuda para transformar um setup sólido e verificado em tráfego consistente, trabalhamos exatamente com isso com models independentes e estúdios.</p>
+          <div class="art-cta__actions">
+            <a href="/pt/model-promotion" class="art-cta__btn art-cta__btn--primary">Serviços de promoção para models →</a>
+            <a href="/pt/studio-traffic" class="art-cta__btn art-cta__btn--ghost">Serviços de tráfego para estúdios →</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Artigos relacionados</h2>
+        <div class="related-grid">
+          <a href="/pt/stripchat-plasma-mobile-streaming" class="related-card">
+            <span class="related-card__icon">📱</span>
+            <span>O app Plasma Streaming da Stripchat</span>
+          </a>
+          <a href="/pt/stripchat-show-recording-guide" class="related-card">
+            <span class="related-card__icon">🎬</span>
+            <span>A ferramenta de gravação da Stripchat</span>
+          </a>
+          <a href="/pt/stripchat-first-14-days-guide" class="related-card">
+            <span class="related-card__icon">🗓️</span>
+            <span>Seus primeiros 14 dias na Stripchat</span>
+          </a>
+          <a href="/pt/how-cam-algorithm-ranks-rooms" class="related-card">
+            <span class="related-card__icon">⚙️</span>
+            <span>Como algoritmos de cam ranqueiam rooms</span>
+          </a>
+          <a href="/pt/why-low-viewers-webcam" class="related-card">
+            <span class="related-card__icon">📉</span>
+            <span>Por que poucos espectadores na webcam</span>
+          </a>
+          <a href="/pt/studio-scaling" class="related-card">
+            <span class="related-card__icon">📈</span>
+            <span>Escalando um estúdio</span>
+          </a>
+        </div>
+      </section>
+
+      </main>
+    </div>
+  </div>
+
+</Base>
