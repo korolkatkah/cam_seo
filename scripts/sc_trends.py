@@ -50,7 +50,7 @@ API = "https://go.whitetrafsa.com/api/models"
 MAX_MODELS = 1000
 
 
-NICHES = ["girls", "men", "couples", "trans"]
+NICHES = ["girls", "couples"]
 
 
 def fetch_models(tag=None):

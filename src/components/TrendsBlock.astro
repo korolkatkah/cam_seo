@@ -517,28 +517,52 @@ const scTagsByNiche: Record<string, { tag: string; models_online: number }[]> = 
         <div class="trends-card trends-card-wide">
           <h3 class="trends-card-title">{t.scTagsTitle}</h3>
           <p class="tags-caption">{t.scTagsCaption}</p>
-          <div class="niche-tabs" role="tablist">
-            {NICHE_LIST.filter((n) => (scTagsByNiche[n] ?? []).length > 0).map((niche, i) => (
-              <button type="button" class={`niche-tab ${i === 0 ? 'is-active' : ''}`} data-niche={niche} role="tab" aria-selected={i === 0 ? 'true' : 'false'}>
-                {t[`niche${niche.charAt(0).toUpperCase()}${niche.slice(1)}`] ?? niche}
-              </button>
+          <select class="niche-select" data-niche-select>
+            {NICHE_LIST.filter((n) => (scTagsByNiche[n] ?? []).length > 0).map((niche) => (
+              <option value={niche}>{t[`niche${niche.charAt(0).toUpperCase()}${niche.slice(1)}`] ?? niche}</option>
             ))}
-          </div>
+          </select>
           {NICHE_LIST.filter((n) => (scTagsByNiche[n] ?? []).length > 0).map((niche, i) => {
             const list = scTagsByNiche[niche] ?? [];
             const maxCount = Math.max(1, ...list.map((tg) => tg.models_online));
+            const visible = list.slice(0, 10);
+            const rest = list.slice(10);
             return (
-              <div class="tag-grid niche-panel" data-niche-panel={niche} hidden={i !== 0}>
-                {list.map((tg) => {
-                  const pct = Math.round((tg.models_online / maxCount) * 100);
-                  return (
-                    <div class="tag-cell">
-                      <span class="tag-cell-name">#{tg.tag}</span>
-                      <span class="tag-cell-stats">{tg.models_online} {t.scTagsModelsWord}</span>
-                      <span class="tag-count-bar-track"><span class="tag-count-bar-fill" style={`width:${pct}%`}></span></span>
+              <div class="niche-panel" data-niche-panel={niche} hidden={i !== 0}>
+                <div class="tag-grid">
+                  {visible.map((tg) => {
+                    const pct = Math.round((tg.models_online / maxCount) * 100);
+                    return (
+                      <div class="tag-cell">
+                        <span class="tag-cell-name">#{tg.tag}</span>
+                        <span class="tag-cell-stats">{tg.models_online} {t.scTagsModelsWord}</span>
+                        <span class="tag-count-bar-track"><span class="tag-count-bar-fill" style={`width:${pct}%`}></span></span>
+                      </div>
+                    );
+                  })}
+                </div>
+                {rest.length > 0 && (
+                  <>
+                    <button class="tags-more-btn" data-show={t.tagsShowMore} data-hide={t.tagsHide} aria-expanded="false">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                      <span>{t.tagsShowMore} ({rest.length})</span>
+                    </button>
+                    <div class="tags-more-panel" hidden>
+                      <div class="tag-grid">
+                        {rest.map((tg) => {
+                          const pct = Math.round((tg.models_online / maxCount) * 100);
+                          return (
+                            <div class="tag-cell">
+                              <span class="tag-cell-name">#{tg.tag}</span>
+                              <span class="tag-cell-stats">{tg.models_online} {t.scTagsModelsWord}</span>
+                              <span class="tag-count-bar-track"><span class="tag-count-bar-fill" style={`width:${pct}%`}></span></span>
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
-                  );
-                })}
+                  </>
+                )}
               </div>
             );
           })}
@@ -570,20 +594,13 @@ const scTagsByNiche: Record<string, { tag: string; models_online: number }[]> = 
     });
   });
 
-  document.querySelectorAll('.niche-tabs').forEach((tabsWrap) => {
-    const card = tabsWrap.closest('.trends-card');
+  document.querySelectorAll('[data-niche-select]').forEach((select) => {
+    const card = select.closest('.trends-card');
     if (!card) return;
-    const tabs = tabsWrap.querySelectorAll('.niche-tab');
-    tabs.forEach((tab) => {
-      tab.addEventListener('click', () => {
-        const niche = tab.dataset.niche;
-        tabs.forEach((tb) => {
-          tb.classList.toggle('is-active', tb === tab);
-          tb.setAttribute('aria-selected', tb === tab ? 'true' : 'false');
-        });
-        card.querySelectorAll('.niche-panel').forEach((panel) => {
-          panel.hidden = panel.dataset.nichePanel !== niche;
-        });
+    select.addEventListener('change', () => {
+      const niche = select.value;
+      card.querySelectorAll('.niche-panel').forEach((panel) => {
+        panel.hidden = panel.dataset.nichePanel !== niche;
       });
     });
   });
@@ -785,20 +802,13 @@ const scTagsByNiche: Record<string, { tag: string; models_online: number }[]> = 
   }
   .trends-empty { text-align: center; color: var(--fg-faint); font-size: 0.9375rem; padding: 1rem 0; }
 
-  .niche-tabs {
-    display: inline-flex; gap: 0.25rem; margin-bottom: 1rem;
-    background: var(--card-bg); border: 1px solid var(--border);
-    border-radius: 99px; padding: 3px;
-  }
-  .niche-tab {
+  .niche-select {
+    display: block; margin-bottom: 1rem;
     font-family: var(--font-body, system-ui, sans-serif);
-    font-size: 0.75rem; font-weight: 700;
-    color: var(--fg-muted); background: transparent; border: none;
-    padding: 0.35rem 0.85rem; border-radius: 99px; cursor: pointer;
-    transition: background 0.2s, color 0.2s;
+    font-size: 0.8125rem; font-weight: 700;
+    color: var(--fg); background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 0.5rem 0.75rem; cursor: pointer;
   }
-  .niche-tab:hover { color: var(--fg); }
-  .niche-tab.is-active { color: var(--btn-fg); background: var(--btn-bg); }
 
   .trends-card {
     background: var(--bg-raised);
