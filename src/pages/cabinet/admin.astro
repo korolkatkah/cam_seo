@@ -100,7 +100,7 @@ import Base from '@/layouts/Base.astro';
       <p class="import-status" id="import-status" role="status" aria-live="polite">Idle.</p>
       <div class="import-actions">
         <button id="run-import-btn" class="import-btn">Run import now</button>
-        <button id="stop-import-btn" class="import-btn export-btn stop-btn" hidden>Stop import</button>
+        <button id="stop-import-btn" class="import-btn export-btn stop-btn" disabled title="Available while an import is running">Stop import</button>
       </div>
 
       <p class="import-status" id="export-status" style="margin-top:1rem;">Idle.</p>
@@ -694,8 +694,7 @@ import Base from '@/layouts/Base.astro';
 
   function renderImportStatus(state) {
     lastImportState = state;
-    stopImportBtn.hidden = !state.running;
-    stopImportBtn.disabled = !!state.stopping;
+    stopImportBtn.disabled = !state.running || !!state.stopping;
     stopImportBtn.textContent = state.stopping ? 'Stopping...' : 'Stop import';
     if (state.running) {
       const p = state.progress || {};
