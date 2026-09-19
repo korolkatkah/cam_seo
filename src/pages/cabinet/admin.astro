@@ -65,6 +65,10 @@ import Base from '@/layouts/Base.astro';
       <h2>Instagram targets database</h2>
       <p class="import-status" id="import-status">Idle.</p>
       <button id="run-import-btn" class="import-btn">Run import now</button>
+
+      <p class="import-status" id="export-status" style="margin-top:1rem;">Idle.</p>
+      <button id="run-export-btn" class="import-btn export-btn">Export to Google Sheet</button>
+      <p id="export-link" class="import-status" hidden></p>
     </div>
 
     <div class="targets-header">
@@ -221,6 +225,12 @@ import Base from '@/layouts/Base.astro';
   }
   .import-btn:hover { opacity: 0.85; }
   .import-btn:disabled { opacity: 0.5; cursor: default; }
+  .export-btn {
+    background: transparent;
+    color: var(--fg);
+    border: 1px solid var(--bg-subtle);
+  }
+  #export-link a { color: var(--fg); font-weight: 600; }
 
   .section-title {
     font-family: var(--font-heading);
@@ -565,6 +575,50 @@ import Base from '@/layouts/Base.astro';
 
   document.getElementById('refresh-targets-btn').addEventListener('click', loadTargets);
 
+  // --- Google Drive export ---
+
+  const exportStatusEl = document.getElementById('export-status');
+  const runExportBtn = document.getElementById('run-export-btn');
+  const exportLinkEl = document.getElementById('export-link');
+  let exportPollTimer = null;
+
+  function formatExportStatus(state) {
+    if (state.running) return 'Export running...';
+    if (state.last_result?.error) return `Last export failed: ${state.last_result.error}`;
+    if (state.last_result) return 'Last export: done.';
+    return 'Idle.';
+  }
+
+  async function pollExportStatus() {
+    const res = await authedFetch('/admin/export/status');
+    if (!res.ok) return;
+    const state = await res.json();
+    exportStatusEl.textContent = formatExportStatus(state);
+    runExportBtn.disabled = state.running;
+    runExportBtn.textContent = state.running ? 'Exporting...' : 'Export to Google Sheet';
+
+    if (state.last_result?.web_view_link) {
+      exportLinkEl.innerHTML = `<a href="${state.last_result.web_view_link}" target="_blank" rel="noopener">Open spreadsheet →</a>`;
+      exportLinkEl.hidden = false;
+    }
+
+    if (state.running) {
+      if (!exportPollTimer) exportPollTimer = setInterval(pollExportStatus, 4000);
+    } else if (exportPollTimer) {
+      clearInterval(exportPollTimer);
+      exportPollTimer = null;
+    }
+  }
+
+  runExportBtn.addEventListener('click', async () => {
+    runExportBtn.disabled = true;
+    const res = await authedFetch('/admin/export/run', { method: 'POST' });
+    const state = await res.json();
+    exportStatusEl.textContent = formatExportStatus(state);
+    runExportBtn.textContent = 'Exporting...';
+    if (!exportPollTimer) exportPollTimer = setInterval(pollExportStatus, 4000);
+  });
+
   document.getElementById('bulk-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     const bulkError = document.getElementById('bulk-error');
@@ -612,6 +666,7 @@ import Base from '@/layouts/Base.astro';
       await loadTasks();
       await loadTargets();
       await pollImportStatus();
+      await pollExportStatus();
     } catch {
       deniedEl.hidden = false;
     }
