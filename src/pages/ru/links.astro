@@ -13,11 +13,12 @@ const hreflang = [
   { lang: 'fr', url: `${site}/fr/links` },
   { lang: 'pt', url: `${site}/pt/links` },
 ];
-const heading = 'EWO';
-const sub = 'Всё необходимое в одном месте.';
-const btnJobs = 'Вакансии — Подать заявку →';
-const btnTelegram = 'Telegram-канал →';
-const btnTools = 'Бесплатные инструменты →';
+const heading = 'EWOMODELS';
+const subLine1 = 'TRAFFIC. MANAGEMENT.';
+const subLine2 = 'FOR WEBCAM MODELS.';
+const btnJobs = 'Top Agency for models →';
+const btnTelegram = 'Traffic for webcam →';
+const btnTools = 'Analytics for webcam →';
 ---
 
 <!doctype html>
@@ -61,7 +62,7 @@ const btnTools = 'Бесплатные инструменты →';
     }
     .wrap { max-width: 420px; width: 100%; text-align: center; }
     .logo { font-family: var(--font-heading); font-weight: 700; font-size: 1.75rem; letter-spacing: 0.02em; margin-bottom: 0.4rem; }
-    .sub { color: var(--fg-muted); margin: 0 0 2rem; font-size: 0.95rem; }
+    .sub { color: var(--fg-muted); margin: 0 0 2rem; font-size: 0.85rem; letter-spacing: 0.06em; line-height: 1.6; }
     .links { display: flex; flex-direction: column; gap: 0.9rem; }
     .btn {
       display: block;
@@ -81,11 +82,11 @@ const btnTools = 'Бесплатные инструменты →';
 <body>
   <div class="wrap">
     <p class="logo">{heading}</p>
-    <p class="sub">{sub}</p>
+    <p class="sub">{subLine1}<br>{subLine2}</p>
     <div class="links">
-      <a class="btn" href="https://ewomodels.com/en" target="_blank" rel="noopener">{btnJobs}</a>
+      <a class="btn" href="https://t.me/ewomodels" target="_blank" rel="noopener">{btnJobs}</a>
       <a class="btn" href="https://t.me/webcam_ewo" target="_blank" rel="noopener">{btnTelegram}</a>
-      <a class="btn" href="https://ewohub.com" target="_blank" rel="noopener">{btnTools}</a>
+      <a class="btn" href="https://www.ewohub.com/" target="_blank" rel="noopener">{btnTools}</a>
     </div>
   </div>
 </body>
