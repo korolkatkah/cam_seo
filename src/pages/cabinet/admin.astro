@@ -659,6 +659,8 @@ import Base from '@/layouts/Base.astro';
     importStatusEl.textContent = formatStatus(state);
     runImportBtn.disabled = state.running;
     runImportBtn.textContent = state.running ? 'Running...' : 'Run import now';
+    // The sheet is refreshed while the import runs, so show its progress too.
+    await pollExportStatus();
 
     if (state.running) {
       if (!pollTimer) pollTimer = setInterval(pollImportStatus, 4000);
@@ -690,7 +692,10 @@ import Base from '@/layouts/Base.astro';
   function formatExportStatus(state) {
     if (state.running) return 'Export running...';
     if (state.last_result?.error) return `Last export failed: ${state.last_result.error}`;
-    if (state.last_result) return 'Last export: done.';
+    if (state.last_result) {
+      const at = state.last_finished_at ? ` at ${new Date(state.last_finished_at).toLocaleTimeString()}` : '';
+      return `Last export: done${at}.`;
+    }
     return 'Idle.';
   }
 
