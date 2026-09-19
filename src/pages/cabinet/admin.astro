@@ -28,7 +28,7 @@ import Base from '@/layouts/Base.astro';
         <table class="targets-table">
           <thead>
             <tr>
-              <th>Worker</th><th>Link</th><th>Visits</th><th>Agency</th><th>Traffic</th><th>Analytics</th><th>Clicks</th><th>Last activity</th>
+              <th>Worker</th><th>Link</th><th class="num-h">Visits</th><th class="num-h">Agency</th><th class="num-h">Traffic</th><th class="num-h">Analytics</th><th class="num-h">Clicks</th><th>Last activity</th>
             </tr>
           </thead>
           <tbody id="links-body"></tbody>
@@ -72,7 +72,7 @@ import Base from '@/layouts/Base.astro';
 
     <div class="glass-card assign-card">
       <h2>Bulk assign</h2>
-      <p class="bulk-hint">Hands the worker the next N accounts from the database that haven't been assigned to anyone yet — no need to type usernames one by one.</p>
+      <p class="bulk-hint">Hands the worker the next N accounts from the database that haven't been assigned to anyone yet вЂ” no need to type usernames one by one.</p>
       <form id="bulk-form" class="assign-form">
         <label>
           Worker email
@@ -94,7 +94,10 @@ import Base from '@/layouts/Base.astro';
 
     <div class="glass-card import-card">
       <h2>Instagram targets database</h2>
-      <p class="import-status" id="import-status">Idle.</p>
+      <div class="progress" id="import-progress" hidden aria-hidden="true">
+        <div class="progress__fill" id="import-progress-fill"></div>
+      </div>
+      <p class="import-status" id="import-status" role="status" aria-live="polite">Idle.</p>
       <button id="run-import-btn" class="import-btn">Run import now</button>
 
       <p class="import-status" id="export-status" style="margin-top:1rem;">Idle.</p>
@@ -134,7 +137,7 @@ import Base from '@/layouts/Base.astro';
     <div class="task-row__main">
       <div>
         <span class="task-row__worker" data-field="worker"></span>
-        <span class="task-row__target">→ <a class="ig-link" data-field="target" target="_blank" rel="noopener"></a></span>
+        <span class="task-row__target">в†’ <a class="ig-link" data-field="target" target="_blank" rel="noopener"></a></span>
       </div>
       <span class="task-row__status" data-field="status"></span>
     </div>
@@ -229,12 +232,13 @@ import Base from '@/layouts/Base.astro';
     margin: -0.5rem 0 0.9rem;
   }
   .links-table-wrap { margin-bottom: 1.25rem; }
-  .targets-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  /* Rows are built in JS, so their selectors must be :global (Astro scopes styles to the template). */
   .targets-table th.num-h { text-align: right; }
-  .targets-table td.total { font-weight: 700; color: var(--fg); }
-  .link-cell { display: flex; align-items: center; gap: 0.5rem; }
-  .link-cell code { font-size: 0.78rem; color: var(--fg-muted); white-space: nowrap; }
-  .copy-btn {
+  :global(.targets-table td.num) { text-align: right; font-variant-numeric: tabular-nums; }
+  :global(.targets-table td.total) { font-weight: 700; color: var(--fg); }
+  :global(.link-cell) { display: flex; align-items: center; gap: 0.5rem; }
+  :global(.link-cell code) { font-size: 0.78rem; color: var(--fg-muted); white-space: nowrap; }
+  :global(.copy-btn) {
     font: inherit;
     font-size: 0.75rem;
     padding: 0.2rem 0.6rem;
@@ -244,7 +248,7 @@ import Base from '@/layouts/Base.astro';
     color: var(--fg-muted);
     cursor: pointer;
   }
-  .copy-btn:hover { color: var(--fg); }
+  :global(.copy-btn:hover) { color: var(--fg); }
   .link-form {
     display: flex;
     flex-wrap: wrap;
@@ -293,6 +297,31 @@ import Base from '@/layouts/Base.astro';
     font-size: 0.85rem;
     color: var(--fg-muted);
     margin: 0 0 1rem;
+  }
+  .progress {
+    height: 8px;
+    border-radius: 999px;
+    background: var(--bg-subtle);
+    overflow: hidden;
+    margin: 0 0 0.75rem;
+  }
+  .progress__fill {
+    height: 100%;
+    width: 0;
+    border-radius: 999px;
+    background: var(--accent);
+    transition: width 0.6s ease;
+  }
+  .progress__fill.is-indeterminate {
+    width: 35%;
+    animation: progress-slide 1.2s ease-in-out infinite alternate;
+  }
+  @keyframes progress-slide {
+    from { margin-left: 0; }
+    to { margin-left: 65%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .progress__fill.is-indeterminate { animation: none; margin-left: 0; width: 100%; opacity: 0.4; }
   }
   .import-btn {
     font: inherit;
@@ -603,15 +632,68 @@ import Base from '@/layouts/Base.astro';
   const targetsEmptyEl = document.getElementById('targets-empty');
   let pollTimer = null;
 
-  function formatStatus(state) {
-    if (state.running) return 'Import running...';
-    if (state.last_result?.error) return `Last run failed: ${state.last_result.error}`;
-    if (state.last_result) {
-      const { fetched = 0, saved = 0, skipped = 0 } = state.last_result;
-      return `Last run: fetched ${fetched}, saved ${saved} new, skipped ${skipped}.`;
-    }
-    return 'Idle.';
+  const progressEl = document.getElementById('import-progress');
+  const progressFillEl = document.getElementById('import-progress-fill');
+  let lastImportState = null;
+
+  function fmtDuration(ms) {
+    const total = Math.max(0, Math.round(ms / 1000));
+    const h = Math.floor(total / 3600);
+    const m = Math.floor((total % 3600) / 60);
+    const sec = total % 60;
+    if (h) return `${h}h ${m}m`;
+    if (m) return `${m}m ${String(sec).padStart(2, '0')}s`;
+    return `${sec}s`;
   }
+
+  function setProgress(pct) {
+    progressEl.hidden = false;
+    if (pct === null) {
+      progressFillEl.classList.add('is-indeterminate');
+      progressFillEl.style.width = '';
+    } else {
+      progressFillEl.classList.remove('is-indeterminate');
+      progressFillEl.style.width = `${pct}%`;
+    }
+  }
+
+  function renderImportStatus(state) {
+    lastImportState = state;
+    if (state.running) {
+      const p = state.progress || {};
+      const elapsed = state.last_started_at ? Date.now() - new Date(state.last_started_at).getTime() : 0;
+      if (p.phase === 'checking_profiles' && p.total) {
+        const pct = Math.round((p.checked / p.total) * 100);
+        setProgress(pct);
+        const eta = p.checked >= 10 ? ` В· about ${fmtDuration((elapsed / p.checked) * (p.total - p.checked))} left` : '';
+        const current = p.current ? ` В· checking ${p.current}` : '';
+        importStatusEl.textContent =
+          `Importing: ${p.checked} of ${p.total} profiles (${pct}%) В· ${p.saved} new В· ${p.skipped} skipped В· ${fmtDuration(elapsed)} elapsed${eta}${current}`;
+      } else if (p.phase === 'fetching_list') {
+        setProgress(null);
+        importStatusEl.textContent = `Importing: fetching the model list (page ${p.page || 0} of ${p.pages || '?'}) В· ${fmtDuration(elapsed)} elapsed`;
+      } else {
+        setProgress(null);
+        importStatusEl.textContent = `Importing: starting... В· ${fmtDuration(elapsed)} elapsed`;
+      }
+      return;
+    }
+    progressEl.hidden = true;
+    if (state.last_result?.error) {
+      importStatusEl.textContent = `Last run failed: ${state.last_result.error}`;
+    } else if (state.last_result) {
+      const { fetched = 0, saved = 0, skipped = 0 } = state.last_result;
+      const at = state.last_finished_at ? ` (finished ${new Date(state.last_finished_at).toLocaleString()})` : '';
+      importStatusEl.textContent = `Last run${at}: checked ${fetched} profiles, ${saved} new, ${skipped} skipped.`;
+    } else {
+      importStatusEl.textContent = 'Idle. No import has run since the server started.';
+    }
+  }
+
+  // Keep the elapsed timer moving between the 4-second polls.
+  setInterval(() => {
+    if (lastImportState?.running) renderImportStatus(lastImportState);
+  }, 1000);
 
   async function loadTargets() {
     const res = await authedFetch('/admin/targets?limit=100');
@@ -656,7 +738,7 @@ import Base from '@/layouts/Base.astro';
     const res = await authedFetch('/admin/import/status');
     if (!res.ok) return;
     const state = await res.json();
-    importStatusEl.textContent = formatStatus(state);
+    renderImportStatus(state);
     runImportBtn.disabled = state.running;
     runImportBtn.textContent = state.running ? 'Running...' : 'Run import now';
     // The sheet is refreshed while the import runs, so show its progress too.
@@ -675,7 +757,7 @@ import Base from '@/layouts/Base.astro';
     runImportBtn.disabled = true;
     const res = await authedFetch('/admin/import/run', { method: 'POST' });
     const state = await res.json();
-    importStatusEl.textContent = formatStatus(state);
+    renderImportStatus(state);
     runImportBtn.textContent = 'Running...';
     if (!pollTimer) pollTimer = setInterval(pollImportStatus, 4000);
   });
@@ -690,13 +772,14 @@ import Base from '@/layouts/Base.astro';
   let exportPollTimer = null;
 
   function formatExportStatus(state) {
-    if (state.running) return 'Export running...';
+    const rows = state.last_result?.rows;
+    const last = state.last_result && !state.last_result.error
+      ? ` Last update${state.last_finished_at ? ` ${new Date(state.last_finished_at).toLocaleTimeString()}` : ''}${rows != null ? `, ${rows} rows` : ''}${state.last_result.added ? ` (+${state.last_result.added} new)` : ''}.`
+      : '';
+    if (state.running) return `Sheet: updating...${last}`;
     if (state.last_result?.error) return `Last export failed: ${state.last_result.error}`;
-    if (state.last_result) {
-      const at = state.last_finished_at ? ` at ${new Date(state.last_finished_at).toLocaleTimeString()}` : '';
-      return `Last export: done${at}.`;
-    }
-    return 'Idle.';
+    if (state.last_result) return `Sheet up to date.${last}`;
+    return 'Sheet: no export yet.';
   }
 
   async function pollExportStatus() {
@@ -708,7 +791,7 @@ import Base from '@/layouts/Base.astro';
     runExportBtn.textContent = state.running ? 'Exporting...' : 'Export to Google Sheet';
 
     if (state.last_result?.web_view_link) {
-      exportLinkEl.innerHTML = `<a href="${state.last_result.web_view_link}" target="_blank" rel="noopener">Open spreadsheet →</a>`;
+      exportLinkEl.innerHTML = `<a href="${state.last_result.web_view_link}" target="_blank" rel="noopener">Open spreadsheet в†’</a>`;
       exportLinkEl.hidden = false;
     }
 
@@ -807,7 +890,7 @@ import Base from '@/layouts/Base.astro';
       cell.append(code, copyBtn);
       linkTd.appendChild(cell);
 
-      const last = item.last_event_at ? new Date(item.last_event_at).toLocaleString() : '—';
+      const last = item.last_event_at ? new Date(item.last_event_at).toLocaleString() : 'вЂ”';
       tr.append(
         nameTd,
         linkTd,
