@@ -28,7 +28,7 @@ import Base from '@/layouts/Base.astro';
         <table class="targets-table">
           <thead>
             <tr>
-              <th>Worker</th><th>Link</th><th class="num-h">Visits</th><th class="num-h">Agency</th><th class="num-h">Traffic</th><th class="num-h">Analytics</th><th class="num-h">Clicks</th><th>Last activity</th>
+              <th>Worker</th><th>Link</th><th class="num-h">Visits</th><th class="num-h">Agency</th><th class="num-h">Traffic</th><th class="num-h">Analytics</th><th class="num-h">Clicks</th><th>Last activity</th><th></th>
             </tr>
           </thead>
           <tbody id="links-body"></tbody>
@@ -49,49 +49,6 @@ import Base from '@/layouts/Base.astro';
       <p id="link-success" class="cabinet-success" hidden></p>
     </div>
 
-    <div class="glass-card assign-card">
-      <h2>Assign a task</h2>
-      <form id="assign-form" class="assign-form">
-        <label>
-          Worker email
-          <input type="email" id="worker-email" required placeholder="worker@example.com" />
-        </label>
-        <label>
-          Instagram username
-          <input type="text" id="target-username" required placeholder="some_model_acc" />
-        </label>
-        <label>
-          Message text (optional)
-          <textarea id="message-text" rows="2"></textarea>
-        </label>
-        <button type="submit">Assign</button>
-        <p id="assign-error" class="cabinet-error" hidden></p>
-        <p id="assign-success" class="cabinet-success" hidden>Task assigned.</p>
-      </form>
-    </div>
-
-    <div class="glass-card assign-card">
-      <h2>Bulk assign</h2>
-      <p class="bulk-hint">Hands the worker the next N accounts from the database that haven't been assigned to anyone yet — no need to type usernames one by one.</p>
-      <form id="bulk-form" class="assign-form">
-        <label>
-          Worker email
-          <input type="email" id="bulk-worker-email" required placeholder="worker@example.com" />
-        </label>
-        <label>
-          How many accounts
-          <input type="number" id="bulk-count" required min="1" max="500" value="20" />
-        </label>
-        <label>
-          Message text (optional)
-          <textarea id="bulk-message-text" rows="2"></textarea>
-        </label>
-        <button type="submit">Assign batch</button>
-        <p id="bulk-error" class="cabinet-error" hidden></p>
-        <p id="bulk-success" class="cabinet-success" hidden></p>
-      </form>
-    </div>
-
     <div class="glass-card import-card">
       <h2>Instagram targets database</h2>
       <div class="progress" id="import-progress" hidden aria-hidden="true">
@@ -110,7 +67,7 @@ import Base from '@/layouts/Base.astro';
 
     <div class="glass-card assign-card">
       <h2>Already handed out</h2>
-      <p class="bulk-hint">Paste the accounts you gave to someone outside the cabinet (links, @names or plain names, any separator). They are marked in the Google Sheet, grouped together at the top, and skipped by "Bulk assign".</p>
+      <p class="bulk-hint">Paste the accounts you gave to someone outside the cabinet (links, @names or plain names, any separator). They are marked in the Google Sheet and grouped together at the top.</p>
       <form id="handout-form" class="assign-form">
         <label>
           Given to
@@ -138,38 +95,8 @@ import Base from '@/layouts/Base.astro';
       </div>
     </div>
 
-    <h2 class="section-title">All tasks</h2>
-    <div class="filter-row">
-      <button data-filter="reported" class="filter-btn is-active">Awaiting review</button>
-      <button data-filter="">All</button>
-      <button data-filter="pending">Pending</button>
-      <button data-filter="approved">Approved</button>
-      <button data-filter="rejected">Rejected</button>
-    </div>
-    <p id="empty-state" hidden>No tasks in this view.</p>
-    <div id="task-list"></div>
   </section>
 </div>
-
-<template id="task-row-template">
-  <div class="task-row">
-    <div class="task-row__main">
-      <div>
-        <span class="task-row__worker" data-field="worker"></span>
-        <span class="task-row__target">→ <a class="ig-link" data-field="target" target="_blank" rel="noopener"></a></span>
-      </div>
-      <span class="task-row__status" data-field="status"></span>
-    </div>
-    <p class="task-row__message" data-field="message"></p>
-    <p class="task-row__screenshot" data-field="screenshot" hidden></p>
-    <div class="task-row__actions" data-field="review-actions" hidden>
-      <input type="text" data-field="note" placeholder="Note (optional)" />
-      <button data-field="approve-btn" class="approve-btn">Approve</button>
-      <button data-field="reject-btn" class="reject-btn">Reject</button>
-    </div>
-    <p class="task-row__note" data-field="existing-note" hidden></p>
-  </div>
-</template>
 
 <style>
   .cabinet-wrap {
@@ -421,107 +348,6 @@ import Base from '@/layouts/Base.astro';
   .ig-link:hover { text-decoration: underline; }
   .targets-table td.source a { color: var(--fg-muted); text-decoration: none; }
   .targets-table td.source a:hover { text-decoration: underline; }
-  .filter-row {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 1.25rem;
-  }
-  .filter-btn {
-    font: inherit;
-    font-size: 0.8rem;
-    padding: 0.4rem 0.8rem;
-    border-radius: 999px;
-    border: 1px solid var(--bg-subtle);
-    background: transparent;
-    color: var(--fg-muted);
-    cursor: pointer;
-  }
-  .filter-btn.is-active {
-    background: var(--accent);
-    color: var(--bg);
-    border-color: var(--accent);
-  }
-
-  #task-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  .task-row {
-    background: var(--bg-raised);
-    border: 1px solid var(--bg-subtle);
-    border-radius: 12px;
-    padding: 1.25rem;
-  }
-  .task-row__main {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: 0.5rem;
-  }
-  .task-row__worker {
-    font-weight: 700;
-    color: var(--fg);
-  }
-  .task-row__target {
-    color: var(--fg-muted);
-    font-size: 0.9rem;
-  }
-  .task-row__status {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    padding: 0.2rem 0.6rem;
-    border-radius: 999px;
-    background: var(--bg-subtle);
-    color: var(--fg-muted);
-    white-space: nowrap;
-  }
-  .task-row__status--reported { background: #fff3cd; color: #7a5c00; }
-  .task-row__status--approved { background: #d4edda; color: #1e6b34; }
-  .task-row__status--rejected { background: #f8d7da; color: #a12a2a; }
-  .task-row__message {
-    color: var(--fg-muted);
-    font-size: 0.9rem;
-    margin: 0 0 0.6rem;
-  }
-  .task-row__screenshot a {
-    color: var(--fg);
-    font-size: 0.85rem;
-  }
-  .task-row__actions {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    flex-wrap: wrap;
-    margin-top: 0.75rem;
-  }
-  .task-row__actions input {
-    font: inherit;
-    padding: 0.5rem 0.7rem;
-    border-radius: 8px;
-    border: 1px solid var(--bg-subtle);
-    background: var(--bg);
-    color: var(--fg);
-    flex: 1 1 180px;
-  }
-  .task-row__actions button {
-    font: inherit;
-    font-weight: 600;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-  }
-  .approve-btn { background: #1e6b34; color: #fff; }
-  .reject-btn { background: #a12a2a; color: #fff; }
-  .task-row__note {
-    margin: 0.6rem 0 0;
-    font-size: 0.85rem;
-    color: var(--fg-muted);
-  }
 </style>
 
 </Base>
@@ -535,10 +361,6 @@ import Base from '@/layouts/Base.astro';
 
   const deniedEl = document.getElementById('denied');
   const contentEl = document.getElementById('admin-content');
-  const listEl = document.getElementById('task-list');
-  const emptyEl = document.getElementById('empty-state');
-  const template = document.getElementById('task-row-template');
-  let currentFilter = 'reported';
 
   document.getElementById('logout-btn').addEventListener('click', () => {
     localStorage.removeItem('cabinet_token');
@@ -557,108 +379,6 @@ import Base from '@/layouts/Base.astro';
     }
     return res;
   }
-
-  function renderTask(task) {
-    const node = template.content.cloneNode(true);
-    const row = node.querySelector('.task-row');
-    row.querySelector('[data-field="worker"]').textContent = task.worker_email;
-    const targetLink = row.querySelector('[data-field="target"]');
-    targetLink.textContent = `@${task.target_username}`;
-    targetLink.href = `https://www.instagram.com/${encodeURIComponent(task.target_username)}/`;
-    row.querySelector('[data-field="message"]').textContent = task.message_text || '';
-
-    const statusEl = row.querySelector('[data-field="status"]');
-    statusEl.textContent = task.status;
-    statusEl.classList.add(`task-row__status--${task.status}`);
-
-    if (task.proof_screenshot_path) {
-      const p = row.querySelector('[data-field="screenshot"]');
-      p.hidden = false;
-      p.textContent = `Screenshot attached: ${task.proof_screenshot_path}`;
-    }
-
-    if (task.status === 'reported') {
-      const actions = row.querySelector('[data-field="review-actions"]');
-      actions.hidden = false;
-      const noteInput = row.querySelector('[data-field="note"]');
-      const approveBtn = row.querySelector('[data-field="approve-btn"]');
-      const rejectBtn = row.querySelector('[data-field="reject-btn"]');
-
-      const review = async (approve) => {
-        approveBtn.disabled = true;
-        rejectBtn.disabled = true;
-        try {
-          const res = await authedFetch(`/tasks/${task.id}/review`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ approve, note: noteInput.value || null }),
-          });
-          if (!res.ok) throw new Error('Review failed');
-          await loadTasks();
-        } catch {
-          approveBtn.disabled = false;
-          rejectBtn.disabled = false;
-        }
-      };
-      approveBtn.addEventListener('click', () => review(true));
-      rejectBtn.addEventListener('click', () => review(false));
-    } else if (task.review_note) {
-      const noteEl = row.querySelector('[data-field="existing-note"]');
-      noteEl.hidden = false;
-      noteEl.textContent = `Note: ${task.review_note}`;
-    }
-
-    listEl.appendChild(row);
-  }
-
-  async function loadTasks() {
-    listEl.innerHTML = '';
-    const qs = currentFilter ? `?status_filter=${currentFilter}` : '';
-    const res = await authedFetch(`/tasks/all${qs}`);
-    if (!res.ok) return;
-    const tasks = await res.json();
-    emptyEl.hidden = tasks.length > 0;
-    tasks.forEach(renderTask);
-  }
-
-  document.querySelectorAll('.filter-btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.filter-btn').forEach((b) => b.classList.remove('is-active'));
-      btn.classList.add('is-active');
-      currentFilter = btn.dataset.filter;
-      loadTasks();
-    });
-  });
-
-  document.getElementById('assign-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const assignError = document.getElementById('assign-error');
-    const assignSuccess = document.getElementById('assign-success');
-    assignError.hidden = true;
-    assignSuccess.hidden = true;
-
-    const worker_email = document.getElementById('worker-email').value;
-    const target_username = document.getElementById('target-username').value;
-    const message_text = document.getElementById('message-text').value || null;
-
-    try {
-      const res = await authedFetch('/tasks', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ worker_email, target_username, message_text }),
-      });
-      if (!res.ok) {
-        const data = await res.json().catch(() => null);
-        throw new Error(data?.detail || 'Failed to assign task');
-      }
-      assignSuccess.hidden = false;
-      document.getElementById('assign-form').reset();
-      await loadTasks();
-    } catch (err) {
-      assignError.textContent = err instanceof Error ? err.message : 'Failed to assign task';
-      assignError.hidden = false;
-    }
-  });
 
   // --- Instagram targets database + manual import ---
 
@@ -906,39 +626,6 @@ import Base from '@/layouts/Base.astro';
     if (!exportPollTimer) exportPollTimer = setInterval(pollExportStatus, 4000);
   });
 
-  document.getElementById('bulk-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const bulkError = document.getElementById('bulk-error');
-    const bulkSuccess = document.getElementById('bulk-success');
-    bulkError.hidden = true;
-    bulkSuccess.hidden = true;
-
-    const worker_email = document.getElementById('bulk-worker-email').value;
-    const count = parseInt(document.getElementById('bulk-count').value, 10);
-    const message_text = document.getElementById('bulk-message-text').value || null;
-
-    try {
-      const res = await authedFetch('/tasks/bulk', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ worker_email, count, message_text }),
-      });
-      if (!res.ok) {
-        const data = await res.json().catch(() => null);
-        throw new Error(data?.detail || 'Failed to bulk-assign');
-      }
-      const data = await res.json();
-      bulkSuccess.textContent = `Assigned ${data.assigned} of ${data.requested} requested (database had ${data.assigned} unassigned accounts left).`;
-      bulkSuccess.hidden = false;
-      document.getElementById('bulk-form').reset();
-      document.getElementById('bulk-count').value = 20;
-      await loadTasks();
-    } catch (err) {
-      bulkError.textContent = err instanceof Error ? err.message : 'Failed to bulk-assign';
-      bulkError.hidden = false;
-    }
-  });
-
   // --- Tracking links (per-worker /links?ref=... with click counters) ---
 
   const linksBody = document.getElementById('links-body');
@@ -983,6 +670,23 @@ import Base from '@/layouts/Base.astro';
       cell.append(code, copyBtn);
       linkTd.appendChild(cell);
 
+      const actionTd = document.createElement('td');
+      if (item.ref !== 'direct') {
+        const delBtn = document.createElement('button');
+        delBtn.type = 'button';
+        delBtn.className = 'undo-btn';
+        delBtn.textContent = 'Delete';
+        delBtn.addEventListener('click', async () => {
+          const stats = `${item.visits} visits and ${item.total_clicks} clicks`;
+          if (!confirm(`Delete the link "${item.ref}"? Its statistics (${stats}) are deleted too. This cannot be undone.`)) return;
+          delBtn.disabled = true;
+          const r = await authedFetch(`/admin/links/${encodeURIComponent(item.ref)}`, { method: 'DELETE' });
+          if (r.ok) await loadLinks();
+          else delBtn.disabled = false;
+        });
+        actionTd.appendChild(delBtn);
+      }
+
       const last = item.last_event_at ? new Date(item.last_event_at).toLocaleString() : '—';
       tr.append(
         nameTd,
@@ -993,6 +697,7 @@ import Base from '@/layouts/Base.astro';
         textCell(item.clicks.analytics, 'num'),
         textCell(item.total_clicks, 'num total'),
         textCell(last),
+        actionTd,
       );
       linksBody.appendChild(tr);
     }
@@ -1043,7 +748,6 @@ import Base from '@/layouts/Base.astro';
       contentEl.hidden = false;
       await loadLinks().catch(() => {});
       await loadHandouts().catch(() => {});
-      await loadTasks();
       await pollImportStatus();
       await pollExportStatus();
     } catch {
