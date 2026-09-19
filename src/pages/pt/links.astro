@@ -1,42 +1,92 @@
 ---
-import Base from '@/layouts/Base.astro';
 const site = 'https://www.ewohub.com';
+const lang = 'pt';
+const title = 'EWO Links Rápidos';
+const description = 'Links rápidos para vagas da EWO, nosso canal do Telegram e ferramentas gratuitas de promoção.';
+const hreflang = [
+  { lang: 'en', url: `${site}/links` },
+  { lang: 'de', url: `${site}/de/links` },
+  { lang: 'es', url: `${site}/es/links` },
+  { lang: 'ro', url: `${site}/ro/links` },
+  { lang: 'uk', url: `${site}/uk/links` },
+  { lang: 'ru', url: `${site}/ru/links` },
+  { lang: 'fr', url: `${site}/fr/links` },
+  { lang: 'pt', url: `${site}/pt/links` },
+];
+const heading = 'EWO';
+const sub = 'Tudo o que você precisa em um só lugar.';
+const btnJobs = 'Carreiras — Candidate-se →';
+const btnTelegram = 'Canal do Telegram →';
+const btnTools = 'Ferramentas gratuitas →';
 ---
 
-<Base
-  title="Links Rápidos"
-  description="Links rápidos para vagas da EWO, nosso canal do Telegram e ferramentas gratuitas de promoção."
-  lang="pt"
-  hreflang={[
-    { lang: 'en', url: `${site}/links` },
-    { lang: 'de', url: `${site}/de/links` },
-    { lang: 'es', url: `${site}/es/links` },
-    { lang: 'ro', url: `${site}/ro/links` },
-    { lang: 'uk', url: `${site}/uk/links` },
-    { lang: 'ru', url: `${site}/ru/links` },
-    { lang: 'fr', url: `${site}/fr/links` },
-    { lang: 'pt', url: `${site}/pt/links` },
-  ]}
->
-
-<div class="art-hero">
-  <div class="art-orb art-orb--1"></div>
-  <div class="art-orb art-orb--2"></div>
-  <div class="art-grid"></div>
-  <div class="art-hero__inner container">
-    <h1 class="art-title">EWO <span class="art-grad">Links Rápidos</span></h1>
-    <p class="art-lead">Tudo o que você precisa em um só lugar.</p>
-  </div>
-</div>
-
-<div class="art-body">
-  <div class="container" style="max-width:480px;">
-    <div class="glass-card" style="display:flex;flex-direction:column;gap:1rem;">
-      <a href="https://ewomodels.com/en" target="_blank" rel="noopener" class="art-cta__btn art-cta__btn--primary" style="display:block;text-align:center;">Carreiras — Candidate-se →</a>
-      <a href="https://t.me/webcam_ewo" target="_blank" rel="noopener" class="art-cta__btn art-cta__btn--primary" style="display:block;text-align:center;">Canal do Telegram →</a>
-      <a href="https://ewohub.com" target="_blank" rel="noopener" class="art-cta__btn art-cta__btn--ghost" style="display:block;text-align:center;">Ferramentas gratuitas →</a>
+<!doctype html>
+<html lang={lang}>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title} | EWO</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={`${site}/pt/links`} />
+  {hreflang.map(({ lang: l, url }) => (
+    <link rel="alternate" hreflang={l} href={url} />
+  ))}
+  <link rel="alternate" hreflang="x-default" href={`${site}/links`} />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@1,300;1,400;1,600;1,700&family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #fafaf8;
+      --card: #ffffff;
+      --border: rgba(10,10,10,0.1);
+      --fg: #0a0a0a;
+      --fg-muted: rgba(10,10,10,0.68);
+      --font-heading: 'Josefin Sans', system-ui, sans-serif;
+      --font-body: 'Nunito', system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.25rem;
+    }
+    .wrap { max-width: 420px; width: 100%; text-align: center; }
+    .logo { font-family: var(--font-heading); font-weight: 700; font-size: 1.75rem; letter-spacing: 0.02em; margin-bottom: 0.4rem; }
+    .sub { color: var(--fg-muted); margin: 0 0 2rem; font-size: 0.95rem; }
+    .links { display: flex; flex-direction: column; gap: 0.9rem; }
+    .btn {
+      display: block;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem;
+      color: var(--fg);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+    .btn:hover { transform: translateY(-2px); border-color: rgba(10,10,10,0.25); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <p class="logo">{heading}</p>
+    <p class="sub">{sub}</p>
+    <div class="links">
+      <a class="btn" href="https://ewomodels.com/en" target="_blank" rel="noopener">{btnJobs}</a>
+      <a class="btn" href="https://t.me/webcam_ewo" target="_blank" rel="noopener">{btnTelegram}</a>
+      <a class="btn" href="https://ewohub.com" target="_blank" rel="noopener">{btnTools}</a>
     </div>
   </div>
-</div>
-
-</Base>
+</body>
+</html>
