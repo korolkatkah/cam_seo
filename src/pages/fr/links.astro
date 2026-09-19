@@ -1,0 +1,42 @@
+---
+import Base from '@/layouts/Base.astro';
+const site = 'https://www.ewohub.com';
+---
+
+<Base
+  title="Liens Rapides"
+  description="Liens rapides vers les offres d'emploi EWO, notre canal Telegram et des outils de promotion gratuits."
+  lang="fr"
+  hreflang={[
+    { lang: 'en', url: `${site}/links` },
+    { lang: 'de', url: `${site}/de/links` },
+    { lang: 'es', url: `${site}/es/links` },
+    { lang: 'ro', url: `${site}/ro/links` },
+    { lang: 'uk', url: `${site}/uk/links` },
+    { lang: 'ru', url: `${site}/ru/links` },
+    { lang: 'fr', url: `${site}/fr/links` },
+    { lang: 'pt', url: `${site}/pt/links` },
+  ]}
+>
+
+<div class="art-hero">
+  <div class="art-orb art-orb--1"></div>
+  <div class="art-orb art-orb--2"></div>
+  <div class="art-grid"></div>
+  <div class="art-hero__inner container">
+    <h1 class="art-title">EWO <span class="art-grad">Liens Rapides</span></h1>
+    <p class="art-lead">Tout ce dont vous avez besoin, au même endroit.</p>
+  </div>
+</div>
+
+<div class="art-body">
+  <div class="container" style="max-width:480px;">
+    <div class="glass-card" style="display:flex;flex-direction:column;gap:1rem;">
+      <a href="https://ewomodels.com/en" target="_blank" rel="noopener" class="art-cta__btn art-cta__btn--primary" style="display:block;text-align:center;">Carrières — Postuler →</a>
+      <a href="https://t.me/webcam_ewo" target="_blank" rel="noopener" class="art-cta__btn art-cta__btn--primary" style="display:block;text-align:center;">Canal Telegram →</a>
+      <a href="https://ewohub.com" target="_blank" rel="noopener" class="art-cta__btn art-cta__btn--ghost" style="display:block;text-align:center;">Outils gratuits →</a>
+    </div>
+  </div>
+</div>
+
+</Base>
