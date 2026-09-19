@@ -19,6 +19,37 @@ import Base from '@/layouts/Base.astro';
 
   <section id="admin-content" hidden>
     <div class="glass-card assign-card">
+      <div class="targets-header">
+        <h2 class="section-title">Tracking links</h2>
+        <button id="refresh-links-btn" class="ghost-btn">Refresh</button>
+      </div>
+      <p class="bulk-hint">One link per worker for the EWOMODELS mini-landing. Every visit and button click is counted under the worker whose link was opened.</p>
+      <div class="targets-table-wrap links-table-wrap">
+        <table class="targets-table">
+          <thead>
+            <tr>
+              <th>Worker</th><th>Link</th><th>Visits</th><th>Agency</th><th>Traffic</th><th>Analytics</th><th>Clicks</th><th>Last activity</th>
+            </tr>
+          </thead>
+          <tbody id="links-body"></tbody>
+        </table>
+      </div>
+      <form id="link-form" class="link-form">
+        <label>
+          Ref (in the link)
+          <input type="text" id="link-ref" required minlength="2" maxlength="32" pattern="[a-zA-Z0-9_\-]{2,32}" placeholder="anna" />
+        </label>
+        <label>
+          Worker name (optional)
+          <input type="text" id="link-label" maxlength="255" placeholder="Anna K." />
+        </label>
+        <button type="submit">Create link</button>
+      </form>
+      <p id="link-error" class="cabinet-error" hidden></p>
+      <p id="link-success" class="cabinet-success" hidden></p>
+    </div>
+
+    <div class="glass-card assign-card">
       <h2>Assign a task</h2>
       <form id="assign-form" class="assign-form">
         <label>
@@ -197,6 +228,56 @@ import Base from '@/layouts/Base.astro';
     color: var(--fg-muted);
     margin: -0.5rem 0 0.9rem;
   }
+  .links-table-wrap { margin-bottom: 1.25rem; }
+  .targets-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .targets-table th.num-h { text-align: right; }
+  .targets-table td.total { font-weight: 700; color: var(--fg); }
+  .link-cell { display: flex; align-items: center; gap: 0.5rem; }
+  .link-cell code { font-size: 0.78rem; color: var(--fg-muted); white-space: nowrap; }
+  .copy-btn {
+    font: inherit;
+    font-size: 0.75rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    border: 1px solid var(--bg-subtle);
+    background: transparent;
+    color: var(--fg-muted);
+    cursor: pointer;
+  }
+  .copy-btn:hover { color: var(--fg); }
+  .link-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 0.9rem;
+  }
+  .link-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    color: var(--fg-muted);
+    flex: 1 1 180px;
+  }
+  .link-form input {
+    font: inherit;
+    padding: 0.6rem 0.75rem;
+    border-radius: 8px;
+    border: 1px solid var(--bg-subtle);
+    background: var(--bg);
+    color: var(--fg);
+  }
+  .link-form button {
+    font: inherit;
+    font-weight: 600;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    border: none;
+    background: var(--accent);
+    color: var(--bg);
+    cursor: pointer;
+  }
+  .link-form button:hover { opacity: 0.85; }
 
   .import-card {
     padding: 1.5rem;
@@ -677,6 +758,98 @@ import Base from '@/layouts/Base.astro';
     }
   });
 
+  // --- Tracking links (per-worker /links?ref=... with click counters) ---
+
+  const linksBody = document.getElementById('links-body');
+
+  function textCell(text, className) {
+    const td = document.createElement('td');
+    if (className) td.className = className;
+    td.textContent = text;
+    return td;
+  }
+
+  async function loadLinks() {
+    const res = await authedFetch('/admin/links');
+    if (!res.ok) return;
+    const data = await res.json();
+    linksBody.innerHTML = '';
+    for (const item of data.items) {
+      const tr = document.createElement('tr');
+
+      const nameTd = document.createElement('td');
+      nameTd.className = 'username';
+      nameTd.textContent = item.ref === 'direct' ? item.label : item.label ? `${item.label} (${item.ref})` : item.ref;
+
+      const linkTd = document.createElement('td');
+      const cell = document.createElement('div');
+      cell.className = 'link-cell';
+      const code = document.createElement('code');
+      code.textContent = item.url.replace('https://', '');
+      const copyBtn = document.createElement('button');
+      copyBtn.type = 'button';
+      copyBtn.className = 'copy-btn';
+      copyBtn.textContent = 'Copy';
+      copyBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(item.url);
+          copyBtn.textContent = 'Copied';
+        } catch {
+          copyBtn.textContent = 'Failed';
+        }
+        setTimeout(() => { copyBtn.textContent = 'Copy'; }, 1500);
+      });
+      cell.append(code, copyBtn);
+      linkTd.appendChild(cell);
+
+      const last = item.last_event_at ? new Date(item.last_event_at).toLocaleString() : '—';
+      tr.append(
+        nameTd,
+        linkTd,
+        textCell(item.visits, 'num'),
+        textCell(item.clicks.agency, 'num'),
+        textCell(item.clicks.traffic, 'num'),
+        textCell(item.clicks.analytics, 'num'),
+        textCell(item.total_clicks, 'num total'),
+        textCell(last),
+      );
+      linksBody.appendChild(tr);
+    }
+  }
+
+  document.getElementById('refresh-links-btn').addEventListener('click', loadLinks);
+
+  document.getElementById('link-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const linkError = document.getElementById('link-error');
+    const linkSuccess = document.getElementById('link-success');
+    linkError.hidden = true;
+    linkSuccess.hidden = true;
+
+    const ref = document.getElementById('link-ref').value;
+    const label = document.getElementById('link-label').value || null;
+
+    try {
+      const res = await authedFetch('/admin/links', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ref, label }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        throw new Error(typeof data?.detail === 'string' ? data.detail : 'Failed to create link');
+      }
+      const created = await res.json();
+      linkSuccess.textContent = `Created: ${created.url}`;
+      linkSuccess.hidden = false;
+      document.getElementById('link-form').reset();
+      await loadLinks();
+    } catch (err) {
+      linkError.textContent = err instanceof Error ? err.message : 'Failed to create link';
+      linkError.hidden = false;
+    }
+  });
+
   async function init() {
     try {
       const res = await authedFetch('/auth/me');
@@ -687,6 +860,7 @@ import Base from '@/layouts/Base.astro';
         return;
       }
       contentEl.hidden = false;
+      await loadLinks().catch(() => {});
       await loadTasks();
       await loadTargets();
       await pollImportStatus();

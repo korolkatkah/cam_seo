@@ -122,6 +122,13 @@ Two scheduled cloud tasks publish articles automatically: `ewo-daily-article` (1
 - Phase 2 geo-page plan (13 countries) is only ~6 built (USA, Germany, Romania, Ukraine, Colombia, Spain); Canada, Bulgaria, Russia, Sweden, Poland, France, England, Netherlands still missing.
 - No BreadcrumbList or Article/BlogPosting structured data on content pages (only Organization/WebSite + client-side-generated FAQPage).
 
+## `/links` mini-landing (EWOMODELS) + per-worker tracking
+
+- Standalone pages, **no `Base.astro` layout** (no site header/footer): `src/pages/links.astro` + `src/pages/{de,es,ro,uk,ru,fr,pt}/links.astro`. The 8 files are identical except `lang`/`path`, so edit all 8 together. Design "Halo" (ring-light logo, warm palette), copy is English in every locale on purpose. The root `/links` redirects by browser language client-side, honouring the `ewo-lang-set` localStorage flag (same as the homepage), and keeps `?ref=`.
+- Worker link = `https://www.ewohub.com/links?ref=<ref>` (ref: `a-z 0-9 - _`, 2-32 chars). The page posts `visit`/`click` events (text/plain, no preflight) to the backend `POST /public/track` and to GA4 (`link_click`, param `ref`).
+- Admin cabinet (`/cabinet/admin`) has a "Tracking links" block: per-ref visits, clicks per button (agency/traffic/analytics), copy-link button, create-link form. Unknown refs are counted under `direct`.
+- Backend = separate FastAPI + Postgres app "worker-cabinet" on Railway (`https://worker-cabinet-production.up.railway.app`), source in `D:\WORKER-CABINET` (deployed with `railway up --ci --service worker-cabinet` from that folder). Its endpoints are documented in that repo's `API.md`.
+
 ## Where else to check
 
 - `PROMOTION_PLAN.md` — dated running log of what shipped and why (chronological, not a reference doc — don't duplicate its content here, just consult it for history).

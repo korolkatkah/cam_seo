@@ -29,14 +29,34 @@ const btnTools = 'Analytics for webcam';
 <!doctype html>
 <html lang={lang}>
 <head>
+  <meta charset="UTF-8" />
+  <script is:inline>
+    (function () {
+      try { if (localStorage.getItem('ewo-lang-set')) return; } catch (e) {}
+      var l = (navigator.language || navigator.userLanguage || '').slice(0, 2).toLowerCase();
+      var m = { de: '/de/links', es: '/es/links', ro: '/ro/links', ru: '/ru/links', uk: '/uk/links', fr: '/fr/links', pt: '/pt/links' };
+      if (m[l]) { window.__ewoRedirect = true; window.location.replace(m[l] + location.search); }
+    })();
+  </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-6H89TM92EZ"></script>
   <script is:inline>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-6H89TM92EZ');
+    var ewoRef = '';
+    try {
+      var q = new URLSearchParams(location.search).get('ref');
+      if (q) {
+        ewoRef = q.toLowerCase().replace(/[^a-z0-9_-]/g, '').slice(0, 32);
+        if (ewoRef) sessionStorage.setItem('ewo-ref', ewoRef);
+      }
+      if (!ewoRef) ewoRef = sessionStorage.getItem('ewo-ref') || '';
+    } catch (e) {}
+    window.ewoRef = ewoRef;
+    if (!window.__ewoRedirect) {
+      gtag('js', new Date());
+      gtag('config', 'G-6H89TM92EZ', ewoRef ? { ref: ewoRef } : {});
+    }
   </script>
-  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
   <meta name="description" content={description} />
@@ -52,14 +72,6 @@ const btnTools = 'Analytics for webcam';
   <meta property="og:image" content="https://www.ewohub.com/logo-neon.png" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="theme-color" content="#0f0e0c" />
-  <script is:inline>
-    (function () {
-      try { if (localStorage.getItem('ewo-lang-set')) return; } catch (e) {}
-      var l = (navigator.language || navigator.userLanguage || '').slice(0, 2).toLowerCase();
-      var m = { de: '/de/links', es: '/es/links', ro: '/ro/links', ru: '/ru/links', uk: '/uk/links', fr: '/fr/links', pt: '/pt/links' };
-      if (m[l]) window.location.replace(m[l]);
-    })();
-  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
@@ -177,15 +189,15 @@ const btnTools = 'Analytics for webcam';
     <h1 class="brand">{heading}</h1>
     <p class="sub">{subLine1}<br>{subLine2}</p>
     <div class="links">
-      <a class="strip lit" href="https://t.me/ewomodels" target="_blank" rel="noopener">
+      <a class="strip lit" data-link="agency" href="https://t.me/ewomodels" target="_blank" rel="noopener">
         <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M16 4.6a3.5 3.5 0 010 6.8M18.2 14.4c2 .7 3.3 2.5 3.3 5.6"/></svg>
         {btnJobs}
       </a>
-      <a class="strip" href="https://t.me/webcam_ewo/76" target="_blank" rel="noopener">
+      <a class="strip" data-link="traffic" href="https://t.me/webcam_ewo/76" target="_blank" rel="noopener">
         <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="15 7 21 7 21 13"/></svg>
         {btnTelegram}
       </a>
-      <a class="strip" href="https://www.ewohub.com/" target="_blank" rel="noopener">
+      <a class="strip" data-link="analytics" href="https://www.ewohub.com/" target="_blank" rel="noopener">
         <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="20" x2="6" y2="11"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="18" y1="20" x2="18" y2="14"/></svg>
         {btnTools}
       </a>
@@ -209,7 +221,51 @@ const btnTools = 'Analytics for webcam';
       document.querySelectorAll('.lang-opt').forEach(function (a) {
         a.addEventListener('click', function () {
           try { localStorage.setItem('ewo-lang-set', '1'); } catch (e) {}
+          if (window.ewoRef) {
+            try {
+              var u = new URL(a.href);
+              u.searchParams.set('ref', window.ewoRef);
+              a.href = u.toString();
+            } catch (e) {}
+          }
         });
+      });
+      var TRACK_URL = 'https://worker-cabinet-production.up.railway.app/public/track';
+      function send(payload) {
+        try {
+          fetch(TRACK_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain' },
+            body: JSON.stringify(payload),
+            keepalive: true,
+            credentials: 'omit'
+          }).catch(function () {});
+        } catch (e) {}
+      }
+      var ref = window.ewoRef || 'direct';
+      var lang = document.documentElement.lang;
+      if (!window.__ewoRedirect) {
+        var seen = '';
+        try { seen = sessionStorage.getItem('ewo-visit') || ''; } catch (e) {}
+        if (seen !== ref) {
+          send({ event: 'visit', ref: ref, lang: lang });
+          try { sessionStorage.setItem('ewo-visit', ref); } catch (e) {}
+        }
+      }
+      function track(a) {
+        var name = a.getAttribute('data-link');
+        send({ event: 'click', ref: ref, link_name: name, lang: lang });
+        if (typeof gtag !== 'function') return;
+        gtag('event', 'link_click', {
+          link_name: name,
+          link_url: a.href,
+          ref: ref,
+          page_lang: lang
+        });
+      }
+      document.querySelectorAll('.strip[data-link]').forEach(function (a) {
+        a.addEventListener('click', function () { track(a); });
+        a.addEventListener('auxclick', function () { track(a); });
       });
     })();
   </script>
