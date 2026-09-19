@@ -4,6 +4,48 @@ Running log of daily/session-based SEO & promotion action plans. Newest entry on
 
 ---
 
+## 2026-09-19
+
+### Daily SEO monitoring — Saturday light check (read-only, automated)
+
+Scoped to the last 1 day per session instruction (task file normally allows 1-2 days). `git log --since="24 hours ago"` on `src/pages/` and on the whole repo returned zero commits — no new article was published by either the AM or PM daily-article pipeline task today.
+
+**Flag for an active session:** this isn't just a quiet single day — the repo's most recent commit of any kind is `64fce6b6` on 2026-09-12 (a `chore: update cb trends data` commit), and the most recent actual article ship logged in this file is the 2026-09-10 PM entry ("Stripchat's Viewer Mode: See Your Stream Like Your Audience Does"). That's a 9-day gap with no new content and a 7-day gap with no commits of any kind, which is inconsistent with the pipeline's documented 2/day cadence (`ewo-daily-article` 10:00, `ewo-daily-article-pm` 15:00 per `CLAUDE.md`). Worth checking whether those two scheduled tasks are still active/running (`list_scheduled_tasks` / `list_task_runs`) — this monitoring task is read-only and cannot fix or re-trigger them.
+
+No site content changed, no build run, no commits made (read-only monitoring task).
+
+### Ad-hoc: "are we Google-banned?" check (user-prompted, read-only)
+
+User asked directly whether the site looks penalized/banned given the flat 0-click GSC numbers. Pulled a fresh 28-day GSC snapshot (window **2026-08-21 → 2026-09-17**, i.e. ~1 week after the 2026-09-10 Thursday baseline) plus URL Inspection spot-checks, to answer with evidence rather than the trends-data question.
+
+**Fresh totals:** 14 impressions, 0 clicks, CTR 0%, avg position 15.2 — vs. 2026-09-10 baseline (22 impr / pos 17.2). Impressions down, position slightly better; still single-digit-per-page sample sizes. Per-page: 9 pages with impressions (was 13). `/how-cam-algorithm-ranks-rooms` improved to position 1. `/stripscore-cam-rank-explained` (root) fell back to 4 impr / pos 3.5 from 6 impr / pos 1.33 — worth re-watching, not yet a trend.
+
+**URL Inspection (5 sample URLs) — no ban signal:**
+- `/`, `/stripscore-cam-rank-explained`, `/de/stripchat-promo` → verdict `PASS`, "Submitted and indexed", `robotsTxtState: ALLOWED`, `indexingState: INDEXING_ALLOWED`
+- `/how-cam-algorithm-ranks-rooms` → `NEUTRAL`, "Crawled - currently not indexed" (normal for a thin/low-authority page, not a penalty state)
+- `/stripchat-viewer-mode-stream-check` (the 2026-09-10 article) → `NEUTRAL`, **"URL is unknown to Google"** — flagged this for a deeper look below
+
+**Sitemap:** `sitemap-index.xml` → single `sitemap-0.xml`, 432 `<loc>` entries, 0 errors/0 warnings, last downloaded by Google 2026-09-18 (1 day before this check) — healthy and fresh.
+
+**Deeper look at the "unknown to Google" article** (`stripchat-viewer-mode-stream-check`), since 9 days with zero discovery on a freshly-shipped, promoted article is unusual:
+- Live URL returns HTTP `200`, canonical tag correct (`https://www.ewohub.com/stripchat-viewer-mode-stream-check`), `robots.txt` is `Allow: /` for all UAs with the sitemap referenced — nothing blocking.
+- URL **is** present in `sitemap-0.xml` (found 8 times — once per locale), so it's not missing from the feed Google already fetched cleanly yesterday.
+- Title tag is 70 chars ("Stripchat's Viewer Mode: See Your Stream Like Your Audience Does | EWO") — over the ~50-60 target, likely truncates in SERPs but not a discovery blocker.
+- Meta description is **242 chars**, well over the ~150-160 target — Google will truncate it; not a discovery blocker either, but worth trimming next time the page is touched.
+- Internal links: page **is** linked from all 8 locale `blog.astro` listings plus one other article (`stripchat-magic-search-discoverability.astro`, root locale only) — not orphaned.
+
+**Conclusion: not a ban.** No manual-action-style signals (no blanket de-indexing, robots/canonical/status all clean, sitemap healthy, other same-cluster pages actively indexed and ranking position 1-4). The flat zero-click numbers and one still-undiscovered article read as **low domain authority + low crawl budget on a young, low-traffic site**, not a penalty — consistent with every prior snapshot in this file. Only concrete, fixable finding: this article's title (70 chars) and meta description (242 chars) both run long; recommend trimming them (and checking newer articles for the same pattern) in the next active session — not done here per this task's read-only scope.
+
+### Shipped (PM slot): "Magic Search Just Went Unlimited — Here's Who That Actually Favors" (all 8 locales)
+
+Topic: Stripchat made Magic Search — its computer-vision, describe-what-you-want-to-see discovery feature — unlimited for all users including guests, removing prior access restrictions (sourced via web search, bcams-magazine.com coverage from this month). Angle is dual-audience per the standing content-plan shift: what the feature actually reads (computer vision matching live stream content, not tags/bio text), why a distinctive/describable visual setup now matters as a real discovery lever, and a roster-wide visual-differentiation audit for studios. Shipped as `/stripchat-magic-search-discoverability` + all 7 other locales, Variant B (TOC) structure, "Trending right now" promo block included, added to `blog.astro` in all 8 locales.
+
+**Note on how this shipped:** this exact article (same slug, same topic, full 8-locale draft, `blog.astro` entries already written) was found sitting **uncommitted** in the working tree at the start of this session — evidently a previous PM-slot run completed the writing but crashed or was interrupted before the commit/push step, which is the likely root cause of the 9-day publish gap flagged in the monitoring entry above (the monitoring check itself only saw the root-locale file, before the rest of the locales apparently got finished in a later, also-uncommitted pass). This session independently researched and drafted a second article on the same topic before discovering the existing draft mid-session; the duplicate was deleted rather than shipped. Recommend checking `list_task_runs` for `ewo-daily-article-pm` history to confirm whether crashes are a recurring pattern worth fixing at the task-runner level, not just a one-off.
+
+Build verified clean (440 pages). Browser preview check was skipped — this session runs unattended (scheduled task) and dev-server preview requires interactive approval that isn't available here.
+
+---
+
 ## 2026-09-10
 
 ### Daily SEO monitoring — Thursday week-over-week check (read-only, automated)
