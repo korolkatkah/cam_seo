@@ -800,6 +800,10 @@ const scTagsByNiche: Record<string, { tag: string; models_online: number }[]> = 
   .platform-tab.is-active {
     color: var(--btn-fg); background: var(--btn-bg);
   }
+  .platform-tab[data-platform="cb"]:hover { color: #c2410c; }
+  .platform-tab[data-platform="cb"].is-active { color: #7c2d12; background: #fdba74; }
+  .platform-tab[data-platform="sc"]:hover { color: #b91c1c; }
+  .platform-tab[data-platform="sc"].is-active { color: #7f1d1d; background: #fca5a5; }
   .trends-empty { text-align: center; color: var(--fg-faint); font-size: 0.9375rem; padding: 1rem 0; }
 
   .niche-select {
