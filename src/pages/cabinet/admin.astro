@@ -103,7 +103,7 @@ import Base from '@/layouts/Base.astro';
     <div class="task-row__main">
       <div>
         <span class="task-row__worker" data-field="worker"></span>
-        <span class="task-row__target">→ @<span data-field="target"></span></span>
+        <span class="task-row__target">→ <a class="ig-link" data-field="target" target="_blank" rel="noopener"></a></span>
       </div>
       <span class="task-row__status" data-field="status"></span>
     </div>
@@ -270,6 +270,8 @@ import Base from '@/layouts/Base.astro';
   }
   .targets-table tr:last-child td { border-bottom: none; }
   .targets-table td.username { font-weight: 600; color: var(--fg); }
+  .ig-link { color: var(--fg); font-weight: 600; text-decoration: none; }
+  .ig-link:hover { text-decoration: underline; }
   .targets-table td.source a { color: var(--fg-muted); text-decoration: none; }
   .targets-table td.source a:hover { text-decoration: underline; }
   .filter-row {
@@ -413,7 +415,9 @@ import Base from '@/layouts/Base.astro';
     const node = template.content.cloneNode(true);
     const row = node.querySelector('.task-row');
     row.querySelector('[data-field="worker"]').textContent = task.worker_email;
-    row.querySelector('[data-field="target"]').textContent = task.target_username;
+    const targetLink = row.querySelector('[data-field="target"]');
+    targetLink.textContent = `@${task.target_username}`;
+    targetLink.href = `https://www.instagram.com/${encodeURIComponent(task.target_username)}/`;
     row.querySelector('[data-field="message"]').textContent = task.message_text || '';
 
     const statusEl = row.querySelector('[data-field="status"]');
@@ -537,12 +541,32 @@ import Base from '@/layouts/Base.astro';
     targetsEmptyEl.hidden = data.items.length > 0;
     for (const t of data.items) {
       const tr = document.createElement('tr');
-      const added = new Date(t.created_at).toLocaleString();
-      tr.innerHTML = `
-        <td class="username">@${t.username}</td>
-        <td class="source">${t.source ? `<a href="${t.source}" target="_blank" rel="noopener">${t.source}</a>` : ''}</td>
-        <td>${added}</td>
-      `;
+
+      const userTd = document.createElement('td');
+      userTd.className = 'username';
+      const userLink = document.createElement('a');
+      userLink.className = 'ig-link';
+      userLink.textContent = `@${t.username}`;
+      userLink.href = `https://www.instagram.com/${encodeURIComponent(t.username)}/`;
+      userLink.target = '_blank';
+      userLink.rel = 'noopener';
+      userTd.appendChild(userLink);
+
+      const sourceTd = document.createElement('td');
+      sourceTd.className = 'source';
+      if (t.source) {
+        const sourceLink = document.createElement('a');
+        sourceLink.textContent = t.source;
+        sourceLink.href = t.source;
+        sourceLink.target = '_blank';
+        sourceLink.rel = 'noopener';
+        sourceTd.appendChild(sourceLink);
+      }
+
+      const addedTd = document.createElement('td');
+      addedTd.textContent = new Date(t.created_at).toLocaleString();
+
+      tr.append(userTd, sourceTd, addedTd);
       targetsBody.appendChild(tr);
     }
   }

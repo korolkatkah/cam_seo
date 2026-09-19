@@ -24,7 +24,7 @@ import Base from '@/layouts/Base.astro';
 <template id="task-row-template">
   <div class="task-row">
     <div class="task-row__main">
-      <span class="task-row__target">@<span data-field="target"></span></span>
+      <span class="task-row__target"><a class="ig-link" data-field="target" target="_blank" rel="noopener"></a></span>
       <span class="task-row__status" data-field="status"></span>
     </div>
     <p class="task-row__message" data-field="message"></p>
@@ -85,6 +85,8 @@ import Base from '@/layouts/Base.astro';
     justify-content: space-between;
     margin-bottom: 0.5rem;
   }
+  .ig-link { color: var(--fg); text-decoration: none; }
+  .ig-link:hover { text-decoration: underline; }
   .task-row__target {
     font-weight: 700;
     color: var(--fg);
@@ -181,7 +183,9 @@ import Base from '@/layouts/Base.astro';
   function renderTask(task: Task) {
     const node = template.content.cloneNode(true) as DocumentFragment;
     const row = node.querySelector('.task-row') as HTMLDivElement;
-    row.querySelector('[data-field="target"]')!.textContent = task.target_username;
+    const targetLink = row.querySelector('[data-field="target"]') as HTMLAnchorElement;
+    targetLink.textContent = `@${task.target_username}`;
+    targetLink.href = `https://www.instagram.com/${encodeURIComponent(task.target_username)}/`;
     row.querySelector('[data-field="message"]')!.textContent = task.message_text || '';
 
     const statusEl = row.querySelector('[data-field="status"]') as HTMLSpanElement;
