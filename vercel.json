@@ -18,13 +18,6 @@
     { "source": "/", "has": [{ "type": "header", "key": "accept-language", "value": "^ru" }], "destination": "/ru", "permanent": false },
     { "source": "/", "has": [{ "type": "header", "key": "accept-language", "value": "^uk" }], "destination": "/uk", "permanent": false },
     { "source": "/", "has": [{ "type": "header", "key": "accept-language", "value": "^fr" }], "destination": "/fr", "permanent": false },
-    { "source": "/", "has": [{ "type": "header", "key": "accept-language", "value": "^pt" }], "destination": "/pt", "permanent": false },
-    { "source": "/links", "has": [{ "type": "header", "key": "accept-language", "value": "^de" }], "destination": "/de/links", "permanent": false },
-    { "source": "/links", "has": [{ "type": "header", "key": "accept-language", "value": "^es" }], "destination": "/es/links", "permanent": false },
-    { "source": "/links", "has": [{ "type": "header", "key": "accept-language", "value": "^ro" }], "destination": "/ro/links", "permanent": false },
-    { "source": "/links", "has": [{ "type": "header", "key": "accept-language", "value": "^ru" }], "destination": "/ru/links", "permanent": false },
-    { "source": "/links", "has": [{ "type": "header", "key": "accept-language", "value": "^uk" }], "destination": "/uk/links", "permanent": false },
-    { "source": "/links", "has": [{ "type": "header", "key": "accept-language", "value": "^fr" }], "destination": "/fr/links", "permanent": false },
-    { "source": "/links", "has": [{ "type": "header", "key": "accept-language", "value": "^pt" }], "destination": "/pt/links", "permanent": false }
+    { "source": "/", "has": [{ "type": "header", "key": "accept-language", "value": "^pt" }], "destination": "/pt", "permanent": false }
   ]
 }

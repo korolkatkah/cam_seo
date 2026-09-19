@@ -13,6 +13,10 @@ const hreflang = [
   { lang: 'fr', url: `${site}/fr/links` },
   { lang: 'pt', url: `${site}/pt/links` },
 ];
+const langLabels: Record<string, string> = {
+  en: 'English', de: 'Deutsch', ro: 'Română', uk: 'Українська',
+  ru: 'Русский', es: 'Español', fr: 'Français', pt: 'Português',
+};
 const heading = 'EWOMODELS';
 const subLine1 = 'Traffic. Management.';
 const subLine2 = 'For webcam models.';
@@ -35,6 +39,14 @@ const btnTools = 'Analytics for webcam →';
   <link rel="alternate" hreflang="x-default" href={`${site}/links`} />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="theme-color" content="#0a0a0a" />
+  <script is:inline>
+    (function () {
+      try { if (localStorage.getItem('ewo-lang-set')) return; } catch (e) {}
+      var l = (navigator.language || navigator.userLanguage || '').slice(0, 2).toLowerCase();
+      var m = { de: '/de/links', es: '/es/links', ro: '/ro/links', ru: '/ru/links', uk: '/uk/links', fr: '/fr/links', pt: '/pt/links' };
+      if (m[l]) window.location.replace(m[l]);
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@1,300;1,400;1,600;1,700&family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -77,9 +89,54 @@ const btnTools = 'Analytics for webcam →';
       transition: transform 0.15s ease, border-color 0.15s ease;
     }
     .btn:hover { transform: translateY(-2px); border-color: rgba(10,10,10,0.25); }
+    .lang-dropdown { position: fixed; top: 1rem; right: 1rem; z-index: 200; }
+    .lang-drop-btn {
+      display: flex; align-items: center; gap: .4rem;
+      font-family: var(--font-heading); font-size: .8125rem; font-weight: 600;
+      color: var(--fg-muted); background: transparent;
+      border: 1px solid var(--border);
+      padding: .45rem .875rem; border-radius: 6px;
+      cursor: pointer; transition: color 180ms ease, border-color 180ms ease, background 180ms ease;
+      white-space: nowrap;
+    }
+    .lang-drop-btn:hover,
+    .lang-drop-btn[aria-expanded="true"] { color: var(--fg); border-color: rgba(10,10,10,0.25); background: rgba(0,0,0,0.06); }
+    .lang-drop-btn[aria-expanded="true"] .chevron { transform: rotate(180deg); }
+    .chevron { transition: transform 180ms ease; }
+    .lang-menu {
+      position: absolute; right: 0; top: calc(100% + .5rem);
+      background: #f4f4f2; border: 1px solid var(--border);
+      border-radius: 12px; padding: .4rem; margin: 0; list-style: none;
+      min-width: 155px;
+      display: none; flex-direction: column; gap: .15rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+    }
+    .lang-menu.is-open { display: flex; }
+    .lang-opt {
+      display: block; padding: .5rem .875rem; border-radius: 6px;
+      font-family: var(--font-heading); font-size: .875rem; font-weight: 600;
+      color: var(--fg-muted); text-decoration: none;
+      transition: background 180ms ease, color 180ms ease;
+    }
+    .lang-opt:hover { background: rgba(0,0,0,0.06); color: var(--fg); }
+    .lang-opt--active { color: var(--fg); }
   </style>
 </head>
 <body>
+  <div class="lang-dropdown">
+    <button class="lang-drop-btn" aria-expanded="false" aria-haspopup="true" id="lang-btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      <span>{langLabels[lang] ?? lang}</span>
+      <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <ul class="lang-menu" role="listbox" id="lang-menu">
+      {hreflang.map(({ lang: l, url }) => (
+        <li>
+          <a href={url} class={`lang-opt${l === lang ? ' lang-opt--active' : ''}`} hreflang={l}>{langLabels[l] ?? l}</a>
+        </li>
+      ))}
+    </ul>
+  </div>
   <div class="wrap">
     <p class="logo">{heading}</p>
     <p class="sub">{subLine1}<br>{subLine2}</p>
@@ -89,5 +146,26 @@ const btnTools = 'Analytics for webcam →';
       <a class="btn" href="https://www.ewohub.com/" target="_blank" rel="noopener">{btnTools}</a>
     </div>
   </div>
+<script is:inline>
+  (function () {
+    var btn = document.getElementById('lang-btn');
+    var menu = document.getElementById('lang-menu');
+    if (!btn || !menu) return;
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var open = menu.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    document.addEventListener('click', function () {
+      menu.classList.remove('is-open');
+      btn.setAttribute('aria-expanded', 'false');
+    });
+    document.querySelectorAll('.lang-opt').forEach(function (a) {
+      a.addEventListener('click', function () {
+        try { localStorage.setItem('ewo-lang-set', '1'); } catch (e) {}
+      });
+    });
+  })();
+</script>
 </body>
 </html>
