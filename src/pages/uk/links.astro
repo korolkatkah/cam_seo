@@ -1,8 +1,9 @@
 ---
 const site = 'https://www.ewohub.com';
 const lang = 'uk';
-const title = 'EWO Швидкі посилання';
-const description = 'Швидкі посилання на вакансії EWO, наш Telegram-канал і безкоштовні інструменти просування.';
+const path = '/uk/links';
+const title = 'EWOMODELS | Traffic & Management for Webcam Models';
+const description = 'Top agency for webcam models: traffic promotion, management and analytics. Join EWOMODELS on Telegram.';
 const hreflang = [
   { lang: 'en', url: `${site}/links` },
   { lang: 'de', url: `${site}/de/links` },
@@ -20,99 +21,128 @@ const langLabels: Record<string, string> = {
 const heading = 'EWOMODELS';
 const subLine1 = 'Traffic. Management.';
 const subLine2 = 'For webcam models.';
-const btnJobs = 'Top Agency for models →';
-const btnTelegram = 'Traffic for webcam →';
-const btnTools = 'Analytics for webcam →';
+const btnJobs = 'Top Agency for models';
+const btnTelegram = 'Traffic for webcam';
+const btnTools = 'Analytics for webcam';
 ---
 
 <!doctype html>
 <html lang={lang}>
 <head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6H89TM92EZ"></script>
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6H89TM92EZ');
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{title} | EWO</title>
+  <title>{title}</title>
   <meta name="description" content={description} />
-  <link rel="canonical" href={`${site}/uk/links`} />
+  <link rel="canonical" href={`${site}${path}`} />
   {hreflang.map(({ lang: l, url }) => (
     <link rel="alternate" hreflang={l} href={url} />
   ))}
   <link rel="alternate" hreflang="x-default" href={`${site}/links`} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={`${site}${path}`} />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://www.ewohub.com/logo-neon.png" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <meta name="theme-color" content="#0a0a0a" />
+  <meta name="theme-color" content="#0f0e0c" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@1,300;1,400;1,600;1,700&family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
+    @property --ang { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
     :root {
-      --bg: #fafaf8;
-      --card: #ffffff;
-      --border: rgba(10,10,10,0.1);
-      --fg: #0a0a0a;
-      --fg-muted: rgba(10,10,10,0.68);
+      --bg: #0f0e0c;
+      --fg: #f3e9d6;
+      --fg-strong: #fff3dc;
+      --muted: #a79c88;
+      --line: rgba(255,226,180,0.22);
       --font-heading: 'Josefin Sans', system-ui, sans-serif;
       --font-body: 'Nunito', system-ui, sans-serif;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; }
     body {
-      background: var(--bg);
+      background: radial-gradient(70% 42% at 50% 30%, rgba(255,206,140,0.2), transparent 72%), #0f0e0c;
       color: var(--fg);
       font-family: var(--font-body);
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 2rem 1.25rem;
+      padding: 4.5rem 1.25rem 2.5rem;
     }
-    .wrap { max-width: 420px; width: 100%; text-align: center; }
-    .logo-mark { display: block; width: 84px; height: 84px; border-radius: 50%; margin: 0 auto 1rem; }
-    .logo { font-family: var(--font-heading); font-weight: 700; font-size: 1.75rem; letter-spacing: 0.02em; margin-bottom: 0.4rem; }
-    .sub { color: var(--fg-muted); margin: 0 0 2rem; font-size: 0.85rem; letter-spacing: 0.06em; line-height: 1.6; }
-    .links { display: flex; flex-direction: column; gap: 0.9rem; }
-    .btn {
-      display: block;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1rem;
-      color: var(--fg);
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 0.95rem;
-      transition: transform 0.15s ease, border-color 0.15s ease;
+    .wrap { max-width: 400px; width: 100%; text-align: center; }
+
+    .halo { position: relative; width: 220px; height: 220px; margin: 0 auto; filter: drop-shadow(0 0 22px rgba(255,204,140,0.5)); }
+    .ring {
+      position: absolute; inset: 0; border-radius: 50%;
+      background: conic-gradient(from var(--ang), #fffaf0, #ffd6a0 24%, #fff4dc 50%, #ffdfb0 76%, #fffaf0);
+      -webkit-mask: radial-gradient(circle, transparent 61%, #000 62%);
+      mask: radial-gradient(circle, transparent 61%, #000 62%);
+      animation: spin 10s linear infinite;
     }
-    .btn:hover { transform: translateY(-2px); border-color: rgba(10,10,10,0.25); }
+    .cat { position: absolute; inset: 0; margin: auto; width: 100px; height: 118px; }
+    @keyframes spin { to { --ang: 360deg; } }
+
+    .brand { font-family: var(--font-heading); font-weight: 600; font-size: 1.5rem; letter-spacing: 0.2em; padding-left: 0.2em; color: var(--fg-strong); margin: 1.75rem 0 0.4rem; }
+    .sub { color: var(--muted); font-size: 0.8rem; letter-spacing: 0.08em; line-height: 1.7; margin: 0 0 1.9rem; }
+
+    .links { display: flex; flex-direction: column; gap: 0.75rem; }
+    .strip {
+      display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+      padding: 0.95rem 1rem; border-radius: 14px;
+      font-weight: 800; font-size: 0.95rem; text-decoration: none; color: #f6ecd9;
+      background: rgba(255,240,214,0.06); border: 1px solid var(--line);
+      transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+    }
+    .strip:hover { transform: translateY(-2px); background: rgba(255,240,214,0.11); border-color: rgba(255,226,180,0.4); }
+    .strip.lit {
+      background: linear-gradient(180deg, #fff7e6, #ffdfae); color: #1b1408; border-color: #fff1d2;
+      padding: 1.15rem 1rem; font-size: 1.02rem;
+      box-shadow: 0 0 34px rgba(255,206,140,0.42), 0 1px 0 #fff inset;
+    }
+    .strip.lit:hover { background: linear-gradient(180deg, #fffaf0, #ffe6bd); }
+    .strip:focus-visible, .lang-drop-btn:focus-visible, .lang-opt:focus-visible { outline: 2px solid #ffdfae; outline-offset: 3px; }
+    .ico { width: 20px; height: 20px; flex: none; }
+
     .lang-dropdown { position: fixed; top: 1rem; right: 1rem; z-index: 200; }
     .lang-drop-btn {
-      display: flex; align-items: center; gap: .4rem;
-      font-family: var(--font-heading); font-size: .8125rem; font-weight: 600;
-      color: var(--fg-muted); background: transparent;
-      border: 1px solid var(--border);
-      padding: .45rem .875rem; border-radius: 6px;
-      cursor: pointer; transition: color 180ms ease, border-color 180ms ease, background 180ms ease;
-      white-space: nowrap;
+      display: flex; align-items: center; gap: 0.4rem;
+      font-family: var(--font-heading); font-size: 0.8125rem; font-weight: 600;
+      color: #d8c9ad; background: rgba(15,14,12,0.6); border: 1px solid rgba(255,226,180,0.24);
+      padding: 0.45rem 0.875rem; border-radius: 6px; cursor: pointer; white-space: nowrap;
+      transition: color 180ms ease, border-color 180ms ease, background 180ms ease;
     }
-    .lang-drop-btn:hover,
-    .lang-drop-btn[aria-expanded="true"] { color: var(--fg); border-color: rgba(10,10,10,0.25); background: rgba(0,0,0,0.06); }
+    .lang-drop-btn:hover, .lang-drop-btn[aria-expanded="true"] { color: var(--fg-strong); border-color: rgba(255,226,180,0.45); background: rgba(255,240,214,0.08); }
     .lang-drop-btn[aria-expanded="true"] .chevron { transform: rotate(180deg); }
     .chevron { transition: transform 180ms ease; }
     .lang-menu {
-      position: absolute; right: 0; top: calc(100% + .5rem);
-      background: #f4f4f2; border: 1px solid var(--border);
-      border-radius: 12px; padding: .4rem; margin: 0; list-style: none;
-      min-width: 155px;
-      display: none; flex-direction: column; gap: .15rem;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+      position: absolute; right: 0; top: calc(100% + 0.5rem);
+      background: #1a1814; border: 1px solid rgba(255,226,180,0.18);
+      border-radius: 12px; padding: 0.4rem; margin: 0; list-style: none; min-width: 155px;
+      display: none; flex-direction: column; gap: 0.15rem;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.5);
     }
     .lang-menu.is-open { display: flex; }
     .lang-opt {
-      display: block; padding: .5rem .875rem; border-radius: 6px;
-      font-family: var(--font-heading); font-size: .875rem; font-weight: 600;
-      color: var(--fg-muted); text-decoration: none;
-      transition: background 180ms ease, color 180ms ease;
+      display: block; padding: 0.5rem 0.875rem; border-radius: 6px;
+      font-family: var(--font-heading); font-size: 0.875rem; font-weight: 600;
+      color: #b9ab90; text-decoration: none; transition: background 180ms ease, color 180ms ease;
     }
-    .lang-opt:hover { background: rgba(0,0,0,0.06); color: var(--fg); }
-    .lang-opt--active { color: var(--fg); }
+    .lang-opt:hover { background: rgba(255,240,214,0.08); color: var(--fg-strong); }
+    .lang-opt--active { color: var(--fg-strong); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .ring { animation: none; }
+      .strip { transition: none; }
+    }
   </style>
 </head>
 <body>
@@ -130,36 +160,50 @@ const btnTools = 'Analytics for webcam →';
       ))}
     </ul>
   </div>
-  <div class="wrap">
-    <img class="logo-mark" src="/logo-neon.png" alt="EWO" width="84" height="84">
-    <p class="logo">{heading}</p>
+
+  <main class="wrap">
+    <div class="halo">
+      <div class="ring" aria-hidden="true"></div>
+      <svg class="cat" viewBox="40 36 120 140" role="img" aria-label="EWO"><path d="M55 130C55 152 74 168 100 168C126 168 145 152 145 130L145 95C145 88 140 82 133 80L120 48L108 78C105 77 102 76 100 76C98 76 95 77 92 78L80 48L67 80C60 82 55 88 55 95Z" fill="none" stroke="#ffeccb" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/></svg>
+    </div>
+    <h1 class="brand">{heading}</h1>
     <p class="sub">{subLine1}<br>{subLine2}</p>
     <div class="links">
-      <a class="btn" href="https://t.me/ewomodels" target="_blank" rel="noopener">{btnJobs}</a>
-      <a class="btn" href="https://t.me/webcam_ewo/76" target="_blank" rel="noopener">{btnTelegram}</a>
-      <a class="btn" href="https://www.ewohub.com/" target="_blank" rel="noopener">{btnTools}</a>
+      <a class="strip lit" href="https://t.me/ewomodels" target="_blank" rel="noopener">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M16 4.6a3.5 3.5 0 010 6.8M18.2 14.4c2 .7 3.3 2.5 3.3 5.6"/></svg>
+        {btnJobs}
+      </a>
+      <a class="strip" href="https://t.me/webcam_ewo/76" target="_blank" rel="noopener">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="15 7 21 7 21 13"/></svg>
+        {btnTelegram}
+      </a>
+      <a class="strip" href="https://www.ewohub.com/" target="_blank" rel="noopener">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="20" x2="6" y2="11"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="18" y1="20" x2="18" y2="14"/></svg>
+        {btnTools}
+      </a>
     </div>
-  </div>
-<script is:inline>
-  (function () {
-    var btn = document.getElementById('lang-btn');
-    var menu = document.getElementById('lang-menu');
-    if (!btn || !menu) return;
-    btn.addEventListener('click', function (e) {
-      e.stopPropagation();
-      var open = menu.classList.toggle('is-open');
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-    document.addEventListener('click', function () {
-      menu.classList.remove('is-open');
-      btn.setAttribute('aria-expanded', 'false');
-    });
-    document.querySelectorAll('.lang-opt').forEach(function (a) {
-      a.addEventListener('click', function () {
-        try { localStorage.setItem('ewo-lang-set', '1'); } catch (e) {}
+  </main>
+
+  <script is:inline>
+    (function () {
+      var btn = document.getElementById('lang-btn');
+      var menu = document.getElementById('lang-menu');
+      if (!btn || !menu) return;
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var open = menu.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
       });
-    });
-  })();
-</script>
+      document.addEventListener('click', function () {
+        menu.classList.remove('is-open');
+        btn.setAttribute('aria-expanded', 'false');
+      });
+      document.querySelectorAll('.lang-opt').forEach(function (a) {
+        a.addEventListener('click', function () {
+          try { localStorage.setItem('ewo-lang-set', '1'); } catch (e) {}
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
