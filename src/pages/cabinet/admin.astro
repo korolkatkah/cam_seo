@@ -72,7 +72,7 @@ import Base from '@/layouts/Base.astro';
 
     <div class="glass-card assign-card">
       <h2>Bulk assign</h2>
-      <p class="bulk-hint">Hands the worker the next N accounts from the database that haven't been assigned to anyone yet вЂ” no need to type usernames one by one.</p>
+      <p class="bulk-hint">Hands the worker the next N accounts from the database that haven't been assigned to anyone yet — no need to type usernames one by one.</p>
       <form id="bulk-form" class="assign-form">
         <label>
           Worker email
@@ -98,26 +98,45 @@ import Base from '@/layouts/Base.astro';
         <div class="progress__fill" id="import-progress-fill"></div>
       </div>
       <p class="import-status" id="import-status" role="status" aria-live="polite">Idle.</p>
-      <button id="run-import-btn" class="import-btn">Run import now</button>
+      <div class="import-actions">
+        <button id="run-import-btn" class="import-btn">Run import now</button>
+        <button id="stop-import-btn" class="import-btn export-btn stop-btn" hidden>Stop import</button>
+      </div>
 
       <p class="import-status" id="export-status" style="margin-top:1rem;">Idle.</p>
       <button id="run-export-btn" class="import-btn export-btn">Export to Google Sheet</button>
       <p id="export-link" class="import-status" hidden></p>
     </div>
 
-    <div class="targets-header">
-      <h2 class="section-title">Instagram targets (<span id="targets-total">0</span>)</h2>
-      <button id="refresh-targets-btn" class="ghost-btn">Refresh</button>
+    <div class="glass-card assign-card">
+      <h2>Already handed out</h2>
+      <p class="bulk-hint">Paste the accounts you gave to someone outside the cabinet (links, @names or plain names, any separator). They are marked in the Google Sheet, grouped together at the top, and skipped by "Bulk assign".</p>
+      <form id="handout-form" class="assign-form">
+        <label>
+          Given to
+          <input type="text" id="handout-to" required maxlength="255" placeholder="Worker name or email" />
+        </label>
+        <label>
+          Accounts
+          <textarea id="handout-accounts" rows="6" required placeholder="https://www.instagram.com/some_account/"></textarea>
+        </label>
+        <label class="check-row">
+          <input type="checkbox" id="handout-create" checked />
+          Add accounts that are not in the database yet
+        </label>
+        <button type="submit">Mark as handed out</button>
+        <p id="handout-error" class="cabinet-error" hidden></p>
+        <p id="handout-success" class="cabinet-success" hidden></p>
+      </form>
+      <div class="targets-table-wrap handout-table-wrap" id="handout-summary-wrap" hidden>
+        <table class="targets-table">
+          <thead>
+            <tr><th>Given to</th><th class="num-h">Accounts</th><th>Last added</th><th></th></tr>
+          </thead>
+          <tbody id="handout-body"></tbody>
+        </table>
+      </div>
     </div>
-    <div class="targets-table-wrap">
-      <table class="targets-table">
-        <thead>
-          <tr><th>Username</th><th>Source</th><th>Added</th></tr>
-        </thead>
-        <tbody id="targets-body"></tbody>
-      </table>
-    </div>
-    <p id="targets-empty" hidden>No targets scraped yet.</p>
 
     <h2 class="section-title">All tasks</h2>
     <div class="filter-row">
@@ -137,7 +156,7 @@ import Base from '@/layouts/Base.astro';
     <div class="task-row__main">
       <div>
         <span class="task-row__worker" data-field="worker"></span>
-        <span class="task-row__target">в†’ <a class="ig-link" data-field="target" target="_blank" rel="noopener"></a></span>
+        <span class="task-row__target">→ <a class="ig-link" data-field="target" target="_blank" rel="noopener"></a></span>
       </div>
       <span class="task-row__status" data-field="status"></span>
     </div>
@@ -331,6 +350,24 @@ import Base from '@/layouts/Base.astro';
     border: none;
     background: var(--accent);
     color: var(--bg);
+    cursor: pointer;
+  }
+  .import-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .stop-btn { color: #a12a2a; border-color: rgba(161, 42, 42, 0.35); }
+  .assign-form .check-row {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .handout-table-wrap { margin: 1.25rem 0 0; }
+  :global(.undo-btn) {
+    font: inherit;
+    font-size: 0.75rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    border: 1px solid var(--bg-subtle);
+    background: transparent;
+    color: #a12a2a;
     cursor: pointer;
   }
   .import-btn:hover { opacity: 0.85; }
@@ -627,9 +664,7 @@ import Base from '@/layouts/Base.astro';
 
   const importStatusEl = document.getElementById('import-status');
   const runImportBtn = document.getElementById('run-import-btn');
-  const targetsBody = document.getElementById('targets-body');
-  const targetsTotalEl = document.getElementById('targets-total');
-  const targetsEmptyEl = document.getElementById('targets-empty');
+  const stopImportBtn = document.getElementById('stop-import-btn');
   let pollTimer = null;
 
   const progressEl = document.getElementById('import-progress');
@@ -659,22 +694,28 @@ import Base from '@/layouts/Base.astro';
 
   function renderImportStatus(state) {
     lastImportState = state;
+    stopImportBtn.hidden = !state.running;
+    stopImportBtn.disabled = !!state.stopping;
+    stopImportBtn.textContent = state.stopping ? 'Stopping...' : 'Stop import';
     if (state.running) {
       const p = state.progress || {};
       const elapsed = state.last_started_at ? Date.now() - new Date(state.last_started_at).getTime() : 0;
       if (p.phase === 'checking_profiles' && p.total) {
         const pct = Math.round((p.checked / p.total) * 100);
         setProgress(pct);
-        const eta = p.checked >= 10 ? ` В· about ${fmtDuration((elapsed / p.checked) * (p.total - p.checked))} left` : '';
-        const current = p.current ? ` В· checking ${p.current}` : '';
+        const eta = p.checked >= 10 ? ` · about ${fmtDuration((elapsed / p.checked) * (p.total - p.checked))} left` : '';
+        const current = p.current ? ` · checking ${p.current}` : '';
         importStatusEl.textContent =
-          `Importing: ${p.checked} of ${p.total} profiles (${pct}%) В· ${p.saved} new В· ${p.skipped} skipped В· ${fmtDuration(elapsed)} elapsed${eta}${current}`;
+          `Importing: ${p.checked} of ${p.total} profiles (${pct}%) · ${p.saved} new · ${p.skipped} skipped · ${fmtDuration(elapsed)} elapsed${eta}${current}`;
       } else if (p.phase === 'fetching_list') {
         setProgress(null);
-        importStatusEl.textContent = `Importing: fetching the model list (page ${p.page || 0} of ${p.pages || '?'}) В· ${fmtDuration(elapsed)} elapsed`;
+        importStatusEl.textContent = `Importing: fetching the model list (page ${p.page || 0} of ${p.pages || '?'}) · ${fmtDuration(elapsed)} elapsed`;
       } else {
         setProgress(null);
-        importStatusEl.textContent = `Importing: starting... В· ${fmtDuration(elapsed)} elapsed`;
+        importStatusEl.textContent = `Importing: starting... · ${fmtDuration(elapsed)} elapsed`;
+      }
+      if (state.stopping) {
+        importStatusEl.textContent = `Stopping after the current profile... ${importStatusEl.textContent}`;
       }
       return;
     }
@@ -682,9 +723,10 @@ import Base from '@/layouts/Base.astro';
     if (state.last_result?.error) {
       importStatusEl.textContent = `Last run failed: ${state.last_result.error}`;
     } else if (state.last_result) {
-      const { fetched = 0, saved = 0, skipped = 0 } = state.last_result;
+      const { fetched = 0, saved = 0, skipped = 0, stopped = false } = state.last_result;
       const at = state.last_finished_at ? ` (finished ${new Date(state.last_finished_at).toLocaleString()})` : '';
-      importStatusEl.textContent = `Last run${at}: checked ${fetched} profiles, ${saved} new, ${skipped} skipped.`;
+      const verb = stopped ? 'stopped by you after' : 'checked';
+      importStatusEl.textContent = `Last run${at}: ${verb} ${fetched} profiles, ${saved} new, ${skipped} skipped.`;
     } else {
       importStatusEl.textContent = 'Idle. No import has run since the server started.';
     }
@@ -694,45 +736,6 @@ import Base from '@/layouts/Base.astro';
   setInterval(() => {
     if (lastImportState?.running) renderImportStatus(lastImportState);
   }, 1000);
-
-  async function loadTargets() {
-    const res = await authedFetch('/admin/targets?limit=100');
-    if (!res.ok) return;
-    const data = await res.json();
-    targetsTotalEl.textContent = data.total;
-    targetsBody.innerHTML = '';
-    targetsEmptyEl.hidden = data.items.length > 0;
-    for (const t of data.items) {
-      const tr = document.createElement('tr');
-
-      const userTd = document.createElement('td');
-      userTd.className = 'username';
-      const userLink = document.createElement('a');
-      userLink.className = 'ig-link';
-      userLink.textContent = `@${t.username}`;
-      userLink.href = `https://www.instagram.com/${encodeURIComponent(t.username)}/`;
-      userLink.target = '_blank';
-      userLink.rel = 'noopener';
-      userTd.appendChild(userLink);
-
-      const sourceTd = document.createElement('td');
-      sourceTd.className = 'source';
-      if (t.source) {
-        const sourceLink = document.createElement('a');
-        sourceLink.textContent = t.source;
-        sourceLink.href = t.source;
-        sourceLink.target = '_blank';
-        sourceLink.rel = 'noopener';
-        sourceTd.appendChild(sourceLink);
-      }
-
-      const addedTd = document.createElement('td');
-      addedTd.textContent = new Date(t.created_at).toLocaleString();
-
-      tr.append(userTd, sourceTd, addedTd);
-      targetsBody.appendChild(tr);
-    }
-  }
 
   async function pollImportStatus() {
     const res = await authedFetch('/admin/import/status');
@@ -749,7 +752,6 @@ import Base from '@/layouts/Base.astro';
     } else if (pollTimer) {
       clearInterval(pollTimer);
       pollTimer = null;
-      await loadTargets();
     }
   }
 
@@ -762,7 +764,100 @@ import Base from '@/layouts/Base.astro';
     if (!pollTimer) pollTimer = setInterval(pollImportStatus, 4000);
   });
 
-  document.getElementById('refresh-targets-btn').addEventListener('click', loadTargets);
+  stopImportBtn.addEventListener('click', async () => {
+    if (!confirm('Stop the import? Accounts found so far are kept, the sheet is updated, and you can run it again later.')) return;
+    stopImportBtn.disabled = true;
+    stopImportBtn.textContent = 'Stopping...';
+    try {
+      const res = await authedFetch('/admin/import/stop', { method: 'POST' });
+      if (res.ok) renderImportStatus(await res.json());
+    } catch {
+      stopImportBtn.disabled = false;
+      stopImportBtn.textContent = 'Stop import';
+    }
+    if (!pollTimer) pollTimer = setInterval(pollImportStatus, 4000);
+  });
+
+  // --- Accounts handed out outside the cabinet ---
+
+  const handoutBody = document.getElementById('handout-body');
+  const handoutWrap = document.getElementById('handout-summary-wrap');
+
+  async function loadHandouts() {
+    const res = await authedFetch('/admin/handouts');
+    if (!res.ok) return;
+    const data = await res.json();
+    handoutBody.innerHTML = '';
+    handoutWrap.hidden = data.items.length === 0;
+    for (const item of data.items) {
+      const undoBtn = document.createElement('button');
+      undoBtn.type = 'button';
+      undoBtn.className = 'undo-btn';
+      undoBtn.textContent = 'Take back';
+      undoBtn.addEventListener('click', async () => {
+        if (!confirm(`Take back all ${item.count} accounts given to "${item.given_to}"? They become free again.`)) return;
+        undoBtn.disabled = true;
+        const r = await authedFetch(`/admin/handouts?given_to=${encodeURIComponent(item.given_to)}`, { method: 'DELETE' });
+        if (r.ok) await loadHandouts();
+        else undoBtn.disabled = false;
+      });
+      const actionTd = document.createElement('td');
+      actionTd.appendChild(undoBtn);
+
+      const tr = document.createElement('tr');
+      tr.append(
+        textCell(item.given_to, 'username'),
+        textCell(item.count, 'num'),
+        textCell(item.last_at ? new Date(item.last_at).toLocaleString() : '—'),
+        actionTd,
+      );
+      handoutBody.appendChild(tr);
+    }
+  }
+
+  document.getElementById('handout-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const errorEl = document.getElementById('handout-error');
+    const successEl = document.getElementById('handout-success');
+    errorEl.hidden = true;
+    successEl.hidden = true;
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+
+    try {
+      const res = await authedFetch('/admin/handouts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          given_to: document.getElementById('handout-to').value,
+          accounts: document.getElementById('handout-accounts').value,
+          create_missing: document.getElementById('handout-create').checked,
+        }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        throw new Error(typeof data?.detail === 'string' ? data.detail : 'Failed to mark accounts');
+      }
+      const d = await res.json();
+      const parts = [`Marked ${d.marked} of ${d.found} accounts as given to ${d.given_to}.`];
+      if (d.created_new_accounts) parts.push(`Added ${d.created_new_accounts} account(s) that were not in the database.`);
+      if (d.already_marked) parts.push(`Already marked before: ${d.already_marked}.`);
+      if (d.already_assigned_to_worker) parts.push(`Left as they are (already a worker task): ${d.already_assigned_to_worker}.`);
+      if (d.not_in_database.length) parts.push(`Not in the database: ${d.not_in_database.slice(0, 10).join(', ')}${d.not_in_database.length > 10 ? '...' : ''}.`);
+      parts.push('The Google Sheet updates within a minute.');
+      successEl.textContent = parts.join(' ');
+      successEl.hidden = false;
+      document.getElementById('handout-form').reset();
+      document.getElementById('handout-create').checked = true;
+      await loadHandouts();
+      setTimeout(pollExportStatus, 20000);
+    } catch (err) {
+      errorEl.textContent = err instanceof Error ? err.message : 'Failed to mark accounts';
+      errorEl.hidden = false;
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
 
   // --- Google Drive export ---
 
@@ -774,7 +869,7 @@ import Base from '@/layouts/Base.astro';
   function formatExportStatus(state) {
     const rows = state.last_result?.rows;
     const last = state.last_result && !state.last_result.error
-      ? ` Last update${state.last_finished_at ? ` ${new Date(state.last_finished_at).toLocaleTimeString()}` : ''}${rows != null ? `, ${rows} rows` : ''}${state.last_result.added ? ` (+${state.last_result.added} new)` : ''}.`
+      ? ` Last update${state.last_finished_at ? ` ${new Date(state.last_finished_at).toLocaleTimeString()}` : ''}${rows != null ? `, ${rows} rows` : ''}${state.last_result.added ? ` (+${state.last_result.added} new)` : ''}${state.last_result.marked ? `, ${state.last_result.marked} marks updated` : ''}.`
       : '';
     if (state.running) return `Sheet: updating...${last}`;
     if (state.last_result?.error) return `Last export failed: ${state.last_result.error}`;
@@ -791,7 +886,7 @@ import Base from '@/layouts/Base.astro';
     runExportBtn.textContent = state.running ? 'Exporting...' : 'Export to Google Sheet';
 
     if (state.last_result?.web_view_link) {
-      exportLinkEl.innerHTML = `<a href="${state.last_result.web_view_link}" target="_blank" rel="noopener">Open spreadsheet в†’</a>`;
+      exportLinkEl.innerHTML = `<a href="${state.last_result.web_view_link}" target="_blank" rel="noopener">Open spreadsheet →</a>`;
       exportLinkEl.hidden = false;
     }
 
@@ -839,7 +934,6 @@ import Base from '@/layouts/Base.astro';
       document.getElementById('bulk-form').reset();
       document.getElementById('bulk-count').value = 20;
       await loadTasks();
-      await loadTargets();
     } catch (err) {
       bulkError.textContent = err instanceof Error ? err.message : 'Failed to bulk-assign';
       bulkError.hidden = false;
@@ -890,7 +984,7 @@ import Base from '@/layouts/Base.astro';
       cell.append(code, copyBtn);
       linkTd.appendChild(cell);
 
-      const last = item.last_event_at ? new Date(item.last_event_at).toLocaleString() : 'вЂ”';
+      const last = item.last_event_at ? new Date(item.last_event_at).toLocaleString() : '—';
       tr.append(
         nameTd,
         linkTd,
@@ -949,8 +1043,8 @@ import Base from '@/layouts/Base.astro';
       }
       contentEl.hidden = false;
       await loadLinks().catch(() => {});
+      await loadHandouts().catch(() => {});
       await loadTasks();
-      await loadTargets();
       await pollImportStatus();
       await pollExportStatus();
     } catch {

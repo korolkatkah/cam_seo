@@ -129,6 +129,8 @@ Two scheduled cloud tasks publish articles automatically: `ewo-daily-article` (1
 - Admin cabinet (`/cabinet/admin`) has a "Tracking links" block: per-ref visits, clicks per button (agency/traffic/analytics), copy-link button, create-link form. Unknown refs are counted under `direct`.
 - Backend = separate FastAPI + Postgres app "worker-cabinet" on Railway (`https://worker-cabinet-production.up.railway.app`), source in `D:\WORKER-CABINET` (deployed with `railway up --ci --service worker-cabinet` from that folder). Its endpoints are documented in that repo's `API.md`.
 
+- **Encoding gotcha (bit us once):** never rewrite `.astro` files with Windows PowerShell 5.1 `Get-Content`/`Set-Content` — it reads UTF-8 as cp1251 and silently turns `→ · —` into `в†’ В· вЂ”`. Edit with the Edit tool or a node script (`fs.readFileSync(p, 'utf8')`), and check for stray non-ASCII (`node -e` listing `/[^\x00-\x7f]+/g` matches) after touching a file.
+
 ## Where else to check
 
 - `PROMOTION_PLAN.md` — dated running log of what shipped and why (chronological, not a reference doc — don't duplicate its content here, just consult it for history).
