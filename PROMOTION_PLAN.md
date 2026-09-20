@@ -4,6 +4,16 @@ Running log of daily/session-based SEO & promotion action plans. Newest entry on
 
 ---
 
+## 2026-09-20
+
+### Shipped (PM slot): "Stripchat's Account Holder Rule for Group Accounts" (all 8 locales)
+
+Topic: Stripchat's Account Holder rule for group accounts (two or more registered persons): one designated holder who must be present at every broadcast and receives all payouts as beneficiary of the chosen payment method; existing accounts got a 45-day transition (end date on My Documents), on new accounts the first registered person becomes holder automatically and it can't be changed (sourced from BCAMS Magazine's coverage of the announcement, 2024 — the rule is not new, but the site had no coverage and it directly affects duos, team profiles and studios). Dual-audience angle: what the rule says and doesn't say (no penalties or in-platform payout split are described, stated explicitly rather than guessed), the money flow, the presence requirement as a scheduling constraint, new vs existing accounts, and a group-account audit checklist for studios. Shipped as `/stripchat-account-holder-group-accounts` + `/de/`, `/es/`, `/ro/`, `/uk/`, `/ru/`, `/fr/`, `/pt/` copies, Variant B (TOC) structure, "Trending right now" promo block included, added to `blog.astro` in all 8 locales (date 2026-09-20). Title 50 chars and meta description ~150 chars, kept inside the SERP limits flagged in the 2026-09-19 monitoring entry.
+
+**Notes:** no AM-slot article was shipped today (last article commit was the 2026-09-19 Magic Search piece), so this PM run is the only article of the day. Build verified clean (456 pages); TOC anchors, FAQ, related cards, hreflang and canonical checked in the built HTML for all 8 locales. Browser preview check was skipped — this run is unattended and dev servers can't be started without interactive approval. Article files were generated from one script with per-locale strings; no unsourced payout methods, penalties or studio-account details were included.
+
+---
+
 ## 2026-09-19
 
 ### Daily SEO monitoring — Saturday light check (read-only, automated)
