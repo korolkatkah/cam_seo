@@ -4,6 +4,46 @@ Running log of daily/session-based SEO & promotion action plans. Newest entry on
 
 ---
 
+## 2026-09-21
+
+### Daily SEO monitoring — Monday full check (read-only, automated)
+
+Same JWT-signed throwaway script approach as prior entries (key at `C:\Users\shche\.claude\ewohub-secrets\gsc-key.json`, read into memory only, never logged). 28-day window **2026-08-23 → 2026-09-19** (GSC data lags ~2 days).
+
+**Search Analytics totals:** 15 impressions, 0 clicks, CTR 0%, avg position 14.8 — vs. the 2026-09-19 ad-hoc snapshot (14 impr / pos 15.2) and the 2026-09-10 baseline (22 impr / pos 17.2). Flat; position marginally better, still single-digit impressions per page. Only query with any data: `ewo` (1 impr, pos 86).
+
+**By page (9 pages with impressions):** `/` 11 impr / pos 19.6 (improved from 28.2 on 09-10); `/stripscore-cam-rank-explained` 4 / 3.5; `/model-promotion` 2 / 2.5; `/studio-traffic` 2 / 3.5; and 1 impression each on `/how-cam-algorithm-ranks-rooms` (pos 1.0), `/best-streaming-times-by-region` (5.0), `/de/stripchat-promo` (5.0), `/es/stripchat-promo` (4.0), `/ro/stripchat-promo` (6.0). Note GSC still reports four of these (`model-promotion`, `studio-traffic`, `how-cam-algorithm-ranks-rooms`, `best-streaming-times-by-region`) under the **non-www** `https://ewohub.com/...` URL — verified live that `https://ewohub.com/<path>` returns a `308` to `https://www.ewohub.com/<path>` and the www page's canonical is correct, so this is just Google's historical URL variant being reported, not a redirect/canonical fault. Dropped off vs. 09-10: `/ro/stripscore-cam-rank-explained`, `/uk/*` pages, `/ro/platforms-we-work-with` (no impressions this window; n=1-3 noise floor).
+
+**URL Inspection (8 URLs):**
+- `/` → `PASS`, "Submitted and indexed", last crawl 2026-09-10, Google canonical = `https://www.ewohub.com/`
+- `/de/stripchat-promo` → `PASS`, "Submitted and indexed", last crawl 2026-07-29
+- `/stripscore-cam-rank-explained` → `NEUTRAL`, **"Crawled - currently not indexed"** (last crawl 2026-09-19). The 09-19 ad-hoc check reported this URL as `PASS`/indexed — it appears to have been dropped from the index after Google's 09-19 recrawl. It's still the site's best-ranking page (4 impr / pos 3.5 in this window, which predates the drop), so **watch this one**: if it stays unindexed on Thursday's check, impressions will go to zero next week.
+- `/how-cam-algorithm-ranks-rooms` → `NEUTRAL`, "Crawled - currently not indexed" (crawl 2026-08-04, unchanged from 09-19)
+- `/model-promotion` → `NEUTRAL`, "Crawled - currently not indexed" (crawl 2026-09-14)
+- `/stripchat-viewer-mode-stream-check` (shipped 2026-09-10, 11 days ago) → `NEUTRAL`, **"URL is unknown to Google"** — unchanged from 09-19
+- `/stripchat-magic-search-discoverability` (shipped 2026-09-19) → "URL is unknown to Google"
+- `/stripchat-account-holder-group-accounts` (shipped 2026-09-20) → "URL is unknown to Google"
+
+Pattern: every non-homepage, non-promo article page that's been inspected is either "crawled - not indexed" or entirely undiscovered; only `/` and the `stripchat-promo` locale pages are in the index. Consistent with the low-authority read from 09-19 — not a ban — but the recent articles (3 in the last 11 days) getting zero discovery is worth an active-session look at internal-link depth from the homepage/nav and at manually requesting indexing in the GSC UI (the API has no request-indexing endpoint for regular pages).
+
+**Sitemaps endpoint:** `sitemap-index.xml` (submitted 2026-07-21) — 0 errors, 0 warnings, `isPending: false`, **last downloaded 2026-09-18**. That download predates the 09-19 and 09-20 article ships, so Google has not yet seen the two newest articles in the sitemap; the 09-10 article was in the sitemap Google fetched 09-18 and is still undiscovered.
+
+**Canonical spot-check (live, `curl -sL`):** `/`, `/stripchat-account-holder-group-accounts`, `/de/stripchat-promo`, `/ro/stripscore-cam-rank-explained`, `/model-promotion` — all emit `<link rel="canonical" href="https://www.ewohub.com/...">` with correct www host. No issues.
+
+**Recommendations for an active session (not done here, read-only):** (1) request indexing for `/stripscore-cam-rank-explained` and the three unknown-to-Google articles via the GSC UI; (2) resubmit `sitemap-index.xml` to prompt a fresh fetch; (3) still-open items from the 2026-09-19 entry — trim over-long titles/meta descriptions (viewer-mode article: 70-char title, 242-char description); (4) standing 2026-08-30 audit list (structured data, non-Stripchat platform content gap, remaining geo pages) unchanged.
+
+No site content changed, no build run, no commits made (read-only monitoring task).
+
+---
+
+### Shipped (AM slot): "Stripchat's Updated Community Guidelines Explained" (all 8 locales)
+
+Topic: Stripchat's September 2026 Community Guidelines update (sourced from BCAMS Magazine's coverage: clearer/more transparent wording, new enforcement notes answering FAQs on specific policy areas, moderation reviews the whole situation rather than isolated elements, and a single unverified report does not trigger enforcement on its own). Not previously covered on-site (the only existing mention of `Community Guidelines` was a passing reference in `stripchat-model-news-studio-admin`). The announcement itself lists no new prohibited content, penalties, thresholds or appeal process, so the article says so explicitly and does not invent any; it separates what was stated from what wasn't. Dual-audience angle: what "context matters" means for a model's stream (title/tags/tip menu/on-camera consistency, keeping a record, checking Viewer Mode before reacting to a single complaint) and a studio process for guideline updates, standard reactions to reports/warnings and a support-question log. Slug: `stripchat-community-guidelines-update` + `/de/`, `/es/`, `/ro/`, `/uk/`, `/ru/`, `/fr/`, `/pt/` copies. Variant B (TOC), promo block linking `/stripchat-promo`, two-button CTA, added to `blog.astro` in all 8 locales with `tag: 'Stripchat'`, `date: '2026-09-21'` identical across locales. Titles 42-50 chars and meta descriptions 141-157 chars, inside the SERP limits flagged in the 2026-09-19 entry.
+
+**Notes:** a web-search snippet initially attributed the "Sweet September Contest" (top 500 performers, Sept 6-8) to Stripchat; fetching the source showed it is a Streamate promotion, so it was discarded. Build verified clean (464 pages); TOC anchors, FAQ, hreflang, canonical, promo block and blog listing entries checked in the built HTML for all 8 locales. Browser preview check skipped — unattended run, dev servers can't be started without interactive approval. Files were generated from one script with per-locale strings; `fr`/`pt` TOC strings reuse the precedent from earlier articles.
+
+---
+
 ## 2026-09-20
 
 ### Shipped (PM slot): "Stripchat's Account Holder Rule for Group Accounts" (all 8 locales)
