@@ -120,7 +120,7 @@ Two scheduled cloud tasks publish articles automatically: `ewo-daily-article` (1
 
 - No deep content for BongaCams / MyFreeCams / LiveJasmin / CamSoda — only Stripchat and Chaturbate have article clusters; competitors cover multi-platform comparisons where this site doesn't.
 - Phase 2 geo-page plan (13 countries) is only ~6 built (USA, Germany, Romania, Ukraine, Colombia, Spain); Canada, Bulgaria, Russia, Sweden, Poland, France, England, Netherlands still missing.
-- No BreadcrumbList or Article/BlogPosting structured data on content pages (only Organization/WebSite + client-side-generated FAQPage).
+- ~~No BreadcrumbList / Article structured data~~ — fixed 2026-09-21, see "SEO meta & schema (Base.astro)" below.
 
 ## `/links` mini-landing (EWOMODELS) + per-worker tracking
 
@@ -130,6 +130,13 @@ Two scheduled cloud tasks publish articles automatically: `ewo-daily-article` (1
 - Backend = separate FastAPI + Postgres app "worker-cabinet" on Railway (`https://worker-cabinet-production.up.railway.app`), source in `D:\WORKER-CABINET` (deployed with `railway up --ci --service worker-cabinet` from that folder). Its endpoints are documented in that repo's `API.md`.
 
 - **Encoding gotcha (bit us once):** never rewrite `.astro` files with Windows PowerShell 5.1 `Get-Content`/`Set-Content` — it reads UTF-8 as cp1251 and silently turns `→ · —` into `в†’ В· вЂ”`. Edit with the Edit tool or a node script (`fs.readFileSync(p, 'utf8')`), and check for stray non-ASCII (`node -e` listing `/[^\x00-\x7f]+/g` matches) after touching a file.
+
+## SEO meta & schema (Base.astro) — how it works now
+
+- **Structured data:** every page that passes `articleMeta={{ datePublished: 'YYYY-MM-DD' }}` to `<Base>` gets `BlogPosting` + `BreadcrumbList` JSON-LD (Home > Blog > article; add `section: 'guides'` inside `articleMeta` for pages that live on `/resources`, currently `stripchat-first-14-days-guide` and `stripchat-fan-club-pricing-guide`). `FAQPage` is still built from the rendered body. `og:type` is `article` on those pages.
+- **Titles:** `<title>` is `{title} | EWO` with no automatic trimming — write titles at **60 characters or fewer** (before the suffix), keyword first, in every locale. 143 titles across the 8 locales were shortened on 2026-09-21; the 6 pages that already rank (`stripscore-cam-rank-explained`, `model-promotion`, `studio-traffic`, `how-cam-algorithm-ranks-rooms`, `best-streaming-times-by-region`, `stripchat-promo`) were left alone on purpose.
+- **Meta descriptions:** `Base.astro` runs every description through `trimDescription()` (`src/lib/seo.ts`), which cuts at the last sentence end (or ` — ` / `; `) under 158 chars. Still write descriptions of about 150-160 characters yourself; the helper is a safety net and leaves text untouched if it finds no clean cut.
+- **Footer "Latest articles":** `src/lib/articles.ts` reads every page source at build time and lists the 6 newest articles (by `datePublished`) per locale in the footer of every page, so new articles get site-wide inbound links with no manual step.
 
 ## Where else to check
 

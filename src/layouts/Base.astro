@@ -1,4 +1,7 @@
 ﻿---
+import { trimDescription } from '@/lib/seo';
+import { latestArticles } from '@/lib/articles';
+
 interface HreflangEntry {
   lang: string;
   url: string;
@@ -7,6 +10,8 @@ interface HreflangEntry {
 interface ArticleMeta {
   datePublished: string;
   dateModified?: string;
+  /** Which listing the article lives under; drives the breadcrumb trail. Defaults to 'blog'. */
+  section?: 'blog' | 'guides';
 }
 
 interface Props {
@@ -31,6 +36,7 @@ const {
 } = Astro.props;
 
 const siteName = 'EWO';
+const metaDescription = trimDescription(description);
 
 const langLabels: Record<string, string> = {
   en: 'English',
@@ -281,7 +287,18 @@ try {
 // --- Build-time BlogPosting schema ---
 // Only emitted when the calling page explicitly passes `articleMeta` (real blog/guide
 // articles listed in blog.astro/resources.astro). Every other page is unaffected.
+const breadcrumbLabels: Record<string, { home: string; blog: string; guides: string }> = {
+  en: { home: 'Home', blog: 'Blog', guides: 'Guides' },
+  de: { home: 'Startseite', blog: 'Blog', guides: 'Guides' },
+  es: { home: 'Inicio', blog: 'Blog', guides: 'Guías' },
+  ro: { home: 'Acasă', blog: 'Blog', guides: 'Ghiduri' },
+  uk: { home: 'Головна', blog: 'Блог', guides: 'Гайди' },
+  ru: { home: 'Главная', blog: 'Блог', guides: 'Гайды' },
+  fr: { home: 'Accueil', blog: 'Blog', guides: 'Guides' },
+  pt: { home: 'Início', blog: 'Blog', guides: 'Guias' },
+};
 let blogPostingSchema: Record<string, unknown> | null = null;
+let breadcrumbSchema: Record<string, unknown> | null = null;
 if (articleMeta) {
   const headline = title.length > 110 ? `${title.slice(0, 107).trimEnd()}...` : title;
   blogPostingSchema = {
@@ -290,7 +307,10 @@ if (articleMeta) {
     headline,
     datePublished: articleMeta.datePublished,
     dateModified: articleMeta.dateModified ?? articleMeta.datePublished,
-    author: { '@type': 'Organization', name: 'EWOhub' },
+    description: metaDescription,
+    inLanguage: lang,
+    image: 'https://www.ewohub.com/logo-neon.png',
+    author: { '@type': 'Organization', name: 'EWOhub', url: 'https://www.ewohub.com' },
     publisher: {
       '@type': 'Organization',
       name: 'EWOhub',
@@ -298,7 +318,26 @@ if (articleMeta) {
     },
     mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalUrl },
   };
+
+  const bl = breadcrumbLabels[lang] ?? breadcrumbLabels.en;
+  const sectionKey = articleMeta.section ?? 'blog';
+  breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: bl.home, item: `https://www.ewohub.com${langPrefix || '/'}` },
+      { '@type': 'ListItem', position: 2, name: bl[sectionKey], item: `https://www.ewohub.com${langPrefix}/${sectionKey === 'guides' ? 'resources' : 'blog'}` },
+      { '@type': 'ListItem', position: 3, name: headline, item: canonicalUrl },
+    ],
+  };
 }
+
+const latestLabels: Record<string, string> = {
+  en: 'Latest articles', de: 'Neueste Artikel', es: 'Últimos artículos', ro: 'Ultimele articole',
+  uk: 'Останні статті', ru: 'Последние статьи', fr: 'Derniers articles', pt: 'Últimos artigos',
+};
+const latestTitle = latestLabels[lang] ?? latestLabels.en;
+const latest = latestArticles(lang);
 ---
 
 <!doctype html>
@@ -317,18 +356,18 @@ if (articleMeta) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title} | {siteName}</title>
-    <meta name="description" content={description} />
+    <meta name="description" content={metaDescription} />
     <link rel="canonical" href={canonicalUrl} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     <meta property="og:title" content={`${title} | ${siteName}`} />
-    <meta property="og:description" content={description} />
+    <meta property="og:description" content={metaDescription} />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={articleMeta ? 'article' : 'website'} />
     <meta property="og:image" content="https://www.ewohub.com/logo-neon.png" />
     <meta property="og:site_name" content={siteName} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={`${title} | ${siteName}`} />
-    <meta name="twitter:description" content={description} />
+    <meta name="twitter:description" content={metaDescription} />
     <meta name="twitter:image" content="https://www.ewohub.com/logo-neon.png" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -362,6 +401,7 @@ if (articleMeta) {
 
     <!-- BlogPosting schema (only present when the page passes articleMeta) -->
     {blogPostingSchema && <script type="application/ld+json" set:html={JSON.stringify(blogPostingSchema)} />}
+    {breadcrumbSchema && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />}
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -466,6 +506,16 @@ if (articleMeta) {
           </div>
         </nav>
       </div>
+      {latest.length > 0 && (
+        <nav class="footer-latest" aria-label={latestTitle}>
+          <p class="footer-col-title">{latestTitle}</p>
+          <ul role="list">
+            {latest.map(({ slug, title: t }) => (
+              <li><a href={`${langPrefix}/${slug}`}>{t}</a></li>
+            ))}
+          </ul>
+        </nav>
+      )}
       <div class="footer-bottom">
         <p>&copy; {new Date().getFullYear()} EWOhub · {fd.rights}</p>
       </div>
@@ -843,6 +893,23 @@ if (articleMeta) {
     transition: color var(--transition);
   }
   .footer-col a:hover { color: var(--fg); }
+  .footer-latest {
+    max-width: var(--container);
+    margin-inline: auto;
+    padding: 0 clamp(1.25rem, 4vw, 2rem) 2.5rem;
+  }
+  .footer-latest ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: .5rem 2rem;
+  }
+  .footer-latest a {
+    font-size: .875rem;
+    font-weight: 600;
+    color: var(--fg-muted);
+    transition: color var(--transition);
+  }
+  .footer-latest a:hover { color: var(--fg); }
   .footer-bottom {
     border-top: 1px solid rgba(0,0,0,0.08);
     padding: 1.25rem clamp(1.25rem, 4vw, 2rem);

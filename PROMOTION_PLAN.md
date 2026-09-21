@@ -34,6 +34,17 @@ Pattern: every non-homepage, non-promo article page that's been inspected is eit
 
 No site content changed, no build run, no commits made (read-only monitoring task).
 
+### Active session: structured data, titles/descriptions, internal links (user-requested follow-up to the check above)
+
+Follow-up to the low-growth discussion; the three fixable on-page items from the monitoring entry:
+
+- **Structured data:** `BlogPosting` already existed for article pages (the "no Article schema" line in `CLAUDE.md` was stale). Added `BreadcrumbList` (Home > Blog/Guides > article, localized labels) to all 224 article pages, and enriched `BlogPosting` with `description`, `inLanguage`, `image` and author `url`; `og:type` is now `article` on those pages. Guides (`stripchat-first-14-days-guide`, `stripchat-fan-club-pricing-guide`) use `section: 'guides'` so their breadcrumb points to `/resources`.
+- **Titles:** 143 titles over 60 chars rewritten across all 8 locales (e.g. viewer-mode 64 -> 56 chars, fr popular-visibility 126 -> 57). Left untouched on purpose: the 6 pages that already rank / get impressions (`stripscore-cam-rank-explained`, `model-promotion`, `studio-traffic`, `how-cam-algorithm-ranks-rooms`, `best-streaming-times-by-region`, `stripchat-promo`), and titles already at or under 60.
+- **Descriptions:** rather than hand-rewriting ~220 descriptions, `Base.astro` now trims to a clean sentence/clause boundary under 158 chars (`src/lib/seo.ts`): 146 of 215 over-long descriptions are now cut cleanly (viewer-mode 242 -> ~135). 69 remain over 160 because they have no sentence or clause break to cut at; the page copy for those still needs a manual rewrite. The daily article pipeline should be told to write titles at 60 chars or fewer and descriptions at about 155.
+- **Internal linking:** before this change 3 recent articles (`stripchat-amazon-wishlist-gifts`, `stripchat-community-guidelines-update`, `stripchat-magic-search-discoverability`) had zero inbound links from other pages, and the header nav doesn't link `/blog`. Added a footer "Latest articles" row (6 newest per locale, generated at build time from page sources by `src/lib/articles.ts`) to all 456 pages, so every new article gets site-wide inbound links automatically. The curated per-article "Related Articles" grids were not touched.
+
+Build verified clean (464 pages); checked built HTML for the viewer-mode article (title, trimmed description, `og:type`, BlogPosting + BreadcrumbList, footer list) and the de guides page (breadcrumb -> `/de/resources`). Browser preview check skipped (dev servers can't be started from this session). This does not change the underlying cause from the check above (low authority, no backlinks, thin/unindexed pages) — it removes cheap on-page friction only.
+
 ---
 
 ### Shipped (AM slot): "Stripchat's Updated Community Guidelines Explained" (all 8 locales)
