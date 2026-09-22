@@ -3,7 +3,7 @@ import Base from '@/layouts/Base.astro';
 import { studioDirectory, countryNames, factLabels, experienceYearsUnit, payoutLabels, perkLabels, reviewWord, faqHeading, faqTemplates, homeLabel, catalogLabel, type Studio, type CountryKey } from '@/data/studios';
 
 export function getStaticPaths() {
-  const localeList = ['de', 'es', 'ro', 'uk', 'ru', 'fr', 'pt'];
+  const localeList = ['ro', 'ru'];
   const paths: { params: { locale: string; slug: string }; props: { studio: Studio; countryKey: CountryKey; siblings: Studio[] } }[] = [];
   for (const locale of localeList) {
     for (const entry of studioDirectory) {
@@ -27,52 +27,33 @@ const metaDescription = studio.about[lang].length > 155 ? `${studio.about[lang].
 const pageUrl = `${site}/${lang}/studio-directory/${slug}`;
 
 const backLabel: Record<string, string> = {
-  de: '← Alle Studios in {c}', es: '← Todos los estudios en {c}', ro: '← Toate studiourile din {c}',
-  uk: '← Усі студії в {c}', ru: '← Все студии в {c}', fr: '← Tous les studios en {c}', pt: '← Todos os estúdios em {c}',
+  ro: '← Toate studiourile din {c}', ru: '← Все студии в {c}',
 };
 const websiteLabel: Record<string, string> = {
-  de: 'Offizielle Website besuchen →', es: 'Visitar sitio web oficial →', ro: 'Vizitează site-ul oficial →',
-  uk: 'Відвідати офіційний сайт →', ru: 'Посетить официальный сайт →', fr: 'Visiter le site officiel →', pt: 'Visitar site oficial →',
+  ro: 'Vizitează site-ul oficial →', ru: 'Посетить официальный сайт →',
 };
 const disclaimerTpl: Record<string, string> = {
-  de: 'Diese Angaben stammen von der eigenen Website von {n} und aus öffentlichen Quellen — nicht von EWO verifiziert und können sich ändern. Lies vor der Unterschrift bei jedem Studio unsere <a href="/de/how-to-choose-a-webcam-studio">Warnsignal-Checkliste für Studios</a>. Betreibst du dieses Studio und hast etwas Falsches oder Veraltetes entdeckt? <a href="https://t.me/ewo_agency" target="_blank" rel="noopener noreferrer">Schreib uns auf Telegram</a>.',
-  es: 'Estos detalles provienen del propio sitio web de {n} y de fuentes públicas — no verificados por EWO, y pueden cambiar. Antes de firmar con cualquier estudio, lee nuestra <a href="/es/how-to-choose-a-webcam-studio">lista de señales de alerta para estudios</a>. ¿Diriges este estudio y detectaste algo incorrecto o desactualizado? <a href="https://t.me/ewo_agency" target="_blank" rel="noopener noreferrer">Escríbenos por Telegram</a>.',
   ro: 'Aceste detalii provin de pe site-ul propriu al {n} și din surse publice — neverificate de EWO și pot fi modificate. Înainte să semnezi cu orice studio, citește <a href="/ro/how-to-choose-a-webcam-studio">lista noastră de semnale de alarmă pentru studiouri</a>. Conduci acest studio și ai observat ceva greșit sau învechit? <a href="https://t.me/ewo_agency" target="_blank" rel="noopener noreferrer">Scrie-ne pe Telegram</a>.',
-  uk: 'Ці дані взяті з власного сайту {n} та публічних джерел — не перевірені EWO і можуть змінюватися. Перш ніж підписувати договір з будь-якою студією, прочитайте наш <a href="/uk/how-to-choose-a-webcam-studio">чекліст тривожних сигналів для студій</a>. Керуєте цією студією і помітили щось неправильне чи застаріле? <a href="https://t.me/ewo_agency" target="_blank" rel="noopener noreferrer">Напишіть нам в Telegram</a>.',
   ru: 'Эти данные взяты с собственного сайта {n} и из публичных источников — не проверены EWO и могут меняться. Перед тем как подписывать договор с любой студией, прочитайте наш <a href="/ru/how-to-choose-a-webcam-studio">чек-лист тревожных сигналов для студий</a>. Управляете этой студией и заметили что-то неверное или устаревшее? <a href="https://t.me/ewo_agency" target="_blank" rel="noopener noreferrer">Напишите нам в Telegram</a>.',
-  fr: "Ces informations proviennent du site officiel de {n} et de sources publiques — non vérifiées par EWO, et sujettes à changement. Avant de signer avec un studio, lisez notre <a href=\"/fr/how-to-choose-a-webcam-studio\">liste de signaux d'alerte pour les studios</a>. Vous gérez ce studio et avez repéré une erreur ou une info obsolète ? <a href=\"https://t.me/ewo_agency\" target=\"_blank\" rel=\"noopener noreferrer\">Écrivez-nous sur Telegram</a>.",
-  pt: 'Esses detalhes vêm do próprio site da {n} e de fontes públicas — não verificados pela EWO, e sujeitos a mudanças. Antes de assinar com qualquer estúdio, leia nossa <a href="/pt/how-to-choose-a-webcam-studio">lista de sinais de alerta para estúdios</a>. Administra este estúdio e percebeu algo errado ou desatualizado? <a href="https://t.me/ewo_agency" target="_blank" rel="noopener noreferrer">Fale conosco no Telegram</a>.',
 };
 const ctaHeading: Record<string, string> = {
-  de: 'Brauchst du eine zweite Meinung, bevor du unterschreibst?', es: '¿Quieres una segunda opinión antes de firmar?',
-  ro: 'Vrei o a doua opinie înainte să semnezi?', uk: 'Потрібна друга думка перед підписанням?',
-  ru: 'Нужно второе мнение перед подписанием?', fr: "Besoin d'un second avis avant de signer ?", pt: 'Quer uma segunda opinião antes de assinar?',
+  ro: 'Vrei o a doua opinie înainte să semnezi?', ru: 'Нужно второе мнение перед подписанием?',
 };
 const ctaParagraph: Record<string, string> = {
-  de: 'Sag unserem Support-Team dein Land und deine Situation — wir helfen dir, ein Studio-Angebot einzuschätzen, oder besprechen unabhängiges Streaming mit EWO als Traffic-Treiber.',
-  es: 'Cuéntale a nuestro equipo de soporte tu país y tu situación — te ayudaremos a evaluar una oferta de estudio, o a hablar sobre transmitir de forma independiente con EWO llevando tu tráfico.',
   ro: 'Spune-i echipei noastre de suport țara și situația ta — te ajutăm să evaluezi o ofertă de studio sau discutăm despre streaming independent cu EWO aducându-ți trafic.',
-  uk: 'Розкажіть нашій команді підтримки свою країну й ситуацію — ми допоможемо оцінити пропозицію студії або обговоримо незалежний стрімінг з EWO, що приводить трафік.',
   ru: 'Расскажите нашей команде поддержки свою страну и ситуацию — мы поможем оценить предложение студии или обсудим независимый стриминг с EWO, который приводит трафик.',
-  fr: "Indiquez à notre équipe support votre pays et votre situation — nous vous aiderons à évaluer une offre de studio, ou à envisager le streaming indépendant avec EWO qui vous apporte du trafic.",
-  pt: 'Conte para nossa equipe de suporte seu país e sua situação — vamos ajudar você a avaliar uma oferta de estúdio, ou conversar sobre transmitir de forma independente com a EWO trazendo tráfego.',
 };
 const ctaPrimary: Record<string, string> = {
-  de: 'Support kontaktieren →', es: 'Hablar con Soporte →', ro: 'Vorbește cu Suportul →', uk: 'Написати в Підтримку →',
-  ru: 'Написать в Поддержку →', fr: 'Contacter le Support →', pt: 'Falar com o Suporte →',
+  ro: 'Vorbește cu Suportul →', ru: 'Написать в Поддержку →',
 };
 const ctaGhost: Record<string, string> = {
-  de: 'Warnsignal-Checkliste lesen', es: 'Leer la lista de señales de alerta', ro: 'Citește lista de semnale de alarmă',
-  uk: 'Прочитати чекліст тривожних сигналів', ru: 'Прочитать чек-лист тревожных сигналов',
-  fr: "Lire la liste des signaux d'alerte", pt: 'Ler a lista de sinais de alerta',
+  ro: 'Citește lista de semnale de alarmă', ru: 'Прочитать чек-лист тревожных сигналов',
 };
 const moreStudiosTpl: Record<string, string> = {
-  de: 'Weitere Studios in {c}', es: 'Más Estudios en {c}', ro: 'Mai Multe Studiouri din {c}',
-  uk: 'Більше Студій у {c}', ru: 'Больше Студий в {c}', fr: 'Plus de Studios en {c}', pt: 'Mais Estúdios em {c}',
+  ro: 'Mai Multe Studiouri din {c}', ru: 'Больше Студий в {c}',
 };
 const fullCatalogLabel: Record<string, string> = {
-  de: 'Kompletter Studio-Katalog', es: 'Catálogo Completo de Estudios', ro: 'Catalog Complet de Studiouri',
-  uk: 'Повний Каталог Студій', ru: 'Полный Каталог Студий', fr: 'Catalogue Complet des Studios', pt: 'Catálogo Completo de Estúdios',
+  ro: 'Catalog Complet de Studiouri', ru: 'Полный Каталог Студий',
 };
 
 const backHref = `/${lang}/studio-directory`;
@@ -82,7 +63,6 @@ const disclaimerHtml = disclaimerTpl[lang].replace('{n}', studio.name);
 // differs from the nominative form used elsewhere (e.g. "Romania" itself).
 const locativeCountry: Record<string, Record<CountryKey, string>> = {
   ru: { romania: 'Румынии', ukraine: 'Украине', spain: 'Испании', russia: 'России', usa: 'США', germany: 'Германии', france: 'Франции' },
-  uk: { romania: 'Румунії', ukraine: 'Україні', spain: 'Іспанії', russia: 'Росії', usa: 'США', germany: 'Німеччині', france: 'Франції' },
 };
 const countryNameInPhrase = locativeCountry[lang]?.[countryKey] ?? countryName;
 
@@ -154,13 +134,8 @@ const schemaGraph = {
   lang={lang}
   hreflang={[
     { lang: 'en', url: `${site}/studio-directory/${slug}` },
-    { lang: 'de', url: `${site}/de/studio-directory/${slug}` },
-    { lang: 'es', url: `${site}/es/studio-directory/${slug}` },
     { lang: 'ro', url: `${site}/ro/studio-directory/${slug}` },
-    { lang: 'uk', url: `${site}/uk/studio-directory/${slug}` },
     { lang: 'ru', url: `${site}/ru/studio-directory/${slug}` },
-    { lang: 'fr', url: `${site}/fr/studio-directory/${slug}` },
-    { lang: 'pt', url: `${site}/pt/studio-directory/${slug}` },
   ]}
 >
 

@@ -40,38 +40,25 @@ const metaDescription = trimDescription(description);
 
 const langLabels: Record<string, string> = {
   en: 'English',
-  de: 'Deutsch',
   ro: 'Română',
-  uk: 'Українська',
   ru: 'Русский',
-  es: 'Español',
-  fr: 'Français',
-  pt: 'Português',
 };
 
 const langPrefix = lang === 'en' ? '' : `/${lang}`;
 
 const navLabels: Record<string, {models: string, studios: string, directory: string, blog: string, guides: string, catalog: string}> = {
   en: { models: 'For Models', studios: 'For Studios', directory: 'Studios Catalog', blog: 'Blog', guides: 'Guides', catalog: 'Services Catalog' },
-  de: { models: 'Für Models', studios: 'Für Studios', directory: 'Studio-Katalog', blog: 'Blog', guides: 'Guides', catalog: 'Service-Katalog' },
-  es: { models: 'Para Modelos', studios: 'Para Estudios', directory: 'Catálogo de Estudios', blog: 'Blog', guides: 'Guías', catalog: 'Catálogo de Servicios' },
   ro: { models: 'Pentru Modele', studios: 'Pentru Studiouri', directory: 'Catalog de Studiouri', blog: 'Blog', guides: 'Ghiduri', catalog: 'Catalog de Servicii' },
-  uk: { models: 'Для Моделей', studios: 'Для Студій', directory: 'Каталог Студій', blog: 'Блог', guides: 'Гайди', catalog: 'Каталог Сервісів' },
   ru: { models: 'Для Моделей', studios: 'Для Студий', directory: 'Каталог Студий', blog: 'Блог', guides: 'Гайды', catalog: 'Каталог Сервисов' },
-  fr: { models: 'Pour les Modèles', studios: 'Pour les Studios', directory: 'Catalogue des Studios', blog: 'Blog', guides: 'Guides', catalog: 'Catalogue de Services' },
-  pt: { models: 'Para Modelos', studios: 'Para Estúdios', directory: 'Catálogo de Estúdios', blog: 'Blog', guides: 'Guias', catalog: 'Catálogo de Serviços' },
 };
 const nl = navLabels[lang] ?? navLabels.en;
 
 const ctaLabels: Record<string, string> = {
-  en: 'Get Started', de: 'Loslegen', es: 'Comenzar',
-  ro: 'Începe', uk: 'Почати', ru: 'Начать',
-  fr: 'Commencer', pt: 'Começar',
+  en: 'Get Started', ro: 'Începe', ru: 'Начать',
 };
 
 const menuLabels: Record<string, string> = {
-  en: 'Menu', de: 'Menü', es: 'Menú', ro: 'Meniu', uk: 'Меню', ru: 'Меню',
-  fr: 'Menu', pt: 'Menu',
+  en: 'Menu', ro: 'Meniu', ru: 'Меню',
 };
 
 const nav = [
@@ -102,22 +89,6 @@ const footerData: Record<string, Omit<FooterLabels, 'services' | 'resources' | '
     regions: ['USA', 'Germany', 'Romania', 'Ukraine', 'Colombia', 'Spain'],
     rights: 'All rights reserved',
   },
-  de: {
-    tagline: 'Seriöses Publikumswachstum für Webcam-Models & Studios weltweit.',
-    colServices: 'Services', colResources: 'Ressourcen', colRegions: 'Regionen',
-    services: ['Für Models', 'Studio-Traffic', 'Wachstum für neue Models', 'Studio-Skalierung'],
-    resources: ['Model-Promotion', 'Warum wenig Zuschauer', 'Algorithmus-Guide', 'Einkommens-Guide', 'Ressourcen', 'Blog', 'Kontakt'],
-    regions: ['USA', 'Deutschland', 'Rumänien', 'Ukraine', 'Kolumbien', 'Spanien'],
-    rights: 'Alle Rechte vorbehalten',
-  },
-  es: {
-    tagline: 'Crecimiento de audiencia legítimo para modelos webcam y estudios en todo el mundo.',
-    colServices: 'Servicios', colResources: 'Recursos', colRegions: 'Regiones',
-    services: ['Para Modelos', 'Tráfico para Estudios', 'Crecimiento de Nuevas Modelos', 'Escalado de Estudios'],
-    resources: ['Promoción de Modelos', 'Por Qué Pocos Espectadores', 'Guía del Algoritmo', 'Guía de Ingresos', 'Recursos', 'Blog', 'Contacto'],
-    regions: ['EE. UU.', 'Alemania', 'Rumanía', 'Ucrania', 'Colombia', 'España'],
-    rights: 'Todos los derechos reservados',
-  },
   ro: {
     tagline: 'Creștere legitimă de audiență pentru modele webcam și studiouri la nivel mondial.',
     colServices: 'Servicii', colResources: 'Resurse', colRegions: 'Regiuni',
@@ -126,14 +97,6 @@ const footerData: Record<string, Omit<FooterLabels, 'services' | 'resources' | '
     regions: ['SUA', 'Germania', 'România', 'Ucraina', 'Columbia', 'Spania'],
     rights: 'Toate drepturile rezervate',
   },
-  uk: {
-    tagline: 'Легітимне зростання аудиторії для вебкам-моделей і студій у всьому світі.',
-    colServices: 'Послуги', colResources: 'Ресурси', colRegions: 'Регіони',
-    services: ['Для Моделей', 'Трафік для Студій', 'Зростання Нових Моделей', 'Масштабування Студій'],
-    resources: ['Промоція Моделей', 'Чому Мало Глядачів', 'Гід по Алгоритму', 'Гід по Доходу', 'Ресурси', 'Блог', 'Контакт'],
-    regions: ['США', 'Німеччина', 'Румунія', 'Україна', 'Колумбія', 'Іспанія'],
-    rights: 'Усі права захищені',
-  },
   ru: {
     tagline: 'Легитимный рост аудитории для вебкам-моделей и студий по всему миру.',
     colServices: 'Услуги', colResources: 'Ресурсы', colRegions: 'Регионы',
@@ -141,22 +104,6 @@ const footerData: Record<string, Omit<FooterLabels, 'services' | 'resources' | '
     resources: ['Продвижение Моделей', 'Почему Мало Зрителей', 'Гид по Алгоритму', 'Гид по Доходу', 'Ресурсы', 'Блог', 'Контакт'],
     regions: ['США', 'Германия', 'Румыния', 'Украина', 'Колумбия', 'Испания'],
     rights: 'Все права защищены',
-  },
-  fr: {
-    tagline: 'Croissance d\'audience légitime pour les modèles et studios webcam du monde entier.',
-    colServices: 'Services', colResources: 'Ressources', colRegions: 'Régions',
-    services: ['Pour les Modèles', 'Trafic pour Studios', 'Croissance Nouvelles Modèles', 'Extension de Studio'],
-    resources: ['Promotion de Modèles', 'Pourquoi Peu de Spectateurs', 'Guide de l\'Algorithme', 'Guide des Revenus', 'Ressources', 'Blog', 'Contact'],
-    regions: ['États-Unis', 'Allemagne', 'Roumanie', 'Ukraine', 'Colombie', 'Espagne'],
-    rights: 'Tous droits réservés',
-  },
-  pt: {
-    tagline: 'Crescimento de audiência legítimo para modelos e estúdios de webcam no mundo todo.',
-    colServices: 'Serviços', colResources: 'Recursos', colRegions: 'Regiões',
-    services: ['Para Modelos', 'Tráfego para Estúdios', 'Crescimento de Novas Modelos', 'Expansão de Estúdio'],
-    resources: ['Promoção de Modelos', 'Por Que Poucos Espectadores', 'Guia do Algoritmo', 'Guia de Renda', 'Recursos', 'Blog', 'Contato'],
-    regions: ['EUA', 'Alemanha', 'Romênia', 'Ucrânia', 'Colômbia', 'Espanha'],
-    rights: 'Todos os direitos reservados',
   },
 };
 const fd = footerData[lang] ?? footerData.en;
@@ -289,13 +236,8 @@ try {
 // articles listed in blog.astro/resources.astro). Every other page is unaffected.
 const breadcrumbLabels: Record<string, { home: string; blog: string; guides: string }> = {
   en: { home: 'Home', blog: 'Blog', guides: 'Guides' },
-  de: { home: 'Startseite', blog: 'Blog', guides: 'Guides' },
-  es: { home: 'Inicio', blog: 'Blog', guides: 'Guías' },
   ro: { home: 'Acasă', blog: 'Blog', guides: 'Ghiduri' },
-  uk: { home: 'Головна', blog: 'Блог', guides: 'Гайди' },
   ru: { home: 'Главная', blog: 'Блог', guides: 'Гайды' },
-  fr: { home: 'Accueil', blog: 'Blog', guides: 'Guides' },
-  pt: { home: 'Início', blog: 'Blog', guides: 'Guias' },
 };
 let blogPostingSchema: Record<string, unknown> | null = null;
 let breadcrumbSchema: Record<string, unknown> | null = null;
@@ -333,8 +275,7 @@ if (articleMeta) {
 }
 
 const latestLabels: Record<string, string> = {
-  en: 'Latest articles', de: 'Neueste Artikel', es: 'Últimos artículos', ro: 'Ultimele articole',
-  uk: 'Останні статті', ru: 'Последние статьи', fr: 'Derniers articles', pt: 'Últimos artigos',
+  en: 'Latest articles', ro: 'Ultimele articole', ru: 'Последние статьи',
 };
 const latestTitle = latestLabels[lang] ?? latestLabels.en;
 const latest = latestArticles(lang);

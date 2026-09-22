@@ -8,13 +8,8 @@ const title = 'Webcam Model & Studio Promotion Platform';
 const description = 'EWO is a global service for webcam models and studios. Traffic growth, promotion, and full management. 1000+ clients, 10+ years experience, 20+ countries.';
 const hreflang = [
   { lang: 'en', url: `${site}/` },
-  { lang: 'de', url: `${site}/de` },
-  { lang: 'es', url: `${site}/es` },
   { lang: 'ro', url: `${site}/ro` },
-  { lang: 'uk', url: `${site}/uk` },
   { lang: 'ru', url: `${site}/ru` },
-  { lang: 'fr', url: `${site}/fr` },
-  { lang: 'pt', url: `${site}/pt` },
 ];
 ---
 <Base title={title} description={description} lang="en" hreflang={hreflang}>
@@ -23,7 +18,7 @@ const hreflang = [
       (function(){
         try { if (localStorage.getItem('ewo-lang-set')) return; } catch(e) {}
         var l=(navigator.language||navigator.userLanguage||'').slice(0,2).toLowerCase();
-        var m={de:'/de',es:'/es',ro:'/ro',ru:'/ru',uk:'/uk'};
+        var m={ro:'/ro',ru:'/ru'};
         if(m[l]) window.location.replace(m[l]);
       })();
     </script>

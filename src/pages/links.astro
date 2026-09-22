@@ -6,17 +6,11 @@ const title = "EWOMODELS | Traffic & Management for Webcam Models";
 const description = "Top agency for webcam models: traffic promotion, management and analytics. Join EWOMODELS on Telegram.";
 const hreflang = [
   { lang: 'en', url: `${site}/links` },
-  { lang: 'de', url: `${site}/de/links` },
-  { lang: 'es', url: `${site}/es/links` },
   { lang: 'ro', url: `${site}/ro/links` },
-  { lang: 'uk', url: `${site}/uk/links` },
   { lang: 'ru', url: `${site}/ru/links` },
-  { lang: 'fr', url: `${site}/fr/links` },
-  { lang: 'pt', url: `${site}/pt/links` },
 ];
 const langLabels: Record<string, string> = {
-  en: 'English', de: 'Deutsch', ro: 'Română', uk: 'Українська',
-  ru: 'Русский', es: 'Español', fr: 'Français', pt: 'Português',
+  en: 'English', ro: 'Română', ru: 'Русский',
 };
 const heading = 'EWOMODELS';
 const subLine1 = "Traffic. Management.";
@@ -35,7 +29,7 @@ const btnPromo = "Stripchat promotion";
     (function () {
       try { if (localStorage.getItem('ewo-lang-set')) return; } catch (e) {}
       var l = (navigator.language || navigator.userLanguage || '').slice(0, 2).toLowerCase();
-      var m = { de: '/de/links', es: '/es/links', ro: '/ro/links', ru: '/ru/links', uk: '/uk/links', fr: '/fr/links', pt: '/pt/links' };
+      var m = { ro: '/ro/links', ru: '/ru/links' };
       if (m[l]) { window.__ewoRedirect = true; window.location.replace(m[l] + location.search); }
     })();
   </script>

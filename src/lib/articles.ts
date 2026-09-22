@@ -7,7 +7,7 @@ const sources = import.meta.glob<string>('../pages/**/*.astro', {
   eager: true,
 });
 
-const LOCALES = ['de', 'es', 'ro', 'uk', 'ru', 'fr', 'pt'];
+const LOCALES = ['ro', 'ru'];
 
 export interface ArticleLink {
   lang: string;

@@ -7,17 +7,19 @@
     { "source": "/:path*", "has": [{ "type": "host", "value": "ewo.cam" }], "destination": "https://www.ewohub.com/:path*", "permanent": true },
     { "source": "/:path*", "has": [{ "type": "host", "value": "www.ewo.cam" }], "destination": "https://www.ewohub.com/:path*", "permanent": true },
     { "source": "/stripchat_promo", "destination": "/stripchat-promo", "permanent": true },
-    { "source": "/de/stripchat_promo", "destination": "/de/stripchat-promo", "permanent": true },
-    { "source": "/es/stripchat_promo", "destination": "/es/stripchat-promo", "permanent": true },
     { "source": "/ro/stripchat_promo", "destination": "/ro/stripchat-promo", "permanent": true },
-    { "source": "/uk/stripchat_promo", "destination": "/uk/stripchat-promo", "permanent": true },
     { "source": "/ru/stripchat_promo", "destination": "/ru/stripchat-promo", "permanent": true },
-    { "source": "/", "has": [{ "type": "header", "key": "accept-language", "value": "^de" }], "destination": "/de", "permanent": false },
-    { "source": "/", "has": [{ "type": "header", "key": "accept-language", "value": "^es" }], "destination": "/es", "permanent": false },
+    { "source": "/de", "destination": "/", "permanent": true },
+    { "source": "/de/:path*", "destination": "/:path*", "permanent": true },
+    { "source": "/es", "destination": "/", "permanent": true },
+    { "source": "/es/:path*", "destination": "/:path*", "permanent": true },
+    { "source": "/uk", "destination": "/", "permanent": true },
+    { "source": "/uk/:path*", "destination": "/:path*", "permanent": true },
+    { "source": "/fr", "destination": "/", "permanent": true },
+    { "source": "/fr/:path*", "destination": "/:path*", "permanent": true },
+    { "source": "/pt", "destination": "/", "permanent": true },
+    { "source": "/pt/:path*", "destination": "/:path*", "permanent": true },
     { "source": "/", "has": [{ "type": "header", "key": "accept-language", "value": "^ro" }], "destination": "/ro", "permanent": false },
-    { "source": "/", "has": [{ "type": "header", "key": "accept-language", "value": "^ru" }], "destination": "/ru", "permanent": false },
-    { "source": "/", "has": [{ "type": "header", "key": "accept-language", "value": "^uk" }], "destination": "/uk", "permanent": false },
-    { "source": "/", "has": [{ "type": "header", "key": "accept-language", "value": "^fr" }], "destination": "/fr", "permanent": false },
-    { "source": "/", "has": [{ "type": "header", "key": "accept-language", "value": "^pt" }], "destination": "/pt", "permanent": false }
+    { "source": "/", "has": [{ "type": "header", "key": "accept-language", "value": "^ru" }], "destination": "/ru", "permanent": false }
   ]
 }

@@ -4,6 +4,105 @@ Running log of daily/session-based SEO & promotion action plans. Newest entry on
 
 ---
 
+## 2026-09-22 (execution)
+
+### Locale reduction 8 → 3 (EN/RU/RO) — executed
+
+Carried out the locale cut decided in the planning entry below. Scope: **remove DE/ES/UK/FR/PT**, keep EN/RU/RO. Noindex-by-topic-demand triage (part 2 of the planning entry) is a separate follow-up, not done in this pass.
+
+**What changed:**
+- `vercel.json`: added 301 redirects `/de|es|uk|fr|pt(/*)` → `/(*)`; removed the now-dead accept-language soft-redirects and legacy `/xx/stripchat_promo` rules for the 5 dropped locales (kept ro/ru ones).
+- Deleted `src/pages/{de,es,uk,fr,pt}/` entirely (~45 pages each).
+- `src/pages/[locale]/studio-directory/[slug].astro`: this dynamic route (not a static per-locale folder) generates studio pages for ro/ru — shrank its `localeList` and all its locale-keyed label dicts from 7 to 2 (ro/ru).
+- Trimmed the 8-entry `hreflang` array down to `en/ro/ru` in all ~135 remaining page files (root + `ru/*` + `ro/*`) via a small Node script — first pass had a CRLF-related regex bug that ate the newline of the preceding kept line; caught it, reverted, fixed the regex (restricted whitespace matching to `[ \t]`, explicit `\r?\n` terminator), and re-ran clean.
+- `src/layouts/Base.astro`: removed de/es/uk/fr/pt keys from `langLabels`, `navLabels`, `ctaLabels`, `menuLabels`, `footerData`, `breadcrumbLabels`, `latestLabels`. (Not strictly required functionally — the language switcher renders from each page's own `hreflang` prop, not from these dicts — done for cleanliness.)
+- `src/lib/articles.ts`: `LOCALES` array shrunk to `['ro','ru']`.
+- `src/pages/index.astro`, `src/pages/links.astro`, `src/pages/ru/links.astro`, `src/pages/ro/links.astro`: trimmed inline browser-language-redirect maps to `{ro, ru}` only.
+
+**Deliberately NOT touched (dead-data risk/reward didn't justify it):** `src/data/services-catalog.ts` and `src/data/studios.ts` still carry `Record<Locale,string>` translations for the dropped locales (hundreds of lines); `TrendsBlock.astro`/`LiveHeroStats.astro`/`LiveIndicator.astro`/`LiveLookupTool.astro` still have `STR` dict entries for them too. This project has no `astro check`/typecheck step (confirmed via `package.json` — no `@astrojs/check` or `typescript` devDependency), so there's no compiler safety net for a blind large-scale edit across that much data, and the leftover keys are inert — nothing renders them once the routes are gone. Cleanup candidate for a dedicated future pass, not bundled here.
+
+**Verification:** `npm run build` — 180 pages built (down from the prior full 8-locale count), `sitemap-0.xml` has 180 URLs with zero `/de/|/es/|/uk/|/fr/|/pt/` references, `dist/` has no `de/es/uk/fr/pt` directories. Spot-checked in the dev server: homepage auto-redirects to `/ru` (browser locale), renders fully, language switcher shows exactly English/Română/Русский. Studio-directory dynamic route confirmed rendering correctly for both `ro` and `ru`. Vercel-level redirects (`vercel.json`) can't be verified locally (Vercel-only feature) — check live after deploy: `/de/anything` should 301 → `/anything`.
+
+**Not done yet (next session):** the demand-based noindex triage from the planning entry (page-by-page keep-indexed vs. noindex table), and the previously-flagged cleanup items (sitemap listing noindex `/cabinet*` pages, missing `<lastmod>`, over-length titles/descriptions).
+
+---
+
+## 2026-09-22
+
+### Locale reduction (8 → 3) + demand-based noindex triage — planning only, no site changes made
+
+User decision (already made, not re-litigated here): keep **EN, RU, RO** live; drop **DE, ES, UK, FR, PT**. Separately, set every remaining page to `noindex` **except** pages that match real, currently-trending demand in the camming/webcam-promotion niche — determined by competitor/community research below, not guesswork. This session is research + a written plan only: no `.astro`, `vercel.json`, `astro.config.mjs`, or `Base.astro` file was touched, no build run, no commit made.
+
+**Context carried over from earlier this session (Semrush + technical audit, not repeated in full):** ewohub.com has effectively zero indexed organic footprint (`domain_organic` = `NOTHING FOUND` in every regional Semrush database checked — us/de/es/ru/ua/fr/uk), Authority Score 2, 63 backlinks / 52 referring domains with several spammy-looking purchased-anchor links and a clone-domain cluster (`domraider.*.com`). Practical implication for everything below: this site is not sitting on link equity worth protecting, so the usual "don't 404/redirect away indexed pages, you'll lose PageRank" caution mostly doesn't apply — the overriding priorities instead are (1) stop shipping thin/duplicate-pattern locale content that risks a scaled-content-abuse read, and (2) point Google's limited crawl budget at the handful of pages that have a real chance of matching demand.
+
+#### 1. Competitor / trending-topic research (WebSearch — Reddit itself is not fetchable from this environment, `www.reddit.com` fetches are blocked, so Reddit is represented via search-index snippets about r/CamModels-type communities rather than direct thread pulls; flagged so this isn't overstated as primary-sourced)
+
+Queries run: "reddit camming subreddit trending discussion Stripchat Chaturbate 2026", "XBIZ camming news 2026", "bcams-magazine.com 2026 Stripchat Chaturbate trending", "camming forum model advice webcam studio traffic 2026", "cam model niche positioning 2026 fan club subscription income diversification", "webcam studio management roster scaling agency 2026 trends". Direct Reddit fetch attempts (`r/CamModels` top-of-month) failed — tool-level block, not a content gap.
+
+**Recurring real sources/communities found (the niche's actual "forums"):**
+- **bcams-magazine.com** — the closest thing to a trade press outlet for this niche; publishes near-daily platform-feature-change writeups (Stripchat, Chaturbate, BongaModels, Cams.com). This is ewohub's own sourcing outlet for the Stripchat news-cycle articles already shipped (magic search, wishlist, account holder, community guidelines, etc.) — confirms those topics were real news, but also confirms they're feature-announcement news, not evergreen search-demand topics (see part 2).
+- **XBIZ** (xbiz.com / xbizmiami.com / xbizamsterdam.com) — trade-show and awards coverage (Creator Awards, workshops on stream decks, etc.); more industry-conference news than search-demand content, weak match to ewohub's existing pages.
+- **Aruna Talent** (arunatalent.com) — the single most recurring competitor domain across searches: earnings calculator, "how much do webcam models make," "best webcam agencies 2026," "best webcam modeling agency," "Chaturbate management agency: costs, splits, results," "webcam agency guide." This is a talent agency running an aggressive SEO/content play on exactly ewohub's topic space (income guides + agency/studio comparisons) — **the closest real competitor found this session**, worth a recurring watch.
+- **adent.io, teasecode.com, camstar.in.rs, cammingwiki.com, scrile.com, supercreator.app, outseeker.net** — one-or-two-appearance content-mill sites, all publishing the same cluster of "how much do cam girls make," "best cam sites 2026," "best webcam studios/agencies" listicles. Recurs enough as a *topic cluster* (income + best-sites/agencies rankings) even though individual domains don't repeat as often as Aruna Talent.
+
+**Trending topics identified (grounded in what actually showed up, not assumed):**
+1. Chaturbate ChaturSafe (auto real-time chat-moderation blocking) — bcams-magazine, Mar 2026. **Not covered on ewohub.**
+2. Chaturbate Auto Translate for public chat — bcams-magazine, Aug 2026. **Not covered on ewohub.**
+3. Income/earnings transparency — "how much do cam models actually make," diversified-income framing (tips/privates/content/subs mix), recurs across essentially every competitor domain found. **Covered** by `webcam-model-income-guide`, `webcam-earnings-by-platform`.
+4. "Best webcam agencies/studios 2026" ranking content — recurs on Aruna Talent + adent.io. **Partially covered** (`studio-directory`, `best-studios`) but ewohub's version is a directory of client studios, not an independent "best of" ranking — different intent, worth noting as a content-gap rather than a full match.
+5. Niche positioning / specialization advantage ("generic positioning is increasingly invisible") — recurs in scrile.com and camstar.in.rs pieces. **Not covered** as its own page.
+6. Roster/agency scaling, staff-to-model ratios, mentorship-for-new-models — Aruna Talent, Streamline Models. **Covered** by `studio-scaling`, `stripchat-first-14-days-guide`.
+7. Best times/hours to stream — a perennial, high-intent query pattern industry-wide (not tied to one competitor, it's a recurring search-behavior pattern). **Covered and already ranking** — `best-streaming-times-by-region`, `best-hours-to-stream-chaturbate`.
+8. Room-ranking / discoverability algorithm explainers — no single competitor article surfaced by name, but "how does the algorithm rank rooms" is exactly the query family the site's *only currently-ranking, indexed cluster* sits in per GSC (`stripscore-cam-rank-explained`, `how-cam-algorithm-ranks-rooms`, `raise-your-room-ranking-score`, `how-stripscore-works`). Treat as validated demand from the site's own data, independent of this search round.
+9. Individual Stripchat feature-change news (magic search, wishlist gating, account-holder rule, community guidelines wording, viewer mode, plasma app, VR shows, show recording, AI model recommendations, new-model-window length, popular/new visibility mechanics, studio-admin model news) — these are all real bcams-magazine stories, but **none of them recurred as a topic anyone else besides bcams-magazine itself was covering**, and per the 2026-09-19/09-20/09-21 monitoring entries above, the ones checked in GSC are consistently "URL is unknown to Google" or "crawled — not indexed." Read: real news, but not a *search-demand* match — good for topical freshness/pipeline cadence, not for indexing priority.
+
+#### 2. Page-by-page keep-indexed vs. noindex recommendation (all 68 EN slugs)
+
+**KEEP INDEXED — proven-ranking cluster (do not touch, per the 2026-09-21 entry these were deliberately left alone already):**
+`stripscore-cam-rank-explained`, `model-promotion`, `studio-traffic`, `how-cam-algorithm-ranks-rooms`, `best-streaming-times-by-region`, `stripchat-promo`, plus `/` (homepage).
+
+**KEEP INDEXED — same topic family as the proven cluster (algorithm/ranking), high confidence:**
+`how-stripscore-works`, `raise-your-room-ranking-score`.
+
+**KEEP INDEXED — matches a recurring competitor/industry topic cluster found in part 1 (income, best-times, tag/title optimization, tip-menu/fan-club income structure, onboarding, agency scaling):**
+`webcam-model-income-guide`, `webcam-earnings-by-platform`, `best-hours-to-stream-chaturbate`, `top-performing-tags-chaturbate`, `top-performing-titles-chaturbate`, `chaturbate-show-prices`, `why-low-viewers-webcam` (evergreen troubleshooting intent, high-frequency query pattern), `stripchat-fan-club-pricing-guide`, `stripchat-goals-tip-menu-structure`, `stripchat-first-14-days-guide`, `new-model-growth`, `studio-scaling`.
+
+**KEEP INDEXED — core money/service pages (always-index regardless of trend-matching; these are what the whole site exists to sell, not discovery content):**
+`about`, `contact`, `for-models`, `services-catalog`, `platforms-we-work-with`, `how-to-choose-a-webcam-studio`, `live-model-lookup`, `studio-directory` (the index page), `best-studios`, `blog`, `resources`.
+
+**KEEP INDEXED — geo pages, conditional on the locale decision below:** `model-promotion-usa`, `model-promotion-germany`, `model-promotion-romania`, `model-promotion-colombia`, `model-promotion-ukraine`, `model-promotion-spain` — these are EN-language pages regardless of which locale folders survive, so keep all six indexed; they don't compete with the DE/ES/UK locale-drop decision (that's about the `/de/*`, `/es/*` etc. translated page trees, not these English geo-targeted slugs).
+
+**NOINDEX — individual studio profile pages** (`andromeda-studio`, `aura`, `belle-studio`, `charm-studio`, `missjoy-models`, `modele-webcam`, `new-industry-models`, `rosa-estudios`, `studio-20`, `webcammaedchen`, `webmodel-valencia`): brand-name pages with no plausible independent search volume (nobody is searching these studio names except the studios' own clients, who arrive via direct link, not organic) and no match in any competitor/trend research above. Implementation note: these are a single `getStaticPaths` route (`src/pages/studio-directory/[slug].astro`) driven by `src/data/studios.ts` — noindexing all profile pages is a one-line data-flag addition, not 11 file edits.
+
+**NOINDEX — Stripchat feature-news articles** (real bcams-magazine-sourced news, valuable for pipeline cadence and internal linking, but no evidence of standalone search demand per part 1 and per this month's GSC "unknown to Google" pattern): `stripchat-account-holder-group-accounts`, `stripchat-ai-model-recommendations`, `stripchat-amazon-wishlist-gifts`, `stripchat-community-guidelines-update`, `stripchat-magic-search-discoverability`, `stripchat-model-news-studio-admin`, `stripchat-new-model-30-day-window`, `stripchat-plasma-mobile-streaming`, `stripchat-popular-new-model-visibility`, `stripchat-show-recording-guide`, `stripchat-viewer-mode-stream-check`, `stripchat-vr-shows-worth-it`. Keep these linked internally (they still feed the "Trending right now" cross-promo and footer latest-articles list) — noindex only, don't delete; if GSC ever shows real impressions on one of these, flip it back to indexed rather than treating this list as permanent.
+
+**Content gap worth building (not an existing page, flagged for the backlog, not built this session):** a ChaturSafe / Chaturbate Auto Translate explainer — two real, recent, currently-uncovered Chaturbate feature stories (parallel to the Stripchat news cluster ewohub already runs) — and a "best webcam agencies/studios, independently ranked" comparison piece distinct from the client-studio directory, matching the Aruna Talent / adent.io topic cluster.
+
+#### 3. Locale plan: keep EN/RU/RO, retire DE/ES/UK/FR/PT
+
+Current state confirmed by directory listing: `src/pages/{de,es,ro,uk,ru,fr,pt}` hold 44-46 files each (near-parity, per `CLAUDE.md`'s "8 locales live" note). Retiring 5 locales removes roughly 220-230 page files.
+
+**Recommendation: 301-redirect, not delete-outright or noindex-in-place.** Three options weighed:
+- **Delete outright (remove files, no redirect):** simplest, smallest surface going forward, matches the "we only support 3 locales now" decision cleanly. Downside: every currently-indexed non-EN URL (per the 2026-09-21 GSC entry, `/de/stripchat-promo`, `/es/stripchat-promo`, `/ro/stripchat-promo`* are `PASS`/"Submitted and indexed" with a handful of impressions each) starts 404ing, and any external link/bookmark/social-share pointing at a dropped-locale URL breaks with no recovery path. (*`/ro/*` stays live under the new plan, not being dropped — only cited here as evidence these locale promo pages do get crawled/indexed at all.)
+- **Noindex in place, keep files live:** avoids 404s, reversible, no redirect-map work. Downside: leaves ~225 files and their translation-maintenance burden in the repo indefinitely, which defeats the point of "reducing to 3 locales" as a scope-reduction move, and CLAUDE.md's per-locale mirroring rule would need a carve-out exception people have to remember.
+- **301 redirect `/{de,es,uk,fr,pt}/*` → the matching `/en` (root) URL, then delete the source files once redirects are verified live:** given the Semrush finding that there is effectively zero organic authority to protect, the classic "redirects preserve link equity" rationale barely applies here — but redirecting is still the right call for a different reason: it's the only option that (a) doesn't 404 the handful of already-indexed/bookmarked non-EN URLs, (b) actually removes the files/maintenance burden once live (unlike noindex-in-place), and (c) is a two-minute `vercel.json` rule addition given the existing `accept-language` redirect block already documented in CLAUDE.md as prior art. **This is the recommended path.**
+
+Rollout sequence for a future execution session (not done here): (1) add `/de/:path*`, `/es/:path*`, `/uk/:path*`, `/fr/:path*`, `/pt/:path*` → `/:path*` redirect rules in `vercel.json`; (2) verify a handful of dropped-locale URLs (especially the indexed `/de/stripchat-promo`, `/es/stripchat-promo`) 301 correctly with `curl -sL`; (3) remove the `hreflang` alternate-language `<link>` entries for de/es/uk/fr/pt from `Base.astro` (leaving stale hreflang pointing at redirected/soon-to-be-deleted URLs would itself be a technical-SEO error); (4) delete the 5 locale directories (`src/pages/{de,es,uk,fr,pt}`) and their `blog.astro`/`resources.astro` listing entries in remaining locales that link to them; (5) regenerate/resubmit `sitemap-index.xml` so it no longer lists the retired paths. None of this was done in this session — plan only.
+
+#### 4. Cleanup items carried over from this session's earlier technical audit (not newly found today, restated here so they're in the dated log rather than only in chat)
+
+- `Base.astro` already supports a `noindex` boolean prop (`<meta name="robots" content="noindex, nofollow">` when true) — confirmed by reading the layout. Implementing the part-2 noindex list is a per-page prop addition, no new layout code needed.
+- `astro.config.mjs`'s `@astrojs/sitemap` integration has no `filter` configured, so noindexed pages (currently just `/cabinet/*`, soon the part-2 noindex list too) still appear in `sitemap-index.xml` — add a `filter` excluding `/cabinet`, the studio-profile slugs, and the Stripchat feature-news slugs when this is executed.
+- Titles over 60 chars still outstanding: `studio-scaling` (87 chars), `best-hours-to-stream-chaturbate` (64), `webcam-earnings-by-platform` (63), `stripchat-amazon-wishlist-gifts` (62) — note `stripchat-amazon-wishlist-gifts` is slated for noindex above, so fixing its title is lower priority than the other three, which are staying indexed.
+- 6 meta descriptions still exceed ~160 chars despite `trimDescription()` (per the live audit run earlier this session) — needs manual rewrite per `CLAUDE.md`'s SEO-meta section, same priority ordering (fix the ones staying indexed first).
+- `/links` (the EWOMODELS worker-tracking landing) is not currently noindexed and isn't a content/discovery page — low-priority candidate for `noindex` alongside the `/cabinet/*` pages, since it exists purely for `?ref=` tracking, not organic search.
+
+**No Search Console pull was run in this session** (this was a planning/research task per the invoking instructions, not a monitoring cadence run) — GSC figures cited above are quoted from the 2026-09-21 entry directly above, not re-fetched.
+
+No site content changed, no build run, no commit made.
+
+---
+
 ## 2026-09-21
 
 ### Daily SEO monitoring — Monday full check (read-only, automated)
