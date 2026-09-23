@@ -4,7 +4,11 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://www.ewohub.com',
   trailingSlash: 'never',
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      filter: (page) => !page.includes('/cabinet'),
+    }),
+  ],
   vite: {
     build: {
       // Without this, small hoisted component <script> chunks (most of ours

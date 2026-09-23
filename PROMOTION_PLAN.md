@@ -4,6 +4,109 @@ Running log of daily/session-based SEO & promotion action plans. Newest entry on
 
 ---
 
+## 2026-09-23 — Semrush keyword audit (EN/RU/RO) → existing-article match / gap / redundant
+
+Full Semrush pull across the site's actual topic scope: registration/onboarding, income, promotion/traffic/boosting, studio topics, general webcam, Chaturbate + Stripchat specifics. Scoped to **audience = models/studios/agencies only** — member/viewer-intent queries (platform browsing, "cam girls", "live sex", token-purchase pricing, platform safety reviews) excluded per this session's explicit correction; a handful of dual-intent terms (platform explainers, comparison content, the two approved token-*calculator* tools) kept. Locale scope = EN/RU/RO only (matches the 2026-09-22 locale cut). Method: `phrase_these`/`phrase_this`/`phrase_related` via the Semrush gateway (GroupBuySEO), `database=us` for EN, `database=ru` for RU; `database=ro` returned almost no data for this niche (see caveat below) — RO figures are not reliable.
+
+**Reminder from the 2026-09-22 entry, still true:** `domain_organic` for ewohub.com itself returns `NOTHING FOUND` in every regional database — the site has ~0 tracked organic footprint. So this audit is a *topical coverage* map (does a page exist for a keyword with real demand), not a rankings audit.
+
+### EN (`database=us`) — keywords with real volume, mapped
+
+| Keyword | Vol/mo | CPC | Status |
+|---|---|---|---|
+| cam sites | 5400 | 2.33 | dual-intent comparison — no independent "best cam sites" page |
+| best cam sites | 1900 | 5.11 | same cluster |
+| best camming | 2900 | 0.68 | same cluster |
+| chaturbate tags | 1900 | 0 | **MATCHED** — `top-performing-tags-chaturbate` |
+| what is stripchat | 1000 | 2.28 | **GAP** — no plain explainer page exists |
+| stripchat account | 260 | 1.80 | partial — `stripchat-account-holder-group-accounts` covers group-account angle only, not "what is a Stripchat account" |
+| how to delete chaturbate account | 720 | 0 | GAP, low priority (retention/support intent, not promotional) |
+| how to delete stripchat account | 140 | 0 | same, low priority |
+| webcam model jobs | 320 | 1.6 | GAP — no jobs/vacancy-style page |
+| chaturbate token converter | 320 | 0 | GAP — approved dual-intent (earnings-calculator angle) |
+| cam model jobs | 260 | 1.61 | GAP, same cluster as above |
+| what's a cam model | 260 | 0 | GAP |
+| how to start a cam studio | 260 | 0 | partial — `how-to-choose-a-webcam-studio` is about *choosing*, not *starting/opening* one |
+| what is camsoda | 390 | 2.26 | off-scope platform (site doesn't cover CamSoda) — skip |
+| how to start a webcam business | 170 | 1.97 | same gap as "start a cam studio" |
+| chaturbate pay | 170 | 2.06 | low priority |
+| chaturbate tip menu | 170 | 0 | GAP — site has `stripchat-goals-tip-menu-structure`, no Chaturbate equivalent |
+| накрутка зрителей в чатурбате | 170 | 0 | **GAP, high priority** — direct hit on EWO's actual service (traffic/promotion), zero content |
+| how much can you make on chaturbate | 140 | 0 | partial — `webcam-earnings-by-platform` should already cover this angle, verify it names Chaturbate explicitly |
+| adult webcam models seo | 140 | 0 | **GAP** — no "SEO for your cam profile" content at all |
+| chaturbate advertising | 140 | 0 | **GAP**, direct EWO service match |
+| how do you get paid on chaturbate | 110 | 0 | partial, same as "how much can you make" |
+| stripchat token calculator | 110 | 6.44 | **GAP** — approved dual-intent, high CPC = commercial interest |
+| what is cam modelling | 110 | 0 | GAP, broad-awareness/definitional |
+| chaturbate wiki | 110 | 0 | low priority, thin content risk |
+| how much do cam models make | 110 | 0 | partial, same income cluster |
+| cam site seo | 90 | 0 | GAP, same as "adult webcam models seo" |
+| chaturbate viewer | 90 | 0 | GAP, traffic/promotion cluster |
+| chaturbate speed test | 70 | 0 | low priority, tool-support topic |
+| webcam modeling companies | 70 | 1.94 | **GAP** — matches the 2026-09-22 "independent best-agencies ranking" content idea (Aruna Talent competitor cluster) |
+| chaturbate bots | 70 | 0 | GAP, traffic cluster — write from the "risk/what to know" angle, not a how-to-cheat angle |
+| webcam girls seo | 70 | 0 | same as adult-webcam-models-seo cluster |
+| sex cam business | 50 | 0 | low priority, generic |
+| chaturbate traffic | 50 | 0 | **GAP, high priority**, direct EWO service match |
+| seo company for chaturbate | 50 | 0 | GAP — this is literally "who do I hire" intent, direct lead-gen keyword |
+| clickadu earnings | 50 | 0 | low priority, niche ad-network topic |
+| cam agency | 50 | 0 | **GAP** — direct lead-gen keyword, EWO's own category |
+| adult webcam jobs | 40 | 1.67 | low priority |
+| best adult cam sites for affiliates | 40 | 0 | low priority |
+| cam model sign up | 40 | 2.12 | GAP |
+| being / be a webcam model | 40 / 40 | 2.05 | low priority phrasing variants |
+| how to become webcam model | 40 | 0 | partial — onboarding covered but not this exact framing |
+| chaturbate referral program | 40 | 0 | low priority |
+| camgirl seo | 40 | 0 | same SEO cluster |
+| chatursafe | 30 | 0 | **GAP**, flagged already in 2026-09-22 entry — real but low volume |
+| webcam model income | 30 | 1.18 | **MATCHED** — `webcam-model-income-guide` |
+| best time to stream on chaturbate | 30 | 0 | **MATCHED** — `best-hours-to-stream-chaturbate` |
+| best webcam agencies | 10 | 0 | GAP, very low volume — confirms 2026-09-22 note that this is a *competitor content pattern*, not a high-demand keyword; still worth 1 page for lead-gen, don't over-invest |
+| chaturbate algorithm | 20 | 0 | **MATCHED (thin)** — `how-cam-algorithm-ranks-rooms` cluster; Semrush shows almost no volume, but 2026-09-22's own-GSC data says this cluster is the site's only real ranking traction — trust GSC over Semrush here |
+| stripscore | 20 | 2.31 | **MATCHED — 2×** (`how-stripscore-works` + `stripscore-cam-rank-explained`) — possible cannibalization, check `Po` (position) on both before writing anything new here |
+| stripchat fan club | 20 | 0 | **MATCHED** — `stripchat-fan-club-pricing-guide` |
+| how to become a stripchat model | 20 | 0 | partial — `stripchat-first-14-days-guide`/`new-model-growth` cover onboarding, not this exact query framing |
+
+Checked and confirmed **zero Semrush volume** (don't chase, despite being on-topic): `chaturbate auto translate`, `webcam agency comparison`, `chaturbate titles`, `how does chaturbate algorithm work`, `room ranking score`, `why am i getting no viewers`, `why no viewers on chaturbate`, `how to choose a webcam studio`, `webcam platforms list`, `new cam model tips`, `how to increase/grow viewers on chaturbate`, `chaturbate show prices`. These existing pages (`how-to-choose-a-webcam-studio`, `chaturbate-show-prices`, `why-low-viewers-webcam`) are living on GSC/direct traffic or topical-authority value, not exact-match Semrush demand — consistent with the 2026-09-22 finding that this niche's real long-tail is mostly untracked by Semrush.
+
+### RU (`database=ru`)
+
+| Keyword | Vol/mo | CPC | Status |
+|---|---|---|---|
+| вебкам | 49500 | 0.25 | too broad/brand, dual-intent top-of-funnel only |
+| вебкам это | 8100 | 0.38 | dual-intent, definitional — **GAP**, no RU-native explainer |
+| вебкам модель | 6600 | 0.44 | GAP |
+| вебкам сайт | 5400 | 0.55 | dual, comparison |
+| вебкам работа | 3600 | 0.46 | **GAP, high priority** — direct "job/vacancy" intent, RU has no equivalent page |
+| веб модель | 1600 | 0.34 | phrasing variant |
+| вебкам студия | 1600 | 0.62 | **GAP** |
+| что такое вебкам | 1300 | 0.54 | dual, definitional |
+| webcam модели | 1000 | 0.36 | phrasing variant |
+| вебкам платформы | 880 | 0.62 | dual, comparison |
+| сайты вебкам | 880 | 0.54 | dual, comparison |
+| вебкам студия спб | 720 | 1.53 | **GAP — geo**, same pattern as `model-promotion-usa/germany/romania`; worth testing 1-2 more RU cities before building a template |
+| webcam модель это | 590 | 0.43 | definitional variant |
+| работа вебкам моделью | 260 | 0.48 | **GAP**, same as "вебкам работа" |
+| стрипчат (cyrillic) | 49500 | 0.42 | brand/dual |
+| stripchat (latin, in ru db) | 74000 | 0.29 | brand/dual — higher than cyrillic spelling, note for title/meta wording |
+| накрутка зрителей | 260 | 0.12 | raw term — related-keyword pull showed real demand is dominated by Twitch/Instagram (165k/90k), cam-specific share is a small slice of this; treat as low-volume niche, not the 260 number's face value |
+
+RU has real, usable volume (unlike the earlier wrong assumption that RU was Semrush-thin — that was a methodology error, broad seed terms have plenty of data). No RU-locale page currently targets "вебкам работа" / "вебкам студия" / geo-city angle at all — this is the single clearest content gap found this session.
+
+### RO (`database=ro`) — unreliable, flag and move on
+
+Only 3 phrases returned any row at all across ~30 tried (`stripchat fan club` 20, `model webcam` 20, plus `stripchat` alone showing a suspicious 1,000,000 that looks like a global-fallback artifact, not real RO-specific data — don't trust it). RO conclusion: Semrush's keyword index for this niche in Romania is too thin to plan content from. Recommend using `domain_organic` against real RO-market competitor domains (studio recruiters targeting Romania specifically, e.g. `modellife.eu`) instead of keyword-guessing for the RO content plan.
+
+### Recommended next actions (not yet executed)
+
+1. **Write first, highest-confidence gaps (EN):** накрутка зрителей в чатурбате, chaturbate advertising, chaturbate traffic, cam agency, seo company for chaturbate, adult webcam models seo / cam site seo / webcam girls seo (could be one pillar page + subtopics rather than 3 separate thin pages), stripchat token calculator (build the actual tool, not just an article), what is stripchat.
+2. **Write first, highest-confidence gaps (RU):** вебкам работа / работа вебкам моделью (one page), вебкам студия, что такое вебкам / вебкам это (one explainer page), вебкам студия спб (pilot geo page — if it performs, template it to other RU cities the way `model-promotion-*` does for EN).
+3. **Check before writing:** `stripscore` — two existing EN pages (`how-stripscore-works`, `stripscore-cam-rank-explained`) target the same 20/mo keyword; pull `Po` (position) for both via `domain_organic` before adding a third piece here, and consider merging/redirecting if they're competing with each other.
+4. **RO:** don't keyword-plan from Semrush; switch method to competitor `domain_organic` gap analysis for the next RO session.
+5. **Don't build:** anything purely member/viewer-intent (platform browsing, "cam girls", token-purchase pricing, "is jerkmate safe"-style reviews) — confirmed off-scope for this site's audience this session.
+
+---
+
 ## 2026-09-22 (execution)
 
 ### Locale reduction 8 → 3 (EN/RU/RO) — executed
