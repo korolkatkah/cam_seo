@@ -1,0 +1,326 @@
+---
+import Base from '@/layouts/Base.astro';
+const site = 'https://www.ewohub.com';
+const slug = 'best-cam-sites-for-models';
+
+const rows = [
+  { name: 'Chaturbate', aud: 'Самая большая аудитория в мире', pay: 'Фиксированные $0,05 за токен на стандартных аккаунтах', fit: 'Объём, комнаты на чаевых' },
+  { name: 'Stripchat', aud: 'Сильна в Европе, есть VR', pay: '50–60% стоимости токена', fit: 'Нишевое позиционирование, лояльные зрители' },
+  { name: 'xHamsterLive', aud: 'Трафик с крупного тюб-сайта', pay: 'Работает на технологии Stripchat, схожая структура', fit: 'Модели, которые уже на Stripchat' },
+  { name: 'CamSoda', aud: 'Аудитория, любящая игрушки и VR', pay: 'Обычно называют около 50–55%, ступенчато', fit: 'Интерактивные шоу с игрушками' },
+  { name: 'MyFreeCams', aud: 'Давно работает, много постоянных зрителей из США', pay: '$0,05 за токен модели, выплаты два раза в месяц', fit: 'Комьюнити-формат, возвращающиеся зрители' },
+  { name: 'LiveJasmin', aud: 'Премиум, покупатели приватных шоу', pay: 'Ступени 30–80%', fit: 'Высокое качество и стабильный объём' },
+  { name: 'Flirt4Free', aud: 'Приваты и VIP-сессии', pay: 'Уточняйте актуальные условия', fit: 'Долгие приватные сессии' },
+  { name: 'Streamate', aud: 'Поминутные приватные шоу', pay: 'Публичного раздела нет, данные сторонних источников расходятся', fit: 'Специализация на привате' },
+  { name: 'ImLive', aud: 'Смешанная, оплата кредитами', pay: 'Зависит от типа кредитов, внимательно читайте условия', fit: 'Опытные модели на нескольких платформах' },
+  { name: 'XLoveCam', aud: 'Ориентирована на Европу', pay: 'Уточняйте актуальные условия', fit: 'Работа с европейской аудиторией' },
+  { name: 'BongaCams', aud: 'Восточная Европа, русскоязычные зрители', pay: 'Ступени 25–65%, токен $0,05', fit: 'Комнаты для РФ/СНГ' },
+  { name: 'Cam4', aud: 'Широкая, давно работающая аудитория', pay: 'Еженедельные выплаты на счёт, минимум зависит от способа', fit: 'Вторая платформа, широкий охват' },
+  { name: 'Camster', aud: 'Небольшой мейнстрим-сайт', pay: 'Уточняйте актуальные условия', fit: 'Расширение, когда база уже есть' },
+  { name: 'BabeStation', aud: 'Британский бренд', pay: 'Уточняйте актуальные условия', fit: 'Модели для аудитории Великобритании' },
+  { name: 'CooMeet / LuckyCrush', aud: 'Случайный видеочат один на один', pay: 'Оплата за минуту, не как в комнатах с чаевыми', fit: 'Другой формат, не комнаты' },
+  { name: 'Fansly', aud: 'Подписчики на контент', pay: 'Подписки и продажа контента', fit: 'Пассивный доход рядом с эфирами' },
+];
+---
+
+<Base
+  title="Лучшие вебкам-сайты для моделей: сравнение 17 платформ"
+  description="Какой вебкам-сайт выбрать модели? Сравнение 17 платформ по аудитории, схеме выплат и подходящему формату, а также как выбирать и когда не стоит распылять внимание."
+  lang="ru"
+  hreflang={[
+    { lang: 'en', url: `${site}/${slug}` },
+    { lang: 'ru', url: `${site}/ru/${slug}` },
+  ]}
+  articleMeta={{ datePublished: '2026-09-24' }}
+>
+
+  <section class="art-hero">
+    <div class="art-orb art-orb--1"></div>
+    <div class="art-orb art-orb--2"></div>
+    <div class="art-grid"></div>
+    <div class="art-hero__inner container">
+      <div class="art-meta">
+        <span class="art-tag">Сравнение платформ</span>
+        <span class="art-tag art-tag--green">Для моделей</span>
+      </div>
+      <h1 class="art-title">Лучшие вебкам-сайты <span class="art-grad">для моделей</span></h1>
+      <p class="art-lead">
+        «Лучший сайт» зависит от того, кто спрашивает. Зрителю нужен выбор, а модели — трафик, честные
+        выплаты и понятные правила. Это взгляд со стороны модели: 17 платформ, чем каждая полезна и как
+        выбрать без гаданий.
+      </p>
+    </div>
+  </section>
+
+  <div class="art-body container">
+    <div class="art-layout">
+      <aside class="art-toc">
+        <p class="art-toc__title">Содержание</p>
+        <ol class="art-toc__list">
+          <li><a href="#how-to-choose">Как выбирать</a></li>
+          <li><a href="#quick-compare">Быстрое сравнение</a></li>
+          <li><a href="#big-traffic">Платформы с большим трафиком</a></li>
+          <li><a href="#premium">Премиум и приватные шоу</a></li>
+          <li><a href="#regional">Региональные и смешанные</a></li>
+          <li><a href="#other-formats">Другие форматы</a></li>
+          <li><a href="#by-situation">Рекомендации по ситуации</a></li>
+          <li><a href="#faq">Частые вопросы</a></li>
+        </ol>
+        <a href="#cta" class="art-toc__cta">Получить помощь →</a>
+      </aside>
+
+      <main class="art-main">
+
+        <p class="art-intro">
+          Подходящая платформа — та, где совпадают ваша аудитория, график и способы вывода денег. Более высокий
+          процент на пустой площадке часто приносит меньше, чем средний процент на загруженной. Условия ниже
+          собраны по данным площадок и распространённым сторонним источникам на сентябрь 2026 года; они
+          меняются, поэтому перед решением уточняйте актуальные условия для моделей.
+        </p>
+        <p class="card-date" style="margin:0 0 1.75rem;">Редакция EWOhub · Опубликовано 24 сен. 2026 г.</p>
+
+        <section class="section" id="how-to-choose">
+          <h2>Как выбрать вебкам-сайт модели</h2>
+          <div class="reason-card" style="margin-top:1.25rem;">
+            <div class="reason-num">01</div>
+            <div class="reason-content">
+              <h3>Трафик важнее процента</h3>
+              <p>50% с загруженной комнаты выгоднее 70% с пустой. Спрашивайте не про заявленный процент, а про то, сколько зрителей реально видит новая модель в первые недели.</p>
+            </div>
+          </div>
+          <div class="reason-card">
+            <div class="reason-num">02</div>
+            <div class="reason-content">
+              <h3>Как платформа платит</h3>
+              <p>Фиксированный токен, ступенчатый процент и поминутные приваты работают по-разному. Ступени поощряют объём, а после спокойного периода вас могут понизить. Подробный разбор — в статье <a href="/ru/webcam-earnings-by-platform">заработок по платформам</a>.</p>
+            </div>
+          </div>
+          <div class="reason-card">
+            <div class="reason-num">03</div>
+            <div class="reason-content">
+              <h3>Совпадение с аудиторией</h3>
+              <p>У каждого сайта свой круг зрителей и язык. Комната, совпадающая с аудиторией платформы, выигрывает у «более выгодной» площадки с неподходящей публикой.</p>
+            </div>
+          </div>
+          <div class="reason-card">
+            <div class="reason-num">04</div>
+            <div class="reason-content">
+              <h3>Вывод денег в вашей стране</h3>
+              <p>Минимальные пороги, графики и доступные способы вывода зависят от платформы и от страны проживания. В ряде регионов именно это решает выбор, а не процент.</p>
+            </div>
+          </div>
+          <div class="reason-card">
+            <div class="reason-num">05</div>
+            <div class="reason-content">
+              <h3>Правила и эксклюзивность</h3>
+              <p>Некоторые платформы запрещают одновременные трансляции у конкурентов, а студии могут добавлять собственную эксклюзивность. Прочитайте оба набора условий до мультистрима.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="quick-compare">
+          <h2>Быстрое сравнение</h2>
+          <p style="color:var(--fg-muted);">Читайте слева направо: кто смотрит, как вам платят, кому подходит.</p>
+          <div style="overflow-x:auto;margin-top:1rem;">
+            <table style="width:100%;border-collapse:collapse;font-size:.875rem;min-width:620px;">
+              <thead>
+                <tr style="text-align:left;border-bottom:1px solid var(--fg-faint);">
+                  <th style="padding:.6rem .5rem;">Платформа</th>
+                  <th style="padding:.6rem .5rem;">Аудитория</th>
+                  <th style="padding:.6rem .5rem;">Схема выплат модели</th>
+                  <th style="padding:.6rem .5rem;">Кому подходит</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((r) => (
+                  <tr style="border-bottom:1px solid rgba(10,10,10,.08);vertical-align:top;">
+                    <td style="padding:.6rem .5rem;font-weight:700;">{r.name}</td>
+                    <td style="padding:.6rem .5rem;color:var(--fg-muted);">{r.aud}</td>
+                    <td style="padding:.6rem .5rem;color:var(--fg-muted);">{r.pay}</td>
+                    <td style="padding:.6rem .5rem;color:var(--fg-muted);">{r.fit}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p style="margin-top:1rem;font-size:.875rem;color:var(--fg-muted);">
+            AdultWork мы не включали: это в первую очередь каталог услуг для взрослых, а не платформа с комнатами.
+          </p>
+        </section>
+
+        <section class="section" id="big-traffic">
+          <h2>Платформы с большим трафиком</h2>
+          <div class="glass-card" style="margin-top:1.25rem;">
+            <h3>Chaturbate</h3>
+            <p>Крупнейшая аудитория отрасли и бесплатный для зрителя формат на чаевых. Выплата — фиксированные $0,05 за токен на стандартных аккаунтах, поэтому рост идёт за счёт объёма, а не ступеней. Заметность зависит от тегов, длины сессии и активности в чате — см. <a href="/ru/how-cam-algorithm-ranks-rooms">как алгоритмы ранжируют комнаты</a> и <a href="/ru/top-performing-tags-chaturbate">лучшие теги</a>.</p>
+          </div>
+          <div class="glass-card" style="margin-top:1rem;">
+            <h3>Stripchat</h3>
+            <p>Платит примерно 50–60% в зависимости от статуса и источника трафика, сильна в Европе и имеет VR. У новых аккаунтов есть ограниченное окно повышенной видимости, его нужно спланировать — см. <a href="/ru/stripchat-first-14-days-guide">первые 14 дней на Stripchat</a>.</p>
+          </div>
+          <div class="glass-card" style="margin-top:1rem;">
+            <h3>xHamsterLive</h3>
+            <p>Работает на технологии Stripchat, трафик приходит с крупного тюб-сайта. Если вы уже стримите на Stripchat, переход простой, но заранее уточните, как обрабатываются аккаунт и выплаты, и не считайте, что всё работает одинаково.</p>
+          </div>
+          <div class="glass-card" style="margin-top:1rem;">
+            <h3>CamSoda</h3>
+            <p>Известна интеграцией игрушек и VR, а ступенчатую выплату за токен обычно называют в районе 50–55% с бонусами за часы и оборот токенов. Хорошо подходит для интерактивных шоу с меню чаевых.</p>
+          </div>
+          <div class="glass-card" style="margin-top:1rem;">
+            <h3>MyFreeCams</h3>
+            <p>Один из старейших сайтов, комьюнити-культура и лояльные возвращающиеся зрители. Модели, по распространённым данным, получают $0,05 за токен, выплаты два раза в месяц. Набирать аудиторию медленнее, чем на трафиковой новинке, зато постоянные зрители остаются надолго.</p>
+          </div>
+        </section>
+
+        <section class="section" id="premium">
+          <h2>Премиум и приватные шоу</h2>
+          <div class="glass-card" style="margin-top:1.25rem;">
+            <h3>LiveJasmin</h3>
+            <p>Премиум-позиционирование и покупатели приватных шоу. Выплата ступенчатая: от порядка 30% у новых моделей до 80% на высшем уровне, пересматривается каждый период выплат. Награждает стабильное качество и объём и наказывает нерегулярность.</p>
+          </div>
+          <div class="glass-card" style="margin-top:1rem;">
+            <h3>Flirt4Free</h3>
+            <p>Ориентирована на приваты и VIP-сессии, а не на чаевые в открытой комнате, поэтому доход зависит от умения превращать зрителей в долгие платные сессии.</p>
+          </div>
+          <div class="glass-card" style="margin-top:1rem;">
+            <h3>Streamate</h3>
+            <p>Доход в основном с поминутных приватов. Чёткого публичного раздела нет, поэтому проценты из сторонних источников считайте оценкой и запрашивайте актуальные условия.</p>
+          </div>
+          <div class="glass-card" style="margin-top:1rem;">
+            <h3>ImLive</h3>
+            <p>Выплата зависит от типа кредитов, которые тратит зритель, поэтому реальный доход может заметно отличаться от заявленного. Внимательно прочитайте соглашение модели, прежде чем делать площадку основным источником дохода.</p>
+          </div>
+          <div class="glass-card" style="margin-top:1rem;">
+            <h3>XLoveCam</h3>
+            <p>Ориентирована на Европу, полезна при работе с конкретной европейской языковой аудиторией. Актуальные условия выплат уточняйте напрямую.</p>
+          </div>
+        </section>
+
+        <section class="section" id="regional">
+          <h2>Региональные и смешанные платформы</h2>
+          <div class="glass-card" style="margin-top:1.25rem;">
+            <h3>BongaCams</h3>
+            <p>Сильна среди аудитории Восточной Европы и русскоязычных зрителей. Выплата ступенчатая: примерно от 25% до 60–65% при фиксированном токене $0,05, раз в две недели с минимумом $50. Максимальный процент доступен только тем, кто много зарабатывает.</p>
+          </div>
+          <div class="glass-card" style="margin-top:1rem;">
+            <h3>Cam4</h3>
+            <p>Давно работающий сайт с широкой аудиторией. Выплаты могут быть еженедельными на банковский счёт, минимум зависит от способа вывода. Обычно вторая площадка, когда основа уже есть в другом месте.</p>
+          </div>
+          <div class="glass-card" style="margin-top:1rem;">
+            <h3>Camster и BabeStation</h3>
+            <p>Небольшие мейнстрим-варианты, BabeStation с британскими корнями. Подходят для диверсификации, но трафика меньше, чем у лидеров, поэтому сначала уточните актуальные условия и размер аудитории.</p>
+          </div>
+        </section>
+
+        <section class="section" id="other-formats">
+          <h2>Платформы с другим форматом</h2>
+          <div class="glass-card" style="margin-top:1.25rem;">
+            <h3>CooMeet и LuckyCrush</h3>
+            <p>Случайный видеочат один на один вместо публичных комнат, оплата за минуту. Это другая работа, чем ведение комнаты на чаевых, поэтому доход напрямую сравнивать нельзя.</p>
+          </div>
+          <div class="glass-card" style="margin-top:1rem;">
+            <h3>Fansly</h3>
+            <p>Платформа подписок и контента. Это не классический вебкам-сайт, но многие модели ведут её параллельно с эфирами ради регулярного дохода. Подробнее о типах — в разделе <a href="/ru/platforms-we-work-with">платформы, с которыми мы работаем</a>.</p>
+          </div>
+        </section>
+
+        <section class="section" id="by-situation">
+          <h2>Рекомендации по ситуации</h2>
+          <div class="two-col-box">
+            <div class="two-col-box__item two-col-box__item--good">
+              <p class="two-col-box__label">НОВАЯ МОДЕЛЬ</p>
+              <p>Выберите одну платформу с большим трафиком и в первые недели работайте только там — чаще всего это Chaturbate или Stripchat. Распыление внимания на старте обычно обходится дороже, чем приносит, — см. <a href="/ru/new-model-growth">рост для новых моделей</a>.</p>
+            </div>
+            <div class="two-col-box__item two-col-box__item--bad">
+              <p class="two-col-box__label">ОПЫТНАЯ МОДЕЛЬ</p>
+              <p>Добавьте вторую платформу с другой аудиторией и заранее проверьте правила эксклюзивности. Премиум-площадки имеют смысл, если вы можете держать качество и объём.</p>
+            </div>
+          </div>
+          <div class="glass-card" style="margin-top:1.25rem;">
+            <p style="margin-bottom:0;">
+              <strong>Русскоязычная аудитория:</strong> BongaCams стоит рассмотреть всерьёз, но сначала проверьте вывод денег в вашей стране.
+              <strong>Работа через студию:</strong> доля студии применяется сверх ставки платформы, поэтому сравнивайте итоговый процент, а не только платформенный — см. <a href="/ru/how-to-choose-a-webcam-studio">как выбрать вебкам-студию</a>.
+            </p>
+          </div>
+        </section>
+
+        <section class="faq-section section" id="faq">
+          <h2>Частые вопросы</h2>
+          <div class="faq-item">
+            <button class="faq-chevron" aria-expanded="false">
+              <span>Какой вебкам-сайт платит модели больше всех?</span>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="faq-body"><p>Однозначного ответа нет. Самые высокие проценты обычно стоят за ступенями, для которых нужен постоянный объём, а самые загруженные платформы платят меньший процент, но с гораздо большего числа зрителей. Реальный доход складывается из трафика, совпадения с аудиторией и условий вывода денег.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-chevron" aria-expanded="false">
+              <span>Стоит ли новой модели сразу работать на нескольких сайтах?</span>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="faq-body"><p>Обычно нет. Сначала наберите реальную аудиторию на одной платформе, потом расширяйтесь. Кроме того, некоторые площадки запрещают одновременные трансляции, поэтому проверьте правила до мультистрима.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-chevron" aria-expanded="false">
+              <span>Актуальны ли эти цифры?</span>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="faq-body"><p>Не навсегда. Платформы пересматривают проценты, пороги и правила, а данные сторонних источников расходятся. Считайте эту страницу стартовой картой и перед регистрацией или расчётами уточняйте актуальные условия на самой платформе.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-chevron" aria-expanded="false">
+              <span>Подписочный сервис лучше вебкам-сайта?</span>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="faq-body"><p>Это разные виды работы. Эфиры платят прямо в момент трансляции и требуют постоянного присутствия, а подписки дают регулярный доход, но сначала нужна аудитория. Многие совмещают оба формата и используют эфиры, чтобы привлекать подписчиков.</p></div>
+          </div>
+        </section>
+
+        <section id="cta" class="art-cta section">
+          <div class="art-cta__orb"></div>
+          <div class="art-cta__inner">
+            <span class="art-cta__badge">Выбираете платформу?</span>
+            <h2>Поможем выбрать и привести первых зрителей</h2>
+            <p>Расскажите об аудитории, графике и стране. Подскажем, с чего начать, и как привести трафик в вашу комнату с первого дня.</p>
+            <div class="art-cta__actions">
+              <a href="https://t.me/+tBjfmjh9vHo1YzQy" target="_blank" rel="noopener" class="art-cta__btn art-cta__btn--primary">Написать нам →</a>
+              <a href="/ru/for-models" class="art-cta__btn art-cta__btn--ghost">Как мы работаем с моделями</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2>Похожие статьи</h2>
+          <div class="related-grid">
+            <a href="/ru/webcam-earnings-by-platform" class="related-card">
+              <span class="related-card__icon">📊</span>
+              <span>Заработок на вебкаме по платформам</span>
+            </a>
+            <a href="/ru/platforms-we-work-with" class="related-card">
+              <span class="related-card__icon">🌐</span>
+              <span>Платформы, с которыми мы работаем</span>
+            </a>
+            <a href="/ru/webcam-model-income-guide" class="related-card">
+              <span class="related-card__icon">💰</span>
+              <span>Гид по доходам вебкам-модели</span>
+            </a>
+            <a href="/ru/how-cam-algorithm-ranks-rooms" class="related-card">
+              <span class="related-card__icon">📈</span>
+              <span>Как алгоритмы ранжируют комнаты</span>
+            </a>
+            <a href="/ru/new-model-growth" class="related-card">
+              <span class="related-card__icon">🚀</span>
+              <span>Стратегия роста для новых моделей</span>
+            </a>
+            <a href="/ru/how-to-choose-a-webcam-studio" class="related-card">
+              <span class="related-card__icon">🏢</span>
+              <span>Как выбрать вебкам-студию</span>
+            </a>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+</Base>
