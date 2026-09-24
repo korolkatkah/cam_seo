@@ -1,0 +1,145 @@
+---
+---
+
+<div class="tc" data-token-calc>
+  <div class="tc__grid">
+    <label class="tc__field">
+      <span>Platform preset</span>
+      <select data-f="platform">
+        <option value="0.05">Chaturbate ($0.05 / token)</option>
+        <option value="0.05" selected>Stripchat ($0.05 / token)</option>
+        <option value="0.05">MyFreeCams ($0.05 / token)</option>
+        <option value="0.055">CamSoda ($0.055 / token, top tier)</option>
+        <option value="custom">Custom rate</option>
+      </select>
+    </label>
+    <label class="tc__field">
+      <span>Payout per token (USD)</span>
+      <input type="number" step="0.001" min="0" value="0.05" data-f="rate" inputmode="decimal" />
+    </label>
+    <label class="tc__field">
+      <span>Tokens earned</span>
+      <input type="number" step="1" min="0" value="10000" data-f="tokens" inputmode="numeric" />
+    </label>
+    <label class="tc__field">
+      <span>Hours streamed (optional)</span>
+      <input type="number" step="0.5" min="0" value="20" data-f="hours" inputmode="decimal" />
+    </label>
+    <label class="tc__field">
+      <span>Your share after studio (%)</span>
+      <input type="number" step="1" min="0" max="100" value="100" data-f="share" inputmode="numeric" />
+    </label>
+    <label class="tc__field">
+      <span>Tax and fees (%)</span>
+      <input type="number" step="1" min="0" max="100" value="0" data-f="tax" inputmode="numeric" />
+    </label>
+  </div>
+
+  <div class="tc__results" aria-live="polite">
+    <div class="tc__stat"><span class="tc__lab">Gross from platform</span><span class="tc__num" data-o="gross">$0.00</span></div>
+    <div class="tc__stat"><span class="tc__lab">After studio share</span><span class="tc__num" data-o="afterStudio">$0.00</span></div>
+    <div class="tc__stat tc__stat--main"><span class="tc__lab">Net in hand</span><span class="tc__num" data-o="net">$0.00</span></div>
+    <div class="tc__stat"><span class="tc__lab">Net per hour</span><span class="tc__num" data-o="perHour">—</span></div>
+    <div class="tc__stat"><span class="tc__lab">Tokens per hour</span><span class="tc__num" data-o="tokensPerHour">—</span></div>
+  </div>
+
+  <div class="tc__reverse">
+    <label class="tc__field">
+      <span>Target net income (USD)</span>
+      <input type="number" step="50" min="0" value="3000" data-f="target" inputmode="decimal" />
+    </label>
+    <p class="tc__reverse-out">
+      Tokens needed with these settings: <strong data-o="needTokens">—</strong>
+      <span data-o="needPerHourWrap"> (about <strong data-o="needPerHour">—</strong> tokens per hour)</span>
+    </p>
+  </div>
+
+  <p class="tc__note">
+    Rates shown are commonly cited defaults, not a promise. Check the payout rate in your own model dashboard and
+    edit the field above. Studio share means the part of the platform payout that you keep after your studio.
+  </p>
+</div>
+
+<script is:inline>
+  (function () {
+    var root = document.querySelector('[data-token-calc]');
+    if (!root) return;
+    var f = function (k) { return root.querySelector('[data-f="' + k + '"]'); };
+    var o = function (k) { return root.querySelector('[data-o="' + k + '"]'); };
+    var usd = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 });
+    var int = new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 });
+    var num = function (k) {
+      var v = parseFloat(f(k).value);
+      return isFinite(v) && v >= 0 ? v : 0;
+    };
+    var platform = f('platform');
+    var rateInput = f('rate');
+
+    function calc() {
+      var rate = num('rate');
+      var tokens = num('tokens');
+      var hours = num('hours');
+      var share = Math.min(num('share'), 100) / 100;
+      var tax = Math.min(num('tax'), 100) / 100;
+      var target = num('target');
+
+      var gross = tokens * rate;
+      var afterStudio = gross * share;
+      var net = afterStudio * (1 - tax);
+      o('gross').textContent = usd.format(gross);
+      o('afterStudio').textContent = usd.format(afterStudio);
+      o('net').textContent = usd.format(net);
+      o('perHour').textContent = hours > 0 ? usd.format(net / hours) : '—';
+      o('tokensPerHour').textContent = hours > 0 ? int.format(tokens / hours) : '—';
+
+      var perToken = rate * share * (1 - tax);
+      var need = perToken > 0 ? target / perToken : 0;
+      o('needTokens').textContent = perToken > 0 ? int.format(Math.ceil(need)) : '—';
+      var wrap = o('needPerHourWrap');
+      if (hours > 0 && perToken > 0) {
+        wrap.hidden = false;
+        o('needPerHour').textContent = int.format(Math.ceil(need / hours));
+      } else {
+        wrap.hidden = true;
+      }
+    }
+
+    platform.addEventListener('change', function () {
+      if (platform.value !== 'custom') rateInput.value = platform.value;
+      calc();
+    });
+    rateInput.addEventListener('input', function () {
+      var match = false;
+      for (var i = 0; i < platform.options.length; i++) {
+        if (platform.options[i].value === rateInput.value) match = true;
+      }
+      if (!match) platform.value = 'custom';
+      calc();
+    });
+    var inputs = root.querySelectorAll('input');
+    for (var i = 0; i < inputs.length; i++) inputs[i].addEventListener('input', calc);
+    calc();
+  })();
+</script>
+
+<style>
+  .tc { border: 1px solid rgba(10, 10, 10, 0.12); border-radius: 16px; padding: 1.5rem; background: var(--bg-raised); }
+  .tc__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1rem; }
+  .tc__field { display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.8125rem; font-weight: 600; color: var(--fg-muted); }
+  .tc__field input,
+  .tc__field select {
+    font: inherit; font-size: 1rem; font-weight: 400; color: var(--fg);
+    padding: 0.6rem 0.75rem; border: 1px solid rgba(10, 10, 10, 0.2); border-radius: 10px; background: var(--bg);
+    min-height: 44px;
+  }
+  .tc__field input:focus,
+  .tc__field select:focus { outline: 2px solid var(--fg); outline-offset: 1px; }
+  .tc__results { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.75rem; margin-top: 1.5rem; }
+  .tc__stat { display: flex; flex-direction: column; gap: 0.25rem; padding: 0.9rem 1rem; border-radius: 12px; background: var(--bg); border: 1px solid rgba(10, 10, 10, 0.08); }
+  .tc__stat--main { background: var(--fg); color: var(--bg); }
+  .tc__lab { font-size: 0.75rem; opacity: 0.7; }
+  .tc__num { font-family: var(--font-heading); font-size: 1.35rem; font-weight: 700; }
+  .tc__reverse { margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px dashed rgba(10, 10, 10, 0.2); display: grid; gap: 0.75rem; max-width: 420px; }
+  .tc__reverse-out { margin: 0; font-size: 0.9375rem; }
+  .tc__note { margin: 1.25rem 0 0; font-size: 0.8125rem; color: var(--fg-faint); }
+</style>

@@ -17,7 +17,11 @@ Running log of daily/session-based SEO & promotion action plans. Newest entry on
 - Literal promo-service phrases are tiny (`chaturbate advertising` 140/mo, `накрутка зрителей в чатурбате` 170/mo; RU exact-match phrases ≈ 0) — win via topical guides, not service-name pages.
 - Platform brand volumes (Semrush US): Chaturbate 9.1M, Stripchat 5M, CamSoda 1M, MyFreeCams 450K, LiveJasmin 201K, BongaCams 90K — EWO covers only Stripchat/Chaturbate in depth.
 
-**Queued next:** Phase 2 (EN platform-comparison page for Tier 1+2 platforms + per-platform "work as a model on X" pages for MyFreeCams/CamSoda/LiveJasmin/BongaCams), Phase 3 (Stripchat token calculator tool; EN tip menu / cam agency / what is stripchat / webcam model jobs). Yandex follow-ups: register in Yandex Webmaster + set region for `/ru/`, add `Clean-param: ref` to `robots.txt`.
+**Phase 2 shipped (same day):** `/best-cam-sites-for-models` (17 platforms, model-side angle; EN + RU `/ru/best-cam-sites-for-models`, hreflang en/ru) and EN model guides `/myfreecams-model-guide`, `/camsoda-model-guide`, `/livejasmin-model-guide`, `/bongacams-model-guide`. Payout figures for Chaturbate/Stripchat/BongaCams/LiveJasmin reuse `webcam-earnings-by-platform`; MFC/CamSoda figures are third-party "commonly cited" and hedged in copy (sources conflict on CamSoda minimum payout: $20 vs $50) — re-verify against the platforms' model terms.
+
+**Phase 3 shipped (same day):** `/stripchat-chaturbate-token-calculator` (working client-side tool, `src/components/TokenCalculator.astro`; note: component scripts must be `is:inline` — a plain `<script>` was silently not emitted into the page), `/what-is-stripchat`, `/what-is-a-cam-model`, `/webcam-model-jobs`, `/cam-agency-vs-studio-vs-independent`, `/chaturbate-tip-menu`. All listed in `blog.astro`.
+
+**Not done / follow-ups:** RU/RO counterparts of the Phase 3 + model-guide EN pages (locale rule; only the comparison page has RU so far); submit new URLs in GSC (URL Inspection → Request indexing) and Yandex Webmaster; verify RU volumes in Yandex Wordstat; Yandex follow-ups (below). Remaining Yandex follow-ups: register in Yandex Webmaster + set region for `/ru/`, add `Clean-param: ref` to `robots.txt`.
 
 ---
 
