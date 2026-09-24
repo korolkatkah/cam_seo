@@ -4,6 +4,23 @@ Running log of daily/session-based SEO & promotion action plans. Newest entry on
 
 ---
 
+## 2026-09-24 — Phase 1 shipped: RU model-attraction cluster + competitor findings
+
+**Shipped (RU only, no EN/RO counterparts — separate content from RU keyword research, so no hreflang pairs; self-canonical + `hreflang="ru"`):** `/ru/what-is-webcam` (вебкам это / вебкам модель / что такое вебкам — 8100+6600+1300/mo), `/ru/webcam-work` (вебкам работа — 3600/mo), `/ru/webcam-studio` (вебкам студия — 1600/mo), `/ru/webcam-studio-spb` (вебкам студия спб — 720/mo, geo pilot; deliberately no invented local addresses — a verification checklist instead). All in `ru/blog.astro`. Volumes are Semrush **Google.ru**; Semrush has no Yandex database — verify against Yandex Wordstat (wordstat.yandex.com works from this network, yandex.ru times out; needs Yandex ID login).
+
+**Semrush competitor findings (live pulls 2026-09-24):**
+- arunatalent.com: AS25, 2199 kw, 3412 visits/mo; top driver is typo keyword `chatabate` (12100/mo, pos 6) + OnlyFans cluster; has live `/tools/onlyfans-calculator/`.
+- onlytraffic.com: AS29, 2938 kw, 6222/mo; driven by Reddit-NSFW-list article (`reddit nsfw` 90500/mo) + OnlyFans marketing terms.
+- wecamgirls.com: AS33, 1383 kw, 12177/mo; the only genuinely webcam-content model — platform reviews (`camsites`, `cam girl sites`, per-platform review pages). **EWO has no platform-comparison page — Phase 2 gap.**
+- Not webcam despite category label: cmmodels.com (fashion), creatorhero.com (OnlyFans), bird.marketing (casino/gambling SEO).
+- Bot/traffic sellers (viewerbot.webcam, papaproxy.net, smgrowth.net, rootpanel.pro, rubot.cloud, stream-promotion.ru…) have ~zero SEO footprint — that market runs on forums/DMs.
+- Literal promo-service phrases are tiny (`chaturbate advertising` 140/mo, `накрутка зрителей в чатурбате` 170/mo; RU exact-match phrases ≈ 0) — win via topical guides, not service-name pages.
+- Platform brand volumes (Semrush US): Chaturbate 9.1M, Stripchat 5M, CamSoda 1M, MyFreeCams 450K, LiveJasmin 201K, BongaCams 90K — EWO covers only Stripchat/Chaturbate in depth.
+
+**Queued next:** Phase 2 (EN platform-comparison page for Tier 1+2 platforms + per-platform "work as a model on X" pages for MyFreeCams/CamSoda/LiveJasmin/BongaCams), Phase 3 (Stripchat token calculator tool; EN tip menu / cam agency / what is stripchat / webcam model jobs). Yandex follow-ups: register in Yandex Webmaster + set region for `/ru/`, add `Clean-param: ref` to `robots.txt`.
+
+---
+
 ## 2026-09-23 — Semrush keyword audit (EN/RU/RO) → existing-article match / gap / redundant
 
 Full Semrush pull across the site's actual topic scope: registration/onboarding, income, promotion/traffic/boosting, studio topics, general webcam, Chaturbate + Stripchat specifics. Scoped to **audience = models/studios/agencies only** — member/viewer-intent queries (platform browsing, "cam girls", "live sex", token-purchase pricing, platform safety reviews) excluded per this session's explicit correction; a handful of dual-intent terms (platform explainers, comparison content, the two approved token-*calculator* tools) kept. Locale scope = EN/RU/RO only (matches the 2026-09-22 locale cut). Method: `phrase_these`/`phrase_this`/`phrase_related` via the Semrush gateway (GroupBuySEO), `database=us` for EN, `database=ru` for RU; `database=ro` returned almost no data for this niche (see caveat below) — RO figures are not reliable.
