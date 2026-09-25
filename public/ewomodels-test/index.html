@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EWOMODELS — международная вебкам-сеть</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,700;1,6..96,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0a09; --bg-2:#141210; --card:#1a1714;
+  --fg:#f6f1ea; --muted:rgba(246,241,234,.66); --faint:rgba(246,241,234,.38);
+  --gold:#d9b779; --gold-2:#f3dcae; --line:rgba(217,183,121,.22);
+  --live:#ff2d55;
+  --serif:'Bodoni Moda', Georgia, serif; --sans:'Manrope', system-ui, sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.55;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+.eyebrow{font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;color:var(--gold)}
+h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.02;letter-spacing:-.01em}
+h2{font-size:clamp(2.2rem,5vw,4rem)}
+h2 em,h1 em,h3 em{font-style:italic;color:var(--gold-2)}
+.btn{display:inline-flex;align-items:center;gap:.6rem;padding:1rem 1.6rem;border-radius:999px;font-weight:700;font-size:.9rem;letter-spacing:.04em;text-transform:uppercase;transition:transform .2s, background .2s;border:0;cursor:pointer;font-family:inherit}
+.btn:hover{transform:translateY(-2px)}
+.btn-gold{background:linear-gradient(135deg,var(--gold-2),var(--gold));color:#1a1206}
+.btn-ghost{border:1px solid rgba(246,241,234,.35);color:var(--fg);backdrop-filter:blur(8px);background:rgba(255,255,255,.06)}
+.live{display:inline-flex;align-items:center;gap:.45rem;background:var(--live);color:#fff;font-size:.68rem;font-weight:800;letter-spacing:.14em;padding:.32rem .6rem;border-radius:6px;text-transform:uppercase}
+.live::before{content:"";width:7px;height:7px;border-radius:50%;background:#fff;animation:pulse 1.2s infinite}
+@keyframes pulse{50%{opacity:.25}}
+
+/* NAV */
+nav{position:fixed;inset:0 0 auto 0;z-index:50;padding:14px 0;background:rgba(11,10,9,.55);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(217,183,121,.12)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{font-family:var(--serif);font-size:1.6rem;font-weight:700;letter-spacing:.02em}
+.logo span{font-family:var(--sans);font-size:.62rem;font-weight:800;letter-spacing:.4em;color:var(--gold);margin-left:.5rem;vertical-align:middle}
+.menu{display:flex;gap:28px;font-size:.85rem;color:var(--muted)}
+.menu a:hover{color:var(--fg)}
+nav .btn{padding:.7rem 1.2rem;font-size:.75rem}
+
+/* HERO */
+.hero{position:relative;min-height:100vh;display:flex;align-items:flex-end;overflow:hidden}
+.hero > img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%;transform:scale(1.04)}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,10,9,.85) 0%,rgba(11,10,9,.5) 45%,rgba(11,10,9,0) 75%),linear-gradient(180deg,rgba(11,10,9,.35) 0%,rgba(11,10,9,0) 30%,rgba(11,10,9,.6) 75%,var(--bg) 100%)}
+.hero .wrap{position:relative;z-index:2;padding-top:130px;padding-bottom:64px;width:100%}
+.hero h1{font-size:clamp(2.6rem,min(7.5vw,10vh),7rem);max-width:11ch;margin:.4rem 0 1.2rem}
+.hero p.lead{font-size:clamp(1rem,1.6vw,1.2rem);color:var(--muted);max-width:54ch;margin-bottom:2rem}
+.hero p.lead b{color:var(--fg);font-weight:700}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:12px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:40px;margin-top:56px;padding-top:28px;border-top:1px solid var(--line)}
+.hero-meta b{display:block;font-family:var(--serif);font-size:2.4rem;font-weight:500;color:var(--gold-2)}
+.hero-meta small{color:var(--faint);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase}
+.hero-badge{position:absolute;right:24px;top:110px;z-index:3;display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.hero-badge .viewers{background:rgba(0,0,0,.5);backdrop-filter:blur(10px);padding:.35rem .7rem;border-radius:6px;font-size:.75rem;font-weight:700}
+
+/* TICKER */
+.ticker{border-block:1px solid var(--line);background:var(--bg-2);overflow:hidden;white-space:nowrap}
+.ticker div{display:inline-block;padding:18px 0;animation:tick 42s linear infinite;font-family:var(--serif);font-style:italic;font-size:1.5rem;color:var(--gold-2)}
+.ticker span{margin:0 28px;color:var(--gold);font-style:normal}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+section{padding:120px 0}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-bottom:48px;flex-wrap:wrap}
+.head p{color:var(--muted);max-width:44ch}
+
+/* NETWORK */
+.net{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;counter-reset:n}
+.node{position:relative;padding:32px 26px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(180deg,var(--bg-2),var(--bg))}
+.node::before{counter-increment:n;content:"0" counter(n);font-family:var(--serif);font-size:3rem;color:var(--gold-2);display:block;line-height:1;margin-bottom:22px}
+.node h3{font-family:var(--sans);font-size:1.05rem;font-weight:700;margin-bottom:8px}
+.node p{color:var(--muted);font-size:.9rem}
+.node:not(:last-child)::after{content:"→";position:absolute;right:-14px;top:40px;z-index:2;width:28px;height:28px;border-radius:50%;background:var(--gold);color:#1a1206;display:grid;place-items:center;font-weight:800;font-size:.85rem}
+
+/* WORLD */
+.world{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:280px;gap:16px}
+.city{position:relative;border-radius:22px;overflow:hidden;grid-column:span 2}
+.city.w3{grid-column:span 3}
+.city.tall{grid-row:span 2}
+.city img{width:100%;height:100%;object-fit:cover;transition:transform .7s}
+.city:hover img{transform:scale(1.06)}
+.city::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.25) 0%,transparent 30%,transparent 50%,rgba(0,0,0,.88))}
+.city .tag{position:absolute;top:14px;left:14px;z-index:2;display:flex;gap:6px}
+.city .tag span{background:rgba(0,0,0,.45);backdrop-filter:blur(8px);padding:.3rem .6rem;border-radius:6px;font-size:.7rem;font-weight:700}
+.city .tag .open{background:rgba(217,183,121,.9);color:#1a1206}
+.city .cap{position:absolute;left:22px;right:22px;bottom:20px;z-index:2}
+.city .cap small{color:var(--gold);font-size:.7rem;letter-spacing:.24em;text-transform:uppercase}
+.city .cap h3{font-size:2rem;margin:.2rem 0 .3rem}
+.city .cap p{color:var(--muted);font-size:.85rem}
+.world-note{margin-top:28px;text-align:center;color:var(--muted);font-size:.95rem}
+.world-note a{color:var(--gold);border-bottom:1px solid var(--line)}
+
+/* RESIDENTS — tiktok feed */
+.feed{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(240px,1fr);gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px;scrollbar-width:none}
+.feed::-webkit-scrollbar{display:none}
+.reel{position:relative;aspect-ratio:9/16;border-radius:22px;overflow:hidden;scroll-snap-align:start;background:var(--card)}
+.reel img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.reel:hover img{transform:scale(1.06)}
+.reel::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35) 0%,transparent 25%,transparent 55%,rgba(0,0,0,.85) 100%)}
+.reel .top{position:absolute;top:14px;left:14px;right:14px;z-index:2;display:flex;justify-content:space-between;align-items:center;font-size:.72rem;font-weight:700}
+.reel .bot{position:absolute;left:16px;right:56px;bottom:18px;z-index:2}
+.reel .bot b{font-size:1rem;display:block}
+.reel .bot small{color:var(--muted);font-size:.8rem;line-height:1.4;display:block;margin-top:4px}
+.reel .side{position:absolute;right:12px;bottom:20px;z-index:2;display:flex;flex-direction:column;gap:14px;align-items:center;font-size:.68rem;font-weight:700}
+.reel .side i{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.14);backdrop-filter:blur(8px);display:grid;place-items:center;font-style:normal;font-size:1rem}
+.loc{background:rgba(0,0,0,.45);backdrop-filter:blur(8px);padding:.3rem .6rem;border-radius:6px}
+
+/* PILLARS */
+.pillars{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pillar{position:relative;border-radius:28px;overflow:hidden;min-height:560px;display:flex;align-items:flex-end}
+.pillar > img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pillar::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.1) 15%,rgba(0,0,0,.55) 50%,rgba(0,0,0,.94))}
+.pillar .in{position:relative;z-index:2;padding:36px}
+.pillar .num{font-family:var(--serif);font-size:.95rem;color:var(--gold)}
+.pillar h3{font-size:clamp(2.6rem,4.5vw,3.8rem);margin:.2rem 0 1rem}
+.pillar ul{list-style:none;display:grid;gap:10px;color:var(--muted);font-size:.95rem;max-width:44ch}
+.pillar li{padding-left:1.4rem;position:relative}
+.pillar li::before{content:"✦";position:absolute;left:0;color:var(--gold)}
+.pillar li b{color:var(--fg)}
+.platforms{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:56px}
+.platforms span{border:1px solid var(--line);border-radius:999px;padding:.55rem 1.1rem;font-size:.82rem;color:var(--muted);font-weight:600}
+
+/* DAY */
+.day{background:var(--bg-2);border-block:1px solid var(--line)}
+.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.step{background:var(--card);border-radius:22px;overflow:hidden;border:1px solid rgba(255,255,255,.05)}
+.step img{aspect-ratio:4/5;width:100%;object-fit:cover}
+.step div{padding:22px}
+.step time{font-family:var(--serif);font-size:2rem;color:var(--gold-2)}
+.step h3{font-family:var(--sans);font-size:1rem;font-weight:700;margin:.4rem 0}
+.step p{color:var(--muted);font-size:.88rem}
+
+/* MODES */
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.mode{position:relative;border-radius:28px;overflow:hidden;min-height:520px;display:flex;align-items:flex-end}
+.mode img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.mode::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 20%,rgba(0,0,0,.9))}
+.mode .in{position:relative;z-index:2;padding:36px}
+.mode h3{font-size:2.6rem;margin:.4rem 0 1rem}
+.mode ul{list-style:none;display:grid;gap:8px;margin-bottom:1.6rem;color:var(--muted);font-size:.92rem}
+.mode li::before{content:"✦ ";color:var(--gold)}
+
+/* APPLY */
+.apply{position:relative;overflow:hidden;padding:0}
+.apply > img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:30% center}
+.apply::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,10,9,.2) 0%,rgba(11,10,9,.75) 50%,rgba(11,10,9,.96) 70%)}
+.apply .wrap{position:relative;z-index:2;display:flex;justify-content:flex-end;padding-top:120px;padding-bottom:120px}
+.form{width:min(460px,100%);background:rgba(20,18,16,.72);backdrop-filter:blur(18px);border:1px solid var(--line);border-radius:28px;padding:40px}
+.form h2{font-size:2.6rem;margin:.6rem 0 .8rem}
+.form p{color:var(--muted);font-size:.92rem;margin-bottom:1.6rem}
+.form label{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin:14px 0 6px}
+.form input,.form select{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:.9rem 1rem;color:var(--fg);font:inherit}
+.form select option{background:var(--bg-2)}
+.form .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form .btn{width:100%;justify-content:center;margin-top:24px}
+.form .tg{display:block;text-align:center;margin-top:14px;font-size:.85rem;color:var(--gold)}
+.form .safe{display:flex;gap:8px;align-items:center;justify-content:center;margin-top:18px;font-size:.75rem;color:var(--faint)}
+
+footer{padding:48px 0;border-top:1px solid var(--line);color:var(--faint);font-size:.8rem}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.age{border:1px solid var(--faint);border-radius:6px;padding:.1rem .4rem;margin-right:.5rem;font-weight:700}
+
+@media (max-width:980px){
+  .menu{display:none}
+  .net{grid-template-columns:1fr 1fr}
+  .node:nth-child(2)::after{display:none}
+  .world{grid-template-columns:1fr 1fr;grid-auto-rows:260px}
+  .city,.city.w3{grid-column:span 1}.city.tall{grid-row:span 1}
+  .city.wide-m{grid-column:span 2}
+  .pillars,.modes{grid-template-columns:1fr}
+  .timeline{grid-template-columns:1fr 1fr}
+  .apply::after{background:linear-gradient(180deg,rgba(11,10,9,.3),rgba(11,10,9,.95) 45%)}
+  .apply .wrap{justify-content:center;padding-top:320px}
+}
+@media (max-width:600px){
+  .wrap{padding:0 16px}
+  section{padding:80px 0}
+  nav .btn{display:none}
+  .hero-badge{top:84px;right:16px;left:16px;flex-direction:row;justify-content:flex-end}
+  .hero .wrap{padding-top:150px}
+  .hero-meta{gap:24px}.hero-meta b{font-size:1.8rem}
+  .net,.timeline{grid-template-columns:1fr}
+  .node::after{display:none}
+  .world{grid-template-columns:1fr;grid-auto-rows:300px}
+  .city.wide-m{grid-column:span 1}
+  .feed{grid-auto-columns:72%}
+  .pillar{min-height:520px}.pillar .in{padding:24px}
+  .form{padding:28px}.form .row{grid-template-columns:1fr}
+  .mode{min-height:460px}.mode .in{padding:24px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="logo" href="#">EWO<span>MODELS</span></a>
+    <div class="menu">
+      <a href="#network">Сеть</a>
+      <a href="#world">Локации</a>
+      <a href="#models">Модели</a>
+      <a href="#why">Почему мы</a>
+      <a href="#modes">Формат</a>
+    </div>
+    <a class="btn btn-gold" href="#apply">Подключиться →</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <img src="/ewomodels-test/img/4.webp" alt="Вилла у океана: бассейн, камеры, суперкары">
+  <div class="hero-badge">
+    <span class="live">Live</span>
+    <span class="viewers">🌍 9 городов · 7 стран</span>
+  </div>
+  <div class="wrap">
+    <p class="eyebrow">Международная вебкам-сеть</p>
+    <h1>Свобода. Деньги. <em>Весь мир.</em></h1>
+    <p class="lead"><b>EWOMODELS</b> подключает девушек к международной вебкам-сети. Здесь топовые условия, проверенные агентства и студии в разных странах. Выбираешь город и график, зарабатываешь в долларах. Твои данные защищены на каждом этапе.</p>
+    <div class="ctas">
+      <a class="btn btn-gold" href="#apply">Заполнить анкету</a>
+      <a class="btn btn-ghost" href="#world">Выбрать город</a>
+    </div>
+    <div class="hero-meta">
+      <div><b>9</b><small>городов в сети</small></div>
+      <div><b>50%+</b><small>доля модели + бонусы</small></div>
+      <div><b>$ / 7 дн.</b><small>выплаты на карту или крипту</small></div>
+      <div><b>100%</b><small>анонимно и безопасно</small></div>
+    </div>
+  </div>
+</header>
+
+<div class="ticker"><div>
+  Нью-Йорк <span>✦</span> Дубай <span>✦</span> Майами <span>✦</span> Бали <span>✦</span> Париж <span>✦</span> Марбелья <span>✦</span> Лазурный берег <span>✦</span> Лос-Анджелес <span>✦</span> Киев <span>✦</span>
+  Нью-Йорк <span>✦</span> Дубай <span>✦</span> Майами <span>✦</span> Бали <span>✦</span> Париж <span>✦</span> Марбелья <span>✦</span> Лазурный берег <span>✦</span> Лос-Анджелес <span>✦</span> Киев <span>✦</span>
+</div></div>
+
+<section id="network">
+  <div class="wrap">
+    <div class="head">
+      <div><p class="eyebrow">Как работает сеть</p><h2>Одна анкета — <em>весь мир</em></h2></div>
+      <p>Мы не одна студия. Мы сеть партнёрских агентств и студий. Мы проверили каждую: условия, выплаты, безопасность.</p>
+    </div>
+    <div class="net">
+      <div class="node"><h3>Анкета</h3><p>Заполняешь за 2 минуты. Рассматриваем любой типаж, опыт не нужен.</p></div>
+      <div class="node"><h3>Город и агентство</h3><p>Подбираем студию в сети под тебя: страна, язык, формат, доход.</p></div>
+      <div class="node"><h3>Переезд или дом</h3><p>Жильё и переезд берём на себя. Можно работать из дома.</p></div>
+      <div class="node"><h3>Эфир и выплаты</h3><p>Трафик на твой стрим каждую смену. Деньги каждую неделю.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="world" style="padding-top:0">
+  <div class="wrap">
+    <div class="head">
+      <div><p class="eyebrow">Локации сети</p><h2>Выбирай, <em>где жить</em> и работать</h2></div>
+      <p>Пентхаусы, виллы и апартаменты партнёров. Свет, камеры и ноутбук уже готовы. Приезжаешь и сразу выходишь в эфир.</p>
+    </div>
+    <div class="world">
+      <div class="city w3 tall"><img src="/ewomodels-test/img/dubai.webp" alt="Пентхаус в Дубае" loading="lazy">
+        <div class="tag"><span class="open">Набор открыт</span><span>🇦🇪</span></div>
+        <div class="cap"><small>ОАЭ · Пентхаус</small><h3>Дубай</h3><p>Вид на Бурдж-Халифу и ночные эфиры на весь мир.</p></div></div>
+      <div class="city w3"><img src="/ewomodels-test/img/1.webp" alt="Пентхаус в Нью-Йорке" loading="lazy" style="object-position:center 30%">
+        <div class="tag"><span class="live">Live</span><span>🇺🇸</span></div>
+        <div class="cap"><small>США · Пентхаус</small><h3>Нью-Йорк</h3><p>52-й этаж, закаты над Манхэттеном.</p></div></div>
+      <div class="city w3"><img src="/ewomodels-test/img/bali.webp" alt="Вилла на Бали" loading="lazy">
+        <div class="tag"><span class="open">Набор открыт</span><span>🇮🇩</span></div>
+        <div class="cap"><small>Индонезия · Вилла</small><h3>Бали</h3><p>Бассейн над океаном и вечное лето.</p></div></div>
+      <div class="city"><img src="/ewomodels-test/img/paris.webp" alt="Апартаменты в Париже" loading="lazy">
+        <div class="tag"><span>🇫🇷</span></div>
+        <div class="cap"><small>Франция · Апартаменты</small><h3>Париж</h3><p>Эйфелева башня в окне.</p></div></div>
+      <div class="city"><img src="/ewomodels-test/img/5.webp" alt="Вилла в Майами" loading="lazy" style="object-position:48% center">
+        <div class="tag"><span class="live">Live</span><span>🇺🇸</span></div>
+        <div class="cap"><small>США · Вилла</small><h3>Майами</h3><p>Океан, пальмы, двусветная гостиная.</p></div></div>
+      <div class="city"><img src="/ewomodels-test/img/10.webp" alt="Марбелья" loading="lazy" style="object-position:40% center">
+        <div class="tag"><span>🇪🇸</span></div>
+        <div class="cap"><small>Испания · Резиденция</small><h3>Марбелья</h3><p>Средиземноморье и суперкары.</p></div></div>
+      <div class="city"><img src="/ewomodels-test/img/9.webp" alt="Лазурный берег" loading="lazy" style="object-position:60% center">
+        <div class="tag"><span>🇲🇨</span></div>
+        <div class="cap"><small>Монако · Сьют</small><h3>Лазурный берег</h3><p>Спальня-студия с видом на бухту.</p></div></div>
+      <div class="city"><img src="/ewomodels-test/img/11.webp" alt="Особняк в Лос-Анджелесе" loading="lazy" style="object-position:55% center">
+        <div class="tag"><span>🇺🇸</span></div>
+        <div class="cap"><small>США · Особняк</small><h3>Лос-Анджелес</h3><p>Мраморный холл, рояль и свет.</p></div></div>
+      <div class="city wide-m"><img src="/ewomodels-test/img/6.webp" alt="Лофт в Киеве" loading="lazy" style="object-position:45% center">
+        <div class="tag"><span class="open">Набор открыт</span><span>🇺🇦</span></div>
+        <div class="cap"><small>Украина · Лофт</small><h3>Киев</h3><p>Здесь начинается сеть. Отдельные квартиры для моделей.</p></div></div>
+    </div>
+    <p class="world-note">Твоего города нет в списке? <a href="#apply">Напиши нам</a>. Подберём проверенную студию в любой стране.</p>
+  </div>
+</section>
+
+<section id="models" style="padding-top:0">
+  <div class="wrap">
+    <div class="head">
+      <div><p class="eyebrow">Модели сети</p><h2>Они <em>уже живут</em> так</h2></div>
+      <p>Каждая комната — отдельный канал в новом городе. Свайпай ленту: так выглядит обычный вечер в сети.</p>
+    </div>
+    <div class="feed">
+      <article class="reel"><img src="/ewomodels-test/img/1.webp" alt="" loading="lazy">
+        <div class="top"><span class="live">Live</span><span class="loc">📍 Нью-Йорк</span></div>
+        <div class="side"><i>♥</i>48K<i>✦</i>2.1K</div>
+        <div class="bot"><b>@mila.ewo</b><small>Закатный стрим на 52-м этаже 🌆</small></div></article>
+      <article class="reel"><img src="/ewomodels-test/img/7.webp" alt="" loading="lazy" style="object-position:55% center">
+        <div class="top"><span class="loc">📍 Майами</span><span>12:40</span></div>
+        <div class="side"><i>♥</i>31K<i>✦</i>960</div>
+        <div class="bot"><b>@sofi.models</b><small>Фотосет перед эфиром</small></div></article>
+      <article class="reel"><img src="/ewomodels-test/img/8.webp" alt="" loading="lazy" style="object-position:62% center">
+        <div class="top"><span class="live">Live</span><span class="loc">📍 Нью-Йорк</span></div>
+        <div class="side"><i>♥</i>57K<i>✦</i>3.4K</div>
+        <div class="bot"><b>@kate.golden</b><small>Утренний стрим в пижаме ☕</small></div></article>
+      <article class="reel"><img src="/ewomodels-test/img/10.webp" alt="" loading="lazy" style="object-position:40% center">
+        <div class="top"><span class="loc">📍 Марбелья</span><span>21:05</span></div>
+        <div class="side"><i>♥</i>72K<i>✦</i>5.8K</div>
+        <div class="bot"><b>@lana.drive</b><small>Выезд после смены 🏎️</small></div></article>
+      <article class="reel"><img src="/ewomodels-test/img/12.webp" alt="" loading="lazy" style="object-position:55% center">
+        <div class="top"><span class="live">Live</span><span class="loc">📍 Дубай</span></div>
+        <div class="side"><i>♥</i>39K<i>✦</i>1.7K</div>
+        <div class="bot"><b>@ari.city</b><small>Стрим прямо из машины</small></div></article>
+      <article class="reel"><img src="/ewomodels-test/img/11.webp" alt="" loading="lazy" style="object-position:55% center">
+        <div class="top"><span class="loc">📍 Лос-Анджелес</span><span>19:30</span></div>
+        <div class="side"><i>♥</i>44K<i>✦</i>2.6K</div>
+        <div class="bot"><b>@nika.ewo</b><small>Образ на вечерний эфир</small></div></article>
+    </div>
+  </div>
+</section>
+
+<section id="why" class="day">
+  <div class="wrap">
+    <div class="head">
+      <div><p class="eyebrow">Почему EWOMODELS</p><h2>Четыре вещи, <em>ради которых</em> приходят</h2></div>
+      <p>Топовые условия сети. Без мелкого шрифта.</p>
+    </div>
+    <div class="pillars">
+      <div class="pillar"><img src="/ewomodels-test/img/bali.webp" alt="" loading="lazy">
+        <div class="in"><span class="num">01</span><h3><em>Свобода</em></h3>
+          <ul><li><b>Свой график</b>: сама решаешь, когда начать и закончить смену</li><li>Любая страна сети или работа из дома</li><li>Старт с телефона или ноутбука</li></ul></div></div>
+      <div class="pillar"><img src="/ewomodels-test/img/10.webp" alt="" loading="lazy" style="object-position:40% center">
+        <div class="in"><span class="num">02</span><h3><em>Деньги</em></h3>
+          <ul><li><b>50% + бонусы</b> с каждого эфира</li><li>Выплаты каждую неделю в долларах, на карту или крипту</li><li>Трафик на стримы: модели сети на первых страницах сайтов</li><li>Пассивный доход с продажи контента</li></ul></div></div>
+      <div class="pillar"><img src="/ewomodels-test/img/dubai.webp" alt="" loading="lazy">
+        <div class="in"><span class="num">03</span><h3><em>Роскошь</em></h3>
+          <ul><li><b>Пентхаусы и виллы</b> партнёров по всему миру</li><li>Отдельная квартира, свет, камеры, гардероб и реквизит</li><li>Переезд и проживание берём на себя</li></ul></div></div>
+      <div class="pillar"><img src="/ewomodels-test/img/2.webp" alt="" loading="lazy" style="object-position:40% center">
+        <div class="in"><span class="num">04</span><h3><em>Безопасность</em></h3>
+          <ul><li><b>Полная анонимность</b>: посетители из стран СНГ заблокированы</li><li>Только проверенные агентства и студии</li><li>Поддержка 24/7, обучение с первого дня</li></ul></div></div>
+    </div>
+    <div class="platforms">
+      <span>Chaturbate</span><span>Stripchat</span><span>MyFreeCams</span><span>LiveJasmin</span><span>Flirt4Free</span><span>Streamate</span><span>CamSoda</span><span>ImLive</span><span>SkyPrivate</span><span>OnlyFans</span><span>ManyVids</span>
+    </div>
+  </div>
+</section>
+
+<section id="day">
+  <div class="wrap">
+    <div class="head">
+      <div><p class="eyebrow">Один день модели</p><h2>От макияжа <em>до эфира</em></h2></div>
+      <p>Уметь заранее ничего не нужно. Учим с первого дня, первые деньги приходят в первую неделю.</p>
+    </div>
+    <div class="timeline">
+      <div class="step"><img src="/ewomodels-test/img/2.webp" alt="" loading="lazy" style="object-position:40% center"><div><time>12:00</time><h3>Образ</h3><p>Макияж, гардероб и реквизит за счёт студии.</p></div></div>
+      <div class="step"><img src="/ewomodels-test/img/7.webp" alt="" loading="lazy" style="object-position:52% center"><div><time>15:00</time><h3>Фотосет</h3><p>Контент для профиля и продажи. Это пассивный доход.</p></div></div>
+      <div class="step"><img src="/ewomodels-test/img/6.webp" alt="" loading="lazy" style="object-position:45% center"><div><time>20:00</time><h3>Эфир</h3><p>Оператор рядом, трафик идёт на твой стрим.</p></div></div>
+      <div class="step"><img src="/ewomodels-test/img/10.webp" alt="" loading="lazy" style="object-position:42% center"><div><time>23:30</time><h3>Свободна</h3><p>Смена закрыта. Доход виден в личном кабинете.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="modes" style="padding-top:0">
+  <div class="wrap">
+    <div class="head">
+      <div><p class="eyebrow">Формат работы</p><h2>Студия сети или <em>твой дом</em></h2></div>
+      <p>Условия одни и те же. Разница только в том, где ты включаешь камеру.</p>
+    </div>
+    <div class="modes">
+      <div class="mode"><img src="/ewomodels-test/img/5.webp" alt="" loading="lazy" style="object-position:48% center">
+        <div class="in"><p class="eyebrow">В любой стране</p><h3>Студия сети</h3>
+          <ul><li>Отдельная квартира для работы</li><li>Свет, камеры, реквизит</li><li>Оператор и техподдержка</li></ul>
+          <a class="btn btn-gold" href="#apply">Выбрать город</a></div></div>
+      <div class="mode"><img src="/ewomodels-test/img/6.webp" alt="" loading="lazy" style="object-position:45% center">
+        <div class="in"><p class="eyebrow">Удалённо</p><h3>Из дома</h3>
+          <ul><li>Старт с телефона или ноутбука</li><li>Помощь с оборудованием и гардеробом</li><li>Свой график, свои правила</li></ul>
+          <a class="btn btn-ghost" href="#apply">Работать из дома</a></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="apply" class="apply">
+  <img src="/ewomodels-test/img/10.webp" alt="" loading="lazy">
+  <div class="wrap">
+    <form class="form" onsubmit="return false">
+      <p class="eyebrow">Набор открыт · 18+</p>
+      <h2>Подключись <em>к сети</em></h2>
+      <p>Рассматриваем любой типаж. Ответим в Telegram в течение часа.</p>
+      <div class="row">
+        <div><label>Имя</label><input placeholder="Как к тебе обращаться"></div>
+        <div><label>Возраст</label><input placeholder="18+" inputmode="numeric"></div>
+      </div>
+      <label>Telegram</label><input placeholder="@username">
+      <label>Где хочешь работать</label>
+      <select><option>Подберите мне город</option><option>Дубай</option><option>Нью-Йорк</option><option>Майами</option><option>Бали</option><option>Париж</option><option>Марбелья</option><option>Лазурный берег</option><option>Лос-Анджелес</option><option>Киев</option><option>Из дома</option><option>Оператор (с опытом)</option></select>
+      <button class="btn btn-gold">Отправить анкету →</button>
+      <a class="tg" href="#">или напиши нам в Telegram</a>
+      <div class="safe">🔒 Анкету видит только менеджер. Данные не передаём третьим лицам.</div>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span><span class="age">18+</span>EWOMODELS · международная вебкам-сеть для совершеннолетних</span>
+    <span>Telegram · Instagram · Поддержка 24/7</span>
+  </div>
+</footer>
+
+</body>
+</html>
