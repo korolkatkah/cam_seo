@@ -54,6 +54,12 @@ import Base from '@/layouts/Base.astro';
       <div class="progress" id="import-progress" hidden aria-hidden="true">
         <div class="progress__fill" id="import-progress-fill"></div>
       </div>
+      <label class="category-field">
+        Category to parse
+        <input type="text" id="import-category" placeholder="https://ru.stripchat.com/girls/young" autocomplete="off" spellcheck="false" />
+      </label>
+      <p class="bulk-hint category-hint">Paste a Stripchat category link (girls, men or trans sections). Leave empty for the default: girls/young (Young 22+).</p>
+      <p id="import-category-error" class="cabinet-error" hidden></p>
       <p class="import-status" id="import-status" role="status" aria-live="polite">Idle.</p>
       <div class="import-actions">
         <button id="run-import-btn" class="import-btn">Run import now</button>
@@ -67,7 +73,7 @@ import Base from '@/layouts/Base.astro';
 
     <div class="glass-card assign-card">
       <h2>Already handed out</h2>
-      <p class="bulk-hint">Paste the accounts you gave to someone outside the cabinet (links, @names or plain names, any separator). They are marked in the Google Sheet and grouped together at the top.</p>
+      <p class="bulk-hint">Paste the accounts you gave to someone outside the cabinet (links, @names or plain names, any separator). They are marked in the Google Sheet and moved below the free accounts, grouped by who got them.</p>
       <form id="handout-form" class="assign-form">
         <label>
           Given to
@@ -280,6 +286,24 @@ import Base from '@/layouts/Base.astro';
     cursor: pointer;
   }
   .import-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .category-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    color: var(--fg-muted);
+    margin-bottom: 0.4rem;
+  }
+  .category-field input {
+    font: inherit;
+    padding: 0.6rem 0.75rem;
+    border-radius: 8px;
+    border: 1px solid var(--bg-subtle);
+    background: var(--bg);
+    color: var(--fg);
+  }
+  .category-field input:disabled { opacity: 0.6; }
+  .category-hint { margin: 0 0 0.75rem; }
   .stop-btn { color: #a12a2a; border-color: rgba(161, 42, 42, 0.35); }
   .assign-form .check-row {
     flex-direction: row;
@@ -385,7 +409,13 @@ import Base from '@/layouts/Base.astro';
   const importStatusEl = document.getElementById('import-status');
   const runImportBtn = document.getElementById('run-import-btn');
   const stopImportBtn = document.getElementById('stop-import-btn');
+  const categoryInput = document.getElementById('import-category');
+  const categoryErrorEl = document.getElementById('import-category-error');
   let pollTimer = null;
+
+  try {
+    categoryInput.value = localStorage.getItem('import_category') || '';
+  } catch {}
 
   const progressEl = document.getElementById('import-progress');
   const progressFillEl = document.getElementById('import-progress-fill');
@@ -416,6 +446,8 @@ import Base from '@/layouts/Base.astro';
     lastImportState = state;
     stopImportBtn.disabled = !state.running || !!state.stopping;
     stopImportBtn.textContent = state.stopping ? 'Stopping...' : 'Stop import';
+    categoryInput.disabled = !!state.running;
+    const categoryNote = state.category ? ` · category ${state.category}` : '';
     if (state.running) {
       const p = state.progress || {};
       const elapsed = state.last_started_at ? Date.now() - new Date(state.last_started_at).getTime() : 0;
@@ -425,13 +457,13 @@ import Base from '@/layouts/Base.astro';
         const eta = p.checked >= 10 ? ` · about ${fmtDuration((elapsed / p.checked) * (p.total - p.checked))} left` : '';
         const current = p.current ? ` · checking ${p.current}` : '';
         importStatusEl.textContent =
-          `Importing: ${p.checked} of ${p.total} profiles (${pct}%) · ${p.saved} new · ${p.skipped} skipped · ${fmtDuration(elapsed)} elapsed${eta}${current}`;
+          `Importing${categoryNote}: ${p.checked} of ${p.total} profiles (${pct}%) · ${p.saved} new · ${p.skipped} skipped · ${fmtDuration(elapsed)} elapsed${eta}${current}`;
       } else if (p.phase === 'fetching_list') {
         setProgress(null);
-        importStatusEl.textContent = `Importing: fetching the model list (page ${p.page || 0} of ${p.pages || '?'}) · ${fmtDuration(elapsed)} elapsed`;
+        importStatusEl.textContent = `Importing${categoryNote}: fetching the model list (page ${p.page || 0} of ${p.pages || '?'}) · ${fmtDuration(elapsed)} elapsed`;
       } else {
         setProgress(null);
-        importStatusEl.textContent = `Importing: starting... · ${fmtDuration(elapsed)} elapsed`;
+        importStatusEl.textContent = `Importing${categoryNote}: starting... · ${fmtDuration(elapsed)} elapsed`;
       }
       if (state.stopping) {
         importStatusEl.textContent = `Stopping after the current profile... ${importStatusEl.textContent}`;
@@ -445,7 +477,8 @@ import Base from '@/layouts/Base.astro';
       const { fetched = 0, saved = 0, skipped = 0, stopped = false } = state.last_result;
       const at = state.last_finished_at ? ` (finished ${new Date(state.last_finished_at).toLocaleString()})` : '';
       const verb = stopped ? 'stopped by you after' : 'checked';
-      importStatusEl.textContent = `Last run${at}: ${verb} ${fetched} profiles, ${saved} new, ${skipped} skipped.`;
+      const lastCategory = state.last_result.category ? ` [${state.last_result.category}]` : '';
+      importStatusEl.textContent = `Last run${at}${lastCategory}: ${verb} ${fetched} profiles, ${saved} new, ${skipped} skipped.`;
     } else {
       importStatusEl.textContent = 'Idle. No import has run since the server started.';
     }
@@ -475,12 +508,38 @@ import Base from '@/layouts/Base.astro';
   }
 
   runImportBtn.addEventListener('click', async () => {
+    categoryErrorEl.hidden = true;
+    const category = categoryInput.value.trim();
+    try {
+      localStorage.setItem('import_category', category);
+    } catch {}
+
     runImportBtn.disabled = true;
-    const res = await authedFetch('/admin/import/run', { method: 'POST' });
-    const state = await res.json();
-    renderImportStatus(state);
-    runImportBtn.textContent = 'Running...';
-    if (!pollTimer) pollTimer = setInterval(pollImportStatus, 4000);
+    runImportBtn.textContent = 'Checking category...';
+    try {
+      const res = await authedFetch('/admin/import/run', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ category: category || null }),
+      });
+      const data = await res.json().catch(() => null);
+      if (!res.ok) {
+        // A bad category is refused before anything starts: show why and let the admin fix it.
+        categoryErrorEl.textContent = data?.detail || 'Could not start the import.';
+        categoryErrorEl.hidden = false;
+        runImportBtn.disabled = false;
+        runImportBtn.textContent = 'Run import now';
+        return;
+      }
+      renderImportStatus(data);
+      runImportBtn.textContent = 'Running...';
+      if (!pollTimer) pollTimer = setInterval(pollImportStatus, 4000);
+    } catch (err) {
+      categoryErrorEl.textContent = err instanceof Error ? err.message : 'Could not start the import.';
+      categoryErrorEl.hidden = false;
+      runImportBtn.disabled = false;
+      runImportBtn.textContent = 'Run import now';
+    }
   });
 
   stopImportBtn.addEventListener('click', async () => {
