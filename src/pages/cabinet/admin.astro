@@ -70,37 +70,6 @@ import Base from '@/layouts/Base.astro';
       <button id="run-export-btn" class="import-btn export-btn">Export to Google Sheet</button>
       <p id="export-link" class="import-status" hidden></p>
     </div>
-
-    <div class="glass-card assign-card">
-      <h2>Already handed out</h2>
-      <p class="bulk-hint">Paste the accounts you gave to someone outside the cabinet (links, @names or plain names, any separator). They are marked in the Google Sheet and moved below the free accounts, grouped by who got them.</p>
-      <form id="handout-form" class="assign-form">
-        <label>
-          Given to
-          <input type="text" id="handout-to" required maxlength="255" placeholder="Worker name or email" />
-        </label>
-        <label>
-          Accounts
-          <textarea id="handout-accounts" rows="6" required placeholder="https://www.instagram.com/some_account/"></textarea>
-        </label>
-        <label class="check-row">
-          <input type="checkbox" id="handout-create" checked />
-          Add accounts that are not in the database yet
-        </label>
-        <button type="submit">Mark as handed out</button>
-        <p id="handout-error" class="cabinet-error" hidden></p>
-        <p id="handout-success" class="cabinet-success" hidden></p>
-      </form>
-      <div class="targets-table-wrap handout-table-wrap" id="handout-summary-wrap" hidden>
-        <table class="targets-table">
-          <thead>
-            <tr><th>Given to</th><th class="num-h">Accounts</th><th>Last added</th><th></th></tr>
-          </thead>
-          <tbody id="handout-body"></tbody>
-        </table>
-      </div>
-    </div>
-
   </section>
 </div>
 
@@ -305,12 +274,6 @@ import Base from '@/layouts/Base.astro';
   .category-field input:disabled { opacity: 0.6; }
   .category-hint { margin: 0 0 0.75rem; }
   .stop-btn { color: #a12a2a; border-color: rgba(161, 42, 42, 0.35); }
-  .assign-form .check-row {
-    flex-direction: row;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  .handout-table-wrap { margin: 1.25rem 0 0; }
   :global(.undo-btn) {
     font: inherit;
     font-size: 0.75rem;
@@ -556,87 +519,6 @@ import Base from '@/layouts/Base.astro';
     if (!pollTimer) pollTimer = setInterval(pollImportStatus, 4000);
   });
 
-  // --- Accounts handed out outside the cabinet ---
-
-  const handoutBody = document.getElementById('handout-body');
-  const handoutWrap = document.getElementById('handout-summary-wrap');
-
-  async function loadHandouts() {
-    const res = await authedFetch('/admin/handouts');
-    if (!res.ok) return;
-    const data = await res.json();
-    handoutBody.innerHTML = '';
-    handoutWrap.hidden = data.items.length === 0;
-    for (const item of data.items) {
-      const undoBtn = document.createElement('button');
-      undoBtn.type = 'button';
-      undoBtn.className = 'undo-btn';
-      undoBtn.textContent = 'Take back';
-      undoBtn.addEventListener('click', async () => {
-        if (!confirm(`Take back all ${item.count} accounts given to "${item.given_to}"? They become free again.`)) return;
-        undoBtn.disabled = true;
-        const r = await authedFetch(`/admin/handouts?given_to=${encodeURIComponent(item.given_to)}`, { method: 'DELETE' });
-        if (r.ok) await loadHandouts();
-        else undoBtn.disabled = false;
-      });
-      const actionTd = document.createElement('td');
-      actionTd.appendChild(undoBtn);
-
-      const tr = document.createElement('tr');
-      tr.append(
-        textCell(item.given_to, 'username'),
-        textCell(item.count, 'num'),
-        textCell(item.last_at ? new Date(item.last_at).toLocaleString() : '—'),
-        actionTd,
-      );
-      handoutBody.appendChild(tr);
-    }
-  }
-
-  document.getElementById('handout-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const errorEl = document.getElementById('handout-error');
-    const successEl = document.getElementById('handout-success');
-    errorEl.hidden = true;
-    successEl.hidden = true;
-    const submitBtn = e.target.querySelector('button[type="submit"]');
-    submitBtn.disabled = true;
-
-    try {
-      const res = await authedFetch('/admin/handouts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          given_to: document.getElementById('handout-to').value,
-          accounts: document.getElementById('handout-accounts').value,
-          create_missing: document.getElementById('handout-create').checked,
-        }),
-      });
-      if (!res.ok) {
-        const data = await res.json().catch(() => null);
-        throw new Error(typeof data?.detail === 'string' ? data.detail : 'Failed to mark accounts');
-      }
-      const d = await res.json();
-      const parts = [`Marked ${d.marked} of ${d.found} accounts as given to ${d.given_to}.`];
-      if (d.created_new_accounts) parts.push(`Added ${d.created_new_accounts} account(s) that were not in the database.`);
-      if (d.already_marked) parts.push(`Already marked before: ${d.already_marked}.`);
-      if (d.already_assigned_to_worker) parts.push(`Left as they are (already a worker task): ${d.already_assigned_to_worker}.`);
-      if (d.not_in_database.length) parts.push(`Not in the database: ${d.not_in_database.slice(0, 10).join(', ')}${d.not_in_database.length > 10 ? '...' : ''}.`);
-      parts.push('The Google Sheet updates within a minute.');
-      successEl.textContent = parts.join(' ');
-      successEl.hidden = false;
-      document.getElementById('handout-form').reset();
-      document.getElementById('handout-create').checked = true;
-      await loadHandouts();
-      setTimeout(pollExportStatus, 20000);
-    } catch (err) {
-      errorEl.textContent = err instanceof Error ? err.message : 'Failed to mark accounts';
-      errorEl.hidden = false;
-    } finally {
-      submitBtn.disabled = false;
-    }
-  });
-
   // --- Google Drive export ---
 
   const exportStatusEl = document.getElementById('export-status');
@@ -807,7 +689,6 @@ import Base from '@/layouts/Base.astro';
       }
       contentEl.hidden = false;
       await loadLinks().catch(() => {});
-      await loadHandouts().catch(() => {});
       await pollImportStatus();
       await pollExportStatus();
     } catch {
