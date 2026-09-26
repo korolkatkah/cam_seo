@@ -28,7 +28,7 @@ import Base from '@/layouts/Base.astro';
         <table class="targets-table">
           <thead>
             <tr>
-              <th>Worker</th><th>Link</th><th class="num-h">Visits</th><th class="num-h">Agency</th><th class="num-h">Traffic</th><th class="num-h">Analytics</th><th class="num-h">Promo</th><th class="num-h">Clicks</th><th>Last activity</th><th></th>
+              <th>Worker</th><th>Link</th><th class="num-h">Visits</th><th class="num-h">Agency</th><th class="num-h">Traffic</th><th class="num-h">Analytics</th><th class="num-h">Promo</th><th class="num-h">Photo</th><th class="num-h">Clicks</th><th>Last activity</th><th></th>
             </tr>
           </thead>
           <tbody id="links-body"></tbody>
@@ -637,6 +637,7 @@ import Base from '@/layouts/Base.astro';
         textCell(item.clicks.traffic, 'num'),
         textCell(item.clicks.analytics, 'num'),
         textCell(item.clicks.promo ?? 0, 'num'),
+        textCell(item.clicks.photo ?? 0, 'num'),
         textCell(item.total_clicks, 'num total'),
         textCell(last),
         actionTd,
