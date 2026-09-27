@@ -135,6 +135,24 @@ import Base from '@/layouts/Base.astro';
           <button id="tp-run-btn" class="import-btn">Run parser</button>
           <button id="tp-stop-btn" class="import-btn export-btn stop-btn" disabled>Stop</button>
         </div>
+        <div class="tp-auto">
+          <label class="tp-switch"><input type="checkbox" id="tp-sched-on" role="switch" /> <span>Auto mode: run on a schedule</span></label>
+          <div class="tp-options">
+            <label class="category-field">
+              Every
+              <select id="tp-sched-every">
+                <option value="1">1 hour</option><option value="2">2 hours</option><option value="3">3 hours</option>
+                <option value="4">4 hours</option><option value="6">6 hours</option><option value="8">8 hours</option>
+                <option value="12">12 hours</option><option value="24" selected>24 hours</option>
+              </select>
+            </label>
+            <label class="category-field">
+              Starting at (Kyiv)
+              <select id="tp-sched-hour"></select>
+            </label>
+          </div>
+          <p class="import-status" id="tp-sched-status">Loading...</p>
+        </div>
       </div>
 
       <div class="glass-card import-card">
@@ -173,12 +191,27 @@ import Base from '@/layouts/Base.astro';
           <button id="tp-send-btn" class="import-btn">Start mailing</button>
           <button id="tp-send-stop-btn" class="import-btn export-btn stop-btn" disabled>Stop</button>
         </div>
+        <div class="tp-auto">
+          <label class="tp-switch"><input type="checkbox" id="tp-auto-on" role="switch" /> <span>Auto mode: message new profiles automatically</span></label>
+          <p class="bulk-hint">Checks for profiles nobody messaged yet after every parser run and every 15 minutes, and messages them with the text, delays and source above.</p>
+          <div class="tp-options">
+            <label class="category-field">
+              Max per day
+              <input type="number" id="tp-auto-daily" min="1" max="1000" value="50" />
+            </label>
+          </div>
+          <p class="import-status" id="tp-auto-status">Loading...</p>
+        </div>
       </div>
 
       <div class="glass-card import-card">
         <div class="targets-header">
           <h2>Profiles <span id="tp-total" class="tp-total"></span></h2>
           <button id="tp-csv-btn" class="ghost-btn">Download CSV</button>
+        </div>
+        <div class="tp-sheet">
+          <p class="import-status" id="tp-sheet-status">Google Sheet: updates by itself while the parser and mailing run.</p>
+          <button id="tp-sheet-btn" class="ghost-btn">Sync Google Sheet now</button>
         </div>
         <label class="category-field">
           Search
@@ -261,6 +294,51 @@ import Base from '@/layouts/Base.astro';
   }
   .category-field textarea { resize: vertical; min-height: 5rem; }
   :global(.tp-msg-sent) { color: #1e6b34; }
+  .tp-auto {
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--bg-subtle);
+  }
+  .tp-auto .import-status { margin: 0; }
+  .tp-switch {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 600;
+    color: var(--fg);
+    cursor: pointer;
+    margin-bottom: 0.75rem;
+  }
+  .tp-switch input {
+    appearance: none;
+    width: 2.4rem;
+    height: 1.35rem;
+    border-radius: 999px;
+    background: var(--bg-subtle);
+    position: relative;
+    cursor: pointer;
+    transition: background 0.2s;
+    flex-shrink: 0;
+    margin: 0;
+  }
+  .tp-switch input::after {
+    content: '';
+    position: absolute;
+    top: 0.15rem;
+    left: 0.15rem;
+    width: 1.05rem;
+    height: 1.05rem;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s;
+  }
+  .tp-switch input:checked { background: #1e6b34; }
+  .tp-switch input:checked::after { transform: translateX(1.05rem); }
+  .tp-switch input:disabled { opacity: 0.5; }
+  .tp-sheet { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; margin: 0 0 1rem; }
+  .tp-sheet .import-status { margin: 0; flex: 1 1 260px; }
+  .tp-sheet .import-status a { color: var(--fg); }
   :global(.tp-msg-error) { color: #a12a2a; }
   .cabinet-success { color: #1e6b34; font-size: 0.85rem; }
 
@@ -1047,8 +1125,11 @@ import Base from '@/layouts/Base.astro';
     const r = s.last_result;
     if (s.running) {
       const p = s.progress;
-      const where = p ? `${p.source === 'im' ? 'messenger suggestions' : 'people search'}, page ${p.pages}, ${p.found} found` : 'starting';
-      tpRunStatus.textContent = s.stopping ? `Stopping... (${where})` : `Running: ${where}.`;
+      const where = p && p.source
+        ? `${p.source === 'im' ? 'messenger suggestions' : 'people search'}, page ${p.pages}, ${p.found} found, ${p.saved || 0} new saved`
+        : 'starting';
+      const by = s.trigger === 'schedule' ? ' (scheduled)' : '';
+      tpRunStatus.textContent = s.stopping ? `Stopping... (${where})` : `Running${by}: ${where}.`;
     } else if (r && r.error) {
       tpRunStatus.textContent = `Last run failed: ${r.error}`;
     } else if (r) {
@@ -1073,6 +1154,11 @@ import Base from '@/layouts/Base.astro';
     } else if (tpWasRunning) {
       tpWasRunning = false;
       loadTpProfiles(true);
+      loadTpAuto().catch(() => {});
+      pollTpSend().catch(() => {});
+    } else if (tpSchedOn.checked) {
+      // Scheduled runs start by themselves on the server: keep an eye on them.
+      tpPollTimer = setTimeout(pollTpStatus, 30000);
     }
   }
 
@@ -1195,7 +1281,7 @@ import Base from '@/layouts/Base.astro';
     if (s.running && p) {
       const cur = p.current ? `, now @${p.current}` : '';
       const lastErr = p.last_error ? ` Last error: ${p.last_error}` : '';
-      tpSendStatus.textContent = `${s.stopping ? 'Stopping' : 'Sending'}: ${p.done} of ${p.total} (${p.sent} sent, ${p.errors} failed${cur}).${lastErr}`;
+      tpSendStatus.textContent = `${s.stopping ? 'Stopping' : s.trigger === 'auto' ? 'Auto-sending' : 'Sending'}: ${p.done} of ${p.total} (${p.sent} sent, ${p.errors} failed${cur}).${lastErr}`;
     } else if (r) {
       const when = s.last_finished_at ? new Date(s.last_finished_at).toLocaleString() : '';
       const head = r.error ? `Stopped with error: ${r.error}` : r.stopped ? 'Stopped' : 'Done';
@@ -1220,6 +1306,10 @@ import Base from '@/layouts/Base.astro';
     } else if (tpSendWasRunning) {
       tpSendWasRunning = false;
       loadTpProfiles(true);
+      loadTpAuto().catch(() => {});
+    } else if (tpAutoOn.checked) {
+      // Auto-mailing can start by itself on the server: keep an eye on it.
+      tpSendTimer = setTimeout(pollTpSend, 30000);
     }
   }
 
@@ -1271,7 +1361,169 @@ import Base from '@/layouts/Base.astro';
     pollTpSend();
   });
 
+  // Auto mode: parser schedule
+
+  const tpSchedOn = document.getElementById('tp-sched-on');
+  const tpSchedEvery = document.getElementById('tp-sched-every');
+  const tpSchedHour = document.getElementById('tp-sched-hour');
+  const tpSchedStatus = document.getElementById('tp-sched-status');
+  for (let h = 0; h < 24; h++) {
+    const o = document.createElement('option');
+    o.value = String(h);
+    o.textContent = `${String(h).padStart(2, '0')}:00`;
+    tpSchedHour.append(o);
+  }
+
+  function renderTpSched(s) {
+    tpSchedOn.checked = s.enabled;
+    tpSchedEvery.value = String(s.every_hours);
+    tpSchedHour.value = String(s.start_hour);
+    tpSchedStatus.textContent = s.active && s.next_run_at
+      ? `On. Next run ${new Date(s.next_run_at).toLocaleString()} (limit ${s.limit}, ${s.sources.join(' + ')}).`
+      : 'Off.';
+  }
+
+  async function saveTpSched() {
+    const sources = [];
+    if (document.getElementById('tp-src-search').checked) sources.push('search');
+    if (document.getElementById('tp-src-im').checked) sources.push('im');
+    tpSchedOn.disabled = true;
+    const res = await authedFetch('/admin/tonplace/schedule', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        enabled: tpSchedOn.checked,
+        every_hours: parseInt(tpSchedEvery.value, 10),
+        start_hour: parseInt(tpSchedHour.value, 10),
+        limit: Math.max(1, Math.min(5000, parseInt(document.getElementById('tp-limit').value, 10) || 500)),
+        sources,
+      }),
+    });
+    tpSchedOn.disabled = false;
+    if (res.ok) {
+      renderTpSched(await res.json());
+    } else {
+      tpSchedStatus.textContent = await readError(res);
+      tpSchedOn.checked = !tpSchedOn.checked;
+    }
+  }
+
+  async function loadTpSched() {
+    const res = await authedFetch('/admin/tonplace/schedule');
+    if (res.ok) renderTpSched(await res.json());
+  }
+
+  tpSchedOn.addEventListener('change', saveTpSched);
+  tpSchedEvery.addEventListener('change', () => { if (tpSchedOn.checked) saveTpSched(); });
+  tpSchedHour.addEventListener('change', () => { if (tpSchedOn.checked) saveTpSched(); });
+
+  // Auto mode: mailing
+
+  const tpAutoOn = document.getElementById('tp-auto-on');
+  const tpAutoDaily = document.getElementById('tp-auto-daily');
+  const tpAutoStatus = document.getElementById('tp-auto-status');
+
+  function renderTpAuto(a) {
+    tpAutoOn.checked = a.enabled;
+    tpAutoDaily.value = String(a.daily_limit);
+    if (a.enabled) {
+      if (a.message && !tpMsg.value.trim()) tpMsg.value = a.message;
+      tpAutoStatus.textContent = `On. Sent today ${a.sent_today} of ${a.daily_limit}, ${a.waiting} new profile(s) waiting. Checks every ${a.check_every_minutes} min.`;
+    } else {
+      tpAutoStatus.textContent = `Off. ${a.waiting} profile(s) not messaged yet.`;
+    }
+  }
+
+  async function saveTpAuto() {
+    const p = tpSendPayload();
+    tpAutoOn.disabled = true;
+    const res = await authedFetch('/admin/tonplace/auto-send', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        enabled: tpAutoOn.checked,
+        message: p.message,
+        daily_limit: Math.max(1, Math.min(1000, parseInt(tpAutoDaily.value, 10) || 50)),
+        delay_min: p.delay_min,
+        delay_max: p.delay_max,
+        source: p.source,
+      }),
+    });
+    tpAutoOn.disabled = false;
+    if (res.ok) {
+      renderTpAuto(await res.json());
+      if (tpAutoOn.checked) setTimeout(pollTpSend, 1500);
+    } else {
+      tpAutoStatus.textContent = await readError(res);
+      tpAutoOn.checked = !tpAutoOn.checked;
+    }
+  }
+
+  async function loadTpAuto() {
+    const res = await authedFetch('/admin/tonplace/auto-send');
+    if (res.ok) renderTpAuto(await res.json());
+  }
+
+  tpAutoOn.addEventListener('change', () => {
+    if (tpAutoOn.checked && !confirm('Turn on auto-mailing? New profiles will be messaged automatically with the text above.')) {
+      tpAutoOn.checked = false;
+      return;
+    }
+    saveTpAuto();
+  });
+  tpAutoDaily.addEventListener('change', () => { if (tpAutoOn.checked) saveTpAuto(); });
+
+  // Google Sheet
+
+  const tpSheetStatus = document.getElementById('tp-sheet-status');
+  const tpSheetBtn = document.getElementById('tp-sheet-btn');
+  let tpSheetTimer = null;
+
+  function renderTpSheet(s) {
+    const r = s.last_result;
+    tpSheetStatus.replaceChildren();
+    if (s.running) {
+      tpSheetStatus.textContent = 'Google Sheet: updating...';
+    } else if (r && r.error) {
+      tpSheetStatus.textContent = `Google Sheet: last update failed: ${r.error}`;
+    } else if (r) {
+      const a = document.createElement('a');
+      a.href = r.web_view_link;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.textContent = 'Google Sheet';
+      tpSheetStatus.append(a, ` ("tonplace" sheet): ${r.rows} profiles, ${r.sent} messaged, updated ${new Date(s.last_finished_at).toLocaleString()}.`);
+    } else {
+      tpSheetStatus.textContent = 'Google Sheet: updates by itself while the parser and mailing run.';
+    }
+    tpSheetBtn.disabled = s.running;
+  }
+
+  async function pollTpSheet() {
+    clearTimeout(tpSheetTimer);
+    const res = await authedFetch('/admin/tonplace/sheet/status');
+    if (!res.ok) return;
+    const s = await res.json();
+    renderTpSheet(s);
+    tpSheetTimer = setTimeout(pollTpSheet, s.running ? 3000 : 30000);
+  }
+
+  tpSheetBtn.addEventListener('click', async () => {
+    tpSheetBtn.disabled = true;
+    const res = await authedFetch('/admin/tonplace/sheet/sync', { method: 'POST' });
+    if (!res.ok) {
+      tpSheetStatus.textContent = await readError(res);
+      tpSheetBtn.disabled = false;
+      return;
+    }
+    renderTpSheet(await res.json());
+    pollTpSheet();
+  });
+
   function loadTonplace() {
+    loadTpSched().catch(() => {});
+    loadTpAuto().catch(() => {});
+    pollTpSheet().catch(() => {});
     loadTpSession().catch(() => {});
     pollTpStatus().catch(() => {});
     pollTpSend().catch(() => {});
