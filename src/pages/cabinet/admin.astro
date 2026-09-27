@@ -73,9 +73,30 @@ import Base from '@/layouts/Base.astro';
         <button id="stop-import-btn" class="import-btn export-btn stop-btn" disabled title="Available while an import is running">Stop import</button>
       </div>
 
-      <div class="schedule-row" style="margin-top:1rem;">
-        <button id="schedule-toggle-btn" class="import-btn export-btn">Enable daily auto-import</button>
-        <p class="import-status" id="schedule-status">Loading...</p>
+      <div class="schedule-block" style="margin-top:1rem;">
+        <div class="schedule-fields">
+          <label>
+            Every
+            <select id="schedule-interval">
+              <option value="1">1 hour</option>
+              <option value="2">2 hours</option>
+              <option value="3">3 hours</option>
+              <option value="4">4 hours</option>
+              <option value="6">6 hours</option>
+              <option value="8">8 hours</option>
+              <option value="12">12 hours</option>
+              <option value="24">24 hours</option>
+            </select>
+          </label>
+          <label>
+            Starting at (Kyiv)
+            <select id="schedule-start"></select>
+          </label>
+        </div>
+        <div class="schedule-row">
+          <button id="schedule-toggle-btn" class="import-btn export-btn">Enable auto-import</button>
+          <p class="import-status" id="schedule-status">Loading...</p>
+        </div>
       </div>
 
       <p class="import-status" id="export-status" style="margin-top:1rem;">Idle.</p>
@@ -606,6 +627,29 @@ import Base from '@/layouts/Base.astro';
   .category-field input:disabled { opacity: 0.6; }
   .category-hint { margin: 0 0 0.75rem; }
   .stop-btn { color: #a12a2a; border-color: rgba(161, 42, 42, 0.35); }
+  .schedule-fields {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.9rem;
+  }
+  .schedule-fields label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    color: var(--fg-muted);
+  }
+  .schedule-fields select {
+    font: inherit;
+    padding: 0.55rem 0.7rem;
+    border-radius: 8px;
+    border: 1px solid var(--bg-subtle);
+    background: var(--bg);
+    color: var(--fg);
+    min-width: 140px;
+  }
+  .schedule-fields select:disabled { opacity: 0.6; }
   .schedule-row {
     display: flex;
     align-items: center;
@@ -811,20 +855,33 @@ import Base from '@/layouts/Base.astro';
     }
   }
 
-  // --- Daily auto-import toggle ---
+  // --- Recurring auto-import (every N hours, starting at HH:00) ---
 
   const scheduleBtn = document.getElementById('schedule-toggle-btn');
   const scheduleStatusEl = document.getElementById('schedule-status');
+  const scheduleIntervalEl = document.getElementById('schedule-interval');
+  const scheduleStartEl = document.getElementById('schedule-start');
+
+  for (let h = 0; h < 24; h++) {
+    const opt = document.createElement('option');
+    opt.value = String(h);
+    opt.textContent = `${String(h).padStart(2, '0')}:00`;
+    scheduleStartEl.appendChild(opt);
+  }
 
   function renderSchedule(state) {
     scheduleBtn.classList.toggle('is-on', state.enabled);
-    scheduleBtn.textContent = state.enabled ? 'Disable daily auto-import' : 'Enable daily auto-import';
-    const time = `${String(state.hour).padStart(2, '0')}:${String(state.minute).padStart(2, '0')} ${state.timezone}`;
+    scheduleBtn.textContent = state.enabled ? 'Disable auto-import' : 'Enable auto-import';
+    scheduleIntervalEl.value = String(state.interval_hours);
+    scheduleStartEl.value = String(state.start_hour);
+    scheduleIntervalEl.disabled = state.enabled;
+    scheduleStartEl.disabled = state.enabled;
+    const time = `every ${state.interval_hours}h, starting ${String(state.start_hour).padStart(2, '0')}:${String(state.start_minute).padStart(2, '0')} ${state.timezone}`;
     if (state.enabled) {
       const next = state.next_run_at ? ` · next run ${new Date(state.next_run_at).toLocaleString()}` : '';
-      scheduleStatusEl.textContent = `On, daily at ${time}${next}.`;
+      scheduleStatusEl.textContent = `On, ${time}${next}.`;
     } else {
-      scheduleStatusEl.textContent = `Off. Would run daily at ${time}.`;
+      scheduleStatusEl.textContent = `Off. Would run ${time}.`;
     }
   }
 
@@ -838,10 +895,17 @@ import Base from '@/layouts/Base.astro';
     scheduleBtn.disabled = true;
     try {
       const wantEnabled = !scheduleBtn.classList.contains('is-on');
-      const res = await authedFetch('/admin/schedule/toggle', {
+      // Sending the currently-picked interval/start alongside enabling makes
+      // sure a value chosen just before clicking "Enable" is the one that's used.
+      const res = await authedFetch('/admin/schedule/update', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ enabled: wantEnabled }),
+        body: JSON.stringify({
+          enabled: wantEnabled,
+          interval_hours: parseInt(scheduleIntervalEl.value, 10),
+          start_hour: parseInt(scheduleStartEl.value, 10),
+          start_minute: 0,
+        }),
       });
       if (res.ok) renderSchedule(await res.json());
     } finally {
