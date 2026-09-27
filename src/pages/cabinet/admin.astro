@@ -205,26 +205,11 @@ import Base from '@/layouts/Base.astro';
       </div>
 
       <div class="glass-card import-card">
-        <div class="targets-header">
-          <h2>Profiles <span id="tp-total" class="tp-total"></span></h2>
-          <button id="tp-csv-btn" class="ghost-btn">Download CSV</button>
-        </div>
+        <h2>Google Sheet <span id="tp-total" class="tp-total"></span></h2>
+        <p class="bulk-hint">All parsed profiles live in the "tonplace" sheet, updated right after every parsed page and every sent message; each run is logged in the "tonplace_report" sheet. To keep someone out of the mailing, write anything in their "message" cell.</p>
         <div class="tp-sheet">
-          <p class="import-status" id="tp-sheet-status">Google Sheet: updates by itself while the parser and mailing run.</p>
+          <p class="import-status" id="tp-sheet-status">Loading...</p>
           <button id="tp-sheet-btn" class="ghost-btn">Sync Google Sheet now</button>
-        </div>
-        <label class="category-field">
-          Search
-          <input type="search" id="tp-search" placeholder="username or name" autocomplete="off" />
-        </label>
-        <div class="targets-table-wrap">
-          <table class="targets-table">
-            <thead><tr><th>Profile</th><th>Name</th><th>Source</th><th>Added</th><th>Message</th></tr></thead>
-            <tbody id="tp-body"></tbody>
-          </table>
-        </div>
-        <div class="import-actions" style="margin-top:0.75rem;">
-          <button id="tp-more-btn" class="ghost-btn" hidden>Load more</button>
         </div>
       </div>
     </div>
@@ -1072,15 +1057,9 @@ import Base from '@/layouts/Base.astro';
   const tpRunStatus = document.getElementById('tp-run-status');
   const tpRunBtn = document.getElementById('tp-run-btn');
   const tpStopBtn = document.getElementById('tp-stop-btn');
-  const tpBody = document.getElementById('tp-body');
   const tpTotal = document.getElementById('tp-total');
-  const tpSearch = document.getElementById('tp-search');
-  const tpMoreBtn = document.getElementById('tp-more-btn');
-  const TP_PAGE = 100;
-  let tpOffset = 0;
   let tpPollTimer = null;
   let tpWasRunning = false;
-  let tpSearchTimer = null;
 
   async function readError(res) {
     try {
@@ -1153,7 +1132,7 @@ import Base from '@/layouts/Base.astro';
       tpPollTimer = setTimeout(pollTpStatus, 2000);
     } else if (tpWasRunning) {
       tpWasRunning = false;
-      loadTpProfiles(true);
+      loadTpProfiles();
       loadTpAuto().catch(() => {});
       pollTpSend().catch(() => {});
     } else if (tpSchedOn.checked) {
@@ -1188,63 +1167,13 @@ import Base from '@/layouts/Base.astro';
     pollTpStatus();
   });
 
-  async function loadTpProfiles(reset) {
-    if (reset) tpOffset = 0;
-    const q = tpSearch.value.trim();
-    const params = new URLSearchParams({ limit: String(TP_PAGE), offset: String(tpOffset) });
-    if (q) params.set('q', q);
-    const res = await authedFetch(`/admin/tonplace/profiles?${params}`);
+  // Profile counts (the list itself lives in the Google Sheet)
+  async function loadTpProfiles() {
+    const res = await authedFetch('/admin/tonplace/profiles?limit=1');
     if (!res.ok) return;
     const data = await res.json();
-    if (reset) tpBody.replaceChildren();
-    for (const item of data.items) {
-      const tr = document.createElement('tr');
-      const linkTd = document.createElement('td');
-      linkTd.className = 'username';
-      const a = document.createElement('a');
-      a.className = 'ig-link';
-      a.href = item.url;
-      a.target = '_blank';
-      a.rel = 'noopener';
-      a.textContent = item.username;
-      linkTd.append(a);
-      const msgTd = ofCell(
-        item.message_status === 'sent' ? `sent ${new Date(item.messaged_at).toLocaleDateString()}`
-          : item.message_status === 'error' ? 'failed' : '',
-        item.message_status ? `tp-msg-${item.message_status}` : '',
-      );
-      if (item.message_reason) msgTd.title = item.message_reason;
-      tr.append(
-        linkTd,
-        ofCell(item.display_name || ''),
-        ofCell(item.source === 'im' ? 'suggestions' : 'search'),
-        ofCell(item.created_at ? new Date(item.created_at).toLocaleDateString() : ''),
-        msgTd,
-      );
-      tpBody.append(tr);
-    }
-    tpOffset += data.items.length;
-    tpTotal.textContent = (q ? `(${data.total} of ${data.all_total}` : `(${data.all_total}`) + `, messaged ${data.sent_total})`;
-    tpMoreBtn.hidden = tpOffset >= data.total;
+    tpTotal.textContent = `(${data.all_total} profiles, ${data.sent_total} messaged)`;
   }
-
-  tpMoreBtn.addEventListener('click', () => loadTpProfiles(false));
-  tpSearch.addEventListener('input', () => {
-    clearTimeout(tpSearchTimer);
-    tpSearchTimer = setTimeout(() => loadTpProfiles(true), 300);
-  });
-
-  document.getElementById('tp-csv-btn').addEventListener('click', async () => {
-    const q = tpSearch.value.trim();
-    const res = await authedFetch(`/admin/tonplace/profiles.csv${q ? `?q=${encodeURIComponent(q)}` : ''}`);
-    if (!res.ok) return;
-    const url = URL.createObjectURL(await res.blob());
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'tonplace_profiles.csv';
-    a.click();
-    URL.revokeObjectURL(url);
-  });
 
   // Mailing
 
@@ -1285,7 +1214,8 @@ import Base from '@/layouts/Base.astro';
     } else if (r) {
       const when = s.last_finished_at ? new Date(s.last_finished_at).toLocaleString() : '';
       const head = r.error ? `Stopped with error: ${r.error}` : r.stopped ? 'Stopped' : 'Done';
-      tpSendStatus.textContent = `${head} ${when}: ${r.sent} sent, ${r.errors} failed of ${r.total}.`;
+      const skip = r.skipped ? `, ${r.skipped} skipped (already messaged)` : '';
+      tpSendStatus.textContent = `${head} ${when}: ${r.sent} sent, ${r.errors} failed${skip} of ${r.total}.`;
     } else {
       tpSendStatus.textContent = 'Idle.';
     }
@@ -1305,7 +1235,7 @@ import Base from '@/layouts/Base.astro';
       tpSendTimer = setTimeout(pollTpSend, 3000);
     } else if (tpSendWasRunning) {
       tpSendWasRunning = false;
-      loadTpProfiles(true);
+      loadTpProfiles();
       loadTpAuto().catch(() => {});
     } else if (tpAutoOn.checked) {
       // Auto-mailing can start by itself on the server: keep an eye on it.
@@ -1491,10 +1421,11 @@ import Base from '@/layouts/Base.astro';
       a.href = r.web_view_link;
       a.target = '_blank';
       a.rel = 'noopener';
-      a.textContent = 'Google Sheet';
-      tpSheetStatus.append(a, ` ("tonplace" sheet): ${r.rows} profiles, ${r.sent} messaged, updated ${new Date(s.last_finished_at).toLocaleString()}.`);
+      a.textContent = 'the sheet';
+      tpSheetStatus.append('Open ', a, `, updated ${new Date(s.last_finished_at).toLocaleString()}.`);
+      loadTpProfiles().catch(() => {});
     } else {
-      tpSheetStatus.textContent = 'Google Sheet: updates by itself while the parser and mailing run.';
+      tpSheetStatus.textContent = 'Not synced since the last server restart. Press "Sync Google Sheet now" to get the link.';
     }
     tpSheetBtn.disabled = s.running;
   }
@@ -1527,7 +1458,7 @@ import Base from '@/layouts/Base.astro';
     loadTpSession().catch(() => {});
     pollTpStatus().catch(() => {});
     pollTpSend().catch(() => {});
-    loadTpProfiles(true).catch(() => {});
+    loadTpProfiles().catch(() => {});
   }
 
   async function init() {
