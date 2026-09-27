@@ -21,6 +21,7 @@ import Base from '@/layouts/Base.astro';
     <div class="admin-tabs" role="tablist">
       <button class="admin-tab is-active" role="tab" data-tab="main" aria-selected="true">Main</button>
       <button class="admin-tab" role="tab" data-tab="tonplace" aria-selected="false">ton.place</button>
+      <button class="admin-tab" role="tab" data-tab="onlyfans" aria-selected="false">OnlyFans</button>
     </div>
 
     <div data-panel="main">
@@ -82,6 +83,9 @@ import Base from '@/layouts/Base.astro';
       <p id="export-link" class="import-status" hidden></p>
     </div>
 
+    </div>
+
+    <div data-panel="onlyfans" hidden>
     <div class="glass-card import-card">
       <div class="targets-header">
         <h2>OnlyFans panel</h2>
@@ -100,6 +104,19 @@ import Base from '@/layouts/Base.astro';
       <div class="import-actions" style="margin-top:1rem;">
         <a id="of-open-btn" class="import-btn" href="http://localhost:8080" target="_blank" rel="noopener" style="text-decoration:none;">Open panel in new tab</a>
         <button id="of-stop-btn" class="import-btn export-btn stop-btn" disabled>Stop all tasks</button>
+        <a class="import-btn export-btn" href="http://localhost:8080/api/download-excel" style="text-decoration:none;">Download Excel</a>
+      </div>
+    </div>
+
+    <div class="glass-card import-card">
+      <h2>Models <span id="of-models-total" class="tp-total"></span></h2>
+      <p class="bulk-hint">Models from the panel's database (<code>onlyfans_models.xlsx</code>): which accounts subscribed and whether a message was sent.</p>
+      <p class="import-status" id="of-models-status">Loads when the panel is online.</p>
+      <div class="targets-table-wrap" id="of-models-wrap" hidden>
+        <table class="targets-table">
+          <thead><tr><th>Model</th><th>Name</th><th>Subscribed by</th><th>Message</th></tr></thead>
+          <tbody id="of-models-body"></tbody>
+        </table>
       </div>
     </div>
     </div>
@@ -1033,7 +1050,48 @@ import Base from '@/layouts/Base.astro';
     }
   }
 
-  document.getElementById('of-refresh-btn').addEventListener('click', loadOfPanel);
+  async function loadOfModels() {
+    const statusEl = document.getElementById('of-models-status');
+    try {
+      const res = await fetch(`${OF_BASE}/api/models`);
+      const { models, total } = await res.json();
+      const body = document.getElementById('of-models-body');
+      body.replaceChildren();
+      for (const m of models.slice(0, 500)) {
+        const tr = document.createElement('tr');
+        const linkTd = document.createElement('td');
+        linkTd.className = 'username';
+        const a = document.createElement('a');
+        a.className = 'ig-link';
+        a.href = `https://onlyfans.com/${encodeURIComponent(m.username)}`;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.textContent = m.username;
+        linkTd.append(a);
+        tr.append(
+          linkTd,
+          ofCell(m.display_name || ''),
+          ofCell((m.accounts || []).join(', ')),
+          ofCell(m.message_sent ? 'sent' : '', m.message_sent ? 'tp-msg-sent' : ''),
+        );
+        body.append(tr);
+      }
+      const sent = models.filter((m) => m.message_sent).length;
+      document.getElementById('of-models-total').textContent = `(${total}, messaged ${sent})`;
+      statusEl.textContent = total > 500 ? 'Showing the first 500. Download Excel for the full list.' : '';
+      statusEl.hidden = !statusEl.textContent;
+      document.getElementById('of-models-wrap').hidden = total === 0;
+    } catch {
+      statusEl.hidden = false;
+      statusEl.textContent = 'Loads when the panel is online.';
+      document.getElementById('of-models-wrap').hidden = true;
+    }
+  }
+
+  document.getElementById('of-refresh-btn').addEventListener('click', () => {
+    loadOfPanel();
+    loadOfModels();
+  });
   ofStopBtn.addEventListener('click', async () => {
     ofStopBtn.disabled = true;
     try {
@@ -1057,6 +1115,10 @@ import Base from '@/layouts/Base.astro';
     });
     tabPanels.forEach((p) => { p.hidden = p.dataset.panel !== name; });
     if (history.replaceState) history.replaceState(null, '', name === 'main' ? location.pathname : `#${name}`);
+    if (name === 'onlyfans') {
+      loadOfPanel();
+      loadOfModels();
+    }
     if (name === 'tonplace' && !tonplaceLoaded) {
       tonplaceLoaded = true;
       loadTonplace();
