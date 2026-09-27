@@ -87,44 +87,35 @@ import Base from '@/layouts/Base.astro';
 
     <div data-panel="onlyfans" hidden>
     <div class="glass-card import-card">
-      <h2>Cloud parser (API)</h2>
-      <p class="bulk-hint">Runs on the server, no browser or local panel needed. Collects creators from OnlyFans recommendations, walking from each found creator to the next, and saves them to the "onlyfans" sheet of the Google Sheet as it goes.</p>
-      <p class="import-status" id="ofc-session-status">Loading...</p>
-      <form id="ofc-session-form">
-        <label class="category-field">
-          Cookies of a logged-in onlyfans.com session
-          <textarea id="ofc-cookies" rows="3" autocomplete="off" spellcheck="false" placeholder='[{"name":"sess","value":"..."}, ...]  or  sess=...; auth_id=...; fp=...'></textarea>
-        </label>
-        <p class="bulk-hint">Paste the content of <code>accounts/main.json</code>, or all cookies from DevTools &rarr; Application &rarr; Cookies &rarr; onlyfans.com. Needs at least <code>sess</code> and <code>auth_id</code> (and <code>fp</code>).</p>
-        <label class="category-field">
-          Signing rules (of_rules.json)
-          <textarea id="ofc-rules" rows="3" autocomplete="off" spellcheck="false" placeholder='{"staticParam": "...", "start": "...", "end": "...", "checksumConstant": 0, "checksumIndexes": [...]}'></textarea>
-        </label>
-        <label class="category-field">
-          x-of-rev (optional)
-          <input type="text" id="ofc-rev" autocomplete="off" spellcheck="false" placeholder="202609251341-9985c38bbd" />
-        </label>
-        <div class="import-actions">
-          <button type="submit" class="import-btn export-btn">Save</button>
-        </div>
-      </form>
-      <p id="ofc-session-error" class="cabinet-error" hidden></p>
-
-      <div class="tp-auto">
-        <div class="tp-options">
-          <label class="category-field">
-            New creators per run
-            <input type="number" id="ofc-limit" min="1" max="5000" value="300" />
-          </label>
-        </div>
-        <p class="import-status" id="ofc-run-status" role="status" aria-live="polite">Idle.</p>
-        <div class="import-actions">
-          <button id="ofc-run-btn" class="import-btn">Run parser</button>
-          <button id="ofc-stop-btn" class="import-btn export-btn stop-btn" disabled>Stop</button>
-          <button id="ofc-sheet-btn" class="ghost-btn">Sync Google Sheet now</button>
-        </div>
-        <p class="import-status" id="ofc-sheet-status" style="margin-top:0.75rem;"></p>
+      <div class="targets-header">
+        <h2>Local agent</h2>
+        <span id="ofa-badge" class="ofa-badge">...</span>
       </div>
+      <p class="bulk-hint">OnlyFans blocks server IPs, so parsing and mailing run on your computer: the agent picks up the jobs you start here, sends the requests from your own IP with the cookies in <code>accounts/main.json</code>, and reports back. Start it with <code>of-panel/run_agent.bat</code>; jobs wait in the queue while it is off.</p>
+      <p class="import-status" id="ofa-status">Loading...</p>
+      <div class="import-actions">
+        <button id="ofa-config-btn" class="import-btn export-btn">Download agent_config.json</button>
+        <button id="ofa-legacy-btn" class="ghost-btn" hidden>Delete cookies saved on the server</button>
+      </div>
+      <p class="bulk-hint" style="margin-top:0.5rem;">Put the downloaded file next to <code>of_agent.py</code> (in <code>of-panel</code>). Downloading again issues a new key and the old file stops working.</p>
+    </div>
+
+    <div class="glass-card import-card">
+      <h2>Parser</h2>
+      <p class="bulk-hint">Collects creators from OnlyFans recommendations, walking from each found creator to the next, and saves them to the "onlyfans" sheet of the Google Sheet as it goes.</p>
+      <div class="tp-options">
+        <label class="category-field">
+          New creators per run
+          <input type="number" id="ofc-limit" min="1" max="5000" value="300" />
+        </label>
+      </div>
+      <p class="import-status" id="ofc-run-status" role="status" aria-live="polite">Idle.</p>
+      <div class="import-actions">
+        <button id="ofc-run-btn" class="import-btn">Run parser</button>
+        <button id="ofc-stop-btn" class="import-btn export-btn stop-btn" disabled>Stop</button>
+        <button id="ofc-sheet-btn" class="ghost-btn">Sync Google Sheet now</button>
+      </div>
+      <p class="import-status" id="ofc-sheet-status" style="margin-top:0.75rem;"></p>
     </div>
 
     <div class="glass-card import-card">
@@ -436,6 +427,8 @@ import Base from '@/layouts/Base.astro';
   .tp-switch input:checked { background: #1e6b34; }
   .tp-switch input:checked::after { transform: translateX(1.05rem); }
   .tp-switch input:disabled { opacity: 0.5; }
+  .ofa-badge { font-size: 0.8rem; font-weight: 600; padding: 0.25rem 0.6rem; border-radius: 999px; background: var(--bg-subtle); color: var(--fg-muted); }
+  .ofa-badge.is-online { background: #1e6b34; color: #fff; }
   .tp-sheet { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; margin: 0 0 1rem; }
   .tp-sheet .import-status { margin: 0; flex: 1 1 260px; }
   .tp-sheet .import-status a { color: var(--fg); }
@@ -1170,69 +1163,59 @@ import Base from '@/layouts/Base.astro';
     }
   }
 
-  // --- OnlyFans cloud parser (worker-cabinet backend) ---
+  // --- OnlyFans agent + job queue (worker-cabinet backend) ---
 
-  const ofcSessionStatus = document.getElementById('ofc-session-status');
-  const ofcSessionError = document.getElementById('ofc-session-error');
+  const ofaBadge = document.getElementById('ofa-badge');
+  const ofaStatus = document.getElementById('ofa-status');
+  const ofaLegacyBtn = document.getElementById('ofa-legacy-btn');
   const ofcRunStatus = document.getElementById('ofc-run-status');
   const ofcRunBtn = document.getElementById('ofc-run-btn');
   const ofcStopBtn = document.getElementById('ofc-stop-btn');
   const ofcSheetStatus = document.getElementById('ofc-sheet-status');
   let ofcTimer = null;
   let ofcLoaded = false;
+  let ofMailWasActive = false;
 
-  function renderOfcSession(s) {
-    const parts = [];
-    parts.push(s.cookies_saved ? `Cookies saved (account ${s.auth_id}, ${new Date(s.cookies_saved_at).toLocaleString()})` : 'No cookies saved');
-    parts.push(s.rules_saved ? `rules saved ${new Date(s.rules_saved_at).toLocaleString()}` : 'no signing rules');
-    if (s.revision) parts.push(`x-of-rev ${s.revision}`);
-    ofcSessionStatus.textContent = parts.join(', ') + '.';
-  }
+  const jobActive = (j) => j && (j.status === 'pending' || j.status === 'running');
 
-  async function loadOfcSession() {
-    const res = await authedFetch('/admin/onlyfans/session');
-    if (res.ok) renderOfcSession(await res.json());
-  }
-
-  document.getElementById('ofc-session-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    ofcSessionError.hidden = true;
-    const body = {
-      cookies: document.getElementById('ofc-cookies').value,
-      rules: document.getElementById('ofc-rules').value,
-      revision: document.getElementById('ofc-rev').value,
-    };
-    const res = await authedFetch('/admin/onlyfans/session', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    });
-    if (res.ok) {
-      ['ofc-cookies', 'ofc-rules', 'ofc-rev'].forEach((id) => { document.getElementById(id).value = ''; });
-      renderOfcSession(await res.json());
+  function renderOfAgent(a) {
+    ofaBadge.textContent = a.online ? 'Online' : 'Offline';
+    ofaBadge.classList.toggle('is-online', a.online);
+    if (!a.configured) {
+      ofaStatus.textContent = 'Not set up yet: download agent_config.json, put it into of-panel and start run_agent.bat.';
+    } else if (a.online) {
+      ofaStatus.textContent = `Connected, last check-in ${new Date(a.last_seen_at).toLocaleTimeString()}.`;
     } else {
-      ofcSessionError.textContent = await readError(res);
-      ofcSessionError.hidden = false;
+      ofaStatus.textContent = a.last_seen_at
+        ? `Not running. Last seen ${new Date(a.last_seen_at).toLocaleString()}. Start of-panel/run_agent.bat.`
+        : 'Key issued, the agent has not connected yet. Start of-panel/run_agent.bat.';
     }
-  });
+  }
 
-  function renderOfcStatus(s) {
-    const r = s.last_result;
+  function renderOfParse(s) {
+    const j = s.parse;
     const totals = `In the database: ${s.total} creators, ${s.free} free, ${s.messaged} messaged.`;
-    if (s.running) {
-      const p = s.progress;
-      const where = p ? `${p.seeds} seed(s) walked, ${p.found} new` : 'starting';
-      ofcRunStatus.textContent = `${s.stopping ? 'Stopping' : 'Running'}: ${where}. ${totals}`;
+    const r = j && j.result;
+    if (j && j.status === 'pending') {
+      ofcRunStatus.textContent = `Queued, waiting for the agent${s.agent.online ? '' : ' (agent offline)'}. ${totals}`;
+    } else if (j && j.status === 'running') {
+      const p = j.progress;
+      const where = p ? `${p.seeds} seed(s) walked, ${p.found} found, ${p.saved} new saved` : 'starting';
+      ofcRunStatus.textContent = `${j.stop_requested ? 'Stopping' : 'Running'} on the agent: ${where}. ${totals}`;
+    } else if (j && j.status === 'cancelled') {
+      ofcRunStatus.textContent = `Cancelled before it started. ${totals}`;
     } else if (r && r.error) {
       ofcRunStatus.textContent = `Last run failed: ${r.error} (${r.added || 0} saved before that). ${totals}`;
     } else if (r) {
-      ofcRunStatus.textContent = `${r.stopped ? 'Stopped' : 'Done'} ${new Date(s.last_finished_at).toLocaleString()}: ${r.added} new from ${r.seeds} seed(s). ${totals}`;
+      ofcRunStatus.textContent = `${r.stopped ? 'Stopped' : 'Done'} ${new Date(j.finished_at).toLocaleString()}: ${r.added} new from ${r.seeds} seed(s). ${totals}`;
     } else {
       ofcRunStatus.textContent = `Idle. ${totals}`;
     }
-    ofcRunBtn.disabled = s.running;
-    ofcStopBtn.disabled = !s.running || s.stopping;
-    const sh = s.sheet || {};
+    ofcRunBtn.disabled = jobActive(j);
+    ofcStopBtn.disabled = !jobActive(j) || j.stop_requested;
+  }
+
+  function renderOfSheet(sh) {
     ofcSheetStatus.replaceChildren();
     if (sh.running) {
       ofcSheetStatus.textContent = 'Google Sheet: updating...';
@@ -1253,9 +1236,39 @@ import Base from '@/layouts/Base.astro';
     const res = await authedFetch('/admin/onlyfans/status');
     if (!res.ok) return;
     const s = await res.json();
-    renderOfcStatus(s);
-    if (s.running || (s.sheet && s.sheet.running)) ofcTimer = setTimeout(pollOfc, 3000);
+    renderOfAgent(s.agent);
+    renderOfParse(s);
+    renderOfs(s);
+    renderOfSheet(s.sheet || {});
+    ofaLegacyBtn.hidden = !s.legacy_cookies_saved;
+    const busy = jobActive(s.parse) || jobActive(s.mailing) || (s.sheet && s.sheet.running);
+    if (ofMailWasActive && !jobActive(s.mailing)) loadOfsAuto().catch(() => {});
+    ofMailWasActive = jobActive(s.mailing);
+    // Keep watching while something runs, and slowly otherwise (auto-mailing / agent status change by themselves).
+    if (document.querySelector('[data-panel="onlyfans"]:not([hidden])')) ofcTimer = setTimeout(pollOfc, busy ? 3000 : 20000);
   }
+
+  document.getElementById('ofa-config-btn').addEventListener('click', async () => {
+    if (!confirm('Download a new agent_config.json? The previous file (if any) stops working.')) return;
+    const res = await authedFetch('/admin/onlyfans/agent/config', { method: 'POST' });
+    if (!res.ok) {
+      ofaStatus.textContent = await readError(res);
+      return;
+    }
+    const url = URL.createObjectURL(new Blob([JSON.stringify(await res.json(), null, 2)], { type: 'application/json' }));
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'agent_config.json';
+    a.click();
+    URL.revokeObjectURL(url);
+    setTimeout(pollOfc, 500);
+  });
+
+  ofaLegacyBtn.addEventListener('click', async () => {
+    if (!confirm('Delete the OnlyFans cookies and signing rules saved on the server? The agent uses its local files.')) return;
+    await authedFetch('/admin/onlyfans/legacy-cookies', { method: 'DELETE' });
+    pollOfc();
+  });
 
   ofcRunBtn.addEventListener('click', async () => {
     ofcRunBtn.disabled = true;
@@ -1298,8 +1311,6 @@ import Base from '@/layouts/Base.astro';
   const ofsAutoOn = document.getElementById('ofs-auto-on');
   const ofsAutoDaily = document.getElementById('ofs-auto-daily');
   const ofsAutoStatus = document.getElementById('ofs-auto-status');
-  let ofsTimer = null;
-  let ofsWasRunning = false;
 
   try { ofsMsg.value = localStorage.getItem('ofs_message') || ''; } catch {}
   ofsMsg.addEventListener('input', () => { try { localStorage.setItem('ofs_message', ofsMsg.value); } catch {} });
@@ -1316,44 +1327,36 @@ import Base from '@/layouts/Base.astro';
   }
 
   function renderOfs(s) {
-    const r = s.last_result;
-    const p = s.progress;
-    if (s.running && p) {
-      const cur = p.current ? `, now @${p.current}` : '';
-      const lastErr = p.last_error ? ` Last error: ${p.last_error}` : '';
-      const label = s.stopping ? 'Stopping' : s.trigger === 'auto' ? 'Auto-sending' : 'Sending';
-      ofsStatus.textContent = `${label}: ${p.done} of ${p.total} (${p.sent} sent, ${p.errors} failed${cur}).${lastErr}`;
+    const j = s.mailing;
+    const r = j && j.result;
+    const p = j && j.progress;
+    if (j && j.status === 'pending') {
+      ofsStatus.textContent = `Queued${j.trigger === 'auto' ? ' by auto mode' : ''}, waiting for the agent${s.agent.online ? '' : ' (agent offline)'}.`;
+    } else if (j && j.status === 'running') {
+      const label = j.stop_requested ? 'Stopping' : j.trigger === 'auto' ? 'Auto-sending' : 'Sending';
+      if (p) {
+        const cur = p.current ? `, now @${p.current}` : '';
+        const lastErr = p.last_error ? ` Last error: ${p.last_error}` : '';
+        ofsStatus.textContent = `${label} on the agent: ${p.done} of ${p.total} (${p.sent} sent, ${p.errors} failed${cur}).${lastErr}`;
+      } else {
+        ofsStatus.textContent = `${label} on the agent: starting.`;
+      }
+    } else if (j && j.status === 'cancelled') {
+      ofsStatus.textContent = 'Cancelled before it started.';
     } else if (r) {
-      const when = s.last_finished_at ? new Date(s.last_finished_at).toLocaleString() : '';
+      const when = j.finished_at ? new Date(j.finished_at).toLocaleString() : '';
       const head = r.daily_limit ? 'Stopped: OnlyFans daily limit reached' : r.error ? `Stopped with error: ${r.error}` : r.stopped ? 'Stopped' : 'Done';
       const skip = r.skipped ? `, ${r.skipped} skipped (already messaged)` : '';
-      ofsStatus.textContent = `${head} ${when}: ${r.sent} sent, ${r.errors} failed${skip} of ${r.total}.`;
+      ofsStatus.textContent = r.note ? `Done ${when}: ${r.note}.` : `${head} ${when}: ${r.sent} sent, ${r.errors} failed${skip} of ${r.total}.`;
     } else {
       ofsStatus.textContent = 'Idle.';
     }
-    ofsSendBtn.disabled = s.running;
-    ofsPreviewBtn.disabled = s.running;
-    ofsStopBtn.disabled = !s.running || s.stopping;
+    ofsSendBtn.disabled = jobActive(j);
+    ofsPreviewBtn.disabled = jobActive(j);
+    ofsStopBtn.disabled = !jobActive(j) || j.stop_requested;
   }
 
-  async function pollOfs() {
-    clearTimeout(ofsTimer);
-    const res = await authedFetch('/admin/onlyfans/send/status');
-    if (!res.ok) return;
-    const s = await res.json();
-    renderOfs(s);
-    if (s.running) {
-      ofsWasRunning = true;
-      ofsTimer = setTimeout(pollOfs, 3000);
-    } else {
-      if (ofsWasRunning) {
-        ofsWasRunning = false;
-        loadOfsAuto().catch(() => {});
-        pollOfc().catch(() => {});
-      }
-      if (ofsAutoOn.checked) ofsTimer = setTimeout(pollOfs, 30000);
-    }
-  }
+  const pollOfs = () => pollOfc();
 
   ofsPreviewBtn.addEventListener('click', async () => {
     const payload = ofsPayload();
@@ -1393,8 +1396,7 @@ import Base from '@/layouts/Base.astro';
       ofsSendBtn.disabled = false;
       return;
     }
-    renderOfs(await res.json());
-    pollOfs();
+    pollOfc();
   });
 
   ofsStopBtn.addEventListener('click', async () => {
@@ -1483,12 +1485,8 @@ import Base from '@/layouts/Base.astro';
     if (name === 'onlyfans') {
       loadOfPanel();
       loadOfModels();
-      if (!ofcLoaded) {
-        ofcLoaded = true;
-        loadOfcSession().catch(() => {});
-      }
+      ofcLoaded = true;
       pollOfc().catch(() => {});
-      pollOfs().catch(() => {});
       loadOfsAuto().catch(() => {});
     }
     if (name === 'tonplace' && !tonplaceLoaded) {
