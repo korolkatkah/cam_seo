@@ -10,3 +10,6 @@ __pycache__/
 .secrets/
 
 .vercel
+
+# OnlyFans panel (local Python app: credentials, tokens, cookies, Chrome profiles)
+of-panel/

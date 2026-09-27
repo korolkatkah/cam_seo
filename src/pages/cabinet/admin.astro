@@ -18,6 +18,12 @@ import Base from '@/layouts/Base.astro';
   <p id="denied" class="cabinet-error" hidden>Your account is not an admin.</p>
 
   <section id="admin-content" hidden>
+    <div class="admin-tabs" role="tablist">
+      <button class="admin-tab is-active" role="tab" data-tab="main" aria-selected="true">Main</button>
+      <button class="admin-tab" role="tab" data-tab="tonplace" aria-selected="false">ton.place</button>
+    </div>
+
+    <div data-panel="main">
     <div class="glass-card assign-card">
       <div class="targets-header">
         <h2 class="section-title">Tracking links</h2>
@@ -75,6 +81,82 @@ import Base from '@/layouts/Base.astro';
       <button id="run-export-btn" class="import-btn export-btn">Export to Google Sheet</button>
       <p id="export-link" class="import-status" hidden></p>
     </div>
+
+    <div class="glass-card import-card">
+      <div class="targets-header">
+        <h2>OnlyFans panel</h2>
+        <button id="of-refresh-btn" class="ghost-btn">Refresh</button>
+      </div>
+      <p class="bulk-hint">Local panel on this computer (<code>of-panel/run_panel.bat</code>, port 8080). Status is read straight from it, so this block works only on the machine where the panel is running.</p>
+      <p class="import-status" id="of-status" role="status" aria-live="polite">Checking...</p>
+      <div class="targets-table-wrap" id="of-accounts-wrap" hidden>
+        <table class="targets-table">
+          <thead>
+            <tr><th>Account</th><th>Cookies</th><th>Status</th><th class="num-h">Sent</th><th class="num-h">Errors</th><th></th></tr>
+          </thead>
+          <tbody id="of-accounts-body"></tbody>
+        </table>
+      </div>
+      <div class="import-actions" style="margin-top:1rem;">
+        <a id="of-open-btn" class="import-btn" href="http://localhost:8080" target="_blank" rel="noopener" style="text-decoration:none;">Open panel in new tab</a>
+        <button id="of-stop-btn" class="import-btn export-btn stop-btn" disabled>Stop all tasks</button>
+      </div>
+    </div>
+    </div>
+
+    <div data-panel="tonplace" hidden>
+      <div class="glass-card import-card">
+        <h2>ton.place session</h2>
+        <p class="bulk-hint">The parser calls the ton.place API as a logged-in user. Open ton.place in a browser where you are logged in, press F12, go to Console, run <code>localStorage.getItem('token')</code> and paste the result here (format <code>userId,token</code>). Paste a fresh one when the parser says the session expired.</p>
+        <p class="import-status" id="tp-session-status">Loading...</p>
+        <form id="tp-session-form" class="link-form">
+          <label>
+            Session token
+            <input type="password" id="tp-session-input" required autocomplete="off" spellcheck="false" placeholder="1234567,abcdef..." />
+          </label>
+          <button type="submit">Save</button>
+        </form>
+        <p id="tp-session-error" class="cabinet-error" hidden></p>
+      </div>
+
+      <div class="glass-card import-card">
+        <h2>Parse creators</h2>
+        <p class="bulk-hint">Collects creator profiles from people search (newest first) and messenger suggestions. Already known profiles are not duplicated.</p>
+        <div class="tp-options">
+          <label class="category-field">
+            Limit per source
+            <input type="number" id="tp-limit" min="1" max="5000" value="500" />
+          </label>
+          <label class="tp-check"><input type="checkbox" id="tp-src-search" checked /> People search</label>
+          <label class="tp-check"><input type="checkbox" id="tp-src-im" checked /> Messenger suggestions</label>
+        </div>
+        <p class="import-status" id="tp-run-status" role="status" aria-live="polite">Idle.</p>
+        <div class="import-actions">
+          <button id="tp-run-btn" class="import-btn">Run parser</button>
+          <button id="tp-stop-btn" class="import-btn export-btn stop-btn" disabled>Stop</button>
+        </div>
+      </div>
+
+      <div class="glass-card import-card">
+        <div class="targets-header">
+          <h2>Profiles <span id="tp-total" class="tp-total"></span></h2>
+          <button id="tp-csv-btn" class="ghost-btn">Download CSV</button>
+        </div>
+        <label class="category-field">
+          Search
+          <input type="search" id="tp-search" placeholder="username or name" autocomplete="off" />
+        </label>
+        <div class="targets-table-wrap">
+          <table class="targets-table">
+            <thead><tr><th>Profile</th><th>Name</th><th>Source</th><th>Added</th></tr></thead>
+            <tbody id="tp-body"></tbody>
+          </table>
+        </div>
+        <div class="import-actions" style="margin-top:0.75rem;">
+          <button id="tp-more-btn" class="ghost-btn" hidden>Load more</button>
+        </div>
+      </div>
+    </div>
   </section>
 </div>
 
@@ -106,6 +188,30 @@ import Base from '@/layouts/Base.astro';
   }
   .ghost-btn:hover { color: var(--fg); }
   .cabinet-error { color: #c0392b; font-size: 0.85rem; }
+
+  .admin-tabs {
+    display: flex;
+    gap: 0.25rem;
+    border-bottom: 1px solid var(--bg-subtle);
+    margin-bottom: 1.5rem;
+  }
+  .admin-tab {
+    font: inherit;
+    font-weight: 600;
+    padding: 0.6rem 1rem;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    background: transparent;
+    color: var(--fg-muted);
+    cursor: pointer;
+  }
+  .admin-tab:hover { color: var(--fg); }
+  .admin-tab.is-active { color: var(--fg); border-bottom-color: var(--accent); }
+  .tp-options { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 1rem; margin-bottom: 0.75rem; }
+  .tp-options .category-field { margin: 0; max-width: 160px; }
+  .tp-check { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--fg-muted); padding-bottom: 0.6rem; }
+  .tp-total { font-size: 0.85rem; font-weight: 400; color: var(--fg-muted); }
   .cabinet-success { color: #1e6b34; font-size: 0.85rem; }
 
   .assign-card {
@@ -731,6 +837,276 @@ import Base from '@/layouts/Base.astro';
     }
   });
 
+  // --- OnlyFans panel (local FastAPI app on this machine) ---
+
+  const OF_BASE = 'http://localhost:8080';
+  const ofStatusEl = document.getElementById('of-status');
+  const ofWrapEl = document.getElementById('of-accounts-wrap');
+  const ofBodyEl = document.getElementById('of-accounts-body');
+  const ofStopBtn = document.getElementById('of-stop-btn');
+  let ofTimer = null;
+
+  function ofCell(text, cls) {
+    const td = document.createElement('td');
+    if (cls) td.className = cls;
+    td.textContent = text;
+    return td;
+  }
+
+  async function loadOfPanel() {
+    clearTimeout(ofTimer);
+    try {
+      const [accRes, statusRes] = await Promise.all([
+        fetch(`${OF_BASE}/api/accounts`),
+        fetch(`${OF_BASE}/api/status`),
+      ]);
+      const { accounts } = await accRes.json();
+      const status = await statusRes.json();
+      ofStatusEl.textContent = status.running
+        ? `Online, task running: ${status.success} sent, ${status.errors} errors of ${status.total}.`
+        : `Online, idle. ${accounts.length} account(s).`;
+      ofStopBtn.disabled = !status.running;
+      ofBodyEl.replaceChildren();
+      for (const acc of accounts) {
+        const p = acc.progress || {};
+        const tr = document.createElement('tr');
+        tr.append(
+          ofCell(acc.name, 'username'),
+          ofCell(acc.has_cookies ? `yes (${acc.cookie_count})` : 'no'),
+          ofCell(p.status || 'idle'),
+          ofCell(String(p.success ?? 0), 'num'),
+          ofCell(String(p.errors ?? 0), 'num'),
+        );
+        const actionTd = document.createElement('td');
+        const btn = document.createElement('button');
+        btn.className = 'ghost-btn';
+        btn.textContent = 'Open browser';
+        btn.addEventListener('click', async () => {
+          btn.disabled = true;
+          try {
+            const r = await fetch(`${OF_BASE}/api/accounts/${encodeURIComponent(acc.id)}/open-browser`, { method: 'POST' });
+            const data = await r.json();
+            btn.textContent = data.ok ? 'Opened' : (data.error || 'Failed');
+          } catch {
+            btn.textContent = 'Failed';
+          }
+        });
+        actionTd.append(btn);
+        tr.append(actionTd);
+        ofBodyEl.append(tr);
+      }
+      ofWrapEl.hidden = accounts.length === 0;
+      ofTimer = setTimeout(loadOfPanel, status.running ? 5000 : 30000);
+    } catch {
+      ofStatusEl.textContent = 'Offline. Start of-panel/run_panel.bat on this computer, then press Refresh.';
+      ofWrapEl.hidden = true;
+      ofStopBtn.disabled = true;
+    }
+  }
+
+  document.getElementById('of-refresh-btn').addEventListener('click', loadOfPanel);
+  ofStopBtn.addEventListener('click', async () => {
+    ofStopBtn.disabled = true;
+    try {
+      await fetch(`${OF_BASE}/api/stop`, { method: 'POST' });
+    } catch {}
+    loadOfPanel();
+  });
+
+  // --- Tabs ---
+
+  const tabButtons = document.querySelectorAll('.admin-tab');
+  const tabPanels = document.querySelectorAll('[data-panel]');
+  let tonplaceLoaded = false;
+
+  function showTab(name) {
+    if (![...tabButtons].some((b) => b.dataset.tab === name)) name = 'main';
+    tabButtons.forEach((b) => {
+      const active = b.dataset.tab === name;
+      b.classList.toggle('is-active', active);
+      b.setAttribute('aria-selected', String(active));
+    });
+    tabPanels.forEach((p) => { p.hidden = p.dataset.panel !== name; });
+    if (history.replaceState) history.replaceState(null, '', name === 'main' ? location.pathname : `#${name}`);
+    if (name === 'tonplace' && !tonplaceLoaded) {
+      tonplaceLoaded = true;
+      loadTonplace();
+    }
+  }
+  tabButtons.forEach((b) => b.addEventListener('click', () => showTab(b.dataset.tab)));
+
+  // --- ton.place parser (runs on the worker-cabinet backend) ---
+
+  const tpSessionStatus = document.getElementById('tp-session-status');
+  const tpSessionForm = document.getElementById('tp-session-form');
+  const tpSessionInput = document.getElementById('tp-session-input');
+  const tpSessionError = document.getElementById('tp-session-error');
+  const tpRunStatus = document.getElementById('tp-run-status');
+  const tpRunBtn = document.getElementById('tp-run-btn');
+  const tpStopBtn = document.getElementById('tp-stop-btn');
+  const tpBody = document.getElementById('tp-body');
+  const tpTotal = document.getElementById('tp-total');
+  const tpSearch = document.getElementById('tp-search');
+  const tpMoreBtn = document.getElementById('tp-more-btn');
+  const TP_PAGE = 100;
+  let tpOffset = 0;
+  let tpPollTimer = null;
+  let tpWasRunning = false;
+  let tpSearchTimer = null;
+
+  async function readError(res) {
+    try {
+      const data = await res.json();
+      return typeof data.detail === 'string' ? data.detail : `HTTP ${res.status}`;
+    } catch {
+      return `HTTP ${res.status}`;
+    }
+  }
+
+  function renderTpSession(s) {
+    tpSessionStatus.textContent = s.configured
+      ? `Session saved for ton.place user ${s.user_id}${s.saved_at ? `, ${new Date(s.saved_at).toLocaleString()}` : ''}.`
+      : 'No session saved yet.';
+  }
+
+  async function loadTpSession() {
+    const res = await authedFetch('/admin/tonplace/session');
+    if (res.ok) renderTpSession(await res.json());
+  }
+
+  tpSessionForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    tpSessionError.hidden = true;
+    const res = await authedFetch('/admin/tonplace/session', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ session: tpSessionInput.value.trim() }),
+    });
+    if (res.ok) {
+      tpSessionInput.value = '';
+      renderTpSession(await res.json());
+    } else {
+      tpSessionError.textContent = await readError(res);
+      tpSessionError.hidden = false;
+    }
+  });
+
+  function renderTpStatus(s) {
+    const r = s.last_result;
+    if (s.running) {
+      const p = s.progress;
+      const where = p ? `${p.source === 'im' ? 'messenger suggestions' : 'people search'}, page ${p.pages}, ${p.found} found` : 'starting';
+      tpRunStatus.textContent = s.stopping ? `Stopping... (${where})` : `Running: ${where}.`;
+    } else if (r && r.error) {
+      tpRunStatus.textContent = `Last run failed: ${r.error}`;
+    } else if (r) {
+      const when = s.last_finished_at ? new Date(s.last_finished_at).toLocaleString() : '';
+      tpRunStatus.textContent = `${r.stopped ? 'Stopped' : 'Done'} ${when}: ${r.found} found, ${r.added} new, ${r.updated} already known.`;
+    } else {
+      tpRunStatus.textContent = 'Idle.';
+    }
+    tpRunBtn.disabled = s.running;
+    tpStopBtn.disabled = !s.running || s.stopping;
+  }
+
+  async function pollTpStatus() {
+    clearTimeout(tpPollTimer);
+    const res = await authedFetch('/admin/tonplace/status');
+    if (!res.ok) return;
+    const s = await res.json();
+    renderTpStatus(s);
+    if (s.running) {
+      tpWasRunning = true;
+      tpPollTimer = setTimeout(pollTpStatus, 2000);
+    } else if (tpWasRunning) {
+      tpWasRunning = false;
+      loadTpProfiles(true);
+    }
+  }
+
+  tpRunBtn.addEventListener('click', async () => {
+    const sources = [];
+    if (document.getElementById('tp-src-search').checked) sources.push('search');
+    if (document.getElementById('tp-src-im').checked) sources.push('im');
+    const limit = Math.max(1, Math.min(5000, parseInt(document.getElementById('tp-limit').value, 10) || 500));
+    tpRunBtn.disabled = true;
+    const res = await authedFetch('/admin/tonplace/run', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ limit, sources }),
+    });
+    if (!res.ok) {
+      tpRunStatus.textContent = await readError(res);
+      tpRunBtn.disabled = false;
+      return;
+    }
+    renderTpStatus(await res.json());
+    pollTpStatus();
+  });
+
+  tpStopBtn.addEventListener('click', async () => {
+    tpStopBtn.disabled = true;
+    await authedFetch('/admin/tonplace/stop', { method: 'POST' });
+    pollTpStatus();
+  });
+
+  async function loadTpProfiles(reset) {
+    if (reset) tpOffset = 0;
+    const q = tpSearch.value.trim();
+    const params = new URLSearchParams({ limit: String(TP_PAGE), offset: String(tpOffset) });
+    if (q) params.set('q', q);
+    const res = await authedFetch(`/admin/tonplace/profiles?${params}`);
+    if (!res.ok) return;
+    const data = await res.json();
+    if (reset) tpBody.replaceChildren();
+    for (const item of data.items) {
+      const tr = document.createElement('tr');
+      const linkTd = document.createElement('td');
+      linkTd.className = 'username';
+      const a = document.createElement('a');
+      a.className = 'ig-link';
+      a.href = item.url;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.textContent = item.username;
+      linkTd.append(a);
+      tr.append(
+        linkTd,
+        ofCell(item.display_name || ''),
+        ofCell(item.source === 'im' ? 'suggestions' : 'search'),
+        ofCell(item.created_at ? new Date(item.created_at).toLocaleDateString() : ''),
+      );
+      tpBody.append(tr);
+    }
+    tpOffset += data.items.length;
+    tpTotal.textContent = q ? `(${data.total} of ${data.all_total})` : `(${data.all_total})`;
+    tpMoreBtn.hidden = tpOffset >= data.total;
+  }
+
+  tpMoreBtn.addEventListener('click', () => loadTpProfiles(false));
+  tpSearch.addEventListener('input', () => {
+    clearTimeout(tpSearchTimer);
+    tpSearchTimer = setTimeout(() => loadTpProfiles(true), 300);
+  });
+
+  document.getElementById('tp-csv-btn').addEventListener('click', async () => {
+    const q = tpSearch.value.trim();
+    const res = await authedFetch(`/admin/tonplace/profiles.csv${q ? `?q=${encodeURIComponent(q)}` : ''}`);
+    if (!res.ok) return;
+    const url = URL.createObjectURL(await res.blob());
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'tonplace_profiles.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  function loadTonplace() {
+    loadTpSession().catch(() => {});
+    pollTpStatus().catch(() => {});
+    loadTpProfiles(true).catch(() => {});
+  }
+
   async function init() {
     try {
       const res = await authedFetch('/auth/me');
@@ -745,6 +1121,8 @@ import Base from '@/layouts/Base.astro';
       await pollImportStatus();
       await pollExportStatus();
       await loadSchedule().catch(() => {});
+      loadOfPanel();
+      showTab(location.hash.slice(1));
     } catch {
       deniedEl.hidden = false;
     }
