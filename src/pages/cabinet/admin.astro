@@ -138,6 +138,44 @@ import Base from '@/layouts/Base.astro';
       </div>
 
       <div class="glass-card import-card">
+        <h2>Mailing</h2>
+        <p class="bulk-hint">Sends a DM from the saved ton.place account to parsed profiles, newest first. A profile that already got a message is never messaged again.</p>
+        <label class="category-field">
+          Message
+          <textarea id="tp-msg" rows="4" maxlength="4000" placeholder="Hi! ..."></textarea>
+        </label>
+        <div class="tp-options">
+          <label class="category-field">
+            Max recipients
+            <input type="number" id="tp-send-limit" min="1" max="1000" value="50" />
+          </label>
+          <label class="category-field">
+            Delay from, sec
+            <input type="number" id="tp-delay-min" min="3" max="600" value="10" />
+          </label>
+          <label class="category-field">
+            Delay to, sec
+            <input type="number" id="tp-delay-max" min="3" max="600" value="30" />
+          </label>
+          <label class="category-field">
+            Source
+            <select id="tp-send-source">
+              <option value="all">All</option>
+              <option value="search">People search</option>
+              <option value="im">Messenger suggestions</option>
+            </select>
+          </label>
+          <label class="tp-check"><input type="checkbox" id="tp-retry-errors" /> Retry failed</label>
+        </div>
+        <p class="import-status" id="tp-send-status" role="status" aria-live="polite">Idle.</p>
+        <div class="import-actions">
+          <button id="tp-preview-btn" class="import-btn export-btn">Check recipients</button>
+          <button id="tp-send-btn" class="import-btn">Start mailing</button>
+          <button id="tp-send-stop-btn" class="import-btn export-btn stop-btn" disabled>Stop</button>
+        </div>
+      </div>
+
+      <div class="glass-card import-card">
         <div class="targets-header">
           <h2>Profiles <span id="tp-total" class="tp-total"></span></h2>
           <button id="tp-csv-btn" class="ghost-btn">Download CSV</button>
@@ -148,7 +186,7 @@ import Base from '@/layouts/Base.astro';
         </label>
         <div class="targets-table-wrap">
           <table class="targets-table">
-            <thead><tr><th>Profile</th><th>Name</th><th>Source</th><th>Added</th></tr></thead>
+            <thead><tr><th>Profile</th><th>Name</th><th>Source</th><th>Added</th><th>Message</th></tr></thead>
             <tbody id="tp-body"></tbody>
           </table>
         </div>
@@ -212,6 +250,18 @@ import Base from '@/layouts/Base.astro';
   .tp-options .category-field { margin: 0; max-width: 160px; }
   .tp-check { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--fg-muted); padding-bottom: 0.6rem; }
   .tp-total { font-size: 0.85rem; font-weight: 400; color: var(--fg-muted); }
+  .category-field textarea,
+  .category-field select {
+    font: inherit;
+    padding: 0.6rem 0.75rem;
+    border-radius: 8px;
+    border: 1px solid var(--bg-subtle);
+    background: var(--bg);
+    color: var(--fg);
+  }
+  .category-field textarea { resize: vertical; min-height: 5rem; }
+  :global(.tp-msg-sent) { color: #1e6b34; }
+  :global(.tp-msg-error) { color: #a12a2a; }
   .cabinet-success { color: #1e6b34; font-size: 0.85rem; }
 
   .assign-card {
@@ -957,7 +1007,9 @@ import Base from '@/layouts/Base.astro';
   async function readError(res) {
     try {
       const data = await res.json();
-      return typeof data.detail === 'string' ? data.detail : `HTTP ${res.status}`;
+      if (typeof data.detail === 'string') return data.detail;
+      if (Array.isArray(data.detail)) return data.detail.map((d) => `${d.loc?.slice(-1)[0]}: ${d.msg}`).join('; ');
+      return `HTTP ${res.status}`;
     } catch {
       return `HTTP ${res.status}`;
     }
@@ -1070,16 +1122,23 @@ import Base from '@/layouts/Base.astro';
       a.rel = 'noopener';
       a.textContent = item.username;
       linkTd.append(a);
+      const msgTd = ofCell(
+        item.message_status === 'sent' ? `sent ${new Date(item.messaged_at).toLocaleDateString()}`
+          : item.message_status === 'error' ? 'failed' : '',
+        item.message_status ? `tp-msg-${item.message_status}` : '',
+      );
+      if (item.message_reason) msgTd.title = item.message_reason;
       tr.append(
         linkTd,
         ofCell(item.display_name || ''),
         ofCell(item.source === 'im' ? 'suggestions' : 'search'),
         ofCell(item.created_at ? new Date(item.created_at).toLocaleDateString() : ''),
+        msgTd,
       );
       tpBody.append(tr);
     }
     tpOffset += data.items.length;
-    tpTotal.textContent = q ? `(${data.total} of ${data.all_total})` : `(${data.all_total})`;
+    tpTotal.textContent = (q ? `(${data.total} of ${data.all_total}` : `(${data.all_total}`) + `, messaged ${data.sent_total})`;
     tpMoreBtn.hidden = tpOffset >= data.total;
   }
 
@@ -1101,9 +1160,121 @@ import Base from '@/layouts/Base.astro';
     URL.revokeObjectURL(url);
   });
 
+  // Mailing
+
+  const tpSendStatus = document.getElementById('tp-send-status');
+  const tpSendBtn = document.getElementById('tp-send-btn');
+  const tpSendStopBtn = document.getElementById('tp-send-stop-btn');
+  const tpPreviewBtn = document.getElementById('tp-preview-btn');
+  const tpMsg = document.getElementById('tp-msg');
+  let tpSendTimer = null;
+  let tpSendWasRunning = false;
+
+  try {
+    tpMsg.value = localStorage.getItem('tp_message') || '';
+  } catch {}
+  tpMsg.addEventListener('input', () => {
+    try { localStorage.setItem('tp_message', tpMsg.value); } catch {}
+  });
+
+  function tpSendPayload() {
+    const num = (id, def) => parseFloat(document.getElementById(id).value) || def;
+    return {
+      message: tpMsg.value.trim(),
+      limit: Math.round(num('tp-send-limit', 50)),
+      delay_min: num('tp-delay-min', 10),
+      delay_max: num('tp-delay-max', 30),
+      source: document.getElementById('tp-send-source').value,
+      retry_errors: document.getElementById('tp-retry-errors').checked,
+    };
+  }
+
+  function renderTpSend(s) {
+    const r = s.last_result;
+    const p = s.progress;
+    if (s.running && p) {
+      const cur = p.current ? `, now @${p.current}` : '';
+      const lastErr = p.last_error ? ` Last error: ${p.last_error}` : '';
+      tpSendStatus.textContent = `${s.stopping ? 'Stopping' : 'Sending'}: ${p.done} of ${p.total} (${p.sent} sent, ${p.errors} failed${cur}).${lastErr}`;
+    } else if (r) {
+      const when = s.last_finished_at ? new Date(s.last_finished_at).toLocaleString() : '';
+      const head = r.error ? `Stopped with error: ${r.error}` : r.stopped ? 'Stopped' : 'Done';
+      tpSendStatus.textContent = `${head} ${when}: ${r.sent} sent, ${r.errors} failed of ${r.total}.`;
+    } else {
+      tpSendStatus.textContent = 'Idle.';
+    }
+    tpSendBtn.disabled = s.running;
+    tpPreviewBtn.disabled = s.running;
+    tpSendStopBtn.disabled = !s.running || s.stopping;
+  }
+
+  async function pollTpSend() {
+    clearTimeout(tpSendTimer);
+    const res = await authedFetch('/admin/tonplace/send/status');
+    if (!res.ok) return;
+    const s = await res.json();
+    renderTpSend(s);
+    if (s.running) {
+      tpSendWasRunning = true;
+      tpSendTimer = setTimeout(pollTpSend, 3000);
+    } else if (tpSendWasRunning) {
+      tpSendWasRunning = false;
+      loadTpProfiles(true);
+    }
+  }
+
+  tpPreviewBtn.addEventListener('click', async () => {
+    const payload = tpSendPayload();
+    if (!payload.message) payload.message = '-';
+    const res = await authedFetch('/admin/tonplace/send/preview', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) {
+      tpSendStatus.textContent = await readError(res);
+      return;
+    }
+    const data = await res.json();
+    const names = data.items.slice(0, 10).map((i) => `@${i.username}`).join(', ');
+    tpSendStatus.textContent = data.count
+      ? `Will message ${data.count} profile(s): ${names}${data.count > 10 ? ', ...' : ''}`
+      : 'Nobody left to message with these settings.';
+  });
+
+  tpSendBtn.addEventListener('click', async () => {
+    const payload = tpSendPayload();
+    if (!payload.message) {
+      tpSendStatus.textContent = 'Write the message first.';
+      tpMsg.focus();
+      return;
+    }
+    if (!confirm(`Send this message to up to ${payload.limit} ton.place profile(s)?`)) return;
+    tpSendBtn.disabled = true;
+    const res = await authedFetch('/admin/tonplace/send/run', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) {
+      tpSendStatus.textContent = await readError(res);
+      tpSendBtn.disabled = false;
+      return;
+    }
+    renderTpSend(await res.json());
+    pollTpSend();
+  });
+
+  tpSendStopBtn.addEventListener('click', async () => {
+    tpSendStopBtn.disabled = true;
+    await authedFetch('/admin/tonplace/send/stop', { method: 'POST' });
+    pollTpSend();
+  });
+
   function loadTonplace() {
     loadTpSession().catch(() => {});
     pollTpStatus().catch(() => {});
+    pollTpSend().catch(() => {});
     loadTpProfiles(true).catch(() => {});
   }
 
