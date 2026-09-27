@@ -66,6 +66,11 @@ import Base from '@/layouts/Base.astro';
         <button id="stop-import-btn" class="import-btn export-btn stop-btn" disabled title="Available while an import is running">Stop import</button>
       </div>
 
+      <div class="schedule-row" style="margin-top:1rem;">
+        <button id="schedule-toggle-btn" class="import-btn export-btn">Enable daily auto-import</button>
+        <p class="import-status" id="schedule-status">Loading...</p>
+      </div>
+
       <p class="import-status" id="export-status" style="margin-top:1rem;">Idle.</p>
       <button id="run-export-btn" class="import-btn export-btn">Export to Google Sheet</button>
       <p id="export-link" class="import-status" hidden></p>
@@ -274,6 +279,15 @@ import Base from '@/layouts/Base.astro';
   .category-field input:disabled { opacity: 0.6; }
   .category-hint { margin: 0 0 0.75rem; }
   .stop-btn { color: #a12a2a; border-color: rgba(161, 42, 42, 0.35); }
+  .schedule-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .schedule-row .import-btn { margin: 0; }
+  .schedule-row .import-status { margin: 0; }
+  #schedule-toggle-btn.is-on { background: #1e6b34; color: #fff; border-color: transparent; }
   :global(.undo-btn) {
     font: inherit;
     font-size: 0.75rem;
@@ -469,6 +483,44 @@ import Base from '@/layouts/Base.astro';
       pollTimer = null;
     }
   }
+
+  // --- Daily auto-import toggle ---
+
+  const scheduleBtn = document.getElementById('schedule-toggle-btn');
+  const scheduleStatusEl = document.getElementById('schedule-status');
+
+  function renderSchedule(state) {
+    scheduleBtn.classList.toggle('is-on', state.enabled);
+    scheduleBtn.textContent = state.enabled ? 'Disable daily auto-import' : 'Enable daily auto-import';
+    const time = `${String(state.hour).padStart(2, '0')}:${String(state.minute).padStart(2, '0')} ${state.timezone}`;
+    if (state.enabled) {
+      const next = state.next_run_at ? ` · next run ${new Date(state.next_run_at).toLocaleString()}` : '';
+      scheduleStatusEl.textContent = `On, daily at ${time}${next}.`;
+    } else {
+      scheduleStatusEl.textContent = `Off. Would run daily at ${time}.`;
+    }
+  }
+
+  async function loadSchedule() {
+    const res = await authedFetch('/admin/schedule');
+    if (!res.ok) return;
+    renderSchedule(await res.json());
+  }
+
+  scheduleBtn.addEventListener('click', async () => {
+    scheduleBtn.disabled = true;
+    try {
+      const wantEnabled = !scheduleBtn.classList.contains('is-on');
+      const res = await authedFetch('/admin/schedule/toggle', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ enabled: wantEnabled }),
+      });
+      if (res.ok) renderSchedule(await res.json());
+    } finally {
+      scheduleBtn.disabled = false;
+    }
+  });
 
   runImportBtn.addEventListener('click', async () => {
     categoryErrorEl.hidden = true;
@@ -692,6 +744,7 @@ import Base from '@/layouts/Base.astro';
       await loadLinks().catch(() => {});
       await pollImportStatus();
       await pollExportStatus();
+      await loadSchedule().catch(() => {});
     } catch {
       deniedEl.hidden = false;
     }
