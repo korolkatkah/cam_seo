@@ -212,6 +212,22 @@ import Base from '@/layouts/Base.astro';
           <button id="tp-sheet-btn" class="ghost-btn">Sync Google Sheet now</button>
         </div>
       </div>
+
+      <div class="glass-card import-card">
+        <h2>Telegram report</h2>
+        <p class="bulk-hint">Once a day the bot sends how many new models were parsed and how many messages were sent that day.</p>
+        <label class="tp-switch"><input type="checkbox" id="tp-tg-on" role="switch" /> <span>Send the daily report</span></label>
+        <div class="tp-options">
+          <label class="category-field">
+            Time (Kyiv)
+            <select id="tp-tg-hour"></select>
+          </label>
+        </div>
+        <p class="import-status" id="tp-tg-status">Loading...</p>
+        <div class="import-actions">
+          <button id="tp-tg-send-btn" class="import-btn export-btn">Send report now</button>
+        </div>
+      </div>
     </div>
   </section>
 </div>
@@ -1451,7 +1467,70 @@ import Base from '@/layouts/Base.astro';
     pollTpSheet();
   });
 
+  // Telegram daily report
+
+  const tpTgOn = document.getElementById('tp-tg-on');
+  const tpTgHour = document.getElementById('tp-tg-hour');
+  const tpTgStatus = document.getElementById('tp-tg-status');
+  const tpTgSendBtn = document.getElementById('tp-tg-send-btn');
+  for (let h = 0; h < 24; h++) {
+    const o = document.createElement('option');
+    o.value = String(h);
+    o.textContent = `${String(h).padStart(2, '0')}:00`;
+    tpTgHour.append(o);
+  }
+
+  function renderTpTg(t) {
+    tpTgOn.checked = t.enabled;
+    tpTgHour.value = String(t.hour);
+    if (!t.configured) {
+      tpTgStatus.textContent = 'The bot is not connected yet: TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID must be set on the server.';
+    } else if (t.enabled && t.next_run_at) {
+      tpTgStatus.textContent = `On. Next report ${new Date(t.next_run_at).toLocaleString()}.`;
+    } else {
+      tpTgStatus.textContent = 'Bot connected. Daily report is off.';
+    }
+    tpTgOn.disabled = !t.configured;
+    tpTgSendBtn.disabled = !t.configured;
+  }
+
+  async function saveTpTg() {
+    tpTgOn.disabled = true;
+    const res = await authedFetch('/admin/tonplace/telegram', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ enabled: tpTgOn.checked, hour: parseInt(tpTgHour.value, 10) }),
+    });
+    tpTgOn.disabled = false;
+    if (res.ok) {
+      renderTpTg(await res.json());
+    } else {
+      tpTgStatus.textContent = await readError(res);
+      tpTgOn.checked = !tpTgOn.checked;
+    }
+  }
+
+  async function loadTpTg() {
+    const res = await authedFetch('/admin/tonplace/telegram');
+    if (res.ok) renderTpTg(await res.json());
+  }
+
+  tpTgOn.addEventListener('change', saveTpTg);
+  tpTgHour.addEventListener('change', () => { if (tpTgOn.checked) saveTpTg(); });
+  tpTgSendBtn.addEventListener('click', async () => {
+    tpTgSendBtn.disabled = true;
+    const res = await authedFetch('/admin/tonplace/telegram/send', { method: 'POST' });
+    tpTgSendBtn.disabled = false;
+    if (res.ok) {
+      const { stats } = await res.json();
+      tpTgStatus.textContent = `Sent to Telegram: ${stats.new_profiles} new models, ${stats.sent} messages today.`;
+    } else {
+      tpTgStatus.textContent = await readError(res);
+    }
+  });
+
   function loadTonplace() {
+    loadTpTg().catch(() => {});
     loadTpSched().catch(() => {});
     loadTpAuto().catch(() => {});
     pollTpSheet().catch(() => {});
