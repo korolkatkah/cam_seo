@@ -128,6 +128,47 @@ import Base from '@/layouts/Base.astro';
     </div>
 
     <div class="glass-card import-card">
+      <h2>Mailing</h2>
+      <p class="bulk-hint">For each free creator (never paid ones): free subscribe, then a DM, from the saved OnlyFans session. A creator that already got a message is never messaged again; to keep someone out, write anything in their "message" cell in the "onlyfans" sheet. Stops by itself when OnlyFans says the daily limit is reached.</p>
+      <label class="category-field">
+        Message
+        <textarea id="ofs-msg" rows="4" maxlength="4000" placeholder="Hi! ..."></textarea>
+      </label>
+      <div class="tp-options">
+        <label class="category-field">
+          Max recipients
+          <input type="number" id="ofs-limit" min="1" max="500" value="20" />
+        </label>
+        <label class="category-field">
+          Delay from, sec
+          <input type="number" id="ofs-delay-min" min="5" max="900" value="20" />
+        </label>
+        <label class="category-field">
+          Delay to, sec
+          <input type="number" id="ofs-delay-max" min="5" max="900" value="60" />
+        </label>
+        <label class="tp-check"><input type="checkbox" id="ofs-retry" /> Retry failed</label>
+      </div>
+      <p class="import-status" id="ofs-status" role="status" aria-live="polite">Idle.</p>
+      <div class="import-actions">
+        <button id="ofs-preview-btn" class="import-btn export-btn">Check recipients</button>
+        <button id="ofs-send-btn" class="import-btn">Start mailing</button>
+        <button id="ofs-stop-btn" class="import-btn export-btn stop-btn" disabled>Stop</button>
+      </div>
+      <div class="tp-auto">
+        <label class="tp-switch"><input type="checkbox" id="ofs-auto-on" role="switch" /> <span>Auto mode: message new free creators automatically</span></label>
+        <p class="bulk-hint">Checks after every parser run and every 30 minutes, with the text and delays above. Waits until the next day after OnlyFans' own daily limit.</p>
+        <div class="tp-options">
+          <label class="category-field">
+            Max per day
+            <input type="number" id="ofs-auto-daily" min="1" max="500" value="20" />
+          </label>
+        </div>
+        <p class="import-status" id="ofs-auto-status">Loading...</p>
+      </div>
+    </div>
+
+    <div class="glass-card import-card">
       <div class="targets-header">
         <h2>Local panel (browser)</h2>
         <button id="of-refresh-btn" class="ghost-btn">Refresh</button>
@@ -1177,7 +1218,7 @@ import Base from '@/layouts/Base.astro';
 
   function renderOfcStatus(s) {
     const r = s.last_result;
-    const totals = `In the database: ${s.total} creators, ${s.free} free.`;
+    const totals = `In the database: ${s.total} creators, ${s.free} free, ${s.messaged} messaged.`;
     if (s.running) {
       const p = s.progress;
       const where = p ? `${p.seeds} seed(s) walked, ${p.found} new` : 'starting';
@@ -1247,6 +1288,171 @@ import Base from '@/layouts/Base.astro';
     setTimeout(pollOfc, 500);
   });
 
+  // --- OnlyFans mailing ---
+
+  const ofsStatus = document.getElementById('ofs-status');
+  const ofsSendBtn = document.getElementById('ofs-send-btn');
+  const ofsStopBtn = document.getElementById('ofs-stop-btn');
+  const ofsPreviewBtn = document.getElementById('ofs-preview-btn');
+  const ofsMsg = document.getElementById('ofs-msg');
+  const ofsAutoOn = document.getElementById('ofs-auto-on');
+  const ofsAutoDaily = document.getElementById('ofs-auto-daily');
+  const ofsAutoStatus = document.getElementById('ofs-auto-status');
+  let ofsTimer = null;
+  let ofsWasRunning = false;
+
+  try { ofsMsg.value = localStorage.getItem('ofs_message') || ''; } catch {}
+  ofsMsg.addEventListener('input', () => { try { localStorage.setItem('ofs_message', ofsMsg.value); } catch {} });
+
+  function ofsPayload() {
+    const num = (id, def) => parseFloat(document.getElementById(id).value) || def;
+    return {
+      message: ofsMsg.value.trim(),
+      limit: Math.round(num('ofs-limit', 20)),
+      delay_min: num('ofs-delay-min', 20),
+      delay_max: num('ofs-delay-max', 60),
+      retry_errors: document.getElementById('ofs-retry').checked,
+    };
+  }
+
+  function renderOfs(s) {
+    const r = s.last_result;
+    const p = s.progress;
+    if (s.running && p) {
+      const cur = p.current ? `, now @${p.current}` : '';
+      const lastErr = p.last_error ? ` Last error: ${p.last_error}` : '';
+      const label = s.stopping ? 'Stopping' : s.trigger === 'auto' ? 'Auto-sending' : 'Sending';
+      ofsStatus.textContent = `${label}: ${p.done} of ${p.total} (${p.sent} sent, ${p.errors} failed${cur}).${lastErr}`;
+    } else if (r) {
+      const when = s.last_finished_at ? new Date(s.last_finished_at).toLocaleString() : '';
+      const head = r.daily_limit ? 'Stopped: OnlyFans daily limit reached' : r.error ? `Stopped with error: ${r.error}` : r.stopped ? 'Stopped' : 'Done';
+      const skip = r.skipped ? `, ${r.skipped} skipped (already messaged)` : '';
+      ofsStatus.textContent = `${head} ${when}: ${r.sent} sent, ${r.errors} failed${skip} of ${r.total}.`;
+    } else {
+      ofsStatus.textContent = 'Idle.';
+    }
+    ofsSendBtn.disabled = s.running;
+    ofsPreviewBtn.disabled = s.running;
+    ofsStopBtn.disabled = !s.running || s.stopping;
+  }
+
+  async function pollOfs() {
+    clearTimeout(ofsTimer);
+    const res = await authedFetch('/admin/onlyfans/send/status');
+    if (!res.ok) return;
+    const s = await res.json();
+    renderOfs(s);
+    if (s.running) {
+      ofsWasRunning = true;
+      ofsTimer = setTimeout(pollOfs, 3000);
+    } else {
+      if (ofsWasRunning) {
+        ofsWasRunning = false;
+        loadOfsAuto().catch(() => {});
+        pollOfc().catch(() => {});
+      }
+      if (ofsAutoOn.checked) ofsTimer = setTimeout(pollOfs, 30000);
+    }
+  }
+
+  ofsPreviewBtn.addEventListener('click', async () => {
+    const payload = ofsPayload();
+    if (!payload.message) payload.message = '-';
+    const res = await authedFetch('/admin/onlyfans/send/preview', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) {
+      ofsStatus.textContent = await readError(res);
+      return;
+    }
+    const data = await res.json();
+    const names = data.items.slice(0, 10).map((i) => `@${i.username}`).join(', ');
+    ofsStatus.textContent = data.count
+      ? `Will message ${data.count} free creator(s): ${names}${data.count > 10 ? ', ...' : ''}`
+      : 'No free creators left to message.';
+  });
+
+  ofsSendBtn.addEventListener('click', async () => {
+    const payload = ofsPayload();
+    if (!payload.message) {
+      ofsStatus.textContent = 'Write the message first.';
+      ofsMsg.focus();
+      return;
+    }
+    if (!confirm(`Subscribe to and message up to ${payload.limit} free OnlyFans creator(s)?`)) return;
+    ofsSendBtn.disabled = true;
+    const res = await authedFetch('/admin/onlyfans/send/run', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) {
+      ofsStatus.textContent = await readError(res);
+      ofsSendBtn.disabled = false;
+      return;
+    }
+    renderOfs(await res.json());
+    pollOfs();
+  });
+
+  ofsStopBtn.addEventListener('click', async () => {
+    ofsStopBtn.disabled = true;
+    await authedFetch('/admin/onlyfans/send/stop', { method: 'POST' });
+    pollOfs();
+  });
+
+  function renderOfsAuto(a) {
+    ofsAutoOn.checked = a.enabled;
+    ofsAutoDaily.value = String(a.daily_limit);
+    if (a.enabled) {
+      if (a.message && !ofsMsg.value.trim()) ofsMsg.value = a.message;
+      const limitNote = a.onlyfans_limit_today ? ' OnlyFans daily limit hit today, resumes tomorrow.' : '';
+      ofsAutoStatus.textContent = `On. Sent today ${a.sent_today} of ${a.daily_limit}, ${a.waiting} free creator(s) waiting. Checks every ${a.check_every_minutes} min.${limitNote}`;
+    } else {
+      ofsAutoStatus.textContent = `Off. ${a.waiting} free creator(s) not messaged yet.`;
+    }
+  }
+
+  async function loadOfsAuto() {
+    const res = await authedFetch('/admin/onlyfans/auto-send');
+    if (res.ok) renderOfsAuto(await res.json());
+  }
+
+  async function saveOfsAuto() {
+    const p = ofsPayload();
+    ofsAutoOn.disabled = true;
+    const res = await authedFetch('/admin/onlyfans/auto-send', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        enabled: ofsAutoOn.checked,
+        message: p.message,
+        daily_limit: Math.max(1, Math.min(500, parseInt(ofsAutoDaily.value, 10) || 20)),
+        delay_min: p.delay_min,
+        delay_max: p.delay_max,
+      }),
+    });
+    ofsAutoOn.disabled = false;
+    if (res.ok) {
+      renderOfsAuto(await res.json());
+      if (ofsAutoOn.checked) setTimeout(pollOfs, 1500);
+    } else {
+      ofsAutoStatus.textContent = await readError(res);
+      ofsAutoOn.checked = !ofsAutoOn.checked;
+    }
+  }
+
+  ofsAutoOn.addEventListener('change', () => {
+    if (ofsAutoOn.checked && !confirm('Turn on OnlyFans auto-mailing? New free creators will be subscribed to and messaged automatically.')) {
+      ofsAutoOn.checked = false;
+      return;
+    }
+    saveOfsAuto();
+  });
+  ofsAutoDaily.addEventListener('change', () => { if (ofsAutoOn.checked) saveOfsAuto(); });
+
   document.getElementById('of-refresh-btn').addEventListener('click', () => {
     loadOfPanel();
     loadOfModels();
@@ -1282,6 +1488,8 @@ import Base from '@/layouts/Base.astro';
         loadOfcSession().catch(() => {});
       }
       pollOfc().catch(() => {});
+      pollOfs().catch(() => {});
+      loadOfsAuto().catch(() => {});
     }
     if (name === 'tonplace' && !tonplaceLoaded) {
       tonplaceLoaded = true;
