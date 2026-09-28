@@ -323,6 +323,36 @@ import Base from '@/layouts/Base.astro';
       </div>
 
       <div class="glass-card import-card">
+        <h2>Auto-reply</h2>
+        <p class="bulk-hint">When someone the mailing wrote to answers, they get this second message once. Inbox is checked every 5 minutes; profiles marked by hand in the sheet are skipped.</p>
+        <label class="category-field">
+          Reply message
+          <textarea id="tp-reply-msg" rows="4" maxlength="4000" placeholder="Thanks for the answer! ..."></textarea>
+        </label>
+        <div class="tp-ai">
+          <label class="tp-check"><input type="checkbox" id="tp-reply-randomize" /> Randomize with ChatGPT</label>
+        </div>
+        <div class="tp-options">
+          <label class="category-field">
+            Delay from, sec
+            <input type="number" id="tp-reply-delay-min" min="2" max="600" value="5" />
+          </label>
+          <label class="category-field">
+            Delay to, sec
+            <input type="number" id="tp-reply-delay-max" min="2" max="600" value="15" />
+          </label>
+        </div>
+        <p class="import-status" id="tp-reply-status" role="status" aria-live="polite">Loading...</p>
+        <div class="import-actions">
+          <button id="tp-reply-save-btn" class="import-btn export-btn">Save</button>
+          <button id="tp-reply-check-btn" class="import-btn">Check inbox now</button>
+        </div>
+        <div class="tp-auto">
+          <label class="tp-switch"><input type="checkbox" id="tp-reply-on" role="switch" /> <span>Auto mode: check the inbox every 5 minutes and reply</span></label>
+        </div>
+      </div>
+
+      <div class="glass-card import-card">
         <h2>Google Sheet <span id="tp-total" class="tp-total"></span></h2>
         <p class="bulk-hint">All parsed profiles live in the "tonplace" sheet, updated right after every parsed page and every sent message; each run is logged in the "tonplace_report" sheet. To keep someone out of the mailing, write anything in their "message" cell.</p>
         <div class="tp-sheet">
@@ -2001,6 +2031,108 @@ import Base from '@/layouts/Base.astro';
   tpAutoDaily.addEventListener('change', () => { if (tpAutoOn.checked) saveTpAuto(); });
   tpRandomize.addEventListener('change', () => { if (tpAutoOn.checked) saveTpAuto(); });
 
+  // Auto-reply
+
+  const tpReplyMsg = document.getElementById('tp-reply-msg');
+  const tpReplyRandomize = document.getElementById('tp-reply-randomize');
+  const tpReplyOn = document.getElementById('tp-reply-on');
+  const tpReplyStatus = document.getElementById('tp-reply-status');
+  const tpReplySaveBtn = document.getElementById('tp-reply-save-btn');
+  const tpReplyCheckBtn = document.getElementById('tp-reply-check-btn');
+  let tpReplyTimer = null;
+
+  function renderTpReply(a) {
+    tpReplyOn.checked = a.enabled;
+    if (a.message && !tpReplyMsg.value.trim()) tpReplyMsg.value = a.message;
+    tpReplyRandomize.checked = !!a.randomize;
+    document.getElementById('tp-reply-delay-min').value = String(a.delay_min);
+    document.getElementById('tp-reply-delay-max').value = String(a.delay_max);
+    const r = a.last_result;
+    let last = '';
+    if (a.running) {
+      last = ' Checking the inbox now...';
+    } else if (r && r.error) {
+      last = ` Last check failed: ${r.error}`;
+    } else if (r && r.status === 'ok') {
+      const when = a.last_checked_at ? new Date(a.last_checked_at).toLocaleTimeString() : '';
+      const err = r.errors ? `, ${r.errors} failed (${r.last_error})` : '';
+      last = ` Last check ${when}: ${r.incoming} new answer(s) from mailed profiles, ${r.replied} replied${err}.`;
+    }
+    const head = a.enabled
+      ? `On, checks every ${a.check_every_minutes} min${a.next_check_at ? `, next at ${new Date(a.next_check_at).toLocaleTimeString()}` : ''}.`
+      : 'Off.';
+    tpReplyStatus.textContent = `${head} Replied today ${a.replied_today}, total ${a.replied_total}.${last}`;
+  }
+
+  function tpReplyPayload(enabled) {
+    const num = (id, def) => parseFloat(document.getElementById(id).value) || def;
+    return {
+      enabled,
+      message: tpReplyMsg.value.trim(),
+      randomize: tpReplyRandomize.checked,
+      delay_min: num('tp-reply-delay-min', 5),
+      delay_max: num('tp-reply-delay-max', 15),
+    };
+  }
+
+  async function saveTpReply(enabled) {
+    const res = await authedFetch('/admin/tonplace/auto-reply', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(tpReplyPayload(enabled)),
+    });
+    if (!res.ok) {
+      tpReplyStatus.textContent = await readError(res);
+      return false;
+    }
+    renderTpReply(await res.json());
+    return true;
+  }
+
+  async function loadTpReply() {
+    clearTimeout(tpReplyTimer);
+    const res = await authedFetch('/admin/tonplace/auto-reply');
+    if (res.ok) {
+      const a = await res.json();
+      renderTpReply(a);
+      if (a.enabled || a.running) tpReplyTimer = setTimeout(loadTpReply, a.running ? 3000 : 60000);
+    }
+  }
+
+  tpReplySaveBtn.addEventListener('click', async () => {
+    tpReplySaveBtn.disabled = true;
+    if (await saveTpReply(tpReplyOn.checked)) tpReplyStatus.textContent = 'Saved. ' + tpReplyStatus.textContent;
+    tpReplySaveBtn.disabled = false;
+  });
+
+  tpReplyCheckBtn.addEventListener('click', async () => {
+    if (!tpReplyMsg.value.trim()) {
+      tpReplyStatus.textContent = 'Write the reply message first.';
+      tpReplyMsg.focus();
+      return;
+    }
+    if (!confirm('Check the inbox now and send the reply to everyone from the mailing who answered?')) return;
+    tpReplyCheckBtn.disabled = true;
+    if (await saveTpReply(tpReplyOn.checked)) {
+      tpReplyStatus.textContent = 'Checking the inbox...';
+      const res = await authedFetch('/admin/tonplace/auto-reply/check', { method: 'POST' });
+      if (res.ok) renderTpReply(await res.json());
+      else tpReplyStatus.textContent = await readError(res);
+    }
+    tpReplyCheckBtn.disabled = false;
+  });
+
+  tpReplyOn.addEventListener('change', async () => {
+    if (tpReplyOn.checked && !confirm('Turn on auto-reply? Everyone from the mailing who answers will get the reply message automatically.')) {
+      tpReplyOn.checked = false;
+      return;
+    }
+    tpReplyOn.disabled = true;
+    if (!(await saveTpReply(tpReplyOn.checked))) tpReplyOn.checked = !tpReplyOn.checked;
+    tpReplyOn.disabled = false;
+    loadTpReply().catch(() => {});
+  });
+
   // Google Sheet
 
   const tpSheetStatus = document.getElementById('tp-sheet-status');
@@ -2116,6 +2248,7 @@ import Base from '@/layouts/Base.astro';
     loadTpSched().catch(() => {});
     loadTpAuto().catch(() => {});
     loadTpAi().catch(() => {});
+    loadTpReply().catch(() => {});
     pollTpSheet().catch(() => {});
     loadTpSession().catch(() => {});
     pollTpStatus().catch(() => {});
