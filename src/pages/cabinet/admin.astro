@@ -345,7 +345,6 @@ import Base from '@/layouts/Base.astro';
         <p class="import-status" id="tp-reply-status" role="status" aria-live="polite">Loading...</p>
         <div class="import-actions">
           <button id="tp-reply-save-btn" class="import-btn export-btn">Save</button>
-          <button id="tp-reply-check-btn" class="import-btn export-btn">Check inbox now</button>
           <button id="tp-reply-all-btn" class="import-btn">Reply to all now</button>
         </div>
         <div class="tp-auto">
@@ -2039,7 +2038,6 @@ import Base from '@/layouts/Base.astro';
   const tpReplyOn = document.getElementById('tp-reply-on');
   const tpReplyStatus = document.getElementById('tp-reply-status');
   const tpReplySaveBtn = document.getElementById('tp-reply-save-btn');
-  const tpReplyCheckBtn = document.getElementById('tp-reply-check-btn');
   let tpReplyTimer = null;
 
   function renderTpReply(a) {
@@ -2106,8 +2104,6 @@ import Base from '@/layouts/Base.astro';
     tpReplySaveBtn.disabled = false;
   });
 
-  tpReplyCheckBtn.addEventListener('click', () => runTpReplyCheck(false));
-
   async function runTpReplyCheck(all) {
     if (!tpReplyMsg.value.trim()) {
       tpReplyStatus.textContent = 'Write the reply message first.';
@@ -2118,7 +2114,6 @@ import Base from '@/layouts/Base.astro';
       ? 'Go through the WHOLE inbox now and send the reply to everyone from the mailing who answered and has not got it yet?'
       : 'Check the newest dialogs now and send the reply to everyone from the mailing who answered?';
     if (!confirm(question)) return;
-    tpReplyCheckBtn.disabled = true;
     tpReplyAllBtn.disabled = true;
     if (await saveTpReply(tpReplyOn.checked)) {
       tpReplyStatus.textContent = 'Checking the inbox...';
@@ -2134,7 +2129,6 @@ import Base from '@/layouts/Base.astro';
         tpReplyStatus.textContent = await readError(res);
       }
     }
-    tpReplyCheckBtn.disabled = false;
     tpReplyAllBtn.disabled = false;
   }
 
