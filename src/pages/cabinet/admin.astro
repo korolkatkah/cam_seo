@@ -273,6 +273,12 @@ import Base from '@/layouts/Base.astro';
           Message
           <textarea id="tp-msg" rows="4" maxlength="4000" placeholder="Hi! ..."></textarea>
         </label>
+        <div class="tp-ai">
+          <label class="tp-check"><input type="checkbox" id="tp-randomize" /> Randomize with ChatGPT: every recipient gets a reworded copy</label>
+          <button type="button" id="tp-variants-btn" class="ghost-btn">Show examples</button>
+        </div>
+        <p class="bulk-hint" id="tp-ai-hint" hidden></p>
+        <ol class="tp-variants" id="tp-variants" hidden></ol>
         <div class="tp-options">
           <label class="category-field">
             Max recipients
@@ -393,6 +399,10 @@ import Base from '@/layouts/Base.astro';
   .admin-tab.is-active { color: var(--fg); border-bottom-color: var(--accent); }
   .tp-options { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 1rem; margin-bottom: 0.75rem; }
   .tp-options .category-field { margin: 0; max-width: 160px; }
+  .tp-ai { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; margin: 0.25rem 0 0.75rem; }
+  .tp-ai .tp-check { padding-bottom: 0; }
+  .tp-variants { margin: 0 0 1rem 1.25rem; padding: 0; font-size: 0.85rem; color: var(--fg-muted); white-space: pre-wrap; }
+  .tp-variants li { margin-bottom: 0.5rem; }
   .tp-check { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--fg-muted); padding-bottom: 0.6rem; }
   .tp-total { font-size: 0.85rem; font-weight: 400; color: var(--fg-muted); }
   .category-field textarea,
@@ -1704,6 +1714,52 @@ import Base from '@/layouts/Base.astro';
     try { localStorage.setItem('tp_message', tpMsg.value); } catch {}
   });
 
+  const tpRandomize = document.getElementById('tp-randomize');
+  const tpVariantsBtn = document.getElementById('tp-variants-btn');
+  const tpVariants = document.getElementById('tp-variants');
+  const tpAiHint = document.getElementById('tp-ai-hint');
+
+  async function loadTpAi() {
+    const res = await authedFetch('/admin/tonplace/ai');
+    if (!res.ok) return;
+    const a = await res.json();
+    tpAiHint.hidden = a.configured;
+    tpAiHint.textContent = a.configured ? '' : 'ChatGPT is not connected: set OPENAI_API_KEY on the server to use randomization.';
+    tpRandomize.disabled = !a.configured;
+    tpVariantsBtn.disabled = !a.configured;
+  }
+
+  tpVariantsBtn.addEventListener('click', async () => {
+    const message = tpMsg.value.trim();
+    if (!message) {
+      tpMsg.focus();
+      return;
+    }
+    tpVariantsBtn.disabled = true;
+    tpVariantsBtn.textContent = 'Generating...';
+    tpVariants.hidden = true;
+    const res = await authedFetch('/admin/tonplace/send/variants', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message, count: 3 }),
+    });
+    tpVariantsBtn.disabled = false;
+    tpVariantsBtn.textContent = 'Show examples';
+    if (!res.ok) {
+      tpAiHint.hidden = false;
+      tpAiHint.textContent = await readError(res);
+      return;
+    }
+    const data = await res.json();
+    tpAiHint.hidden = true;
+    tpVariants.replaceChildren(...data.variants.map((v) => {
+      const li = document.createElement('li');
+      li.textContent = v;
+      return li;
+    }));
+    tpVariants.hidden = false;
+  });
+
   function tpSendPayload() {
     const num = (id, def) => parseFloat(document.getElementById(id).value) || def;
     return {
@@ -1713,6 +1769,7 @@ import Base from '@/layouts/Base.astro';
       delay_max: num('tp-delay-max', 30),
       source: document.getElementById('tp-send-source').value,
       retry_errors: document.getElementById('tp-retry-errors').checked,
+      randomize: tpRandomize.checked,
     };
   }
 
@@ -1721,13 +1778,14 @@ import Base from '@/layouts/Base.astro';
     const p = s.progress;
     if (s.running && p) {
       const cur = p.current ? `, now @${p.current}` : '';
-      const lastErr = p.last_error ? ` Last error: ${p.last_error}` : '';
+      const lastErr = (p.last_error ? ` Last error: ${p.last_error}` : '') + (p.ai_failed ? ` ChatGPT failed ${p.ai_failed} time(s), original text sent: ${p.last_ai_error}` : '');
       tpSendStatus.textContent = `${s.stopping ? 'Stopping' : s.trigger === 'auto' ? 'Auto-sending' : 'Sending'}: ${p.done} of ${p.total} (${p.sent} sent, ${p.errors} failed${cur}).${lastErr}`;
     } else if (r) {
       const when = s.last_finished_at ? new Date(s.last_finished_at).toLocaleString() : '';
       const head = r.error ? `Stopped with error: ${r.error}` : r.stopped ? 'Stopped' : 'Done';
       const skip = r.skipped ? `, ${r.skipped} skipped (already messaged)` : '';
-      tpSendStatus.textContent = `${head} ${when}: ${r.sent} sent, ${r.errors} failed${skip} of ${r.total}.`;
+      const ai = r.randomize ? (r.ai_failed ? ` ChatGPT failed ${r.ai_failed} time(s), original text sent: ${r.last_ai_error}` : ' Randomized with ChatGPT.') : '';
+      tpSendStatus.textContent = `${head} ${when}: ${r.sent} sent, ${r.errors} failed${skip} of ${r.total}.${ai}`;
     } else {
       tpSendStatus.textContent = 'Idle.';
     }
@@ -1870,6 +1928,7 @@ import Base from '@/layouts/Base.astro';
     tpAutoDaily.value = String(a.daily_limit);
     if (a.enabled) {
       if (a.message && !tpMsg.value.trim()) tpMsg.value = a.message;
+      tpRandomize.checked = !!a.randomize;
       tpAutoStatus.textContent = `On. Sent today ${a.sent_today} of ${a.daily_limit}, ${a.waiting} new profile(s) waiting. Checks every ${a.check_every_minutes} min.`;
     } else {
       tpAutoStatus.textContent = `Off. ${a.waiting} profile(s) not messaged yet.`;
@@ -1889,6 +1948,7 @@ import Base from '@/layouts/Base.astro';
         delay_min: p.delay_min,
         delay_max: p.delay_max,
         source: p.source,
+        randomize: p.randomize,
       }),
     });
     tpAutoOn.disabled = false;
@@ -1914,6 +1974,7 @@ import Base from '@/layouts/Base.astro';
     saveTpAuto();
   });
   tpAutoDaily.addEventListener('change', () => { if (tpAutoOn.checked) saveTpAuto(); });
+  tpRandomize.addEventListener('change', () => { if (tpAutoOn.checked) saveTpAuto(); });
 
   // Google Sheet
 
@@ -2029,6 +2090,7 @@ import Base from '@/layouts/Base.astro';
     loadTpTg().catch(() => {});
     loadTpSched().catch(() => {});
     loadTpAuto().catch(() => {});
+    loadTpAi().catch(() => {});
     pollTpSheet().catch(() => {});
     loadTpSession().catch(() => {});
     pollTpStatus().catch(() => {});
