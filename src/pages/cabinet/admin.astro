@@ -307,6 +307,7 @@ import Base from '@/layouts/Base.astro';
           <button id="tp-preview-btn" class="import-btn export-btn">Check recipients</button>
           <button id="tp-send-btn" class="import-btn">Start mailing</button>
           <button id="tp-send-stop-btn" class="import-btn export-btn stop-btn" disabled>Stop</button>
+          <button id="tp-reset-btn" class="import-btn export-btn stop-btn">Reset sent list</button>
         </div>
         <div class="tp-auto">
           <label class="tp-switch"><input type="checkbox" id="tp-auto-on" role="switch" /> <span>Auto mode: message new profiles automatically</span></label>
@@ -1792,6 +1793,7 @@ import Base from '@/layouts/Base.astro';
     tpSendBtn.disabled = s.running;
     tpPreviewBtn.disabled = s.running;
     tpSendStopBtn.disabled = !s.running || s.stopping;
+    document.getElementById('tp-reset-btn').disabled = s.running;
   }
 
   async function pollTpSend() {
@@ -1853,6 +1855,29 @@ import Base from '@/layouts/Base.astro';
     }
     renderTpSend(await res.json());
     pollTpSend();
+  });
+
+  const tpResetBtn = document.getElementById('tp-reset-btn');
+  tpResetBtn.addEventListener('click', async () => {
+    const auto = tpAutoOn.checked ? ' Auto-mailing is ON: it will start messaging them again within 15 minutes.' : '';
+    if (!confirm('Forget who was already messaged? Everyone in the list will be messaged again by the next mailing. Profiles you marked by hand in the sheet stay excluded. This cannot be undone.' + auto)) return;
+    tpResetBtn.disabled = true;
+    tpSendStatus.textContent = 'Resetting the sent list and rewriting the Google Sheet...';
+    const res = await authedFetch('/admin/tonplace/send/reset', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ keep_hand_marks: true }),
+    });
+    tpResetBtn.disabled = false;
+    if (!res.ok) {
+      tpSendStatus.textContent = await readError(res);
+      return;
+    }
+    const r = await res.json();
+    tpSendStatus.textContent = `Sent list cleared: ${r.deleted} record(s) removed${r.sheet ? ', Google Sheet rewritten' : ''}. The next mailing starts from the top.`;
+    loadTpProfiles();
+    loadTpAuto().catch(() => {});
+    pollTpSheet().catch(() => {});
   });
 
   tpSendStopBtn.addEventListener('click', async () => {
