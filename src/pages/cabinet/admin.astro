@@ -345,7 +345,8 @@ import Base from '@/layouts/Base.astro';
         <p class="import-status" id="tp-reply-status" role="status" aria-live="polite">Loading...</p>
         <div class="import-actions">
           <button id="tp-reply-save-btn" class="import-btn export-btn">Save</button>
-          <button id="tp-reply-check-btn" class="import-btn">Check inbox now</button>
+          <button id="tp-reply-check-btn" class="import-btn export-btn">Check inbox now</button>
+          <button id="tp-reply-all-btn" class="import-btn">Reply to all now</button>
         </div>
         <div class="tp-auto">
           <label class="tp-switch"><input type="checkbox" id="tp-reply-on" role="switch" /> <span>Auto mode: check the inbox every 5 minutes and reply</span></label>
@@ -2050,13 +2051,13 @@ import Base from '@/layouts/Base.astro';
     const r = a.last_result;
     let last = '';
     if (a.running) {
-      last = ' Checking the inbox now...';
+      last = a.progress ? ` Replying: ${a.progress.done} of ${a.progress.total}...` : ' Checking the inbox now...';
     } else if (r && r.error) {
       last = ` Last check failed: ${r.error}`;
     } else if (r && r.status === 'ok') {
       const when = a.last_checked_at ? new Date(a.last_checked_at).toLocaleTimeString() : '';
       const err = r.errors ? `, ${r.errors} failed (${r.last_error})` : '';
-      last = ` Last check ${when}: ${r.incoming} new answer(s) from mailed profiles, ${r.replied} replied${err}.`;
+      last = ` Last ${r.full_scan ? 'full inbox check' : 'check'} ${when}: ${r.incoming} new answer(s) from mailed profiles, ${r.replied} replied${err}.`;
     }
     const head = a.enabled
       ? `On, checks every ${a.check_every_minutes} min${a.next_check_at ? `, next at ${new Date(a.next_check_at).toLocaleTimeString()}` : ''}.`
@@ -2105,22 +2106,40 @@ import Base from '@/layouts/Base.astro';
     tpReplySaveBtn.disabled = false;
   });
 
-  tpReplyCheckBtn.addEventListener('click', async () => {
+  tpReplyCheckBtn.addEventListener('click', () => runTpReplyCheck(false));
+
+  async function runTpReplyCheck(all) {
     if (!tpReplyMsg.value.trim()) {
       tpReplyStatus.textContent = 'Write the reply message first.';
       tpReplyMsg.focus();
       return;
     }
-    if (!confirm('Check the inbox now and send the reply to everyone from the mailing who answered?')) return;
+    const question = all
+      ? 'Go through the WHOLE inbox now and send the reply to everyone from the mailing who answered and has not got it yet?'
+      : 'Check the newest dialogs now and send the reply to everyone from the mailing who answered?';
+    if (!confirm(question)) return;
     tpReplyCheckBtn.disabled = true;
+    tpReplyAllBtn.disabled = true;
     if (await saveTpReply(tpReplyOn.checked)) {
       tpReplyStatus.textContent = 'Checking the inbox...';
-      const res = await authedFetch('/admin/tonplace/auto-reply/check', { method: 'POST' });
-      if (res.ok) renderTpReply(await res.json());
-      else tpReplyStatus.textContent = await readError(res);
+      const res = await authedFetch('/admin/tonplace/auto-reply/check', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ all }),
+      });
+      if (res.ok) {
+        renderTpReply(await res.json());
+        loadTpReply().catch(() => {});
+      } else {
+        tpReplyStatus.textContent = await readError(res);
+      }
     }
     tpReplyCheckBtn.disabled = false;
-  });
+    tpReplyAllBtn.disabled = false;
+  }
+
+  const tpReplyAllBtn = document.getElementById('tp-reply-all-btn');
+  tpReplyAllBtn.addEventListener('click', () => runTpReplyCheck(true));
 
   tpReplyOn.addEventListener('change', async () => {
     if (tpReplyOn.checked && !confirm('Turn on auto-reply? Everyone from the mailing who answers will get the reply message automatically.')) {
