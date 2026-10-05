@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-10-05T02:11:04Z",
+  "generated_at": "2026-10-05T03:01:01Z",
   "tag": "girls",
-  "hours_covered": 23.9,
-  "snapshots": 102,
-  "rooms_seen": 2481,
+  "hours_covered": 24.0,
+  "snapshots": 103,
+  "rooms_seen": 2499,
   "preliminary": false,
   "live": {
-    "generated_at": "2026-10-05T02:11:02Z",
-    "rooms_online": 277
+    "generated_at": "2026-10-05T03:00:59Z",
+    "rooms_online": 287
   },
   "best_hours_utc": [
     {
@@ -20,7 +20,7 @@
     },
     {
       "hour": 2,
-      "score": 104
+      "score": 107
     },
     {
       "hour": 3,
@@ -111,50 +111,54 @@
     "girls": [
       {
         "tag": "girls",
-        "models_online": 277
-      },
-      {
-        "tag": "girls/cam2cam",
-        "models_online": 260
+        "models_online": 287
       },
       {
         "tag": "girls/handy",
-        "models_online": 260
+        "models_online": 273
+      },
+      {
+        "tag": "girls/cam2cam",
+        "models_online": 266
       },
       {
         "tag": "girls/hd",
-        "models_online": 257
+        "models_online": 265
       },
       {
         "tag": "girls/masturbation",
-        "models_online": 221
-      },
-      {
-        "tag": "girls/doggy-style",
-        "models_online": 215
+        "models_online": 230
       },
       {
         "tag": "girls/interactive-toys",
-        "models_online": 214
+        "models_online": 227
       },
       {
         "tag": "girls/lovense",
-        "models_online": 214
+        "models_online": 227
+      },
+      {
+        "tag": "girls/doggy-style",
+        "models_online": 226
       },
       {
         "tag": "girls/fingering",
-        "models_online": 206
+        "models_online": 222
       },
       {
         "tag": "girls/sex-toys",
-        "models_online": 203
+        "models_online": 207
       },
       {
         "tag": "girls/dildo-or-vibrator",
-        "models_online": 198
+        "models_online": 205
       },
       {
         "tag": "girls/dirty-talk",
+        "models_online": 198
+      },
+      {
+        "tag": "girls/mobile",
         "models_online": 198
       },
       {
@@ -163,113 +167,109 @@
       },
       {
         "tag": "girls/recordable-publics",
-        "models_online": 193
+        "models_online": 197
       },
       {
         "tag": "girls/blowjob",
-        "models_online": 191
-      },
-      {
-        "tag": "girls/recordable-privates",
-        "models_online": 190
-      },
-      {
-        "tag": "girls/mobile",
-        "models_online": 181
+        "models_online": 194
       },
       {
         "tag": "girls/orgasm",
-        "models_online": 181
+        "models_online": 189
+      },
+      {
+        "tag": "girls/recordable-privates",
+        "models_online": 180
       },
       {
         "tag": "girls/spanking",
-        "models_online": 181
+        "models_online": 180
       },
       {
-        "tag": "girls/striptease",
-        "models_online": 175
+        "tag": "girls/topless",
+        "models_online": 179
       }
     ],
     "couples": [
       {
         "tag": "couples",
-        "models_online": 333
-      },
-      {
-        "tag": "couples/hd",
-        "models_online": 313
+        "models_online": 343
       },
       {
         "tag": "couples/cam2cam",
-        "models_online": 307
+        "models_online": 317
       },
       {
         "tag": "couples/handy",
-        "models_online": 304
+        "models_online": 316
+      },
+      {
+        "tag": "couples/hd",
+        "models_online": 315
       },
       {
         "tag": "couples/fingering",
-        "models_online": 269
-      },
-      {
-        "tag": "couples/masturbation",
-        "models_online": 265
-      },
-      {
-        "tag": "couples/doggy-style",
-        "models_online": 261
+        "models_online": 279
       },
       {
         "tag": "couples/blowjob",
-        "models_online": 252
+        "models_online": 272
+      },
+      {
+        "tag": "couples/masturbation",
+        "models_online": 269
+      },
+      {
+        "tag": "couples/doggy-style",
+        "models_online": 266
       },
       {
         "tag": "couples/dildo-or-vibrator",
-        "models_online": 243
+        "models_online": 249
       },
       {
         "tag": "couples/recordable-publics",
-        "models_online": 243
-      },
-      {
-        "tag": "couples/recordable-privates",
-        "models_online": 239
-      },
-      {
-        "tag": "couples/spanking",
-        "models_online": 232
-      },
-      {
-        "tag": "couples/dirty-talk",
-        "models_online": 231
-      },
-      {
-        "tag": "couples/sexting",
-        "models_online": 231
+        "models_online": 246
       },
       {
         "tag": "couples/sex-toys",
-        "models_online": 230
+        "models_online": 238
+      },
+      {
+        "tag": "couples/dirty-talk",
+        "models_online": 234
+      },
+      {
+        "tag": "couples/recordable-privates",
+        "models_online": 234
+      },
+      {
+        "tag": "couples/sexting",
+        "models_online": 234
+      },
+      {
+        "tag": "couples/spanking",
+        "models_online": 227
       },
       {
         "tag": "couples/interactive-toys",
-        "models_online": 217
-      },
-      {
-        "tag": "couples/erotic-dance",
-        "models_online": 212
+        "models_online": 225
       },
       {
         "tag": "couples/orgasm",
-        "models_online": 210
+        "models_online": 216
+      },
+      {
+        "tag": "couples/erotic-dance",
+        "models_online": 214
+      },
+      {
+        "tag": "couples/foot-fetish",
+        "models_online": 212
       },
       {
         "tag": "couples/deepthroat",
-        "models_online": 206
-      },
-      {
-        "tag": "couples/oil-show",
-        "models_online": 206
+        "models_online": 211
       }
     ]
   }
