@@ -265,11 +265,12 @@ import Base from '@/layouts/Base.astro';
 
       <div class="glass-card import-card">
         <h2>Google Sheet <span id="cb-total" class="tp-total"></span></h2>
-        <p class="bulk-hint">Everything the parser collects goes to the "chaturbate" sheet in the same Drive workbook as ton.place: updated during a run (at most once a minute) and right after it ends. Columns you add by hand are kept.</p>
+        <p class="bulk-hint">After the online list, the parser opens the public bio of every new model and looks for her Instagram: a free Instagram link in her socials, or "IG: name" / an instagram.com link in her bio or room title. Paid Instagram links hide the name and are skipped. Each bio is re-read after 14 days.</p>
+        <p class="bulk-hint">The Drive workbook (the same one as ton.place) gets two sheets: <b>chaturbate_instagram</b> (only models with an Instagram, one row per account, most followed first) and <b>chaturbate</b> (all models). Updated during a run (at most once a minute) and right after it ends.</p>
         <p class="bulk-hint">Rank is the model's place in Chaturbate's online list (sorted by popularity) at the moment of parsing, inside the gender/keyword filter the run used. Viewers and on_air (hours:minutes since her stream started) are taken at that moment too. Latest parse is on top.</p>
         <div class="tp-sheet">
           <p class="import-status" id="cb-sheet-status">Loading...</p>
-          <a id="cb-sheet-link" class="import-btn" href="#" target="_blank" rel="noopener" style="text-decoration:none;" hidden>Open Google Sheet</a>
+          <a id="cb-sheet-link" class="import-btn" href="#" target="_blank" rel="noopener" style="text-decoration:none;" hidden>Open Instagram sheet</a>
           <button id="cb-sheet-btn" class="ghost-btn">Sync now</button>
         </div>
       </div>
@@ -1681,16 +1682,20 @@ import Base from '@/layouts/Base.astro';
     const r = s.last_result;
     if (s.running) {
       const p = s.progress;
-      const where = p
-        ? `page ${p.pages}, ${p.found} found, ${p.saved || 0} new saved${p.online_total ? ` (${p.online_total} online now)` : ''}`
-        : 'starting';
+      let where = 'starting';
+      if (p && p.phase === 'instagram') {
+        where = `looking for Instagram, bio ${p.bio_checked} of ${p.bio_total}, ${p.instagram} found`;
+      } else if (p) {
+        where = `page ${p.pages}, ${p.found} found, ${p.saved || 0} new saved${p.online_total ? ` (${p.online_total} online now)` : ''}`;
+      }
       const by = s.trigger === 'schedule' ? ' (timer)' : '';
       cbRunStatus.textContent = s.stopping ? `Stopping... (${where})` : `Running${by}: ${where}.`;
     } else if (r && r.error) {
       cbRunStatus.textContent = `Last run failed: ${r.error}`;
     } else if (r) {
       const when = s.last_finished_at ? new Date(s.last_finished_at).toLocaleString() : '';
-      cbRunStatus.textContent = `${r.stopped ? 'Stopped' : 'Done'} ${when}: ${r.found} found, ${r.added} new, ${r.updated} already known.`;
+      const ig = r.checked != null ? ` Bios checked: ${r.checked}, Instagram found: ${r.instagram}.` : '';
+      cbRunStatus.textContent = `${r.stopped ? 'Stopped' : 'Done'} ${when}: ${r.found} found, ${r.added} new, ${r.updated} already known.${ig}`;
     } else {
       cbRunStatus.textContent = 'Idle.';
     }
@@ -1746,7 +1751,7 @@ import Base from '@/layouts/Base.astro';
     const res = await authedFetch('/admin/chaturbate/models?limit=1');
     if (!res.ok) return;
     const data = await res.json();
-    document.getElementById('cb-total').textContent = `(${data.all_total} models)`;
+    document.getElementById('cb-total').textContent = `(${data.instagram_total} with Instagram of ${data.all_total} models)`;
   }
 
   // Timer
