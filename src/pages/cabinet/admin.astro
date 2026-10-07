@@ -264,9 +264,73 @@ import Base from '@/layouts/Base.astro';
       </div>
 
       <div class="glass-card import-card">
+        <h2>Instagram parser</h2>
+        <p class="bulk-hint">"Run parser" already looks for Instagram of the models it finds. This button does only the Instagram step, for models already in the database whose bio was not checked in the last 14 days, most followed first. Takes about 0.5 s per model.</p>
+        <div class="tp-options">
+          <label class="category-field">
+            Models to check
+            <input type="number" id="cb-ig-limit" min="1" max="20000" value="1000" />
+          </label>
+        </div>
+        <p class="import-status" id="cb-ig-status" role="status" aria-live="polite">Idle.</p>
+        <div class="import-actions">
+          <button id="cb-ig-btn" class="import-btn">Find Instagram</button>
+          <button id="cb-ig-stop-btn" class="import-btn export-btn stop-btn" disabled>Stop</button>
+        </div>
+      </div>
+
+      <div class="glass-card import-card">
+        <h2>Chaturbate account</h2>
+        <p class="bulk-hint">Messages are sent from your Chaturbate account (it needs Supporter status: most models only accept DMs from Supporters). Open chaturbate.com in a browser where you are logged in, press F12, go to Network, reload the page, click the first request to chaturbate.com and copy the whole <code>Cookie</code> value from Request Headers. Only <code>sessionid</code> and <code>csrftoken</code> are kept. Paste a fresh one when it says the session expired.</p>
+        <p class="import-status" id="cbs-session-status">Loading...</p>
+        <form id="cbs-session-form" class="link-form">
+          <label>
+            Your Chaturbate username
+            <input type="text" id="cbs-user" required autocomplete="off" spellcheck="false" pattern="[A-Za-z0-9_]+" placeholder="my_account" />
+          </label>
+          <label>
+            Cookie
+            <input type="password" id="cbs-cookie" required autocomplete="off" spellcheck="false" placeholder="csrftoken=...; sessionid=..." />
+          </label>
+          <button type="submit">Save</button>
+        </form>
+        <p id="cbs-session-error" class="cabinet-error" hidden></p>
+      </div>
+
+      <div class="glass-card import-card">
+        <h2>DM mailing <span id="cbs-total" class="tp-total"></span></h2>
+        <p class="bulk-hint">Sends a direct message to models from the database, the ones seen online most recently first. A model that already got a message is never messaged again; every send is marked in the Google Sheet ("message" column).</p>
+        <label class="category-field">
+          Message
+          <textarea id="cbs-msg" rows="3" maxlength="2000" placeholder="Hello"></textarea>
+        </label>
+        <div class="tp-options">
+          <label class="category-field">
+            How many models
+            <input type="number" id="cbs-limit" min="1" max="500" value="10" />
+          </label>
+          <label class="category-field">
+            Pause from, s
+            <input type="number" id="cbs-delay-min" min="3" max="600" value="20" />
+          </label>
+          <label class="category-field">
+            Pause to, s
+            <input type="number" id="cbs-delay-max" min="3" max="600" value="40" />
+          </label>
+          <label class="tp-check"><input type="checkbox" id="cbs-only-ig" /> Only models with Instagram</label>
+          <label class="tp-check"><input type="checkbox" id="cbs-retry" /> Retry failed ones</label>
+        </div>
+        <p class="import-status" id="cbs-status" role="status" aria-live="polite">Loading...</p>
+        <div class="import-actions">
+          <button id="cbs-run-btn" class="import-btn">Send</button>
+          <button id="cbs-stop-btn" class="import-btn export-btn stop-btn" disabled>Stop</button>
+        </div>
+      </div>
+
+      <div class="glass-card import-card">
         <h2>Google Sheet <span id="cb-total" class="tp-total"></span></h2>
         <p class="bulk-hint">After the online list, the parser opens the public bio of every new model and looks for her Instagram: a free Instagram link in her socials, or "IG: name" / an instagram.com link in her bio or room title. Paid Instagram links hide the name and are skipped. Each bio is re-read after 14 days.</p>
-        <p class="bulk-hint">Saved to its own Drive file <b>instagram_cb.xlsx</b> (Stripchat accounts stay in instagram_strip.xlsx). It opens on the <b>chaturbate_instagram</b> sheet (only models with an Instagram, one row per account, most followed first); the <b>chaturbate</b> sheet lists all models. Updated during a run (at most once a minute) and right after it ends. If the server can't create the file, upload an empty instagram_cb.xlsx into the Drive folder once.</p>
+        <p class="bulk-hint">Saved to its own Drive file <b>instagram_cb.xlsx</b> (Stripchat accounts stay in instagram_strip.xlsx). It opens on the <b>chaturbate_instagram</b> sheet (only models with an Instagram, one row per account, most followed first); the <b>chaturbate</b> sheet lists all models. Updated during a run (at most once a minute) and right after it ends. The server can't create that file itself: until an empty instagram_cb.xlsx is uploaded into the Drive folder, the two sheets are written into instagram_strip.xlsx, and they move to instagram_cb.xlsx by themselves once it is there.</p>
         <p class="bulk-hint">Rank is the model's place in Chaturbate's online list (sorted by popularity) at the moment of parsing, inside the gender/keyword filter the run used. Viewers and on_air (hours:minutes since her stream started) are taken at that moment too. Latest parse is on top.</p>
         <div class="tp-sheet">
           <p class="import-status" id="cb-sheet-status">Loading...</p>
@@ -1662,6 +1726,8 @@ import Base from '@/layouts/Base.astro';
       loadCbCount().catch(() => {});
       pollCbSheet().catch(() => {});
       loadCbSched().catch(() => {});
+      loadCbsSession().catch(() => {});
+      pollCbs().catch(() => {});
     }
     if (name === 'tonplace' && !tonplaceLoaded) {
       tonplaceLoaded = true;
@@ -1675,6 +1741,9 @@ import Base from '@/layouts/Base.astro';
   const cbRunBtn = document.getElementById('cb-run-btn');
   const cbStopBtn = document.getElementById('cb-stop-btn');
   const cbRunStatus = document.getElementById('cb-run-status');
+  const cbIgBtn = document.getElementById('cb-ig-btn');
+  const cbIgStopBtn = document.getElementById('cb-ig-stop-btn');
+  const cbIgStatus = document.getElementById('cb-ig-status');
   let cbPollTimer = null;
   let cbWasRunning = false;
 
@@ -1688,10 +1757,13 @@ import Base from '@/layouts/Base.astro';
       } else if (p) {
         where = `page ${p.pages}, ${p.found} found, ${p.saved || 0} new saved${p.online_total ? ` (${p.online_total} online now)` : ''}`;
       }
-      const by = s.trigger === 'schedule' ? ' (timer)' : '';
+      const by = s.trigger === 'schedule' ? ' (timer)' : s.trigger === 'instagram' ? ' (Instagram only)' : '';
       cbRunStatus.textContent = s.stopping ? `Stopping... (${where})` : `Running${by}: ${where}.`;
     } else if (r && r.error) {
       cbRunStatus.textContent = `Last run failed: ${r.error}`;
+    } else if (r && r.only_instagram) {
+      const when = s.last_finished_at ? new Date(s.last_finished_at).toLocaleString() : '';
+      cbRunStatus.textContent = `Instagram search ${r.stopped ? 'stopped' : 'done'} ${when}: ${r.checked} bios checked, ${r.instagram} Instagram found.`;
     } else if (r) {
       const when = s.last_finished_at ? new Date(s.last_finished_at).toLocaleString() : '';
       const ig = r.checked != null ? ` Bios checked: ${r.checked}, Instagram found: ${r.instagram}.` : '';
@@ -1699,8 +1771,11 @@ import Base from '@/layouts/Base.astro';
     } else {
       cbRunStatus.textContent = 'Idle.';
     }
+    cbIgStatus.textContent = cbRunStatus.textContent;
     cbRunBtn.disabled = s.running;
+    cbIgBtn.disabled = s.running;
     cbStopBtn.disabled = !s.running || s.stopping;
+    cbIgStopBtn.disabled = cbStopBtn.disabled;
   }
 
   async function pollCbStatus() {
@@ -1741,9 +1816,31 @@ import Base from '@/layouts/Base.astro';
     pollCbStatus();
   });
 
-  cbStopBtn.addEventListener('click', async () => {
+  async function stopCb() {
     cbStopBtn.disabled = true;
+    cbIgStopBtn.disabled = true;
     await authedFetch('/admin/chaturbate/stop', { method: 'POST' });
+    pollCbStatus();
+  }
+  cbStopBtn.addEventListener('click', stopCb);
+  cbIgStopBtn.addEventListener('click', stopCb);
+
+  cbIgBtn.addEventListener('click', async () => {
+    const limit = Math.max(1, Math.min(20000, parseInt(document.getElementById('cb-ig-limit').value, 10) || 1000));
+    cbIgBtn.disabled = true;
+    cbRunBtn.disabled = true;
+    const res = await authedFetch('/admin/chaturbate/instagram/run', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ limit }),
+    });
+    if (!res.ok) {
+      cbIgStatus.textContent = await readError(res);
+      cbIgBtn.disabled = false;
+      cbRunBtn.disabled = false;
+      return;
+    }
+    renderCbStatus(await res.json());
     pollCbStatus();
   });
 
@@ -1820,6 +1917,142 @@ import Base from '@/layouts/Base.astro';
   cbSchedEvery.addEventListener('change', () => { if (cbSchedOn.checked) saveCbSched(); });
   cbSchedHour.addEventListener('change', () => { if (cbSchedOn.checked) saveCbSched(); });
 
+  // DM mailing from the admin's Chaturbate account
+
+  const cbsSessionStatus = document.getElementById('cbs-session-status');
+  const cbsSessionError = document.getElementById('cbs-session-error');
+  const cbsStatus = document.getElementById('cbs-status');
+  const cbsRunBtn = document.getElementById('cbs-run-btn');
+  const cbsStopBtn = document.getElementById('cbs-stop-btn');
+  let cbsTimer = null;
+  let cbsWasRunning = false;
+
+  async function loadCbsSession() {
+    const res = await authedFetch('/admin/chaturbate/dm/session');
+    if (!res.ok) return;
+    const s = await res.json();
+    if (!s.configured) {
+      cbsSessionStatus.textContent = 'No session saved yet.';
+      return;
+    }
+    document.getElementById('cbs-user').value = s.username;
+    const head = `Session saved for ${s.username}${s.saved_at ? `, ${new Date(s.saved_at).toLocaleString()}` : ''}.`;
+    cbsSessionStatus.textContent = `${head} Checking it with Chaturbate...`;
+    const check = await authedFetch('/admin/chaturbate/dm/session/check');
+    const c = check.ok ? await check.json() : { ok: false, error: await readError(check) };
+    cbsSessionStatus.textContent = c.ok
+      ? `${head} Working: Chaturbate answered (${c.unread} unread conversation(s)).`
+      : `${head} Not working: ${c.error}`;
+  }
+
+  document.getElementById('cbs-session-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    cbsSessionError.hidden = true;
+    const res = await authedFetch('/admin/chaturbate/dm/session', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: document.getElementById('cbs-user').value.trim(),
+        cookie: document.getElementById('cbs-cookie').value.trim(),
+      }),
+    });
+    if (!res.ok) {
+      cbsSessionError.textContent = await readError(res);
+      cbsSessionError.hidden = false;
+      return;
+    }
+    document.getElementById('cbs-cookie').value = '';
+    loadCbsSession().catch(() => {});
+  });
+
+  function renderCbs(s) {
+    const r = s.last_result;
+    if (s.running) {
+      const p = s.progress || {};
+      const err = p.last_error ? ` Last error: ${p.last_error}` : '';
+      cbsStatus.textContent = `${s.stopping ? 'Stopping' : 'Sending'}: ${p.done || 0} of ${p.total || '?'}${p.current ? `, now ${p.current}` : ''}. Sent ${p.sent || 0}, failed ${p.errors || 0}.${err}`;
+    } else if (r) {
+      const when = s.last_finished_at ? new Date(s.last_finished_at).toLocaleString() : '';
+      const err = r.error ? ` ${r.error}` : '';
+      cbsStatus.textContent = `${r.stopped ? 'Stopped' : 'Done'} ${when}: sent ${r.sent} of ${r.total}, failed ${r.errors}.${err}`;
+    } else {
+      cbsStatus.textContent = 'Idle.';
+    }
+    if (s.sent_total != null) document.getElementById('cbs-total').textContent = `(${s.sent_total} messaged)`;
+    cbsRunBtn.disabled = s.running;
+    cbsStopBtn.disabled = !s.running || s.stopping;
+  }
+
+  async function pollCbs() {
+    clearTimeout(cbsTimer);
+    const res = await authedFetch('/admin/chaturbate/dm/status');
+    if (!res.ok) return;
+    const s = await res.json();
+    renderCbs(s);
+    if (s.running) {
+      cbsWasRunning = true;
+      cbsTimer = setTimeout(pollCbs, 3000);
+    } else if (cbsWasRunning) {
+      cbsWasRunning = false;
+      setTimeout(() => pollCbSheet().catch(() => {}), 1500);
+    }
+  }
+
+  function cbsPayload() {
+    const num = (id, d, lo, hi) => Math.max(lo, Math.min(hi, parseFloat(document.getElementById(id).value) || d));
+    return {
+      message: document.getElementById('cbs-msg').value.trim(),
+      limit: num('cbs-limit', 10, 1, 500),
+      delay_min: num('cbs-delay-min', 20, 3, 600),
+      delay_max: num('cbs-delay-max', 40, 3, 600),
+      only_instagram: document.getElementById('cbs-only-ig').checked,
+      retry_errors: document.getElementById('cbs-retry').checked,
+    };
+  }
+
+  cbsRunBtn.addEventListener('click', async () => {
+    const payload = cbsPayload();
+    if (!payload.message) {
+      cbsStatus.textContent = 'Write the message first.';
+      return;
+    }
+    cbsRunBtn.disabled = true;
+    const preview = await authedFetch('/admin/chaturbate/dm/preview', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const list = preview.ok ? await preview.json() : { count: 0, items: [] };
+    if (!list.count) {
+      cbsStatus.textContent = 'Nobody left to message: every matching model already got one.';
+      cbsRunBtn.disabled = false;
+      return;
+    }
+    const names = list.items.slice(0, 15).join(', ') + (list.count > 15 ? ', ...' : '');
+    if (!confirm(`Send "${payload.message}" to ${list.count} model(s)?\n\n${names}`)) {
+      cbsRunBtn.disabled = false;
+      return;
+    }
+    const res = await authedFetch('/admin/chaturbate/dm/run', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) {
+      cbsStatus.textContent = await readError(res);
+      cbsRunBtn.disabled = false;
+      return;
+    }
+    renderCbs(await res.json());
+    pollCbs();
+  });
+
+  cbsStopBtn.addEventListener('click', async () => {
+    cbsStopBtn.disabled = true;
+    await authedFetch('/admin/chaturbate/dm/stop', { method: 'POST' });
+    pollCbs();
+  });
+
   const cbSheetStatus = document.getElementById('cb-sheet-status');
   const cbSheetBtn = document.getElementById('cb-sheet-btn');
   const cbSheetLink = document.getElementById('cb-sheet-link');
@@ -1838,9 +2071,11 @@ import Base from '@/layouts/Base.astro';
     } else if (r && r.error) {
       cbSheetStatus.textContent = `Last sync failed: ${r.error}`;
     } else if (r) {
-      cbSheetStatus.textContent = `Synced ${when}: ${r.rows} models.`;
+      const where = r.file_name ? ` into ${r.file_name}` : '';
+      const tmp = r.fallback ? ' instagram_cb.xlsx is not in the Drive folder, so the sheets went into the Stripchat file for now: upload an empty instagram_cb.xlsx there and they move over.' : '';
+      cbSheetStatus.textContent = `Synced ${when}${where}: ${r.instagram_rows ?? '?'} with Instagram of ${r.rows} models.${tmp}`;
     } else {
-      cbSheetStatus.textContent = link ? 'Updates by itself after every parser run.' : 'instagram_cb.xlsx is not in the Drive folder yet: it is created on the first sync.';
+      cbSheetStatus.textContent = link ? 'Updates by itself after every parser run.' : 'No Drive file found yet.';
     }
     cbSheetBtn.disabled = s.running;
   }
