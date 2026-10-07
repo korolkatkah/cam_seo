@@ -1627,8 +1627,21 @@ import Base from '@/layouts/Base.astro';
 
   function renderTpSession(s) {
     tpSessionStatus.textContent = s.configured
-      ? `Session saved for ton.place user ${s.user_id}${s.saved_at ? `, ${new Date(s.saved_at).toLocaleString()}` : ''}.`
+      ? `Session saved for ton.place user ${s.user_id}${s.saved_at ? `, ${new Date(s.saved_at).toLocaleString()}` : ''}. Checking it with ton.place...`
       : 'No session saved yet.';
+    if (s.configured) checkTpSession(tpSessionStatus.textContent.replace(' Checking it with ton.place...', ''));
+  }
+
+  async function checkTpSession(head) {
+    const res = await authedFetch('/admin/tonplace/session/check');
+    if (!res.ok) {
+      tpSessionStatus.textContent = `${head} Could not check it: ${await readError(res)}`;
+      return;
+    }
+    const c = await res.json();
+    tpSessionStatus.textContent = c.ok
+      ? `${head} Working: ton.place answered (${c.dialogs} dialog(s) on the first page).`
+      : `${head} NOT working: ${c.error}`;
   }
 
   async function loadTpSession() {
