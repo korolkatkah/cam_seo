@@ -22,6 +22,7 @@ import Base from '@/layouts/Base.astro';
       <button class="admin-tab is-active" role="tab" data-tab="main" aria-selected="true">Main</button>
       <button class="admin-tab" role="tab" data-tab="tonplace" aria-selected="false">ton.place</button>
       <button class="admin-tab" role="tab" data-tab="onlyfans" aria-selected="false">OnlyFans</button>
+      <button class="admin-tab" role="tab" data-tab="chaturbate" aria-selected="false">Chaturbate</button>
     </div>
 
     <div data-panel="main">
@@ -213,6 +214,63 @@ import Base from '@/layouts/Base.astro';
         </table>
       </div>
     </div>
+    </div>
+
+    <div data-panel="chaturbate" hidden>
+      <div class="glass-card import-card">
+        <h2>Parse online models</h2>
+        <p class="bulk-hint">Collects models who are online on Chaturbate right now, through its public room list (no login needed). Known models are not duplicated, only their followers, viewers and tags are refreshed. Run it at different times of day to catch more models.</p>
+        <div class="tp-options">
+          <label class="category-field">
+            Limit
+            <input type="number" id="cb-limit" min="1" max="20000" value="1000" />
+          </label>
+          <label class="category-field">
+            Gender
+            <select id="cb-gender">
+              <option value="">All</option><option value="f" selected>Female</option><option value="m">Male</option>
+              <option value="c">Couple</option><option value="t">Trans</option>
+            </select>
+          </label>
+          <label class="category-field">
+            Keyword (optional)
+            <input type="text" id="cb-query" maxlength="100" placeholder="latina" autocomplete="off" spellcheck="false" />
+          </label>
+        </div>
+        <p class="import-status" id="cb-run-status" role="status" aria-live="polite">Idle.</p>
+        <div class="import-actions">
+          <button id="cb-run-btn" class="import-btn">Run parser</button>
+          <button id="cb-stop-btn" class="import-btn export-btn stop-btn" disabled>Stop</button>
+        </div>
+      </div>
+
+      <div class="glass-card import-card">
+        <h2>Models <span id="cb-total" class="tp-total"></span></h2>
+        <div class="tp-options">
+          <label class="category-field">
+            Search
+            <input type="text" id="cb-search" placeholder="name, country, tag" autocomplete="off" spellcheck="false" />
+          </label>
+          <label class="category-field">
+            Gender
+            <select id="cb-filter-gender">
+              <option value="">All</option><option value="f">Female</option><option value="m">Male</option>
+              <option value="c">Couple</option><option value="t">Trans</option>
+            </select>
+          </label>
+          <button id="cb-csv-btn" class="import-btn export-btn">Download CSV</button>
+        </div>
+        <p class="import-status" id="cb-models-status">Loading...</p>
+        <div class="targets-table-wrap" id="cb-models-wrap" hidden>
+          <table class="targets-table">
+            <thead><tr><th>Model</th><th>Gender</th><th class="num-h">Age</th><th>Country</th><th class="num-h">Followers</th><th class="num-h">Viewers</th><th>Last online</th></tr></thead>
+            <tbody id="cb-models-body"></tbody>
+          </table>
+        </div>
+        <div class="import-actions" style="margin-top:1rem;">
+          <button id="cb-more-btn" class="ghost-btn" hidden>Show more</button>
+        </div>
+      </div>
     </div>
 
     <div data-panel="tonplace" hidden>
@@ -1577,6 +1635,7 @@ import Base from '@/layouts/Base.astro';
   const tabButtons = document.querySelectorAll('.admin-tab');
   const tabPanels = document.querySelectorAll('[data-panel]');
   let tonplaceLoaded = false;
+  let cbLoaded = false;
 
   function showTab(name) {
     if (![...tabButtons].some((b) => b.dataset.tab === name)) name = 'main';
@@ -1594,12 +1653,178 @@ import Base from '@/layouts/Base.astro';
       pollOfc().catch(() => {});
       loadOfsAuto().catch(() => {});
     }
+    if (name === 'chaturbate' && !cbLoaded) {
+      cbLoaded = true;
+      pollCbStatus().catch(() => {});
+      loadCbModels().catch(() => {});
+    }
     if (name === 'tonplace' && !tonplaceLoaded) {
       tonplaceLoaded = true;
       loadTonplace();
     }
   }
   tabButtons.forEach((b) => b.addEventListener('click', () => showTab(b.dataset.tab)));
+
+  // --- Chaturbate parser (runs on the worker-cabinet backend) ---
+
+  const cbRunBtn = document.getElementById('cb-run-btn');
+  const cbStopBtn = document.getElementById('cb-stop-btn');
+  const cbRunStatus = document.getElementById('cb-run-status');
+  const cbSearch = document.getElementById('cb-search');
+  const cbFilterGender = document.getElementById('cb-filter-gender');
+  const cbMoreBtn = document.getElementById('cb-more-btn');
+  const CB_GENDERS = { f: 'female', m: 'male', c: 'couple', s: 'trans' };
+  const CB_PAGE = 100;
+  let cbPollTimer = null;
+  let cbWasRunning = false;
+  let cbOffset = 0;
+
+  function renderCbStatus(s) {
+    const r = s.last_result;
+    if (s.running) {
+      const p = s.progress;
+      const where = p
+        ? `page ${p.pages}, ${p.found} found, ${p.saved || 0} new saved${p.online_total ? ` (${p.online_total} online now)` : ''}`
+        : 'starting';
+      cbRunStatus.textContent = s.stopping ? `Stopping... (${where})` : `Running: ${where}.`;
+    } else if (r && r.error) {
+      cbRunStatus.textContent = `Last run failed: ${r.error}`;
+    } else if (r) {
+      const when = s.last_finished_at ? new Date(s.last_finished_at).toLocaleString() : '';
+      cbRunStatus.textContent = `${r.stopped ? 'Stopped' : 'Done'} ${when}: ${r.found} found, ${r.added} new, ${r.updated} already known.`;
+    } else {
+      cbRunStatus.textContent = 'Idle.';
+    }
+    cbRunBtn.disabled = s.running;
+    cbStopBtn.disabled = !s.running || s.stopping;
+  }
+
+  async function pollCbStatus() {
+    clearTimeout(cbPollTimer);
+    const res = await authedFetch('/admin/chaturbate/status');
+    if (!res.ok) return;
+    const s = await res.json();
+    renderCbStatus(s);
+    if (s.running) {
+      cbWasRunning = true;
+      cbPollTimer = setTimeout(pollCbStatus, 2000);
+    } else if (cbWasRunning) {
+      cbWasRunning = false;
+      loadCbModels().catch(() => {});
+    }
+  }
+
+  cbRunBtn.addEventListener('click', async () => {
+    const limit = Math.max(1, Math.min(20000, parseInt(document.getElementById('cb-limit').value, 10) || 1000));
+    const gender = document.getElementById('cb-gender').value;
+    const query = document.getElementById('cb-query').value.trim();
+    cbRunBtn.disabled = true;
+    const res = await authedFetch('/admin/chaturbate/run', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ limit, gender, query }),
+    });
+    if (!res.ok) {
+      cbRunStatus.textContent = await readError(res);
+      cbRunBtn.disabled = false;
+      return;
+    }
+    renderCbStatus(await res.json());
+    pollCbStatus();
+  });
+
+  cbStopBtn.addEventListener('click', async () => {
+    cbStopBtn.disabled = true;
+    await authedFetch('/admin/chaturbate/stop', { method: 'POST' });
+    pollCbStatus();
+  });
+
+  function cbFilterParams() {
+    const params = new URLSearchParams();
+    if (cbSearch.value.trim()) params.set('q', cbSearch.value.trim());
+    if (cbFilterGender.value) params.set('gender', cbFilterGender.value);
+    return params;
+  }
+
+  function cbNumCell(value) {
+    const td = ofCell(value == null ? '' : value.toLocaleString());
+    td.classList.add('num');
+    return td;
+  }
+
+  async function loadCbModels(append = false) {
+    const statusEl = document.getElementById('cb-models-status');
+    const body = document.getElementById('cb-models-body');
+    cbOffset = append ? cbOffset + CB_PAGE : 0;
+    const params = cbFilterParams();
+    params.set('limit', String(CB_PAGE));
+    params.set('offset', String(cbOffset));
+    const res = await authedFetch(`/admin/chaturbate/models?${params}`);
+    if (!res.ok) {
+      statusEl.textContent = await readError(res);
+      return;
+    }
+    const data = await res.json();
+    if (!append) body.replaceChildren();
+    for (const m of data.items) {
+      const tr = document.createElement('tr');
+      const linkTd = document.createElement('td');
+      linkTd.className = 'username';
+      const a = document.createElement('a');
+      a.className = 'ig-link';
+      a.href = m.url;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.textContent = m.username;
+      linkTd.append(a);
+      tr.append(
+        linkTd,
+        ofCell(CB_GENDERS[m.gender] || m.gender || ''),
+        cbNumCell(m.age),
+        ofCell(m.country || ''),
+        cbNumCell(m.followers),
+        cbNumCell(m.viewers),
+        ofCell(m.last_seen_at ? new Date(m.last_seen_at).toLocaleString() : ''),
+      );
+      body.append(tr);
+    }
+    const shown = cbOffset + data.items.length;
+    const filtered = data.total !== data.all_total ? `, ${data.total} match` : '';
+    document.getElementById('cb-total').textContent = `(${data.all_total}${filtered})`;
+    statusEl.textContent = data.all_total === 0 ? 'No models yet. Run the parser.' : '';
+    statusEl.hidden = !statusEl.textContent;
+    document.getElementById('cb-models-wrap').hidden = data.total === 0;
+    cbMoreBtn.hidden = shown >= data.total;
+  }
+
+  let cbSearchTimer = null;
+  cbSearch.addEventListener('input', () => {
+    clearTimeout(cbSearchTimer);
+    cbSearchTimer = setTimeout(() => loadCbModels().catch(() => {}), 300);
+  });
+  cbFilterGender.addEventListener('change', () => loadCbModels().catch(() => {}));
+  cbMoreBtn.addEventListener('click', () => loadCbModels(true).catch(() => {}));
+
+  document.getElementById('cb-csv-btn').addEventListener('click', async (e) => {
+    const btn = e.currentTarget;
+    const statusEl = document.getElementById('cb-models-status');
+    btn.disabled = true;
+    try {
+      const res = await authedFetch(`/admin/chaturbate/models.csv?${cbFilterParams()}`);
+      if (!res.ok) throw new Error(await readError(res));
+      const url = URL.createObjectURL(await res.blob());
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'chaturbate_models.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      statusEl.textContent = err.message;
+      statusEl.hidden = false;
+    } finally {
+      btn.disabled = false;
+    }
+  });
 
   // --- ton.place parser (runs on the worker-cabinet backend) ---
 
