@@ -2015,11 +2015,45 @@ import Base from '@/layouts/Base.astro';
     cbsStopBtn.disabled = !s.running || s.stopping;
   }
 
+  let cbsDraftLoaded = false;
+  let cbsDraftTimer = null;
+
+  function fillCbsDraft(d) {
+    if (cbsDraftLoaded) return;
+    cbsDraftLoaded = true;
+    if (!d) return;
+    document.getElementById('cbs-msg').value = d.message || '';
+    document.getElementById('cbs-limit').value = String(d.limit);
+    document.getElementById('cbs-delay-min').value = String(d.delay_min);
+    document.getElementById('cbs-delay-max').value = String(d.delay_max);
+    document.getElementById('cbs-only-ig').checked = !!d.only_instagram;
+    document.getElementById('cbs-retry').checked = !!d.retry_errors;
+    document.getElementById('cbs-randomize').checked = !!d.randomize;
+  }
+
+  function saveCbsDraft() {
+    if (!cbsDraftLoaded) return;
+    clearTimeout(cbsDraftTimer);
+    cbsDraftTimer = setTimeout(() => {
+      authedFetch('/admin/chaturbate/dm/draft', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(cbsPayload()),
+      }).catch(() => {});
+    }, 600);
+  }
+
+  ['cbs-msg', 'cbs-limit', 'cbs-delay-min', 'cbs-delay-max'].forEach((id) =>
+    document.getElementById(id).addEventListener('input', saveCbsDraft));
+  ['cbs-only-ig', 'cbs-retry', 'cbs-randomize'].forEach((id) =>
+    document.getElementById(id).addEventListener('change', saveCbsDraft));
+
   async function pollCbs() {
     clearTimeout(cbsTimer);
     const res = await authedFetch('/admin/chaturbate/dm/status');
     if (!res.ok) return;
     const s = await res.json();
+    fillCbsDraft(s.draft);
     renderCbs(s);
     if (s.running) {
       cbsWasRunning = true;
