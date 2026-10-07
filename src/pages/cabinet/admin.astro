@@ -266,7 +266,7 @@ import Base from '@/layouts/Base.astro';
       <div class="glass-card import-card">
         <h2>Google Sheet <span id="cb-total" class="tp-total"></span></h2>
         <p class="bulk-hint">After the online list, the parser opens the public bio of every new model and looks for her Instagram: a free Instagram link in her socials, or "IG: name" / an instagram.com link in her bio or room title. Paid Instagram links hide the name and are skipped. Each bio is re-read after 14 days.</p>
-        <p class="bulk-hint">The Drive workbook (the same one as ton.place) gets two sheets: <b>chaturbate_instagram</b> (only models with an Instagram, one row per account, most followed first) and <b>chaturbate</b> (all models). Updated during a run (at most once a minute) and right after it ends.</p>
+        <p class="bulk-hint">Saved to its own Drive file <b>instagram_cb.xlsx</b> (Stripchat accounts stay in instagram_strip.xlsx). It opens on the <b>chaturbate_instagram</b> sheet (only models with an Instagram, one row per account, most followed first); the <b>chaturbate</b> sheet lists all models. Updated during a run (at most once a minute) and right after it ends. If the server can't create the file, upload an empty instagram_cb.xlsx into the Drive folder once.</p>
         <p class="bulk-hint">Rank is the model's place in Chaturbate's online list (sorted by popularity) at the moment of parsing, inside the gender/keyword filter the run used. Viewers and on_air (hours:minutes since her stream started) are taken at that moment too. Latest parse is on top.</p>
         <div class="tp-sheet">
           <p class="import-status" id="cb-sheet-status">Loading...</p>
@@ -1840,7 +1840,7 @@ import Base from '@/layouts/Base.astro';
     } else if (r) {
       cbSheetStatus.textContent = `Synced ${when}: ${r.rows} models.`;
     } else {
-      cbSheetStatus.textContent = link ? 'Updates by itself after every parser run.' : 'The Drive workbook is not found.';
+      cbSheetStatus.textContent = link ? 'Updates by itself after every parser run.' : 'instagram_cb.xlsx is not in the Drive folder yet: it is created on the first sync.';
     }
     cbSheetBtn.disabled = s.running;
   }
