@@ -263,12 +263,22 @@ import Base from '@/layouts/Base.astro';
         <p class="import-status" id="cb-models-status">Loading...</p>
         <div class="targets-table-wrap" id="cb-models-wrap" hidden>
           <table class="targets-table">
-            <thead><tr><th>Model</th><th>Gender</th><th class="num-h">Age</th><th>Country</th><th class="num-h">Followers</th><th class="num-h">Viewers</th><th>Last online</th></tr></thead>
+            <thead><tr><th class="num-h">Rank</th><th>Model</th><th class="num-h">Viewers</th><th class="num-h">On air</th><th class="num-h">Followers</th><th>Gender</th><th class="num-h">Age</th><th>Country</th><th>Parsed</th></tr></thead>
             <tbody id="cb-models-body"></tbody>
           </table>
         </div>
         <div class="import-actions" style="margin-top:1rem;">
           <button id="cb-more-btn" class="ghost-btn" hidden>Show more</button>
+        </div>
+        <p class="bulk-hint">Rank is the model's place in Chaturbate's online list (sorted by popularity) at the moment of parsing, inside the gender/keyword filter the run used. Viewers and On air (hours:minutes since her stream started) are also taken at that moment. Latest parse is on top.</p>
+      </div>
+
+      <div class="glass-card import-card">
+        <h2>Google Sheet</h2>
+        <p class="bulk-hint">Everything the parser collects goes to the "chaturbate" sheet in the same Drive workbook as ton.place: updated during a run (at most once a minute) and right after it ends. Columns you add by hand are kept.</p>
+        <div class="tp-sheet">
+          <p class="import-status" id="cb-sheet-status">Loading...</p>
+          <button id="cb-sheet-btn" class="ghost-btn">Sync Google Sheet now</button>
         </div>
       </div>
     </div>
@@ -1657,6 +1667,7 @@ import Base from '@/layouts/Base.astro';
       cbLoaded = true;
       pollCbStatus().catch(() => {});
       loadCbModels().catch(() => {});
+      pollCbSheet().catch(() => {});
     }
     if (name === 'tonplace' && !tonplaceLoaded) {
       tonplaceLoaded = true;
@@ -1711,6 +1722,7 @@ import Base from '@/layouts/Base.astro';
     } else if (cbWasRunning) {
       cbWasRunning = false;
       loadCbModels().catch(() => {});
+      setTimeout(() => pollCbSheet().catch(() => {}), 1500);
     }
   }
 
@@ -1777,13 +1789,17 @@ import Base from '@/layouts/Base.astro';
       a.rel = 'noopener';
       a.textContent = m.username;
       linkTd.append(a);
+      const rank = cbNumCell(m.rank);
+      if (m.rank_list) rank.title = `List: ${m.rank_list}`;
       tr.append(
+        rank,
         linkTd,
+        cbNumCell(m.viewers),
+        cbNumCell(m.on_air || null),
+        cbNumCell(m.followers),
         ofCell(CB_GENDERS[m.gender] || m.gender || ''),
         cbNumCell(m.age),
         ofCell(m.country || ''),
-        cbNumCell(m.followers),
-        cbNumCell(m.viewers),
         ofCell(m.last_seen_at ? new Date(m.last_seen_at).toLocaleString() : ''),
       );
       body.append(tr);
@@ -1824,6 +1840,55 @@ import Base from '@/layouts/Base.astro';
     } finally {
       btn.disabled = false;
     }
+  });
+
+  const cbSheetStatus = document.getElementById('cb-sheet-status');
+  const cbSheetBtn = document.getElementById('cb-sheet-btn');
+  let cbSheetTimer = null;
+
+  function renderCbSheet(s) {
+    const r = s.last_result;
+    const when = s.last_finished_at ? new Date(s.last_finished_at).toLocaleString() : '';
+    cbSheetStatus.replaceChildren();
+    if (s.running) {
+      cbSheetStatus.textContent = 'Updating the sheet...';
+    } else if (r && r.error) {
+      cbSheetStatus.textContent = `Last sync failed: ${r.error}`;
+    } else if (r) {
+      cbSheetStatus.append(`Synced ${when}: ${r.rows} models. `);
+      if (r.web_view_link) {
+        const a = document.createElement('a');
+        a.href = r.web_view_link;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.textContent = 'Open in Google Drive';
+        cbSheetStatus.append(a);
+      }
+    } else {
+      cbSheetStatus.textContent = 'Not synced since the server started.';
+    }
+    cbSheetBtn.disabled = s.running;
+  }
+
+  async function pollCbSheet() {
+    clearTimeout(cbSheetTimer);
+    const res = await authedFetch('/admin/chaturbate/sheet/status');
+    if (!res.ok) return;
+    const s = await res.json();
+    renderCbSheet(s);
+    if (s.running) cbSheetTimer = setTimeout(pollCbSheet, 3000);
+  }
+
+  cbSheetBtn.addEventListener('click', async () => {
+    cbSheetBtn.disabled = true;
+    const res = await authedFetch('/admin/chaturbate/sheet/sync', { method: 'POST' });
+    if (!res.ok) {
+      cbSheetStatus.textContent = await readError(res);
+      cbSheetBtn.disabled = false;
+      return;
+    }
+    renderCbSheet(await res.json());
+    pollCbSheet();
   });
 
   // --- ton.place parser (runs on the worker-cabinet backend) ---
