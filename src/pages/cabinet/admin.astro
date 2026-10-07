@@ -242,6 +242,25 @@ import Base from '@/layouts/Base.astro';
           <button id="cb-run-btn" class="import-btn">Run parser</button>
           <button id="cb-stop-btn" class="import-btn export-btn stop-btn" disabled>Stop</button>
         </div>
+        <div class="tp-auto">
+          <label class="tp-switch"><input type="checkbox" id="cb-sched-on" role="switch" /> <span>Timer: run the parser on a schedule</span></label>
+          <div class="tp-options">
+            <label class="category-field">
+              Every
+              <select id="cb-sched-every">
+                <option value="1">1 hour</option><option value="2">2 hours</option><option value="3">3 hours</option>
+                <option value="4">4 hours</option><option value="6" selected>6 hours</option><option value="8">8 hours</option>
+                <option value="12">12 hours</option><option value="24">24 hours</option>
+              </select>
+            </label>
+            <label class="category-field">
+              Starting at (Kyiv)
+              <select id="cb-sched-hour"></select>
+            </label>
+          </div>
+          <p class="bulk-hint">The timer uses the limit, gender and keyword set above at the moment you switch it on or change the interval.</p>
+          <p class="import-status" id="cb-sched-status">Loading...</p>
+        </div>
       </div>
 
       <div class="glass-card import-card">
@@ -1668,6 +1687,7 @@ import Base from '@/layouts/Base.astro';
       pollCbStatus().catch(() => {});
       loadCbModels().catch(() => {});
       pollCbSheet().catch(() => {});
+      loadCbSched().catch(() => {});
     }
     if (name === 'tonplace' && !tonplaceLoaded) {
       tonplaceLoaded = true;
@@ -1697,7 +1717,8 @@ import Base from '@/layouts/Base.astro';
       const where = p
         ? `page ${p.pages}, ${p.found} found, ${p.saved || 0} new saved${p.online_total ? ` (${p.online_total} online now)` : ''}`
         : 'starting';
-      cbRunStatus.textContent = s.stopping ? `Stopping... (${where})` : `Running: ${where}.`;
+      const by = s.trigger === 'schedule' ? ' (timer)' : '';
+      cbRunStatus.textContent = s.stopping ? `Stopping... (${where})` : `Running${by}: ${where}.`;
     } else if (r && r.error) {
       cbRunStatus.textContent = `Last run failed: ${r.error}`;
     } else if (r) {
@@ -1723,6 +1744,9 @@ import Base from '@/layouts/Base.astro';
       cbWasRunning = false;
       loadCbModels().catch(() => {});
       setTimeout(() => pollCbSheet().catch(() => {}), 1500);
+    } else if (cbSchedOn.checked) {
+      // Timer runs start by themselves on the server: keep an eye on them.
+      cbPollTimer = setTimeout(pollCbStatus, 30000);
     }
   }
 
@@ -1841,6 +1865,72 @@ import Base from '@/layouts/Base.astro';
       btn.disabled = false;
     }
   });
+
+  // Timer
+
+  const cbSchedOn = document.getElementById('cb-sched-on');
+  const cbSchedEvery = document.getElementById('cb-sched-every');
+  const cbSchedHour = document.getElementById('cb-sched-hour');
+  const cbSchedStatus = document.getElementById('cb-sched-status');
+  const CB_LISTS = { '': 'all genders', f: 'female', m: 'male', c: 'couples', t: 'trans' };
+  for (let h = 0; h < 24; h++) {
+    const o = document.createElement('option');
+    o.value = String(h);
+    o.textContent = `${String(h).padStart(2, '0')}:00`;
+    cbSchedHour.append(o);
+  }
+
+  function renderCbSched(s) {
+    cbSchedOn.checked = s.enabled;
+    cbSchedEvery.value = String(s.every_hours);
+    cbSchedHour.value = String(s.start_hour);
+    const what = `limit ${s.limit}, ${CB_LISTS[s.gender] || s.gender}${s.query ? `, keyword "${s.query}"` : ''}`;
+    cbSchedStatus.textContent = s.active && s.next_run_at
+      ? `On. Next run ${new Date(s.next_run_at).toLocaleString()} (${what}).`
+      : 'Off.';
+  }
+
+  async function saveCbSched() {
+    cbSchedOn.disabled = true;
+    const res = await authedFetch('/admin/chaturbate/schedule', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        enabled: cbSchedOn.checked,
+        every_hours: parseInt(cbSchedEvery.value, 10),
+        start_hour: parseInt(cbSchedHour.value, 10),
+        limit: Math.max(1, Math.min(20000, parseInt(document.getElementById('cb-limit').value, 10) || 1000)),
+        gender: document.getElementById('cb-gender').value,
+        query: document.getElementById('cb-query').value.trim(),
+      }),
+    });
+    cbSchedOn.disabled = false;
+    if (res.ok) {
+      renderCbSched(await res.json());
+      if (cbSchedOn.checked) pollCbStatus().catch(() => {});
+    } else {
+      cbSchedStatus.textContent = await readError(res);
+      cbSchedOn.checked = !cbSchedOn.checked;
+    }
+  }
+
+  async function loadCbSched() {
+    const res = await authedFetch('/admin/chaturbate/schedule');
+    if (!res.ok) return;
+    const s = await res.json();
+    renderCbSched(s);
+    if (s.enabled) {
+      // Show what the timer will parse, so "Run parser" and the timer use the same settings.
+      document.getElementById('cb-limit').value = String(s.limit);
+      document.getElementById('cb-gender').value = s.gender;
+      document.getElementById('cb-query').value = s.query;
+      pollCbStatus().catch(() => {});
+    }
+  }
+
+  cbSchedOn.addEventListener('change', saveCbSched);
+  cbSchedEvery.addEventListener('change', () => { if (cbSchedOn.checked) saveCbSched(); });
+  cbSchedHour.addEventListener('change', () => { if (cbSchedOn.checked) saveCbSched(); });
 
   const cbSheetStatus = document.getElementById('cb-sheet-status');
   const cbSheetBtn = document.getElementById('cb-sheet-btn');
