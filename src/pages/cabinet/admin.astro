@@ -319,6 +319,7 @@ import Base from '@/layouts/Base.astro';
           </label>
           <label class="tp-check"><input type="checkbox" id="cbs-only-ig" /> Only models with Instagram</label>
           <label class="tp-check"><input type="checkbox" id="cbs-retry" /> Retry failed ones</label>
+          <label class="tp-check"><input type="checkbox" id="cbs-randomize" /> Randomize with ChatGPT: every model gets a reworded copy (same language as your text, addressed to her as a woman)</label>
         </div>
         <p class="import-status" id="cbs-status" role="status" aria-live="polite">Loading...</p>
         <div class="import-actions">
@@ -2000,7 +2001,7 @@ import Base from '@/layouts/Base.astro';
     const r = s.last_result;
     if (s.running) {
       const p = s.progress || {};
-      const err = p.last_error ? ` Last error: ${p.last_error}` : '';
+      const err = (p.last_error ? ` Last error: ${p.last_error}` : '') + (p.last_ai_error ? ` ChatGPT: ${p.last_ai_error} (sent the original text).` : '');
       cbsStatus.textContent = `${s.stopping ? 'Stopping' : 'Sending'}: ${p.done || 0} of ${p.total || '?'}${p.current ? `, now ${p.current}` : ''}. Sent ${p.sent || 0}, failed ${p.errors || 0}.${err}`;
     } else if (r) {
       const when = s.last_finished_at ? new Date(s.last_finished_at).toLocaleString() : '';
@@ -2038,6 +2039,7 @@ import Base from '@/layouts/Base.astro';
       delay_max: num('cbs-delay-max', 40, 3, 600),
       only_instagram: document.getElementById('cbs-only-ig').checked,
       retry_errors: document.getElementById('cbs-retry').checked,
+      randomize: document.getElementById('cbs-randomize').checked,
     };
   }
 
@@ -2060,7 +2062,8 @@ import Base from '@/layouts/Base.astro';
       return;
     }
     const names = list.items.slice(0, 15).join(', ') + (list.count > 15 ? ', ...' : '');
-    if (!confirm(`Send "${payload.message}" to ${list.count} model(s)?\n\n${names}`)) {
+    const how = payload.randomize ? ' (reworded by ChatGPT for each model)' : '';
+    if (!confirm(`Send "${payload.message}"${how} to ${list.count} model(s)?\n\n${names}`)) {
       cbsRunBtn.disabled = false;
       return;
     }
