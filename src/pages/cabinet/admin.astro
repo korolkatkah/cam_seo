@@ -1941,7 +1941,7 @@ import Base from '@/layouts/Base.astro';
     const check = await authedFetch('/admin/chaturbate/dm/session/check');
     const c = check.ok ? await check.json() : { ok: false, error: await readError(check) };
     cbsSessionStatus.textContent = c.ok
-      ? `${head} Working: Chaturbate answered (${c.unread} unread conversation(s)).`
+      ? `${head} Working${c.logged_in_as ? `, logged in as ${c.logged_in_as}` : ''}: Chaturbate answered (${c.unread} unread conversation(s)).`
       : `${head} Not working: ${c.error}`;
   }
 
