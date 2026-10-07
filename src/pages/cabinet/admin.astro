@@ -264,40 +264,13 @@ import Base from '@/layouts/Base.astro';
       </div>
 
       <div class="glass-card import-card">
-        <h2>Models <span id="cb-total" class="tp-total"></span></h2>
-        <div class="tp-options">
-          <label class="category-field">
-            Search
-            <input type="text" id="cb-search" placeholder="name, country, tag" autocomplete="off" spellcheck="false" />
-          </label>
-          <label class="category-field">
-            Gender
-            <select id="cb-filter-gender">
-              <option value="">All</option><option value="f">Female</option><option value="m">Male</option>
-              <option value="c">Couple</option><option value="t">Trans</option>
-            </select>
-          </label>
-          <button id="cb-csv-btn" class="import-btn export-btn">Download CSV</button>
-        </div>
-        <p class="import-status" id="cb-models-status">Loading...</p>
-        <div class="targets-table-wrap" id="cb-models-wrap" hidden>
-          <table class="targets-table">
-            <thead><tr><th class="num-h">Rank</th><th>Model</th><th class="num-h">Viewers</th><th class="num-h">On air</th><th class="num-h">Followers</th><th>Gender</th><th class="num-h">Age</th><th>Country</th><th>Parsed</th></tr></thead>
-            <tbody id="cb-models-body"></tbody>
-          </table>
-        </div>
-        <div class="import-actions" style="margin-top:1rem;">
-          <button id="cb-more-btn" class="ghost-btn" hidden>Show more</button>
-        </div>
-        <p class="bulk-hint">Rank is the model's place in Chaturbate's online list (sorted by popularity) at the moment of parsing, inside the gender/keyword filter the run used. Viewers and On air (hours:minutes since her stream started) are also taken at that moment. Latest parse is on top.</p>
-      </div>
-
-      <div class="glass-card import-card">
-        <h2>Google Sheet</h2>
+        <h2>Google Sheet <span id="cb-total" class="tp-total"></span></h2>
         <p class="bulk-hint">Everything the parser collects goes to the "chaturbate" sheet in the same Drive workbook as ton.place: updated during a run (at most once a minute) and right after it ends. Columns you add by hand are kept.</p>
+        <p class="bulk-hint">Rank is the model's place in Chaturbate's online list (sorted by popularity) at the moment of parsing, inside the gender/keyword filter the run used. Viewers and on_air (hours:minutes since her stream started) are taken at that moment too. Latest parse is on top.</p>
         <div class="tp-sheet">
           <p class="import-status" id="cb-sheet-status">Loading...</p>
-          <button id="cb-sheet-btn" class="ghost-btn">Sync Google Sheet now</button>
+          <a id="cb-sheet-link" class="import-btn" href="#" target="_blank" rel="noopener" style="text-decoration:none;" hidden>Open Google Sheet</a>
+          <button id="cb-sheet-btn" class="ghost-btn">Sync now</button>
         </div>
       </div>
     </div>
@@ -1685,7 +1658,7 @@ import Base from '@/layouts/Base.astro';
     if (name === 'chaturbate' && !cbLoaded) {
       cbLoaded = true;
       pollCbStatus().catch(() => {});
-      loadCbModels().catch(() => {});
+      loadCbCount().catch(() => {});
       pollCbSheet().catch(() => {});
       loadCbSched().catch(() => {});
     }
@@ -1701,14 +1674,8 @@ import Base from '@/layouts/Base.astro';
   const cbRunBtn = document.getElementById('cb-run-btn');
   const cbStopBtn = document.getElementById('cb-stop-btn');
   const cbRunStatus = document.getElementById('cb-run-status');
-  const cbSearch = document.getElementById('cb-search');
-  const cbFilterGender = document.getElementById('cb-filter-gender');
-  const cbMoreBtn = document.getElementById('cb-more-btn');
-  const CB_GENDERS = { f: 'female', m: 'male', c: 'couple', s: 'trans' };
-  const CB_PAGE = 100;
   let cbPollTimer = null;
   let cbWasRunning = false;
-  let cbOffset = 0;
 
   function renderCbStatus(s) {
     const r = s.last_result;
@@ -1742,7 +1709,7 @@ import Base from '@/layouts/Base.astro';
       cbPollTimer = setTimeout(pollCbStatus, 2000);
     } else if (cbWasRunning) {
       cbWasRunning = false;
-      loadCbModels().catch(() => {});
+      loadCbCount().catch(() => {});
       setTimeout(() => pollCbSheet().catch(() => {}), 1500);
     } else if (cbSchedOn.checked) {
       // Timer runs start by themselves on the server: keep an eye on them.
@@ -1775,96 +1742,12 @@ import Base from '@/layouts/Base.astro';
     pollCbStatus();
   });
 
-  function cbFilterParams() {
-    const params = new URLSearchParams();
-    if (cbSearch.value.trim()) params.set('q', cbSearch.value.trim());
-    if (cbFilterGender.value) params.set('gender', cbFilterGender.value);
-    return params;
-  }
-
-  function cbNumCell(value) {
-    const td = ofCell(value == null ? '' : value.toLocaleString());
-    td.classList.add('num');
-    return td;
-  }
-
-  async function loadCbModels(append = false) {
-    const statusEl = document.getElementById('cb-models-status');
-    const body = document.getElementById('cb-models-body');
-    cbOffset = append ? cbOffset + CB_PAGE : 0;
-    const params = cbFilterParams();
-    params.set('limit', String(CB_PAGE));
-    params.set('offset', String(cbOffset));
-    const res = await authedFetch(`/admin/chaturbate/models?${params}`);
-    if (!res.ok) {
-      statusEl.textContent = await readError(res);
-      return;
-    }
+  async function loadCbCount() {
+    const res = await authedFetch('/admin/chaturbate/models?limit=1');
+    if (!res.ok) return;
     const data = await res.json();
-    if (!append) body.replaceChildren();
-    for (const m of data.items) {
-      const tr = document.createElement('tr');
-      const linkTd = document.createElement('td');
-      linkTd.className = 'username';
-      const a = document.createElement('a');
-      a.className = 'ig-link';
-      a.href = m.url;
-      a.target = '_blank';
-      a.rel = 'noopener';
-      a.textContent = m.username;
-      linkTd.append(a);
-      const rank = cbNumCell(m.rank);
-      if (m.rank_list) rank.title = `List: ${m.rank_list}`;
-      tr.append(
-        rank,
-        linkTd,
-        cbNumCell(m.viewers),
-        cbNumCell(m.on_air || null),
-        cbNumCell(m.followers),
-        ofCell(CB_GENDERS[m.gender] || m.gender || ''),
-        cbNumCell(m.age),
-        ofCell(m.country || ''),
-        ofCell(m.last_seen_at ? new Date(m.last_seen_at).toLocaleString() : ''),
-      );
-      body.append(tr);
-    }
-    const shown = cbOffset + data.items.length;
-    const filtered = data.total !== data.all_total ? `, ${data.total} match` : '';
-    document.getElementById('cb-total').textContent = `(${data.all_total}${filtered})`;
-    statusEl.textContent = data.all_total === 0 ? 'No models yet. Run the parser.' : '';
-    statusEl.hidden = !statusEl.textContent;
-    document.getElementById('cb-models-wrap').hidden = data.total === 0;
-    cbMoreBtn.hidden = shown >= data.total;
+    document.getElementById('cb-total').textContent = `(${data.all_total} models)`;
   }
-
-  let cbSearchTimer = null;
-  cbSearch.addEventListener('input', () => {
-    clearTimeout(cbSearchTimer);
-    cbSearchTimer = setTimeout(() => loadCbModels().catch(() => {}), 300);
-  });
-  cbFilterGender.addEventListener('change', () => loadCbModels().catch(() => {}));
-  cbMoreBtn.addEventListener('click', () => loadCbModels(true).catch(() => {}));
-
-  document.getElementById('cb-csv-btn').addEventListener('click', async (e) => {
-    const btn = e.currentTarget;
-    const statusEl = document.getElementById('cb-models-status');
-    btn.disabled = true;
-    try {
-      const res = await authedFetch(`/admin/chaturbate/models.csv?${cbFilterParams()}`);
-      if (!res.ok) throw new Error(await readError(res));
-      const url = URL.createObjectURL(await res.blob());
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'chaturbate_models.csv';
-      a.click();
-      URL.revokeObjectURL(url);
-    } catch (err) {
-      statusEl.textContent = err.message;
-      statusEl.hidden = false;
-    } finally {
-      btn.disabled = false;
-    }
-  });
 
   // Timer
 
@@ -1934,28 +1817,25 @@ import Base from '@/layouts/Base.astro';
 
   const cbSheetStatus = document.getElementById('cb-sheet-status');
   const cbSheetBtn = document.getElementById('cb-sheet-btn');
+  const cbSheetLink = document.getElementById('cb-sheet-link');
   let cbSheetTimer = null;
 
   function renderCbSheet(s) {
     const r = s.last_result;
     const when = s.last_finished_at ? new Date(s.last_finished_at).toLocaleString() : '';
-    cbSheetStatus.replaceChildren();
+    const link = s.web_view_link || (r && r.web_view_link);
+    if (link) {
+      cbSheetLink.href = link;
+      cbSheetLink.hidden = false;
+    }
     if (s.running) {
       cbSheetStatus.textContent = 'Updating the sheet...';
     } else if (r && r.error) {
       cbSheetStatus.textContent = `Last sync failed: ${r.error}`;
     } else if (r) {
-      cbSheetStatus.append(`Synced ${when}: ${r.rows} models. `);
-      if (r.web_view_link) {
-        const a = document.createElement('a');
-        a.href = r.web_view_link;
-        a.target = '_blank';
-        a.rel = 'noopener';
-        a.textContent = 'Open in Google Drive';
-        cbSheetStatus.append(a);
-      }
+      cbSheetStatus.textContent = `Synced ${when}: ${r.rows} models.`;
     } else {
-      cbSheetStatus.textContent = 'Not synced since the server started.';
+      cbSheetStatus.textContent = link ? 'Updates by itself after every parser run.' : 'The Drive workbook is not found.';
     }
     cbSheetBtn.disabled = s.running;
   }
