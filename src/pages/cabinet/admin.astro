@@ -328,6 +328,36 @@ import Base from '@/layouts/Base.astro';
       </div>
 
       <div class="glass-card import-card">
+        <h2>Auto-reply</h2>
+        <p class="bulk-hint">When a model the mailing wrote to answers, she gets this second message once. The inbox is checked every 5 minutes; her answer and the reply status go to the Google Sheet ("her_answer", "auto_reply").</p>
+        <label class="category-field">
+          Reply message
+          <textarea id="cbr-msg" rows="4" maxlength="2000" placeholder="Thanks for the answer! ..."></textarea>
+        </label>
+        <div class="tp-ai">
+          <label class="tp-check"><input type="checkbox" id="cbr-randomize" /> Randomize with ChatGPT</label>
+        </div>
+        <div class="tp-options">
+          <label class="category-field">
+            Delay from, sec
+            <input type="number" id="cbr-delay-min" min="2" max="600" value="5" />
+          </label>
+          <label class="category-field">
+            Delay to, sec
+            <input type="number" id="cbr-delay-max" min="2" max="600" value="15" />
+          </label>
+        </div>
+        <p class="import-status" id="cbr-status" role="status" aria-live="polite">Loading...</p>
+        <div class="import-actions">
+          <button id="cbr-save-btn" class="import-btn export-btn">Save</button>
+          <button id="cbr-all-btn" class="import-btn">Reply to all now</button>
+        </div>
+        <div class="tp-auto">
+          <label class="tp-switch"><input type="checkbox" id="cbr-on" role="switch" /> <span>Auto mode: check the inbox every 5 minutes and reply</span></label>
+        </div>
+      </div>
+
+      <div class="glass-card import-card">
         <h2>Google Sheet <span id="cb-total" class="tp-total"></span></h2>
         <p class="bulk-hint">After the online list, the parser opens the public bio of every new model and looks for her Instagram: a free Instagram link in her socials, or "IG: name" / an instagram.com link in her bio or room title. Paid Instagram links hide the name and are skipped. Each bio is re-read after 14 days.</p>
         <p class="bulk-hint">Saved to its own Drive file <b>instagram_cb.xlsx</b> (Stripchat accounts stay in instagram_strip.xlsx). It opens on the <b>chaturbate_instagram</b> sheet (only models with an Instagram, one row per account, most followed first); the <b>chaturbate</b> sheet lists all models. Updated during a run (at most once a minute) and right after it ends. The server can't create that file itself: until an empty instagram_cb.xlsx is uploaded into the Drive folder, the two sheets are written into instagram_strip.xlsx, and they move to instagram_cb.xlsx by themselves once it is there.</p>
@@ -1728,6 +1758,7 @@ import Base from '@/layouts/Base.astro';
       loadCbSched().catch(() => {});
       loadCbsSession().catch(() => {});
       pollCbs().catch(() => {});
+      loadCbr().catch(() => {});
     }
     if (name === 'tonplace' && !tonplaceLoaded) {
       tonplaceLoaded = true;
@@ -2051,6 +2082,116 @@ import Base from '@/layouts/Base.astro';
     cbsStopBtn.disabled = true;
     await authedFetch('/admin/chaturbate/dm/stop', { method: 'POST' });
     pollCbs();
+  });
+
+  // Auto-reply to models who answered the mailing
+
+  const cbrMsg = document.getElementById('cbr-msg');
+  const cbrRandomize = document.getElementById('cbr-randomize');
+  const cbrOn = document.getElementById('cbr-on');
+  const cbrStatus = document.getElementById('cbr-status');
+  const cbrSaveBtn = document.getElementById('cbr-save-btn');
+  const cbrAllBtn = document.getElementById('cbr-all-btn');
+  let cbrTimer = null;
+
+  function renderCbr(a) {
+    cbrOn.checked = a.enabled;
+    if (a.message && !cbrMsg.value.trim()) cbrMsg.value = a.message;
+    cbrRandomize.checked = !!a.randomize;
+    document.getElementById('cbr-delay-min').value = String(a.delay_min);
+    document.getElementById('cbr-delay-max').value = String(a.delay_max);
+    const r = a.last_result;
+    let last = '';
+    if (a.running) {
+      last = a.progress ? ` Replying: ${a.progress.done} of ${a.progress.total}...` : ' Checking the inbox now...';
+    } else if (r && r.error) {
+      last = ` Last check failed: ${r.error}`;
+    } else if (r && r.status === 'ok') {
+      const when = a.last_checked_at ? new Date(a.last_checked_at).toLocaleTimeString() : '';
+      const err = r.errors ? `, ${r.errors} failed (${r.last_error})` : '';
+      last = ` Last ${r.full_scan ? 'full inbox check' : 'check'} ${when}: ${r.incoming} new answer(s) from mailed models, ${r.replied} replied${err}.`;
+    }
+    const head = a.enabled
+      ? `On, checks every ${a.check_every_minutes} min${a.next_check_at ? `, next at ${new Date(a.next_check_at).toLocaleTimeString()}` : ''}.`
+      : 'Off.';
+    cbrStatus.textContent = `${head} Replied today ${a.replied_today}, total ${a.replied_total}.${last}`;
+  }
+
+  function cbrPayload(enabled) {
+    const num = (id, def) => parseFloat(document.getElementById(id).value) || def;
+    return {
+      enabled,
+      message: cbrMsg.value.trim(),
+      randomize: cbrRandomize.checked,
+      delay_min: num('cbr-delay-min', 5),
+      delay_max: num('cbr-delay-max', 15),
+    };
+  }
+
+  async function saveCbr(enabled) {
+    const res = await authedFetch('/admin/chaturbate/dm/auto-reply', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(cbrPayload(enabled)),
+    });
+    if (!res.ok) {
+      cbrStatus.textContent = await readError(res);
+      return false;
+    }
+    renderCbr(await res.json());
+    return true;
+  }
+
+  async function loadCbr() {
+    clearTimeout(cbrTimer);
+    const res = await authedFetch('/admin/chaturbate/dm/auto-reply');
+    if (res.ok) {
+      const a = await res.json();
+      renderCbr(a);
+      if (a.enabled || a.running) cbrTimer = setTimeout(loadCbr, a.running ? 3000 : 60000);
+    }
+  }
+
+  cbrSaveBtn.addEventListener('click', async () => {
+    cbrSaveBtn.disabled = true;
+    if (await saveCbr(cbrOn.checked)) cbrStatus.textContent = 'Saved. ' + cbrStatus.textContent;
+    cbrSaveBtn.disabled = false;
+  });
+
+  cbrAllBtn.addEventListener('click', async () => {
+    if (!cbrMsg.value.trim()) {
+      cbrStatus.textContent = 'Write the reply message first.';
+      cbrMsg.focus();
+      return;
+    }
+    if (!confirm('Go through the WHOLE inbox now and send the reply to every mailed model who answered and has not got it yet?')) return;
+    cbrAllBtn.disabled = true;
+    if (await saveCbr(cbrOn.checked)) {
+      cbrStatus.textContent = 'Checking the inbox...';
+      const res = await authedFetch('/admin/chaturbate/dm/auto-reply/check', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ all: true }),
+      });
+      if (res.ok) {
+        renderCbr(await res.json());
+        loadCbr().catch(() => {});
+      } else {
+        cbrStatus.textContent = await readError(res);
+      }
+    }
+    cbrAllBtn.disabled = false;
+  });
+
+  cbrOn.addEventListener('change', async () => {
+    if (cbrOn.checked && !confirm('Turn on auto-reply? Every mailed model who answers will get the reply message automatically.')) {
+      cbrOn.checked = false;
+      return;
+    }
+    cbrOn.disabled = true;
+    if (!(await saveCbr(cbrOn.checked))) cbrOn.checked = !cbrOn.checked;
+    cbrOn.disabled = false;
+    loadCbr().catch(() => {});
   });
 
   const cbSheetStatus = document.getElementById('cb-sheet-status');
