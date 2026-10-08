@@ -325,6 +325,7 @@ import Base from '@/layouts/Base.astro';
         <div class="import-actions">
           <button id="cbs-run-btn" class="import-btn">Send</button>
           <button id="cbs-stop-btn" class="import-btn export-btn stop-btn" disabled>Stop</button>
+          <button id="cbs-fix-btn" class="ghost-btn">Resend in English to models who got Russian</button>
         </div>
       </div>
 
@@ -1999,10 +2000,17 @@ import Base from '@/layouts/Base.astro';
 
   function renderCbs(s) {
     const r = s.last_result;
-    if (s.running) {
+    if (s.running && s.progress && s.progress.phase === 'scan') {
+      const p = s.progress;
+      cbsStatus.textContent = `Looking for Russian messages: thread ${p.done} of ${p.total}${p.current ? `, ${p.current}` : ''}. Found ${p.russian || 0}.`;
+    } else if (s.running) {
       const p = s.progress || {};
       const err = (p.last_error ? ` Last error: ${p.last_error}` : '') + (p.last_ai_error ? ` ChatGPT: ${p.last_ai_error} (sent the original text).` : '');
       cbsStatus.textContent = `${s.stopping ? 'Stopping' : 'Sending'}: ${p.done || 0} of ${p.total || '?'}${p.current ? `, now ${p.current}` : ''}. Sent ${p.sent || 0}, failed ${p.errors || 0}.${err}`;
+    } else if (r && r.fix_russian) {
+      const when = s.last_finished_at ? new Date(s.last_finished_at).toLocaleString() : '';
+      const err = r.error ? ` ${r.error}` : '';
+      cbsStatus.textContent = `English resend ${r.stopped ? 'stopped' : 'done'} ${when}: ${r.scanned} threads checked, ${r.russian} got Russian, ${r.sent} English sent, ${r.errors} failed.${err}`;
     } else if (r) {
       const when = s.last_finished_at ? new Date(s.last_finished_at).toLocaleString() : '';
       const err = r.error ? ` ${r.error}` : '';
@@ -2109,6 +2117,29 @@ import Base from '@/layouts/Base.astro';
     if (!res.ok) {
       cbsStatus.textContent = await readError(res);
       cbsRunBtn.disabled = false;
+      return;
+    }
+    renderCbs(await res.json());
+    pollCbs();
+  });
+
+  document.getElementById('cbs-fix-btn').addEventListener('click', async (e) => {
+    const btn = e.currentTarget;
+    const payload = cbsPayload();
+    if (!payload.message) {
+      cbsStatus.textContent = 'Write the English message in the Message field first.';
+      return;
+    }
+    if (!confirm(`Check every mailed model's thread and send "${payload.message}"${payload.randomize ? ' (reworded by ChatGPT)' : ''} to those who only got a Russian message?`)) return;
+    btn.disabled = true;
+    const res = await authedFetch('/admin/chaturbate/dm/fix-russian', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    btn.disabled = false;
+    if (!res.ok) {
+      cbsStatus.textContent = await readError(res);
       return;
     }
     renderCbs(await res.json());
