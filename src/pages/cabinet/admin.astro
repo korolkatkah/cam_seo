@@ -2201,14 +2201,14 @@ import Base from '@/layouts/Base.astro';
       cbrMsg.focus();
       return;
     }
-    if (!confirm('Go through the WHOLE inbox now and send the reply to every mailed model who answered and has not got it yet?')) return;
+    if (!confirm('Go through the WHOLE inbox now and send the reply to every mailed model whose last message is unanswered (also those who already got a reply before)?')) return;
     cbrAllBtn.disabled = true;
     if (await saveCbr(cbrOn.checked)) {
       cbrStatus.textContent = 'Checking the inbox...';
       const res = await authedFetch('/admin/chaturbate/dm/auto-reply/check', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ all: true }),
+        body: JSON.stringify({ all: true, again: true }),
       });
       if (res.ok) {
         renderCbr(await res.json());
