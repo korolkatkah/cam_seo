@@ -992,7 +992,8 @@ import Base from '@/layouts/Base.astro';
     stopImportBtn.disabled = !state.running || !!state.stopping;
     stopImportBtn.textContent = state.stopping ? 'Stopping...' : 'Stop import';
     categoryInput.disabled = !!state.running;
-    const categoryNote = state.category ? ` · category ${state.category}` : '';
+    const byTimer = state.trigger === 'schedule' ? ' (by schedule)' : '';
+    const categoryNote = `${byTimer}${state.category ? ` · category ${state.category}` : ''}`;
     if (state.running) {
       const p = state.progress || {};
       const elapsed = state.last_started_at ? Date.now() - new Date(state.last_started_at).getTime() : 0;
@@ -1023,7 +1024,7 @@ import Base from '@/layouts/Base.astro';
       const at = state.last_finished_at ? ` (finished ${new Date(state.last_finished_at).toLocaleString()})` : '';
       const verb = stopped ? 'stopped by you after' : 'checked';
       const lastCategory = state.last_result.category ? ` [${state.last_result.category}]` : '';
-      importStatusEl.textContent = `Last run${at}${lastCategory}: ${verb} ${fetched} profiles, ${saved} new, ${skipped} skipped.`;
+      importStatusEl.textContent = `Last run${byTimer}${at}${lastCategory}: ${verb} ${fetched} profiles, ${saved} new, ${skipped} skipped.`;
     } else {
       importStatusEl.textContent = 'Idle. No import has run since the server started.';
     }
