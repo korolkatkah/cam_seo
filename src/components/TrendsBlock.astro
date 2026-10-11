@@ -472,7 +472,7 @@ const scTagsByNiche: Record<string, { tag: string; models_online: number }[]> = 
         <p class="trends-empty">{t.stripchatSoon}</p>
       )}
       {hasScData && (!section || section === 'hours') && (
-        <div class="trends-card trends-card-wide">
+        <div id="sc-hours" class="trends-card trends-card-wide">
           <h3 class="trends-card-title">{t.scHoursTitle}</h3>
           <p class="hours-caption">{t.hoursCaption}</p>
           <p class="hours-local-note" data-hours-local-note hidden>{t.hoursLocalNote}</p>
@@ -514,7 +514,7 @@ const scTagsByNiche: Record<string, { tag: string; models_online: number }[]> = 
       )}
 
       {hasScData && Object.keys(scTagsByNiche).length > 0 && (!section || section === 'hours') && (
-        <div class="trends-card trends-card-wide">
+        <div id="sc-tags" class="trends-card trends-card-wide">
           <h3 class="trends-card-title">{t.scTagsTitle}</h3>
           <p class="tags-caption">{t.scTagsCaption}</p>
           <select class="niche-select" data-niche-select>
