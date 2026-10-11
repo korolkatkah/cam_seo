@@ -101,7 +101,7 @@ import Base from '@/layouts/Base.astro';
       </div>
 
       <p class="import-status" id="export-status" style="margin-top:1rem;">Idle.</p>
-      <button id="run-export-btn" class="import-btn export-btn">Export to Google Sheet</button>
+      <button id="run-export-btn" class="import-btn export-btn" title="The sheet also refreshes by itself once a day at 00:00 (Kyiv)">Export to Google Sheet</button>
       <p id="export-link" class="import-status" hidden></p>
     </div>
 
@@ -124,7 +124,7 @@ import Base from '@/layouts/Base.astro';
 
     <div class="glass-card import-card">
       <h2>Parser</h2>
-      <p class="bulk-hint">Collects creators from OnlyFans recommendations, walking from each found creator to the next, and saves them to the "onlyfans" sheet of the Google Sheet as it goes.</p>
+      <p class="bulk-hint">Collects creators from OnlyFans recommendations, walking from each found creator to the next, and saves them to the database; the "onlyfans" sheet of the Google Sheet is refreshed once a day at 00:00 (Kyiv) or with the button below.</p>
       <div class="tp-options">
         <label class="category-field">
           New creators per run
@@ -510,7 +510,7 @@ import Base from '@/layouts/Base.astro';
 
       <div class="glass-card import-card">
         <h2>Google Sheet <span id="tp-total" class="tp-total"></span></h2>
-        <p class="bulk-hint">All parsed profiles live in the "tonplace" sheet, updated right after every parsed page and every sent message; each run is logged in the "tonplace_report" sheet. To keep someone out of the mailing, write anything in their "message" cell.</p>
+        <p class="bulk-hint">All parsed profiles live in the "tonplace" sheet, updated once a day at 00:00 (Kyiv) and when you press the button below; each run is logged in the "tonplace_report" sheet. To keep someone out of the mailing, write anything in their "message" cell.</p>
         <div class="tp-sheet">
           <p class="import-status" id="tp-sheet-status">Loading...</p>
           <button id="tp-sheet-btn" class="ghost-btn">Sync Google Sheet now</button>
@@ -2254,7 +2254,7 @@ import Base from '@/layouts/Base.astro';
       const tmp = r.fallback ? ' instagram_cb.xlsx is not in the Drive folder, so the sheets went into the Stripchat file for now: upload an empty instagram_cb.xlsx there and they move over.' : '';
       cbSheetStatus.textContent = `Synced ${when}${where}: ${r.instagram_rows ?? '?'} with Instagram of ${r.rows} models.${tmp}`;
     } else {
-      cbSheetStatus.textContent = link ? 'Updates by itself after every parser run.' : 'No Drive file found yet.';
+      cbSheetStatus.textContent = link ? 'Updates once a day at 00:00 (Kyiv), or press Sync now.' : 'No Drive file found yet.';
     }
     cbSheetBtn.disabled = s.running;
   }
