@@ -23,6 +23,7 @@ import Base from '@/layouts/Base.astro';
       <button class="admin-tab" role="tab" data-tab="tonplace" aria-selected="false">ton.place</button>
       <button class="admin-tab" role="tab" data-tab="onlyfans" aria-selected="false">OnlyFans</button>
       <button class="admin-tab" role="tab" data-tab="chaturbate" aria-selected="false">Chaturbate</button>
+      <button class="admin-tab" role="tab" data-tab="igcomments" aria-selected="false">IG comments</button>
     </div>
 
     <div data-panel="main">
@@ -105,6 +106,62 @@ import Base from '@/layouts/Base.astro';
       <p id="export-link" class="import-status" hidden></p>
     </div>
 
+    </div>
+
+    <div data-panel="igcomments" hidden>
+    <div class="glass-card import-card">
+      <div class="targets-header">
+        <h2>Instagram comments check</h2>
+        <span id="igc-badge" class="ofa-badge">...</span>
+      </div>
+      <p class="bulk-hint">Checks the latest posts of every account in the database and shows which of the commenter accounts left a comment there. Runs in this browser through the <b>IG Worker Checker</b> extension (<code>D:\IG-WORKER-CHECKER</code>), using the Instagram account you are logged into in this browser; no password is entered anywhere. Keep this tab open while it runs.</p>
+      <div class="igc-lists">
+        <label class="category-field">
+          <span>Commenter accounts <span id="igc-authors-count" class="tp-total"></span></span>
+          <textarea id="igc-authors" rows="6" spellcheck="false" placeholder="@worker_one&#10;worker_two&#10;https://www.instagram.com/worker_three/"></textarea>
+        </label>
+        <label class="category-field">
+          <span>Database (accounts to check) <span id="igc-targets-count" class="tp-total"></span></span>
+          <textarea id="igc-targets" rows="6" spellcheck="false" placeholder="One per line: username, @username or profile link"></textarea>
+        </label>
+      </div>
+      <div class="tp-options">
+        <label class="category-field">
+          Posts per account
+          <input type="number" id="igc-posts" min="1" max="12" value="3" />
+        </label>
+        <label class="category-field">
+          Comment pages per post
+          <input type="number" id="igc-pages" min="1" max="20" value="3" />
+        </label>
+        <label class="category-field">
+          Delay, ms
+          <input type="number" id="igc-delay" min="500" max="30000" step="100" value="2000" />
+        </label>
+        <label class="tp-check"><input type="checkbox" id="igc-only-new" checked /> Skip already checked</label>
+      </div>
+      <p class="import-status" id="igc-status" role="status" aria-live="polite">Idle.</p>
+      <div class="progress" id="igc-progress" hidden aria-hidden="true">
+        <div class="progress__fill" id="igc-progress-fill"></div>
+      </div>
+      <div class="import-actions">
+        <button id="igc-start-btn" class="import-btn" disabled>Check comments</button>
+        <button id="igc-stop-btn" class="import-btn export-btn stop-btn" disabled>Stop</button>
+        <button id="igc-csv-btn" class="import-btn export-btn" disabled>Download CSV</button>
+        <button id="igc-clear-btn" class="ghost-btn">Clear results</button>
+      </div>
+    </div>
+
+    <div class="glass-card import-card">
+      <h2>Results <span id="igc-summary" class="tp-total"></span></h2>
+      <div class="targets-table-wrap">
+        <table class="targets-table">
+          <thead><tr><th>#</th><th>Account</th><th>Commented</th><th>Missing</th><th>Status</th></tr></thead>
+          <tbody id="igc-body"></tbody>
+        </table>
+      </div>
+      <pre id="igc-log" class="igc-log"></pre>
+    </div>
     </div>
 
     <div data-panel="onlyfans" hidden>
@@ -592,6 +649,14 @@ import Base from '@/layouts/Base.astro';
   .tp-variants li { margin-bottom: 0.5rem; }
   .tp-check { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--fg-muted); padding-bottom: 0.6rem; }
   .tp-total { font-size: 0.85rem; font-weight: 400; color: var(--fg-muted); }
+  .igc-lists { display: grid; grid-template-columns: 1fr 2fr; gap: 1rem; }
+  @media (max-width: 700px) { .igc-lists { grid-template-columns: 1fr; } }
+  .igc-lists textarea { font-family: ui-monospace, Consolas, monospace; font-size: 0.85rem; min-height: 9rem; }
+  .igc-yes { color: #1e6b34; font-weight: 600; }
+  .igc-no { color: #b42318; font-weight: 600; }
+  .igc-comment { font-size: 0.8rem; color: var(--fg-muted); }
+  .igc-log { margin: 1rem 0 0; max-height: 200px; overflow: auto; font-size: 0.75rem; background: var(--bg-subtle); padding: 0.5rem; border-radius: 8px; white-space: pre-wrap; }
+  .igc-log:empty { display: none; }
   .category-field textarea,
   .category-field select {
     font: inherit;
@@ -1763,6 +1828,7 @@ import Base from '@/layouts/Base.astro';
       pollCbs().catch(() => {});
       loadCbr().catch(() => {});
     }
+    if (name === 'igcomments') igcPing();
     if (name === 'tonplace' && !tonplaceLoaded) {
       tonplaceLoaded = true;
       loadTonplace();
@@ -2961,6 +3027,240 @@ import Base from '@/layouts/Base.astro';
     pollTpSend().catch(() => {});
     loadTpProfiles().catch(() => {});
   }
+
+  // --- Instagram comments check (runs in this browser via the IG Worker Checker extension) ---
+
+  const igcAuthorsEl = document.getElementById('igc-authors');
+  const igcTargetsEl = document.getElementById('igc-targets');
+  const igcPostsEl = document.getElementById('igc-posts');
+  const igcPagesEl = document.getElementById('igc-pages');
+  const igcDelayEl = document.getElementById('igc-delay');
+  const igcOnlyNewEl = document.getElementById('igc-only-new');
+  const igcStatusEl = document.getElementById('igc-status');
+  const igcBadgeEl = document.getElementById('igc-badge');
+  const igcProgressEl = document.getElementById('igc-progress');
+  const igcProgressFillEl = document.getElementById('igc-progress-fill');
+  const igcStartBtn = document.getElementById('igc-start-btn');
+  const igcStopBtn = document.getElementById('igc-stop-btn');
+  const igcCsvBtn = document.getElementById('igc-csv-btn');
+  const igcClearBtn = document.getElementById('igc-clear-btn');
+  const igcBodyEl = document.getElementById('igc-body');
+  const igcSummaryEl = document.getElementById('igc-summary');
+  const igcLogEl = document.getElementById('igc-log');
+  const IGC_KEY = 'igc_state';
+  let igcExtVersion = null;
+  let igcRunning = false;
+  let igcResults = {}; // username -> result from the extension, plus the commenter list it was checked against
+  let igcOrder = [];
+  let igcRunAuthors = [];
+
+  function igcParse(text) {
+    const out = [];
+    for (const raw of String(text || '').split(/[\r\n,;\t ]+/)) {
+      let s = raw.trim();
+      const m = s.match(/instagram\.com\/([^/?#\s]+)/i);
+      if (m) s = m[1];
+      s = s.replace(/^@/, '').toLowerCase();
+      if (/^[a-z0-9._]{1,30}$/.test(s) && !out.includes(s)) out.push(s);
+    }
+    return out;
+  }
+
+  function igcEsc(s) {
+    return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+
+  function igcSave() {
+    try {
+      localStorage.setItem(IGC_KEY, JSON.stringify({
+        authors: igcAuthorsEl.value, targets: igcTargetsEl.value, posts: igcPostsEl.value, pages: igcPagesEl.value,
+        delay: igcDelayEl.value, onlyNew: igcOnlyNewEl.checked, results: igcResults, order: igcOrder,
+      }));
+    } catch {}
+  }
+
+  function igcLoad() {
+    try {
+      const st = JSON.parse(localStorage.getItem(IGC_KEY) || 'null');
+      if (!st) return;
+      igcAuthorsEl.value = st.authors || '';
+      igcTargetsEl.value = st.targets || '';
+      igcPostsEl.value = st.posts || 3;
+      igcPagesEl.value = st.pages || 3;
+      igcDelayEl.value = st.delay || 2000;
+      igcOnlyNewEl.checked = st.onlyNew !== false;
+      igcResults = st.results || {};
+      igcOrder = st.order || [];
+    } catch {}
+  }
+
+  function igcLog(msg) {
+    igcLogEl.textContent = `[${new Date().toLocaleTimeString()}] ${msg}\n` + igcLogEl.textContent.slice(0, 20000);
+  }
+
+  function igcCounts() {
+    document.getElementById('igc-authors-count').textContent = `(${igcParse(igcAuthorsEl.value).length})`;
+    document.getElementById('igc-targets-count').textContent = `(${igcParse(igcTargetsEl.value).length})`;
+  }
+
+  function igcCommented(r) {
+    return [...new Set((r.comments || []).map((c) => c.author))];
+  }
+
+  function igcRender() {
+    const rows = igcOrder.map((u, i) => {
+      const r = igcResults[u];
+      const link = `<a href="https://www.instagram.com/${u}/" target="_blank" rel="noopener">@${u}</a>`;
+      if (!r) return `<tr><td>${i + 1}</td><td>${link}</td><td>-</td><td>-</td><td>waiting</td></tr>`;
+      const done = igcCommented(r);
+      const missing = (r.authors || []).filter((a) => !done.includes(a));
+      const commented = done.length
+        ? done.map((a) => `<div class="igc-yes">@${a}</div>`).join('') + (r.comments || []).map((c) =>
+          `<div class="igc-comment">@${igcEsc(c.author)} on <a href="https://www.instagram.com/p/${igcEsc(c.shortcode)}/" target="_blank" rel="noopener">post</a>: ${igcEsc(c.text)}</div>`).join('')
+        : '<span class="igc-no">none</span>';
+      const miss = r.error || !r.postsChecked ? '-' : missing.length ? missing.map((a) => `<div class="igc-no">@${a}</div>`).join('') : '<span class="igc-yes">none</span>';
+      return `<tr><td>${i + 1}</td><td>${link}</td><td>${commented}</td><td>${miss}</td><td>${igcEsc(r.status || '')}</td></tr>`;
+    });
+    igcBodyEl.innerHTML = rows.join('');
+
+    const checked = igcOrder.filter((u) => igcResults[u]);
+    let all = 0, some = 0, none = 0;
+    checked.forEach((u) => {
+      const r = igcResults[u];
+      const n = igcCommented(r).length;
+      if (n && n >= (r.authors || []).length) all++;
+      else if (n) some++;
+      else none++;
+    });
+    igcSummaryEl.textContent = igcOrder.length
+      ? `checked ${checked.length} of ${igcOrder.length} · by all commenters: ${all} · by some: ${some} · none: ${none}`
+      : '';
+    igcCsvBtn.disabled = !checked.length;
+  }
+
+  function igcSetRunning(on) {
+    igcRunning = on;
+    igcStartBtn.disabled = on || !igcExtVersion;
+    igcStopBtn.disabled = !on;
+    igcClearBtn.disabled = on;
+    igcProgressEl.hidden = !on;
+  }
+
+  function igcSend(msg) {
+    window.postMessage({ ewoIgc: msg }, window.location.origin);
+  }
+
+  window.addEventListener('message', (e) => {
+    if (e.source !== window || !e.data || !e.data.ewoIgcEvent) return;
+    const ev = e.data.ewoIgcEvent;
+    if (ev.type === 'pong') {
+      igcExtVersion = ev.version;
+      igcBadgeEl.textContent = `Extension v${ev.version}`;
+      igcBadgeEl.classList.add('is-online');
+      if (!igcRunning) {
+        igcStartBtn.disabled = false;
+        if (/not found/.test(igcStatusEl.textContent)) igcStatusEl.textContent = 'Idle.';
+      }
+    } else if (ev.type === 'log') {
+      igcLog(ev.message);
+    } else if (ev.type === 'progress') {
+      igcProgressFillEl.style.width = `${Math.round((ev.done / Math.max(1, ev.total)) * 100)}%`;
+      igcStatusEl.textContent = ev.current ? `Checking @${ev.current} (${ev.done + 1} of ${ev.total})...` : `Checked ${ev.done} of ${ev.total}.`;
+    } else if (ev.type === 'result') {
+      const r = ev.result;
+      igcResults[r.username] = { ...r, authors: igcRunAuthors };
+      const done = igcCommented(r);
+      igcLog(`@${r.username}: ${done.length ? 'commented by ' + done.map((a) => '@' + a).join(', ') : 'no comments'} (${r.status})`);
+      igcSave();
+      igcRender();
+    } else if (ev.type === 'done') {
+      igcSetRunning(false);
+      igcStatusEl.textContent = ev.stopped ? 'Stopped.' : 'Done.';
+    } else if (ev.type === 'error') {
+      igcSetRunning(false);
+      igcStatusEl.textContent = `Error: ${ev.message}`;
+      igcLog(`Error: ${ev.message}`);
+    } else if (ev.type === 'disconnected' && igcRunning) {
+      igcSetRunning(false);
+      igcStatusEl.textContent = 'The extension stopped responding (reloaded or disabled?). Start again; checked accounts are kept.';
+    }
+  });
+
+  function igcPing() {
+    igcSend({ type: 'ping' });
+    setTimeout(() => {
+      if (igcExtVersion) return;
+      igcBadgeEl.textContent = 'Extension not found';
+      igcBadgeEl.classList.remove('is-online');
+      igcStartBtn.disabled = true;
+      igcStatusEl.textContent = 'Extension not found: install IG Worker Checker (chrome://extensions, Developer mode, Load unpacked, folder D:\\IG-WORKER-CHECKER) and reload this page.';
+    }, 1500);
+  }
+
+  igcStartBtn.addEventListener('click', () => {
+    if (igcRunning) return;
+    const authors = igcParse(igcAuthorsEl.value);
+    const targets = igcParse(igcTargetsEl.value).filter((u) => !authors.includes(u));
+    if (!authors.length) { igcStatusEl.textContent = 'Add at least one commenter account.'; return; }
+    if (!targets.length) { igcStatusEl.textContent = 'The database is empty.'; return; }
+    targets.forEach((u) => { if (!igcOrder.includes(u)) igcOrder.push(u); });
+    const sameAuthors = (r) => r.authors && r.authors.length === authors.length && authors.every((a) => r.authors.includes(a));
+    const queue = igcOnlyNewEl.checked
+      ? targets.filter((u) => !igcResults[u] || igcResults[u].error || !sameAuthors(igcResults[u]))
+      : targets;
+    igcSave();
+    igcRender();
+    if (!queue.length) { igcStatusEl.textContent = 'All accounts are already checked against these commenters.'; return; }
+    igcRunAuthors = authors;
+    igcSetRunning(true);
+    igcProgressFillEl.style.width = '0%';
+    igcStatusEl.textContent = `Starting: ${queue.length} account(s)...`;
+    igcSend({
+      type: 'start', authors, targets: queue,
+      posts: Number(igcPostsEl.value), commentPages: Number(igcPagesEl.value), delay: Number(igcDelayEl.value),
+    });
+  });
+
+  igcStopBtn.addEventListener('click', () => {
+    igcSend({ type: 'stop' });
+    igcStatusEl.textContent = 'Stopping...';
+  });
+
+  igcClearBtn.addEventListener('click', () => {
+    if (!confirm('Delete all comment check results?')) return;
+    igcResults = {};
+    igcOrder = [];
+    igcLogEl.textContent = '';
+    igcSave();
+    igcRender();
+  });
+
+  igcCsvBtn.addEventListener('click', () => {
+    const q = (s) => `"${String(s).replace(/"/g, '""')}"`;
+    const lines = [['account', 'commented by', 'missing', 'posts', 'comments', 'status', 'checked at'].map(q).join(';')];
+    for (const u of igcOrder) {
+      const r = igcResults[u];
+      if (!r) continue;
+      const done = igcCommented(r);
+      lines.push([
+        u, done.join(' '), (r.authors || []).filter((a) => !done.includes(a)).join(' '),
+        [...new Set((r.comments || []).map((c) => `https://www.instagram.com/p/${c.shortcode}/`))].join(' '),
+        (r.comments || []).map((c) => `@${c.author}: ${c.text}`).join(' | '), r.status || '', r.checkedAt || '',
+      ].map(q).join(';'));
+    }
+    const blob = new Blob(['\ufeff' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `ig-comments-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  });
+
+  [igcAuthorsEl, igcTargetsEl].forEach((el) => el.addEventListener('input', igcCounts));
+  [igcAuthorsEl, igcTargetsEl, igcPostsEl, igcPagesEl, igcDelayEl, igcOnlyNewEl].forEach((el) => el.addEventListener('change', igcSave));
+  igcLoad();
+  igcCounts();
+  igcRender();
 
   async function init() {
     try {
