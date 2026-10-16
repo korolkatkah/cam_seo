@@ -4,6 +4,16 @@ Running log of daily/session-based SEO & promotion action plans. Newest entry on
 
 ---
 
+## 2026-10-08 — GSC check + indexing requests
+
+**GSC (API, 28 d to 2026-10-06):** 9 impressions / 0 clicks / avg pos 4.9 (prev 28 d: 23 / 0 / 16.5). 8 of 9 impressions are the homepage; no queries reported. URL Inspection: `/` indexed (crawled 10-04); `/model-promotion`, `/best-streaming-times-by-region`, `/how-cam-algorithm-ranks-rooms`, `/stripscore-cam-rank-explained`, `/new-model-growth` = "Crawled - currently not indexed". `/stripscore-cam-rank-explained` last crawled 2026-07-24 (before the Aug retitle/links). Phase 1–3 pages from 09-24 (`/best-cam-sites-for-models`, `/what-is-stripchat`, `/ru/what-is-webcam`) = "URL is unknown to Google" although present in the live sitemap (159 URLs); Google last downloaded the sitemap 09-23.
+
+**Done today:** resubmitted `https://ewohub.com/sitemap-index.xml` (API, 204; now pending). Requested indexing in the GSC UI for `/stripscore-cam-rank-explained`, `/best-cam-sites-for-models`, `/what-is-stripchat`, `/ru/what-is-webcam`.
+
+**Found broken:** scheduled tasks `ewo-daily-article`, `ewo-daily-article-pm`, `ewo-seo-monitoring` are no longer in the scheduled-tasks list (only two finished one-offs remain). No new content pages since 09-24. Any recreated article task must target the current EN/RU/RO locale set, not the old 8. GA4 not checked (Claude in Chrome was disconnected at the time).
+
+---
+
 ## 2026-09-24 — Phase 1 shipped: RU model-attraction cluster + competitor findings
 
 **Shipped (RU only, no EN/RO counterparts — separate content from RU keyword research, so no hreflang pairs; self-canonical + `hreflang="ru"`):** `/ru/what-is-webcam` (вебкам это / вебкам модель / что такое вебкам — 8100+6600+1300/mo), `/ru/webcam-work` (вебкам работа — 3600/mo), `/ru/webcam-studio` (вебкам студия — 1600/mo), `/ru/webcam-studio-spb` (вебкам студия спб — 720/mo, geo pilot; deliberately no invented local addresses — a verification checklist instead). All in `ru/blog.astro`. Volumes are Semrush **Google.ru**; Semrush has no Yandex database — verify against Yandex Wordstat (wordstat.yandex.com works from this network, yandex.ru times out; needs Yandex ID login).

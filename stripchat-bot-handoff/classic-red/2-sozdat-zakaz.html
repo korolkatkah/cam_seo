@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Создать заказ — Stripchat traffic promo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --page: #0B0B0B;
+    --bg: #141414;
+    --bg-bar: #1A1A1A;
+    --surface: #212121;
+    --surface-2: #2B2B2B;
+    --border: #363636;
+    --divider: #2E2E2E;
+    --text: #FFFFFF;
+    --text-2: #D0D0D0;
+    --muted: #A8A8A8;
+    --faint: #7A7A7A;
+    --accent: #A2262E;
+    --accent-text: #FF5A62;
+    --accent-soft: #3A1A1D;
+    --info: #5B9BFF;
+    --info-soft: #172338;
+    --err-soft: #2A1719;
+    --err-text: #FFB4B4;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page); color: var(--text); font-family: Manrope, system-ui, sans-serif; font-variant-numeric: tabular-nums; }
+  header.page { padding: 32px 32px 8px; }
+  header.page h1 { margin: 0 0 6px; font-size: 28px; font-weight: 800; }
+  header.page p { margin: 0; color: var(--muted); font-size: 15px; }
+  .gallery { display: flex; flex-wrap: wrap; gap: 40px; padding: 32px; align-items: flex-start; }
+  figure { margin: 0; display: flex; flex-direction: column; gap: 12px; }
+  figcaption { font-size: 15px; font-weight: 700; color: var(--text-2); }
+
+  /* phone frame with Telegram-like header */
+  .phone { width: 390px; height: 844px; border-radius: 28px; overflow: hidden; background: var(--bg-bar); border: 1px solid var(--surface-2); display: flex; flex-direction: column; position: relative; }
+  .tg-head { height: 64px; flex: none; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; background: var(--bg-bar); }
+  .tg-head b { font-size: 19px; font-weight: 700; }
+  .tg-head span { color: var(--faint); font-size: 22px; letter-spacing: 2px; }
+  .sheet { flex: 1; background: var(--bg); border-radius: 18px 18px 0 0; padding: 22px 18px 24px; overflow-y: auto; display: flex; flex-direction: column; gap: 18px; }
+  .tg-foot { height: 44px; flex: none; display: flex; align-items: center; justify-content: center; color: var(--faint); font-size: 14px; background: var(--bg-bar); }
+
+  /* buttons: blue → red accent, green → graphite, red → outline */
+  .btns { display: flex; flex-wrap: wrap; gap: 10px; align-items: stretch; }
+  .btns--split { justify-content: space-between; }
+  .btns--center { justify-content: center; }
+  .btn { min-height: 44px; padding: 0 18px; border-radius: 12px; border: 0; font-family: inherit; font-size: 16px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; cursor: pointer; }
+  .btn--primary { background: var(--accent); color: #FFFFFF; }
+  .btn--secondary { background: var(--surface-2); color: var(--text); }
+  .btn--outline { background: transparent; color: var(--accent-text); border: 1px solid var(--accent); }
+  .btn--balance { flex-direction: column; align-items: flex-start; gap: 0; padding: 8px 16px; background: var(--surface-2); color: var(--text); line-height: 1.2; }
+  .btn--balance small { font-size: 12px; color: var(--muted); font-weight: 600; }
+  .btn--block { width: 100%; min-height: 52px; font-size: 17px; }
+
+  /* orders table */
+  .table-wrap { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th { text-align: left; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; padding: 12px 6px; background: var(--surface); border-bottom: 1px solid var(--border); }
+  td { padding: 12px 6px; border-bottom: 1px solid var(--divider); vertical-align: middle; }
+  tr:last-child td { border-bottom: 0; }
+  td.name { font-weight: 700; font-size: 13px; overflow-wrap: anywhere; } td:first-child, th:first-child { padding-left: 12px; } td:last-child, th:last-child { padding-right: 10px; }
+  td.time { color: var(--text-2); line-height: 1.45; white-space: nowrap; font-size: 13px; }
+  .status { display: inline-flex; align-items: center; height: 24px; padding: 0 8px; border-radius: 12px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+  .status--done { background: var(--surface-2); color: var(--text-2); }
+  .status--cancel { background: var(--err-soft); color: var(--err-text); }
+  .status--plan { background: var(--info-soft); color: #9CC2FF; }
+  .status--run { background: var(--accent-soft); color: #FF8A90; }
+  .icon-btn { width: 36px; height: 36px; border-radius: 10px; border: 0; background: var(--surface-2); color: var(--err-text); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+  .icon-btn--cancel { background: transparent; border: 1px solid #3A2A2E; }
+
+  /* form */
+  label.f { display: flex; flex-direction: column; gap: 8px; font-size: 15px; font-weight: 600; color: var(--text-2); }
+  .input, select.input { height: 52px; border-radius: 12px; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: inherit; font-size: 16px; padding: 0 14px; outline: none; width: 100%; color-scheme: dark; }
+  .input::placeholder { color: var(--faint); }
+  .row-inline { display: flex; align-items: center; gap: 12px; font-size: 15px; font-weight: 600; color: var(--text-2); }
+  .time-select { height: 52px; min-width: 150px; border-radius: 12px; background: var(--accent); color: #FFFFFF; border: 0; font-family: inherit; font-size: 20px; font-weight: 700; padding: 0 14px; color-scheme: dark; }
+  .note { padding: 14px 16px; border-radius: 12px; background: var(--info-soft); color: #C9DCFF; font-size: 15px; line-height: 1.45; }
+  .note b { color: #FFFFFF; }
+  .rules { font-size: 14px; line-height: 1.55; color: var(--text-2); }
+  .rules b { color: var(--text); }
+  .rules ul { margin: 6px 0 0; padding-left: 18px; }
+  .rules a { color: var(--accent-text); word-break: break-all; }
+
+  /* open time dropdown */
+  .dropdown-wrap { position: relative; }
+  .dropdown { position: absolute; left: 0; top: 58px; width: 150px; max-height: 420px; overflow: hidden; border-radius: 12px; border: 1px solid var(--border); background: var(--surface); box-shadow: 0 12px 32px rgba(0,0,0,0.5); z-index: 3; }
+  .dropdown div { height: 40px; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 700; }
+  .dropdown .cur { background: var(--accent); color: #FFFFFF; }
+  .dropdown .free { color: var(--text); }
+  .dropdown .busy { color: #5A5A5A; text-decoration: line-through; background: repeating-linear-gradient(135deg, var(--surface) 0 6px, #262626 6px 12px); }
+
+  /* profile */
+  .center { text-align: center; display: flex; flex-direction: column; gap: 10px; align-items: center; }
+  .center h2 { margin: 6px 0 4px; font-size: 26px; font-weight: 800; }
+  .kv { width: 100%; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); padding: 4px 16px; }
+  .kv div { display: flex; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid var(--divider); font-size: 15px; }
+  .kv div:last-child { border-bottom: 0; }
+  .kv span { color: var(--muted); }
+
+  /* top-up */
+  .amount { height: 60px; border-radius: 14px; border: 2px solid var(--accent); background: var(--surface); color: var(--text); font-family: inherit; font-size: 24px; font-weight: 800; padding: 0 16px; outline: none; width: 100%; }
+  .pay { min-height: 60px; border-radius: 14px; background: var(--accent); color: #FFFFFF; border: 0; font-family: inherit; display: flex; align-items: center; justify-content: center; gap: 18px; font-size: 18px; font-weight: 800; width: 100%; cursor: pointer; }
+  .pay small { display: flex; flex-direction: column; align-items: flex-start; font-size: 11px; font-weight: 600; opacity: 0.85; line-height: 1.2; }
+  .pay small b { font-size: 15px; }
+  .price-main { align-self: center; width: 220px; padding: 20px; border-radius: 16px; background: var(--accent); color: #FFFFFF; text-align: center; display: flex; flex-direction: column; gap: 4px; }
+  .price-main span { font-size: 16px; font-weight: 700; opacity: 0.9; }
+  .price-main b { font-size: 40px; font-weight: 800; }
+  .price-main small { font-size: 15px; opacity: 0.9; }
+  .prices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .price { padding: 18px 12px; border-radius: 14px; background: var(--surface); border: 1px solid var(--border); text-align: center; display: flex; flex-direction: column; gap: 4px; }
+  .price b { font-size: 28px; font-weight: 800; }
+  .price span { font-size: 15px; color: var(--muted); }
+
+  /* referral */
+  .ref-link { display: flex; align-items: center; gap: 8px; padding: 6px 6px 6px 14px; border-radius: 12px; background: var(--surface); border: 1px solid var(--border); }
+  .ref-link span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; color: var(--text-2); font-weight: 600; }
+  .stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .stat { padding: 16px; border-radius: 14px; background: var(--surface); border: 1px solid var(--border); display: flex; flex-direction: column; gap: 4px; }
+  .stat span { font-size: 13px; color: var(--muted); font-weight: 600; }
+  .stat b { font-size: 26px; font-weight: 800; }
+
+
+  /* tools page */
+  .tools-label { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: -8px; }
+  .tools { flex-shrink: 0; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); overflow: hidden; }
+  .tool { display: flex; align-items: center; gap: 12px; padding: 10px 14px; color: var(--text); text-decoration: none; border-bottom: 1px solid var(--divider); }
+  .tool:last-child { border-bottom: 0; }
+  .tool:hover { background: var(--surface-2); }
+  .tool__icon { flex: none; width: 38px; height: 38px; border-radius: 10px; background: var(--accent-soft); color: var(--accent-text); display: flex; align-items: center; justify-content: center; }
+  .tool__text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  .tool__text b { font-size: 15px; font-weight: 700; }
+  .tool__text small { font-size: 12.5px; color: var(--muted); line-height: 1.35; }
+  .tool__arrow { flex: none; color: var(--faint); font-size: 16px; }
+  @media (max-width: 460px) { .gallery { padding: 16px; } .phone { width: calc(100vw - 32px); } }
+</style>
+</head>
+<body>
+<main class="gallery" style="justify-content:center">
+<div class="phone">
+      <div class="tg-head"><b>Stripchat traffic promo</b><span>⋮</span></div>
+      <div class="sheet">
+        <div class="btns btns--split">
+          <a class="btn btn--primary" href="1-istoriya-zakazov.html">История заказов</a>
+          <a class="btn btn--secondary" href="3-profil.html">Профиль</a>
+        </div>
+        <label class="f">Имя пользователя<input class="input" placeholder="Введите имя пользователя"></label>
+        <label class="f">Дата<input class="input" type="date" value="2026-10-10"></label>
+        <div class="row-inline">Начало
+          <select class="time-select" aria-label="Время начала">
+            <option>00:00</option><option>01:00</option><option>02:00</option>
+            <option disabled>03:00 — занято</option><option disabled>04:00 — занято</option>
+            <option>05:00</option><option>06:00</option><option>07:00</option><option>08:00</option>
+            <option disabled>09:00 — занято</option><option disabled>10:00 — занято</option>
+            <option>11:00</option><option>12:00</option><option>13:00</option><option>14:00</option>
+            <option selected>15:00</option><option>16:00</option><option>17:00</option>
+            <option disabled>18:00 — занято</option><option>19:00</option><option>20:00</option>
+            <option>21:00</option><option>22:00</option><option>23:00</option>
+          </select>
+        </div>
+        <div class="note"><b>Важно:</b> время указано в вашем часовом поясе!</div>
+        <label class="f">Продолжительность, часов<input class="input" type="number" min="1" placeholder="Введите продолжительность"></label>
+        <button class="btn btn--primary btn--block">Отправить</button>
+        <div class="rules">
+          <b>ВАЖНО:</b> детальная инструкция — <a href="https://teletype.in/@webcamtraffic/stripchat-traffic-bot">teletype.in/@webcamtraffic/stripchat-traffic-bot</a>
+          <ul>
+            <li>Модель должна быть онлайн за 15 минут до продвижения!</li>
+            <li>Если время занято — переставьте на несколько часов вперёд/назад или выберите следующий день.</li>
+            <li>Продвижение начнётся автоматически в выбранное время.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tg-foot">@Stripchat_traffic_bot</div>
+    </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,774 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>Stripchat traffic promo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Stripchat Traffic Bot — Telegram WebApp. Design tokens from the approved "red" mockup. */
+:root {
+  --bg: #141414;
+  --bg-bar: #1A1A1A;
+  --surface: #212121;
+  --surface-2: #2B2B2B;
+  --border: #363636;
+  --border-2: #3A3A3A;
+  --divider: #2E2E2E;
+  --line: #262626;
+
+  --text: #FFFFFF;
+  --text-2: #D0D0D0;
+  --muted: #A8A8A8;
+  --faint: #7A7A7A;
+  --disabled: #4A4A4A;
+
+  --accent: #A2262E;        /* buttons, selected hours, active tier; white text on top */
+  --accent-text: #FF5A62;   /* links, active tab, accent text on dark */
+  --accent-soft: #3A1A1D;   /* selected chip background */
+  --accent-soft-text: #FF8A90;
+
+  --info: #5B9BFF;
+  --info-soft: #172338;
+  --info-text: #9CC2FF;
+  --err-soft: #2A1719;
+  --err-text: #FFB4B4;
+  --err-border: #3A2A2E;
+
+  --radius-s: 12px;
+  --radius-m: 14px;
+  --radius-l: 18px;
+  --tabbar-h: 72px;
+  --font: 'Manrope', system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font-family: var(--font); font-variant-numeric: tabular-nums; -webkit-tap-highlight-color: transparent; }
+button, input { font-family: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: not-allowed; }
+a { color: var(--accent-text); }
+
+#app { min-height: 100vh; display: flex; flex-direction: column; }
+.screen { flex: 1; padding: 20px 16px calc(var(--tabbar-h) + 120px); display: flex; flex-direction: column; gap: 22px; max-width: 520px; width: 100%; margin: 0 auto; }
+.screen--plain { padding-bottom: 24px; }
+
+.head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.head__sub { font-size: 13px; color: var(--muted); font-weight: 600; }
+h1 { margin: 0; font-size: 26px; font-weight: 800; letter-spacing: -0.02em; }
+.label { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.col { display: flex; flex-direction: column; gap: 10px; }
+.muted { color: var(--muted); }
+.small { font-size: 13px; }
+
+.pill { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px; border-radius: 22px; background: var(--surface-2); color: var(--text); text-decoration: none; font-weight: 700; font-size: 15px; border: 0; }
+
+.field { display: flex; align-items: center; height: 52px; border-radius: var(--radius-m); background: var(--surface); border: 1px solid var(--border); padding: 0 14px; gap: 4px; }
+.field__prefix { color: var(--faint); font-size: 15px; }
+.field input { flex: 1; min-width: 0; background: transparent; border: 0; outline: none; color: var(--text); font-size: 16px; font-weight: 700; }
+.field--big { height: 60px; border-color: var(--accent); }
+.field--big input { font-size: 24px; font-weight: 800; }
+
+.chips { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.chip { height: 36px; padding: 0 14px; border-radius: 18px; font-size: 14px; font-weight: 700; background: var(--surface); color: var(--text-2); border: 1px solid var(--border); }
+.chip.is-on { background: var(--accent-soft); color: var(--accent-soft-text); border-color: var(--accent); }
+
+.days { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+.day { height: 58px; border-radius: var(--radius-m); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 0; background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+.day small { font-size: 11px; font-weight: 700; opacity: 0.75; }
+.day b { font-size: 18px; font-weight: 800; }
+.day.is-on { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+.hours { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; }
+.hour { height: 44px; border-radius: var(--radius-s); font-size: 15px; font-weight: 700; padding: 0; background: var(--surface-2); border: 1px solid var(--border-2); color: var(--text); }
+.hour--past { background: transparent; border-color: var(--line); color: var(--disabled); }
+.hour--busy { background: repeating-linear-gradient(135deg, var(--surface) 0 6px, var(--line) 6px 12px); border-color: var(--surface-2); color: #5A5A5A; text-decoration: line-through; }
+.hour--sel { background: var(--accent); border-color: var(--accent); color: #FFFFFF; }
+.hour--conflict { background: #3A1F22; border-color: #FF7A7A; color: var(--err-text); }
+.skeleton { height: 206px; border-radius: var(--radius-m); background: var(--surface); }
+
+.legend { display: flex; gap: 16px; font-size: 12px; color: var(--muted); }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.legend i { width: 12px; height: 12px; border-radius: 4px; display: inline-block; }
+
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-l); padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+.card--dim { background: var(--bg-bar); border-color: var(--line); }
+.stepper { display: flex; align-items: center; gap: 4px; }
+.stepper button { width: 44px; height: 44px; border-radius: var(--radius-s); border: 0; background: var(--surface-2); color: var(--text); font-size: 22px; font-weight: 700; }
+.stepper b { min-width: 56px; text-align: center; font-size: 20px; font-weight: 800; }
+
+.note { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: var(--radius-m); font-size: 14px; line-height: 1.45; background: var(--surface); color: var(--text-2); }
+.note--err { background: var(--err-soft); color: var(--err-text); }
+.note--info { background: var(--info-soft); color: #C9DCFF; border: 0; text-align: left; width: 100%; }
+.note svg { flex: none; margin-top: 1px; }
+
+.foot { position: fixed; left: 0; right: 0; bottom: var(--tabbar-h); padding: 12px 16px; background: var(--bg); border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; z-index: 5; }
+.foot--notabs { bottom: 0; }
+.foot__inner { max-width: 520px; width: 100%; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
+.btn { height: 52px; border-radius: var(--radius-m); border: 0; font-size: 17px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; width: 100%; }
+.btn--primary { background: var(--accent); color: #FFFFFF; }
+.btn--secondary { background: var(--surface-2); color: var(--text); font-weight: 700; font-size: 16px; }
+.btn--ghost-danger { height: 44px; background: transparent; border: 1px solid var(--err-border); color: var(--err-text); font-size: 15px; font-weight: 700; }
+.btn--small { height: 44px; font-size: 15px; font-weight: 700; }
+.btn:disabled { background: var(--surface-2); color: var(--faint); }
+
+.tabbar { position: fixed; left: 0; right: 0; bottom: 0; height: var(--tabbar-h); background: var(--bg-bar); border-top: 1px solid var(--line); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); z-index: 6; padding-bottom: env(safe-area-inset-bottom); }
+.tab { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; background: transparent; border: 0; color: var(--muted); font-size: 11px; font-weight: 700; }
+.tab.is-on { color: var(--accent-text); }
+
+.seg { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; padding: 4px; border-radius: var(--radius-m); background: var(--surface); }
+.seg button { height: 40px; border-radius: 10px; border: 0; font-size: 14px; font-weight: 700; background: transparent; color: var(--muted); }
+.seg button.is-on { background: var(--border-2); color: var(--text); }
+
+.status { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px; border-radius: 14px; font-size: 13px; font-weight: 700; }
+.status i { width: 8px; height: 8px; border-radius: 4px; display: inline-block; }
+.status--running { background: var(--accent-soft); color: var(--accent-soft-text); }
+.status--running i { background: var(--accent-text); }
+.status--scheduled { background: var(--info-soft); color: var(--info-text); }
+.status--scheduled i { background: var(--info); }
+.status--done { background: var(--surface-2); color: var(--text-2); }
+.status--cancelled { background: var(--err-soft); color: var(--err-text); }
+.progress { height: 6px; border-radius: 3px; background: var(--border); overflow: hidden; }
+.progress div { height: 6px; background: var(--accent); }
+.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+
+.list { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-l); padding: 4px 16px; }
+.list__row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--divider); font-size: 15px; }
+.list__row:last-child { border-bottom: 0; }
+
+.tiers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.tier { border-radius: var(--radius-m); padding: 12px 10px; display: flex; flex-direction: column; gap: 2px; background: var(--surface); border: 1px solid var(--border); }
+.tier small { font-size: 12px; font-weight: 700; opacity: 0.8; }
+.tier b { font-size: 22px; font-weight: 800; }
+.tier.is-on { background: var(--accent); border-color: var(--accent); color: #FFFFFF; }
+.amounts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.amounts .chip { height: 44px; border-radius: var(--radius-s); color: var(--text); }
+
+.balance-big { font-size: 40px; font-weight: 800; letter-spacing: -0.02em; }
+.stat { font-size: 28px; font-weight: 800; }
+
+.switch { flex: none; width: 50px; height: 30px; border-radius: 15px; position: relative; background: var(--border-2); }
+.switch::after { content: ''; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 12px; background: #FFFFFF; transition: left .15s; }
+.switch.is-on { background: var(--accent); }
+.switch.is-on::after { left: 23px; }
+.toggle-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; border-radius: 16px; background: var(--surface); border: 1px solid var(--border); color: var(--text); text-align: left; width: 100%; }
+
+.success { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; padding-top: 20px; }
+.success__icon { width: 72px; height: 72px; border-radius: 36px; background: var(--accent); display: flex; align-items: center; justify-content: center; }
+
+.steps { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.steps li { display: flex; gap: 14px; padding: 16px; border-radius: 16px; background: var(--surface); border: 1px solid var(--border); }
+.steps__n { flex: none; width: 32px; height: 32px; border-radius: 10px; background: var(--surface-2); color: var(--accent-text); font-weight: 800; display: flex; align-items: center; justify-content: center; }
+.empty { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 24px 16px; border-radius: 16px; border: 1px dashed var(--border-2); text-align: center; }
+.toast { position: fixed; left: 50%; bottom: calc(var(--tabbar-h) + 90px); transform: translateX(-50%); background: var(--text); color: var(--bg); padding: 10px 16px; border-radius: 12px; font-weight: 700; font-size: 14px; z-index: 20; }
+
+.tools { border: 1px solid var(--border); border-radius: var(--radius-l); background: var(--surface); overflow: hidden; }
+.tool { display: flex; align-items: center; gap: 12px; padding: 14px 16px; color: var(--text); text-decoration: none; border-bottom: 1px solid var(--divider); min-height: 64px; }
+.tool:last-child { border-bottom: 0; }
+.tool:active { background: var(--surface-2); }
+.tool__icon { flex: none; width: 40px; height: 40px; border-radius: 12px; background: var(--accent-soft); color: var(--accent-text); display: flex; align-items: center; justify-content: center; }
+.tool__text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.tool__text b { font-size: 15px; font-weight: 700; line-height: 1.3; }
+.tool__text small { font-size: 13px; color: var(--muted); line-height: 1.35; }
+.tool__arrow { flex: none; color: var(--faint); }
+.tabbar { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.tab { font-size: 10.5px; }
+
+</style>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<script>
+// API layer. Real backend contract is described in ../SPEC.md (section "API").
+// MOCK = true runs the whole UI on fake in-memory data (open index.html in any browser).
+// Set MOCK = false and API_BASE to the bot backend for production.
+const MOCK = new URLSearchParams(location.search).has('mock') || !window.Telegram?.WebApp?.initData;
+const API_BASE = '/api';
+
+async function http(method, path, body) {
+  const res = await fetch(API_BASE + path, {
+    method,
+    headers: {
+      'Content-Type': 'application/json',
+      // Backend must validate initData signature (HMAC with bot token) on every request.
+      'X-Telegram-Init-Data': window.Telegram?.WebApp?.initData || '',
+    },
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    const err = new Error(data.message || 'Ошибка сервера');
+    err.status = res.status;
+    err.code = data.code;
+    throw err;
+  }
+  return data;
+}
+
+const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+const realApi = {
+  me: () => http('GET', '/me'),
+  slots: (date) => http('GET', `/slots?date=${date}&tz=${encodeURIComponent(tz)}`),
+  createOrder: (o) => http('POST', '/orders', o),
+  orders: (scope) => http('GET', `/orders?scope=${scope}`),
+  cancelOrder: (id) => http('POST', `/orders/${id}/cancel`),
+  setReminder: (id, remind) => http('PATCH', `/orders/${id}`, { remind }),
+  transactions: () => http('GET', '/wallet/transactions'),
+  topup: (amount) => http('POST', '/topup', { amount }),
+  referral: () => http('GET', '/referral'),
+};
+
+// ---------- mock ----------
+const wait = (ms = 250) => new Promise((r) => setTimeout(r, ms));
+const mockDb = {
+  me: {
+    user_id: 1, first_seen: '2025-02-27', balance: 199.63, price_per_hour: 10,
+    recent_models: ['rubyluxee', 'sunnymoon_13', 'lissyforyou'],
+    onboarded: false,
+  },
+  orders: [
+    { id: 3, model: 'rubyluxee', start: '2025-11-06T10:00:00Z', hours: 2, cost: 20, status: 'done', remind: false },
+    { id: 2, model: 'sunnymoon_13', start: '2025-02-27T10:00:00Z', hours: 1, cost: 10, status: 'cancelled', refunded: 10, remind: false },
+    { id: 1, model: 'lissyforyou', start: '2025-02-27T06:00:00Z', hours: 1, cost: 10, status: 'cancelled', refunded: 10, remind: false },
+  ],
+  tx: [
+    { id: 2, type: 'refund', title: 'Возврат · sunnymoon_13', amount: 10, at: '2025-02-27T09:00:00Z' },
+    { id: 1, type: 'topup', title: 'Пополнение · USDT', amount: 200, at: '2025-02-27T05:00:00Z' },
+  ],
+  nextId: 4,
+};
+function busyHoursFor(dateStr) {
+  // deterministic fake load per date
+  let seed = 0;
+  for (const c of dateStr) seed = (seed * 31 + c.charCodeAt(0)) % 9973;
+  const busy = new Set();
+  for (let i = 0; i < 6; i++) busy.add((seed * (i + 7)) % 24);
+  return busy;
+}
+const mockApi = {
+  async me() { await wait(); return { ...mockDb.me }; },
+  async slots(date) {
+    await wait();
+    const busy = busyHoursFor(date);
+    for (const o of mockDb.orders) {
+      if (o.status !== 'scheduled' && o.status !== 'running') continue;
+      const s = new Date(o.start);
+      for (let k = 0; k < o.hours; k++) {
+        const d = new Date(s.getTime() + k * 3600e3);
+        if (localDate(d) === date) busy.add(d.getHours());
+      }
+    }
+    const minStart = Date.now() + 15 * 60e3;
+    const hours = [];
+    for (let h = 0; h < 24; h++) {
+      const t = parseLocal(date, h).getTime();
+      hours.push({ hour: h, status: t < minStart ? 'past' : busy.has(h) ? 'busy' : 'free' });
+    }
+    return { date, tz, hours };
+  },
+  async createOrder({ model, start, hours, remind }) {
+    await wait(400);
+    const cost = hours * mockDb.me.price_per_hour;
+    if (cost > mockDb.me.balance) { const e = new Error('Недостаточно средств'); e.status = 402; e.code = 'insufficient_funds'; throw e; }
+    mockDb.me.balance = +(mockDb.me.balance - cost).toFixed(2);
+    mockDb.me.recent_models = [model, ...mockDb.me.recent_models.filter((m) => m !== model)].slice(0, 5);
+    const order = { id: mockDb.nextId++, model, start, hours, cost, status: 'scheduled', remind };
+    mockDb.orders.unshift(order);
+    mockDb.tx.unshift({ id: Date.now(), type: 'order', title: 'Заказ · ' + model, amount: -cost, at: new Date().toISOString() });
+    return { order, balance: mockDb.me.balance };
+  },
+  async orders(scope) {
+    await wait();
+    const up = (o) => o.status === 'scheduled' || o.status === 'running';
+    return { orders: mockDb.orders.filter((o) => (scope === 'upcoming' ? up(o) : !up(o))) };
+  },
+  async cancelOrder(id) {
+    await wait();
+    const o = mockDb.orders.find((x) => x.id === id);
+    o.status = 'cancelled'; o.refunded = o.cost;
+    mockDb.me.balance = +(mockDb.me.balance + o.cost).toFixed(2);
+    mockDb.tx.unshift({ id: Date.now(), type: 'refund', title: 'Возврат · ' + o.model, amount: o.cost, at: new Date().toISOString() });
+    return { order: o, balance: mockDb.me.balance };
+  },
+  async setReminder(id, remind) { await wait(100); const o = mockDb.orders.find((x) => x.id === id); if (o) o.remind = remind; return { order: o }; },
+  async transactions() { await wait(); return { transactions: mockDb.tx }; },
+  async topup(amount) { await wait(); return { pay_url: 'https://trybit.example/invoice/mock?amount=' + amount }; },
+  async referral() {
+    await wait();
+    return { link: 'https://t.me/Stripchat_traffic_bot?start=ref_MOCK123', percent: null, invited: 0, earned: 0, referrals: [] };
+  },
+};
+
+// helpers shared with app.js
+function localDate(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+function parseLocal(dateStr, hour) { const [y, m, d] = dateStr.split('-').map(Number); return new Date(y, m - 1, d, hour); }
+
+window.api = MOCK ? mockApi : realApi;
+window.API_MOCK = MOCK;
+
+</script>
+<script>
+// Stripchat Traffic Bot — Telegram WebApp UI (vanilla JS, no build step).
+const tg = window.Telegram?.WebApp;
+tg?.ready();
+tg?.expand();
+tg?.setHeaderColor?.('#141414');
+tg?.setBackgroundColor?.('#141414');
+
+const WD = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+const MON = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
+const MAX_HOURS = 12;
+const TIERS = [ // keep in sync with backend pricing
+  { from: 0, price: 10, range: 'до $50', note: 'за час' },
+  { from: 50, price: 9, range: 'от $50', note: '−10%' },
+  { from: 200, price: 8, range: 'от $200', note: '−20%' },
+];
+const priceForTopup = (a) => [...TIERS].reverse().find((t) => a >= t.from).price;
+
+const S = {
+  screen: 'order',
+  me: null,
+  dayIdx: 0,
+  slots: null,
+  start: null,
+  dur: 3,
+  model: '',
+  remind: true,
+  lastOrder: null,
+  ordersTab: 'upcoming',
+  orders: null,
+  topup: 50,
+  tx: null,
+  ref: null,
+  busy: false,
+};
+
+// ---------- utils ----------
+const $app = document.getElementById('app');
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const pad = (h) => String(((h % 24) + 24) % 24).padStart(2, '0') + ':00';
+const money = (n) => '$' + Number(n).toFixed(2);
+const haptic = (t = 'light') => tg?.HapticFeedback?.impactOccurred?.(t);
+const days = () => Array.from({ length: 7 }, (_, i) => { const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() + i); return d; });
+const dayLabel = (d, i) => (i === 0 ? 'Сегодня' : i === 1 ? 'Завтра' : WD[d.getDay()]) + ', ' + d.getDate() + ' ' + MON[d.getMonth()];
+const fmtDate = (iso) => { const d = new Date(iso); const today = localDate(new Date()); const tm = new Date(); tm.setDate(tm.getDate() + 1); if (localDate(d) === localDate(tm)) return 'Завтра'; return localDate(d) === today ? 'Сегодня' :d.getDate() + ' ' + MON[d.getMonth()] + (d.getFullYear() !== new Date().getFullYear() ? ' ' + d.getFullYear() : ''); };
+const fmtTime = (d) => String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+const until = (ms) => { const m = Math.max(0, Math.round(ms / 60e3)); const h = Math.floor(m / 60); return (h ? h + ' ч ' : '') + (m % 60) + ' мин'; };
+function toast(text) { const el = document.createElement('div'); el.className = 'toast'; el.textContent = text; document.body.appendChild(el); setTimeout(() => el.remove(), 2000); }
+
+const I = {
+  wallet: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="3"/><path d="M3 10h18"/><path d="M16 15h2"/></svg>',
+  plus: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>',
+  list: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 9h8"/><path d="M8 13h8"/><path d="M8 17h5"/></svg>',
+  users: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7"/><path d="M18 14.5c2 .6 3.2 2.5 3.5 5.5"/></svg>',
+  clock: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  info: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B9BFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></svg>',
+  alert: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg>',
+  check: '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+  repeat: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 14-5.3L20 9"/><path d="M20 4v5h-5"/><path d="M20 12a8 8 0 0 1-14 5.3L4 15"/></svg>',
+  up: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B9BFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>',
+  send: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 3L10 14"/><path d="M21 3l-7 18-4-7-7-4 18-7z"/></svg>',
+};
+
+// ---------- navigation ----------
+I.grid = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg>';
+const TABS = [['order', 'Заказ', I.plus], ['orders', 'Заказы', I.list], ['wallet', 'Баланс', I.wallet], ['tools', 'Полезное', I.grid], ['referral', 'Партнёрка', I.users]];
+
+// Links to free Stripchat widgets and guides on ewohub.com (UTM goes before the #anchor).
+const EWO_UTM = '?utm_source=stripchat_traffic_bot&utm_medium=webapp';
+const TOOLS = [
+  { url: 'https://www.ewohub.com/ru/best-hours-to-stream-chaturbate' + EWO_UTM + '#sc-hours', title: 'Лучшие часы для стрима на Stripchat', desc: 'Когда у комнаты больше всего зрителей — обновляется каждые 15 минут', icon: '<path d="M12 7v5l3 2"/><circle cx="12" cy="12" r="9"/>' },
+  { url: 'https://www.ewohub.com/ru/best-hours-to-stream-chaturbate' + EWO_UTM + '#sc-tags', title: 'Топ-20 тегов прямо сейчас на Stripchat', desc: 'Сколько моделей онлайн по каждому тегу', icon: '<path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9-9-9z"/><circle cx="7.5" cy="7.5" r="1.5"/>' },
+  { url: 'https://www.ewohub.com/ru/stripchat-first-14-days-guide' + EWO_UTM, title: 'Твои первые 14 дней на Stripchat', desc: 'Пошаговый гид для старта новой модели', icon: '<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2V5z"/><path d="M8 7h7"/>' },
+  { url: 'https://www.ewohub.com/ru/stripchat-fan-club-pricing-guide' + EWO_UTM, title: 'Цены Fan Club на Stripchat', desc: 'Тарифы, которые конвертируют', icon: '<path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9z"/>' },
+];
+const NO_TABS = new Set(['onboarding', 'confirm']);
+
+function go(screen) {
+  S.screen = screen;
+  window.scrollTo(0, 0);
+  if (screen === 'orders' && !S.orders) loadOrders();
+  if (screen === 'wallet' && !S.tx) loadTx();
+  if (screen === 'referral' && !S.ref) loadRef();
+  if (screen === 'order' && !S.slots) loadSlots();
+  if (tg?.BackButton) screen === 'confirm' ? tg.BackButton.show() : tg.BackButton.hide();
+  render();
+}
+tg?.BackButton?.onClick(() => go('order'));
+
+function render() {
+  const screens = { onboarding: viewOnboarding, order: viewOrder, confirm: viewConfirm, orders: viewOrders, wallet: viewWallet, referral: viewReferral, tools: viewTools };
+  let html = screens[S.screen]();
+  if (!NO_TABS.has(S.screen)) {
+    html += '<nav class="tabbar">' + TABS.map(([id, label, icon]) => `<button class="tab ${S.screen === id ? 'is-on' : ''}" data-go="${id}">${icon}${label}</button>`).join('') + '</nav>';
+  }
+  $app.innerHTML = html;
+}
+
+// ---------- data ----------
+async function loadMe() { S.me = await api.me(); if (!S.model) S.model = S.me.recent_models?.[0] || ''; }
+async function loadSlots() {
+  S.slots = null; render();
+  const date = localDate(days()[S.dayIdx]);
+  const res = await api.slots(date);
+  if (localDate(days()[S.dayIdx]) !== date) return; // user switched day meanwhile
+  S.slots = res.hours;
+  if (S.start == null || !fits(S.start, S.dur)) S.start = firstFit(S.dur);
+  render();
+}
+async function loadOrders() { S.orders = null; render(); S.orders = (await api.orders(S.ordersTab)).orders; render(); }
+async function loadTx() { S.tx = (await api.transactions()).transactions; render(); }
+async function loadRef() { S.ref = await api.referral(); render(); }
+
+// ---------- order logic ----------
+const slot = (h) => S.slots?.find((s) => s.hour === h);
+function fits(start, dur) {
+  for (let h = start; h < start + dur; h++) { if (h > 23 || slot(h)?.status !== 'free') return false; }
+  return true;
+}
+function firstFit(dur) { for (let h = 0; h < 24; h++) if (fits(h, dur)) return h; return null; }
+function orderError() {
+  if (!S.model.trim()) return 'Укажите ник модели на Stripchat.';
+  if (!S.slots) return null;
+  if (S.start == null) return 'На этот день нет свободного окна такой длины — выберите другой день или уменьшите длительность.';
+  for (let h = S.start; h < S.start + S.dur; h++) {
+    if (h > 23) return 'Заказ должен закончиться до 24:00 — уменьшите длительность или выберите время раньше.';
+    const st = slot(h)?.status;
+    if (st === 'busy') return pad(h) + ' уже занято — уменьшите длительность или сдвиньте старт.';
+    if (st === 'past') return 'Это время уже прошло.';
+  }
+  if (S.me && S.dur * S.me.price_per_hour > S.me.balance) return 'insufficient';
+  return null;
+}
+
+// ---------- views ----------
+function viewOnboarding() {
+  const step = (n, t, d) => `<li><span class="steps__n">${n}</span><div class="col" style="gap:4px"><b>${t}</b><span class="muted" style="font-size:14px;line-height:1.45">${d}</span></div></li>`;
+  return `<main class="screen screen--plain">
+    <div class="col" style="gap:14px">
+      <h1 style="font-size:28px;line-height:1.15">Трафик в комнату<br>на Stripchat по расписанию</h1>
+      <p class="muted" style="margin:0;font-size:15px;line-height:1.5">Выберите модель и час — продвижение включится само. Оплата с баланса, почасово.</p>
+    </div>
+    <ol class="steps">
+      ${step(1, 'Пополните баланс', 'Криптой: BTC, ETH, USDT. Чем больше пополнение — тем дешевле час: $10 → $9 → $8.')}
+      ${step(2, 'Выберите свободное время', 'Сетка показывает время в вашем часовом поясе. Занятые часы зачёркнуты.')}
+      ${step(3, 'Будьте онлайн за 15 минут', 'Бот напомнит в Telegram. Продвижение стартует автоматически.')}
+    </ol>
+    <a class="list__row" style="border:1px solid var(--line);border-radius:14px;padding:14px 16px;color:var(--text-2);text-decoration:none" href="#" data-link="https://teletype.in/@webcamtraffic/stripchat-traffic-bot">Подробная инструкция <span>↗</span></a>
+    <div style="flex:1"></div>
+    <div class="col">
+      <button class="btn btn--primary" data-action="onboard" data-to="order">Создать первый заказ</button>
+      <button class="btn btn--secondary" data-action="onboard" data-to="wallet">Сначала пополнить баланс</button>
+    </div>
+  </main>`;
+}
+
+function viewOrder() {
+  const me = S.me;
+  const ds = days();
+  const err = orderError();
+  const recent = (me?.recent_models || []).map((m) => `<button class="chip ${m === S.model ? 'is-on' : ''}" data-model="${esc(m)}">${esc(m)}</button>`).join('');
+  const dayBtns = ds.map((d, i) => `<button class="day ${i === S.dayIdx ? 'is-on' : ''}" data-day="${i}"><small>${i === 0 ? 'Сег' : WD[d.getDay()]}</small><b>${d.getDate()}</b></button>`).join('');
+  let hours = '<div class="skeleton"></div>';
+  if (S.slots) {
+    hours = '<div class="hours">' + S.slots.map(({ hour, status }) => {
+      const inR = S.start != null && hour >= S.start && hour < S.start + S.dur;
+      let cls = 'hour';
+      if (status === 'past') cls += ' hour--past';
+      else if (inR && status === 'busy') cls += ' hour--conflict';
+      else if (inR) cls += ' hour--sel';
+      else if (status === 'busy') cls += ' hour--busy';
+      const dis = status === 'past' || (status === 'busy' && !inR);
+      return `<button class="${cls}" data-hour="${hour}" ${dis ? 'disabled' : ''} aria-label="${pad(hour)}, ${status === 'busy' ? 'занято' : status === 'past' ? 'прошло' : 'свободно'}">${String(hour).padStart(2, '0')}</button>`;
+    }).join('') + '</div>';
+  }
+  const now = new Date();
+  const tzOff = -now.getTimezoneOffset() / 60;
+  return `<main class="screen">
+    <div class="head">
+      <div class="col" style="gap:2px"><span class="head__sub">Stripchat traffic</span><h1>Новый заказ</h1></div>
+      <button class="pill" data-go="wallet"><span style="color:var(--accent-text);display:flex">${I.wallet}</span>${me ? money(me.balance) : '…'}</button>
+    </div>
+    <section class="col">
+      <label class="label" for="model">Модель</label>
+      <div class="field"><span class="field__prefix">stripchat.com/</span><input id="model" value="${esc(S.model)}" placeholder="username" autocomplete="off" autocapitalize="off" spellcheck="false"></div>
+      ${recent ? `<div class="chips"><span class="small" style="color:var(--faint)">Недавние:</span>${recent}</div>` : ''}
+    </section>
+    <section class="col">
+      <div class="row"><span class="label">Дата</span><span class="small muted">${dayLabel(ds[S.dayIdx], S.dayIdx)}</span></div>
+      <div class="days">${dayBtns}</div>
+    </section>
+    <section class="col">
+      <div class="row"><span class="label">Время старта</span><span class="small muted" style="display:flex;align-items:center;gap:6px">${I.clock}UTC${tzOff >= 0 ? '+' : ''}${tzOff} · сейчас ${fmtTime(now)}</span></div>
+      ${hours}
+      <div class="legend"><span><i style="background:var(--surface-2);border:1px solid var(--border-2)"></i>Свободно</span><span><i style="background:repeating-linear-gradient(135deg,var(--surface) 0 3px,var(--border-2) 3px 6px)"></i>Занято</span><span><i style="background:var(--accent)"></i>Ваш заказ</span></div>
+    </section>
+    <section class="card" style="flex-direction:row;align-items:center;justify-content:space-between;padding:12px 12px 12px 16px">
+      <div class="col" style="gap:2px"><b>Длительность</b><span class="small muted">${S.start != null ? pad(S.start) + ' – ' + pad(S.start + S.dur) : '—'}</span></div>
+      <div class="stepper"><button data-dur="-1" aria-label="Меньше">−</button><b>${S.dur} ч</b><button data-dur="1" aria-label="Больше">+</button></div>
+    </section>
+    <div id="order-msg">${orderMsg(err)}</div>
+  </main>
+  <div class="foot" id="order-foot">${orderFoot(err)}</div>`;
+}
+function orderMsg(err) {
+  if (err === 'insufficient') return `<div class="note note--err">${I.alert}<span>Не хватает ${money(S.dur * S.me.price_per_hour - S.me.balance)} на балансе.</span></div>`;
+  if (err) return `<div class="note note--err">${I.alert}<span>${esc(err)}</span></div>`;
+  if (S.start == null) return '';
+  return `<div class="note">${I.info}<span>Модель должна быть онлайн с <b style="color:var(--text)">${String((S.start + 23) % 24).padStart(2, '0')}:45</b> — за 15 минут до старта. <a href="#" data-go="onboarding">Как это работает</a></span></div>`;
+}
+function orderFoot(err) {
+  const price = S.me?.price_per_hour ?? 10;
+  const cost = S.dur * price;
+  const after = S.me ? money(S.me.balance - cost) : '…';
+  let btn;
+  if (err === 'insufficient') btn = `<button class="btn btn--primary" data-go="wallet">Пополнить баланс</button>`;
+  else if (err || !S.slots) btn = `<button class="btn" disabled>${S.slots ? 'Выберите свободное время' : 'Загружаем слоты…'}</button>`;
+  else btn = `<button class="btn btn--primary" data-action="create" ${S.busy ? 'disabled' : ''}>${S.busy ? 'Создаём…' : 'Заказать за $' + cost}</button>`;
+  return `<div class="foot__inner"><div class="row small" style="font-size:14px"><span class="muted">${S.dur} ч × $${price}</span><span class="muted">Остаток <b style="color:var(--text)">${after}</b></span></div>${btn}</div>`;
+}
+
+function viewConfirm() {
+  const o = S.lastOrder;
+  const start = new Date(o.start);
+  const end = new Date(start.getTime() + o.hours * 3600e3);
+  const remindAt = new Date(start.getTime() - 30 * 60e3);
+  const onlineAt = new Date(start.getTime() - 15 * 60e3);
+  return `<main class="screen screen--plain" style="padding-top:40px">
+    <div class="success"><div class="success__icon">${I.check}</div><h1>Заказ принят</h1><p class="muted" style="margin:0">Старт через ${until(start - Date.now())}</p></div>
+    <div class="list">
+      <div class="list__row"><span class="muted">Модель</span><b>${esc(o.model)}</b></div>
+      <div class="list__row"><span class="muted">Дата</span><b>${fmtDate(o.start)}</b></div>
+      <div class="list__row"><span class="muted">Время</span><b>${fmtTime(start)} – ${fmtTime(end)} · ${o.hours} ч</b></div>
+      <div class="list__row"><span class="muted">Списано</span><b>${money(o.cost)}</b></div>
+      <div class="list__row"><span class="muted">Остаток</span><b>${money(S.me.balance)}</b></div>
+    </div>
+    <button class="toggle-row" data-action="remind" aria-pressed="${o.remind}">
+      <span class="col" style="gap:2px"><b>Напомнить в Telegram</b><span class="small muted">В ${fmtTime(remindAt)} — за 30 минут до старта</span></span>
+      <span class="switch ${o.remind ? 'is-on' : ''}"></span>
+    </button>
+    <div class="note" style="background:var(--bg-bar)">${I.info}<span>Модель должна быть онлайн с <b style="color:var(--text)">${fmtTime(onlineAt)}</b>. Отменить заказ можно до старта — деньги вернутся на баланс.</span></div>
+    <div style="flex:1"></div>
+    <div class="col"><button class="btn btn--primary" data-go="orders" data-action="reload-orders">Мои заказы</button><button class="btn btn--secondary" data-go="order">Ещё один заказ</button></div>
+  </main>`;
+}
+
+function orderCard(o) {
+  const start = new Date(o.start);
+  const end = new Date(start.getTime() + o.hours * 3600e3);
+  const now = Date.now();
+  const meta = `${fmtDate(o.start)} · ${fmtTime(start)} – ${fmtTime(end)} · ${o.hours} ч · $${o.cost}`;
+  if (o.status === 'running' || (o.status === 'scheduled' && now >= start && now < end)) {
+    const pct = Math.min(100, Math.round(((now - start) / (end - start)) * 100));
+    return `<article class="card"><div class="row"><b style="font-size:17px">${esc(o.model)}</b><span class="status status--running"><i></i>Идёт</span></div>
+      <div class="small muted" style="font-size:14px">${meta}</div>
+      <div class="col" style="gap:6px"><div class="progress"><div style="width:${pct}%"></div></div><span class="small muted">Осталось ${until(end - now)}</span></div></article>`;
+  }
+  if (o.status === 'scheduled') {
+    return `<article class="card"><div class="row"><b style="font-size:17px">${esc(o.model)}</b><span class="status status--scheduled"><i></i>Запланирован</span></div>
+      <div class="small muted" style="font-size:14px">${meta}</div>
+      <div class="small" style="color:var(--text-2)">Старт через ${until(start - now)} · онлайн с ${fmtTime(new Date(start - 15 * 60e3))}${o.remind ? ' · напомним' : ''}</div>
+      <div class="grid2"><button class="btn btn--ghost-danger" data-cancel="${o.id}">Отменить</button><button class="btn btn--secondary btn--small" data-repeat="${o.id}">Повторить</button></div></article>`;
+  }
+  const label = o.status === 'done' ? 'Завершён' : 'Отменён';
+  const sub = o.status === 'cancelled' ? `${fmtDate(o.start)} · ${fmtTime(start)} – ${fmtTime(end)} · $${o.refunded ?? o.cost} возвращено` : meta;
+  return `<article class="card ${o.status === 'cancelled' ? 'card--dim' : ''}" style="flex-direction:row;align-items:center;justify-content:space-between;padding:14px 16px">
+    <div class="col" style="gap:4px"><b style="font-size:16px">${esc(o.model)}</b><span class="small muted">${sub}</span><span class="status status--${o.status}" style="height:22px;width:fit-content">${label}</span></div>
+    <button class="pill" style="height:40px;font-size:14px;flex:none" data-repeat="${o.id}">${I.repeat}Повторить</button></article>`;
+}
+function viewOrders() {
+  const list = S.orders == null ? '<div class="skeleton"></div>'
+    : S.orders.length ? S.orders.map(orderCard).join('')
+    : `<div class="empty"><b>${S.ordersTab === 'upcoming' ? 'Нет активных заказов' : 'История пуста'}</b><span class="small muted">Заказы появятся здесь</span></div>`;
+  return `<main class="screen">
+    <h1>Мои заказы</h1>
+    <div class="seg" role="tablist"><button class="${S.ordersTab === 'upcoming' ? 'is-on' : ''}" data-otab="upcoming">Предстоящие</button><button class="${S.ordersTab === 'history' ? 'is-on' : ''}" data-otab="history">История</button></div>
+    <div class="col" style="gap:12px">${list}
+      <button class="btn btn--secondary" style="border:1px dashed var(--border-2);background:transparent" data-go="order">+ Новый заказ</button></div>
+  </main>`;
+}
+
+function viewWallet() {
+  const me = S.me;
+  const a = S.topup;
+  const p = priceForTopup(a);
+  const hours = a > 0 ? Math.floor((a / p) * 10) / 10 : 0;
+  let upsell = '';
+  if (a > 0 && a < 50) upsell = { to: 50, text: `Добавьте $${50 - a} — и час будет стоить $9 вместо $10` };
+  else if (a >= 50 && a < 200) upsell = { to: 200, text: `От $200 час стоит $8 — это ${Math.floor(200 / 8)} ч вместо ${Math.floor(200 / 9)} ч` };
+  const tx = S.tx == null ? '<div class="skeleton" style="height:120px"></div>'
+    : S.tx.length ? '<div class="list">' + S.tx.map((t) => `<div class="list__row" style="padding:12px 0"><span class="col" style="gap:2px"><b>${esc(t.title)}</b><span class="small muted" style="font-size:12px">${fmtDate(t.at)}</span></span><b style="color:${t.amount > 0 ? 'var(--info-text)' : 'var(--text-2)'}">${t.amount > 0 ? '+' : '−'}${money(Math.abs(t.amount))}</b></div>`).join('') + '</div>'
+    : '<div class="empty"><span class="small muted">Операций пока нет</span></div>';
+  return `<main class="screen" style="padding-bottom:calc(var(--tabbar-h) + 100px)">
+    <h1>Баланс</h1>
+    <div class="card" style="gap:6px"><span class="small muted" style="font-weight:600">Доступно</span><span class="balance-big">${me ? money(me.balance) : '…'}</span>
+      <span style="font-size:14px;color:var(--text-2)">${me ? '≈ ' + Math.floor(me.balance / me.price_per_hour) + ' ч продвижения по вашему тарифу $' + me.price_per_hour + '/ч' : ''}</span></div>
+    <section class="col"><span class="label">Цена часа зависит от пополнения</span>
+      <div class="tiers">${TIERS.map((t) => `<div class="tier ${t.price === p ? 'is-on' : ''}"><small>${t.range}</small><b>$${t.price}</b><small>${t.note}</small></div>`).join('')}</div></section>
+    <section class="col"><label class="label" for="amount">Сумма пополнения</label>
+      <div class="field field--big"><span style="font-size:24px;font-weight:800;color:var(--muted)">$</span><input id="amount" inputmode="decimal" value="${a}"><span id="amount-hint" style="font-size:14px;font-weight:700;color:var(--accent-soft-text);white-space:nowrap">≈ ${hours} ч по $${p}</span></div>
+      <div class="amounts">${[20, 50, 100, 200].map((v) => `<button class="chip ${v === a ? 'is-on' : ''}" data-amount="${v}">$${v}</button>`).join('')}</div>
+      ${upsell ? `<button class="note note--info" data-amount="${upsell.to}">${I.up}<span>${upsell.text}</span></button>` : ''}
+    </section>
+    <section class="col"><span class="label">Операции</span>${tx}</section>
+  </main>
+  <div class="foot"><div class="foot__inner"><button class="btn btn--primary" data-action="topup" ${a < 1 || S.busy ? 'disabled' : ''}>Оплатить $${a} криптой <span style="font-size:12px;opacity:.75">BTC · ETH · USDT</span></button></div></div>`;
+}
+
+function viewTools() {
+  const rows = TOOLS.map((t) => `<a class="tool" href="#" data-link="${esc(t.url)}">
+      <span class="tool__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${t.icon}</svg></span>
+      <span class="tool__text"><b>${t.title}</b><small>${t.desc}</small></span>
+      <span class="tool__arrow">↗</span></a>`).join('');
+  return `<main class="screen" style="padding-bottom:calc(var(--tabbar-h) + 24px)">
+    <div class="col" style="gap:6px"><h1>Полезное</h1><p class="muted" style="margin:0;font-size:15px;line-height:1.5">Бесплатные виджеты и гайды для моделей Stripchat на ewohub.com</p></div>
+    <div class="tools">${rows}</div>
+  </main>`;
+}
+
+function viewReferral() {
+  const r = S.ref;
+  const pct = r?.percent != null ? r.percent + '%' : '[X]%';
+  return `<main class="screen" style="padding-bottom:calc(var(--tabbar-h) + 24px)">
+    <div class="col" style="gap:6px"><h1>Партнёрка</h1><p class="muted" style="margin:0;font-size:15px;line-height:1.5">Приглашайте моделей и студии — получайте ${pct} с каждого их пополнения на свой баланс.</p></div>
+    <div class="grid2" style="gap:10px">
+      <div class="card" style="gap:4px"><span class="small muted" style="font-weight:600">Приглашено</span><span class="stat">${r ? r.invited : '…'}</span></div>
+      <div class="card" style="gap:4px"><span class="small muted" style="font-weight:600">Заработано</span><span class="stat">${r ? money(r.earned) : '…'}</span></div>
+    </div>
+    <section class="col"><span class="label">Ваша ссылка</span>
+      <div class="field" style="padding:6px 6px 6px 14px;height:auto"><span style="flex:1;min-width:0;font-size:14px;font-weight:600;color:var(--text-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r ? esc(r.link.replace('https://', '')) : '…'}</span><button class="pill" style="height:40px;border-radius:10px;font-size:14px;background:var(--border-2)" data-action="copy">Копировать</button></div>
+      <button class="btn btn--primary" data-action="share">${I.send}Поделиться в Telegram</button>
+    </section>
+    <section class="col"><span class="label">Как это работает</span>
+      <div class="list">
+        <div class="list__row" style="justify-content:flex-start;font-size:14px;color:var(--text-2)"><b style="color:var(--accent-text)">1</b>Друг открывает бота по вашей ссылке</div>
+        <div class="list__row" style="justify-content:flex-start;font-size:14px;color:var(--text-2)"><b style="color:var(--accent-text)">2</b>Пополняет баланс и заказывает продвижение</div>
+        <div class="list__row" style="justify-content:flex-start;font-size:14px;color:var(--text-2)"><b style="color:var(--accent-text)">3</b>Вам на баланс приходит ${pct}</div>
+      </div></section>
+    ${r && r.referrals?.length ? '<div class="list">' + r.referrals.map((x) => `<div class="list__row"><span>${esc(x.name)}</span><b>${money(x.earned)}</b></div>`).join('') + '</div>'
+      : '<div class="empty"><b>Пока никого</b><span class="small muted">Здесь появятся приглашённые и начисления</span></div>'}
+  </main>`;
+}
+
+// ---------- events ----------
+$app.addEventListener('click', async (e) => {
+  const el = e.target.closest('button, a');
+  if (!el) return;
+  const d = el.dataset;
+  if (el.tagName === 'A') e.preventDefault();
+
+  if (d.link) { tg ? tg.openLink(d.link) : window.open(d.link, '_blank'); return; }
+  if (d.action === 'reload-orders') { S.ordersTab = 'upcoming'; S.orders = null; }
+  if (d.go) { haptic(); go(d.go); return; }
+  if (d.day != null) { S.dayIdx = +d.day; haptic(); loadSlots(); return; }
+  if (d.hour != null) { S.start = +d.hour; haptic(); render(); return; }
+  if (d.dur) { S.dur = Math.min(MAX_HOURS, Math.max(1, S.dur + +d.dur)); haptic(); render(); return; }
+  if (d.model) { S.model = d.model; render(); return; }
+  if (d.otab) { S.ordersTab = d.otab; loadOrders(); return; }
+  if (d.amount) { S.topup = +d.amount; render(); return; }
+
+  if (d.cancel) {
+    const ok = await confirmDialog('Отменить заказ? Деньги вернутся на баланс.');
+    if (!ok) return;
+    const res = await api.cancelOrder(+d.cancel);
+    S.me.balance = res.balance; S.slots = null; tg?.HapticFeedback?.notificationOccurred('success');
+    toast('Заказ отменён, ' + money(res.order.refunded ?? res.order.cost) + ' вернулись'); loadOrders(); return;
+  }
+  if (d.repeat) {
+    const o = S.orders.find((x) => x.id === +d.repeat);
+    S.model = o.model; S.dur = o.hours; S.start = null; S.dayIdx = 0; S.slots = null;
+    go('order'); return;
+  }
+  switch (d.action) {
+    case 'onboard': localStorage.setItem('onboarded', '1'); go(d.to); break;
+    case 'create': createOrder(); break;
+    case 'remind': {
+      S.lastOrder.remind = !S.lastOrder.remind; render();
+      api.setReminder(S.lastOrder.id, S.lastOrder.remind); break;
+    }
+    case 'topup': {
+      S.busy = true; render();
+      try { const { pay_url } = await api.topup(S.topup); tg ? tg.openLink(pay_url) : window.open(pay_url, '_blank'); }
+      finally { S.busy = false; render(); }
+      break;
+    }
+    case 'copy': navigator.clipboard?.writeText(S.ref.link); toast('Ссылка скопирована'); break;
+    case 'share': {
+      const url = 'https://t.me/share/url?url=' + encodeURIComponent(S.ref.link) + '&text=' + encodeURIComponent('Продвижение комнаты на Stripchat по расписанию');
+      tg ? tg.openTelegramLink(url) : window.open(url, '_blank'); break;
+    }
+  }
+});
+
+$app.addEventListener('input', (e) => {
+  if (e.target.id === 'model') {
+    S.model = e.target.value.trim().replace(/^https?:\/\/(www\.)?stripchat\.com\//i, '').replace(/\/.*$/, '');
+    const err = orderError();
+    document.getElementById('order-msg').innerHTML = orderMsg(err);
+    document.getElementById('order-foot').innerHTML = orderFoot(err);
+  }
+  if (e.target.id === 'amount') {
+    S.topup = Math.max(0, Math.floor(parseFloat(e.target.value.replace(',', '.')) || 0));
+    const p = priceForTopup(S.topup);
+    document.getElementById('amount-hint').textContent = '≈ ' + (S.topup > 0 ? Math.floor((S.topup / p) * 10) / 10 : 0) + ' ч по $' + p;
+  }
+});
+$app.addEventListener('change', (e) => { if (e.target.id === 'amount') render(); });
+
+function confirmDialog(text) {
+  return new Promise((resolve) => (tg?.showConfirm ? tg.showConfirm(text, resolve) : resolve(window.confirm(text))));
+}
+
+async function createOrder() {
+  const date = localDate(days()[S.dayIdx]);
+  const start = parseLocal(date, S.start).toISOString();
+  S.busy = true; render();
+  try {
+    const res = await api.createOrder({ model: S.model, start, hours: S.dur, remind: S.remind });
+    S.lastOrder = res.order; S.me.balance = res.balance;
+    if (!S.me.recent_models.includes(S.model)) S.me.recent_models.unshift(S.model);
+    S.slots = null; S.orders = null; S.tx = null;
+    tg?.HapticFeedback?.notificationOccurred('success');
+    go('confirm');
+  } catch (err) {
+    tg?.HapticFeedback?.notificationOccurred('error');
+    if (err.status === 409) { toast('Это время только что заняли'); loadSlots(); }
+    else if (err.status === 402) { await loadMe(); render(); }
+    else toast(err.message || 'Не удалось создать заказ');
+  } finally { S.busy = false; if (S.screen === 'order') render(); }
+}
+
+// ---------- boot ----------
+(async function boot() {
+  render();
+  await loadMe();
+  // Demo mode for the screens gallery: window.INITIAL_SCREEN = 'order' | 'confirm' | 'orders' | 'history' | 'wallet' | 'referral' | 'onboarding'
+  const demo = window.INITIAL_SCREEN;
+  if (demo) {
+    if (demo === 'history') S.ordersTab = 'history';
+    if (demo === 'order') S.dayIdx = 1;
+    if (demo === 'orders' && window.API_MOCK) {
+      const st = days()[1]; st.setHours(15);
+      await api.createOrder({ model: 'rubyluxee', start: st.toISOString(), hours: 3, remind: true });
+      await loadMe();
+    }
+    if (demo === 'confirm') {
+      const st = days()[1]; st.setHours(15);
+      S.lastOrder = { id: 99, model: 'rubyluxee', start: st.toISOString(), hours: 3, cost: 30, remind: true };
+      S.me.balance = +(S.me.balance - 30).toFixed(2);
+    }
+    go(demo === 'history' ? 'orders' : demo);
+    return;
+  }
+  const firstRun = !localStorage.getItem('onboarded') && !S.me.onboarded;
+  go(firstRun ? 'onboarding' : 'order');
+  if (firstRun) loadSlots();
+})();
+
+</script>
+</body>
+</html>
