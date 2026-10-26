@@ -395,7 +395,15 @@ import Base from '@/layouts/Base.astro';
       </div>
 
       <div class="glass-card import-card">
-        <h2>Chaturbate account</h2>
+        <h2>Chaturbate accounts <span id="cbs-acc-total" class="tp-total"></span></h2>
+        <p class="bulk-hint">Up to 10 accounts. A mailing deals the models out between all saved accounts in turn, and they send at the same time, each with its own pauses (10 models with 2 accounts = 5 from each). The auto-reply reads the inbox of every account. An account whose session does not work is left out of the mailing.</p>
+        <div class="targets-table-wrap">
+          <table class="targets-table">
+            <thead><tr><th>Account</th><th>Proxy</th><th>Saved</th><th class="num-h">Messaged</th><th>Session</th><th></th></tr></thead>
+            <tbody id="cbs-acc-body"></tbody>
+          </table>
+        </div>
+        <h3 id="cbs-form-title">Add account</h3>
         <p class="bulk-hint">Messages are sent from your Chaturbate account (it needs Supporter status: most models only accept DMs from Supporters). Open chaturbate.com in a browser where you are logged in, press F12, go to Network, reload the page, click the first request to chaturbate.com and copy the whole <code>Cookie</code> value from Request Headers. Only <code>sessionid</code> and <code>csrftoken</code> are kept. Paste a fresh one when it says the session expired.</p>
         <p class="bulk-hint">Proxy (optional): every request of this account (session check, mailing, auto-reply) goes through it. Use a proxy in the country you log in from in the browser, so Chaturbate sees the same place. Formats: <code>host:port</code>, <code>host:port:user:pass</code>, <code>user:pass@host:port</code>, or with a type in front: <code>http://</code>, <code>socks5://</code>. Leave Cookie empty to change only the proxy; leave Proxy empty to keep the saved one.</p>
         <p class="import-status" id="cbs-session-status">Loading...</p>
@@ -412,9 +420,10 @@ import Base from '@/layouts/Base.astro';
             Proxy (optional)
             <input type="text" id="cbs-proxy" autocomplete="off" spellcheck="false" placeholder="host:port:user:pass  or  socks5://user:pass@host:port" />
           </label>
-          <button type="submit">Save</button>
+          <button type="submit" id="cbs-save-btn">Save</button>
         </form>
         <button type="button" id="cbs-proxy-remove" class="ghost-btn" hidden>Remove proxy</button>
+        <button type="button" id="cbs-edit-cancel" class="ghost-btn" hidden>Cancel editing</button>
         <p id="cbs-session-error" class="cabinet-error" hidden></p>
       </div>
 
@@ -2093,34 +2102,77 @@ import Base from '@/layouts/Base.astro';
   let cbsTimer = null;
   let cbsWasRunning = false;
 
+  const cbsAccBody = document.getElementById('cbs-acc-body');
+  const cbsProxyPlaceholder = 'host:port:user:pass  or  socks5://user:pass@host:port';
+  let cbsAccounts = [];
+  let cbsFreeSlot = 0;
+  // Slot of the account being edited in the form, or null when the form adds a new one.
+  let cbsEditSlot = null;
+
+  function cbsAccount(slot) {
+    return cbsAccounts.find((a) => a.slot === slot);
+  }
+
+  function setCbsForm(slot) {
+    const a = slot == null ? null : cbsAccount(slot);
+    cbsEditSlot = a ? slot : null;
+    const cookieInput = document.getElementById('cbs-cookie');
+    document.getElementById('cbs-form-title').textContent = a ? `Edit ${a.username}` : 'Add account';
+    document.getElementById('cbs-user').value = a ? a.username : '';
+    cookieInput.value = '';
+    cookieInput.required = !a;
+    cookieInput.placeholder = a ? 'Saved. Paste a fresh Cookie value to replace it' : 'csrftoken=...; sessionid=...  (or the two values: csrftoken; sessionid)';
+    document.getElementById('cbs-proxy').value = '';
+    document.getElementById('cbs-proxy').placeholder = a && a.proxy ? `Saved: ${a.proxy} (type a new one to replace it)` : cbsProxyPlaceholder;
+    document.getElementById('cbs-proxy-remove').hidden = !(a && a.proxy);
+    document.getElementById('cbs-edit-cancel').hidden = !a;
+    const full = !a && cbsFreeSlot == null;
+    document.getElementById('cbs-save-btn').disabled = full;
+    cbsSessionStatus.textContent = full ? 'All 10 accounts are saved: remove one to add another.' : '';
+    cbsSessionError.hidden = true;
+  }
+
+  function renderCbsAccounts() {
+    document.getElementById('cbs-acc-total').textContent = `(${cbsAccounts.length} of 10)`;
+    cbsAccBody.innerHTML = cbsAccounts.length
+      ? cbsAccounts.map((a) => `<tr>
+        <td><a href="https://chaturbate.com/${igcEsc(a.username)}/" target="_blank" rel="noopener">${igcEsc(a.username)}</a></td>
+        <td>${igcEsc(a.proxy || 'none')}</td>
+        <td>${a.saved_at ? new Date(a.saved_at).toLocaleString() : '-'}</td>
+        <td class="num">${a.sent}</td>
+        <td id="cbs-acc-check-${a.slot}">Checking...</td>
+        <td><button class="ghost-btn" data-cbs-edit="${a.slot}">Edit</button> <button class="ghost-btn" data-cbs-remove="${a.slot}">Remove</button></td>
+      </tr>`).join('')
+      : '<tr><td colspan="6">No account saved yet.</td></tr>';
+  }
+
+  async function checkCbsAccount(slot) {
+    const check = await authedFetch(`/admin/chaturbate/dm/session/check?slot=${slot}`);
+    const c = check.ok ? await check.json() : { ok: false, error: await readError(check) };
+    const cell = document.getElementById(`cbs-acc-check-${slot}`);
+    if (!cell) return;
+    cell.innerHTML = c.ok
+      ? `<span class="igc-yes">Working</span>${c.logged_in_as ? `, as ${igcEsc(c.logged_in_as)}` : ''}${c.proxy_ip ? `, IP ${igcEsc(c.proxy_ip)}` : ''}, ${c.unread} unread`
+      : `<span class="igc-no">Not working</span>: ${igcEsc(c.error || '')}`;
+  }
+
   async function loadCbsSession() {
-    const res = await authedFetch('/admin/chaturbate/dm/session');
+    const res = await authedFetch('/admin/chaturbate/dm/accounts');
     if (!res.ok) return;
     const s = await res.json();
-    const cbsProxyInput = document.getElementById('cbs-proxy');
-    const cbsCookieInput = document.getElementById('cbs-cookie');
-    document.getElementById('cbs-proxy-remove').hidden = !s.proxy;
-    cbsProxyInput.placeholder = s.proxy ? `Saved: ${s.proxy} (type a new one to replace it)` : 'host:port:user:pass  or  socks5://user:pass@host:port';
-    if (!s.configured) {
-      cbsSessionStatus.textContent = 'No session saved yet.';
-      return;
-    }
-    cbsCookieInput.required = false;
-    cbsCookieInput.placeholder = 'Saved. Paste a fresh Cookie value to replace it';
-    document.getElementById('cbs-user').value = s.username;
-    const head = `Session saved for ${s.username}${s.saved_at ? `, ${new Date(s.saved_at).toLocaleString()}` : ''}.`
-      + ` ${s.proxy ? `Proxy: ${s.proxy}.` : 'No proxy.'}`;
-    cbsSessionStatus.textContent = `${head} Checking it with Chaturbate...`;
-    const check = await authedFetch('/admin/chaturbate/dm/session/check');
-    const c = check.ok ? await check.json() : { ok: false, error: await readError(check) };
-    cbsSessionStatus.textContent = c.ok
-      ? `${head} Working${c.logged_in_as ? `, logged in as ${c.logged_in_as}` : ''}${c.proxy_ip ? `, Chaturbate sees IP ${c.proxy_ip}` : ''}: Chaturbate answered (${c.unread} unread conversation(s)).`
-      : `${head} Not working: ${c.error}`;
+    cbsAccounts = s.items;
+    cbsFreeSlot = s.free_slot;
+    renderCbsAccounts();
+    setCbsForm(cbsEditSlot);
+    // One account at a time, so Chaturbate does not get a burst of checks.
+    for (const a of cbsAccounts) await checkCbsAccount(a.slot).catch(() => {});
   }
 
   async function saveCbsSession(proxy) {
     cbsSessionError.hidden = true;
-    const res = await authedFetch('/admin/chaturbate/dm/session', {
+    const slot = cbsEditSlot != null ? cbsEditSlot : cbsFreeSlot;
+    if (slot == null) return;
+    const res = await authedFetch(`/admin/chaturbate/dm/session?slot=${slot}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -2134,10 +2186,27 @@ import Base from '@/layouts/Base.astro';
       cbsSessionError.hidden = false;
       return;
     }
-    document.getElementById('cbs-cookie').value = '';
-    document.getElementById('cbs-proxy').value = '';
+    cbsEditSlot = null;
     loadCbsSession().catch(() => {});
   }
+
+  cbsAccBody.addEventListener('click', async (e) => {
+    const edit = e.target.closest('[data-cbs-edit]');
+    if (edit) {
+      setCbsForm(Number(edit.dataset.cbsEdit));
+      document.getElementById('cbs-session-form').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    const remove = e.target.closest('[data-cbs-remove]');
+    if (!remove) return;
+    const a = cbsAccount(Number(remove.dataset.cbsRemove));
+    if (!a || !confirm(`Remove the account ${a.username}? Its saved session and proxy are deleted; models it already messaged stay messaged.`)) return;
+    await authedFetch(`/admin/chaturbate/dm/session?slot=${a.slot}`, { method: 'DELETE' });
+    if (cbsEditSlot === a.slot) cbsEditSlot = null;
+    loadCbsSession().catch(() => {});
+  });
+
+  document.getElementById('cbs-edit-cancel').addEventListener('click', () => setCbsForm(null));
 
   document.getElementById('cbs-proxy-remove').addEventListener('click', () => {
     if (confirm('Remove the proxy? The account will connect from the server IP.')) saveCbsSession('').catch(() => {});
@@ -2148,16 +2217,25 @@ import Base from '@/layouts/Base.astro';
     await saveCbsSession(document.getElementById('cbs-proxy').value.trim() || null);
   });
 
+  function cbsPerAccount(accounts, skipped) {
+    const names = Object.keys(accounts || {});
+    const parts = names.length > 1
+      ? [` By account: ${names.map((n) => `${n} ${accounts[n].sent || 0}${accounts[n].errors ? ` (+${accounts[n].errors} failed)` : ''}`).join(', ')}.`]
+      : [];
+    if (skipped && skipped.length) parts.push(` Left out: ${skipped.join('; ')}.`);
+    return parts.join('');
+  }
+
   function renderCbs(s) {
     const r = s.last_result;
     if (s.running) {
       const p = s.progress || {};
       const err = (p.last_error ? ` Last error: ${p.last_error}` : '') + (p.last_ai_error ? ` ChatGPT: ${p.last_ai_error} (sent the original text).` : '');
-      cbsStatus.textContent = `${s.stopping ? 'Stopping' : 'Sending'}: ${p.done || 0} of ${p.total || '?'}${p.current ? `, now ${p.current}` : ''}. Sent ${p.sent || 0}, failed ${p.errors || 0}.${err}`;
+      cbsStatus.textContent = `${s.stopping ? 'Stopping' : 'Sending'}: ${p.done || 0} of ${p.total || '?'}${p.current ? `, now ${p.current}` : ''}. Sent ${p.sent || 0}, failed ${p.errors || 0}.${cbsPerAccount(p.accounts, p.skipped)}${err}`;
     } else if (r) {
       const when = s.last_finished_at ? new Date(s.last_finished_at).toLocaleString() : '';
       const err = r.error ? ` ${r.error}` : '';
-      cbsStatus.textContent = `${r.stopped ? 'Stopped' : 'Done'} ${when}: sent ${r.sent} of ${r.total}, failed ${r.errors}.${err}`;
+      cbsStatus.textContent = `${r.stopped ? 'Stopped' : 'Done'} ${when}: sent ${r.sent} of ${r.total}, failed ${r.errors}.${cbsPerAccount(r.accounts, r.skipped)}${err}`;
     } else {
       cbsStatus.textContent = 'Idle.';
     }
@@ -2248,7 +2326,8 @@ import Base from '@/layouts/Base.astro';
     }
     const names = list.items.slice(0, 15).join(', ') + (list.count > 15 ? ', ...' : '');
     const how = payload.randomize ? ' (reworded by ChatGPT for each model)' : '';
-    if (!confirm(`Send "${payload.message}"${how} to ${list.count} model(s)?\n\n${names}`)) {
+    const from = list.accounts > 1 ? ` from ${list.accounts} accounts` : '';
+    if (!confirm(`Send "${payload.message}"${how} to ${list.count} model(s)${from}?\n\n${names}`)) {
       cbsRunBtn.disabled = false;
       return;
     }
