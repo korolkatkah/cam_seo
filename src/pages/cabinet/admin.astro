@@ -363,6 +363,7 @@ import Base from '@/layouts/Base.astro';
       <div class="glass-card import-card">
         <h2>Chaturbate account</h2>
         <p class="bulk-hint">Messages are sent from your Chaturbate account (it needs Supporter status: most models only accept DMs from Supporters). Open chaturbate.com in a browser where you are logged in, press F12, go to Network, reload the page, click the first request to chaturbate.com and copy the whole <code>Cookie</code> value from Request Headers. Only <code>sessionid</code> and <code>csrftoken</code> are kept. Paste a fresh one when it says the session expired.</p>
+        <p class="bulk-hint">Proxy (optional): every request of this account (session check, DM mailing, auto-reply) goes through it. Use the proxy of the country/IP the account was logged in from, otherwise Chaturbate may drop the session. Formats: <code>http://user:pass@host:port</code>, <code>socks5://user:pass@host:port</code> or <code>host:port:user:pass</code> (taken as http). Leave empty to send directly from the server.</p>
         <p class="import-status" id="cbs-session-status">Loading...</p>
         <form id="cbs-session-form" class="link-form">
           <label>
@@ -372,6 +373,10 @@ import Base from '@/layouts/Base.astro';
           <label>
             Cookie
             <input type="password" id="cbs-cookie" required autocomplete="off" spellcheck="false" placeholder="csrftoken=...; sessionid=...  (or the two values: csrftoken; sessionid)" />
+          </label>
+          <label>
+            Proxy
+            <input type="text" id="cbs-proxy" autocomplete="off" spellcheck="false" placeholder="http://user:pass@host:port  (empty = no proxy)" />
           </label>
           <button type="submit">Save</button>
         </form>
@@ -2053,6 +2058,33 @@ import Base from '@/layouts/Base.astro';
   let cbsTimer = null;
   let cbsWasRunning = false;
 
+  // Accepts scheme://[user:pass@]host:port or host:port[:user:pass]; returns a proxy URL, '' for none, null if invalid.
+  function normalizeProxy(raw) {
+    const v = raw.trim();
+    if (!v) return '';
+    if (/^(https?|socks5h?):\/\//i.test(v)) {
+      try {
+        const u = new URL(v);
+        return u.hostname && u.port ? v : null;
+      } catch { return null; }
+    }
+    const parts = v.split(':');
+    if (parts.length !== 2 && parts.length !== 4) return null;
+    const [host, port, user, pass] = parts;
+    if (!host || !/^\d{1,5}$/.test(port)) return null;
+    return user !== undefined
+      ? `http://${encodeURIComponent(user)}:${encodeURIComponent(pass)}@${host}:${port}`
+      : `http://${host}:${port}`;
+  }
+
+  // Shows scheme://host:port without the credentials.
+  function proxyLabel(proxy) {
+    try {
+      const u = new URL(proxy);
+      return `${u.protocol}//${u.hostname}:${u.port}`;
+    } catch { return 'proxy'; }
+  }
+
   async function loadCbsSession() {
     const res = await authedFetch('/admin/chaturbate/dm/session');
     if (!res.ok) return;
@@ -2062,7 +2094,9 @@ import Base from '@/layouts/Base.astro';
       return;
     }
     document.getElementById('cbs-user').value = s.username;
-    const head = `Session saved for ${s.username}${s.saved_at ? `, ${new Date(s.saved_at).toLocaleString()}` : ''}.`;
+    document.getElementById('cbs-proxy').value = s.proxy || '';
+    const via = s.proxy ? ` Through proxy ${proxyLabel(s.proxy)}.` : (s.proxy === undefined ? '' : ' No proxy.');
+    const head = `Session saved for ${s.username}${s.saved_at ? `, ${new Date(s.saved_at).toLocaleString()}` : ''}.${via}`;
     cbsSessionStatus.textContent = `${head} Checking it with Chaturbate...`;
     const check = await authedFetch('/admin/chaturbate/dm/session/check');
     const c = check.ok ? await check.json() : { ok: false, error: await readError(check) };
@@ -2074,12 +2108,19 @@ import Base from '@/layouts/Base.astro';
   document.getElementById('cbs-session-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     cbsSessionError.hidden = true;
+    const proxy = normalizeProxy(document.getElementById('cbs-proxy').value);
+    if (proxy === null) {
+      cbsSessionError.textContent = 'Proxy format not recognised. Use http://user:pass@host:port, socks5://user:pass@host:port or host:port:user:pass.';
+      cbsSessionError.hidden = false;
+      return;
+    }
     const res = await authedFetch('/admin/chaturbate/dm/session', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         username: document.getElementById('cbs-user').value.trim(),
         cookie: document.getElementById('cbs-cookie').value.trim(),
+        proxy,
       }),
     });
     if (!res.ok) {
@@ -2088,7 +2129,14 @@ import Base from '@/layouts/Base.astro';
       return;
     }
     document.getElementById('cbs-cookie').value = '';
-    loadCbsSession().catch(() => {});
+    await loadCbsSession().catch(() => {});
+    // An older server silently drops unknown fields; say so instead of pretending the proxy is on.
+    const check = await authedFetch('/admin/chaturbate/dm/session');
+    const saved = check.ok ? await check.json() : null;
+    if (proxy && saved && saved.proxy === undefined) {
+      cbsSessionError.textContent = 'The session was saved, but the server does not support proxies yet (worker-cabinet needs the update): requests still go without a proxy.';
+      cbsSessionError.hidden = false;
+    }
   });
 
   function renderCbs(s) {
