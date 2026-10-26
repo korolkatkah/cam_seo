@@ -24,6 +24,7 @@ import Base from '@/layouts/Base.astro';
       <button class="admin-tab" role="tab" data-tab="onlyfans" aria-selected="false">OnlyFans</button>
       <button class="admin-tab" role="tab" data-tab="chaturbate" aria-selected="false">Chaturbate</button>
       <button class="admin-tab" role="tab" data-tab="igcomments" aria-selected="false">IG comments</button>
+      <button class="admin-tab" role="tab" data-tab="igplugin" aria-selected="false">IG plugin</button>
     </div>
 
     <div data-panel="main">
@@ -114,7 +115,7 @@ import Base from '@/layouts/Base.astro';
         <h2>Instagram comments check</h2>
         <span id="igc-badge" class="ofa-badge">...</span>
       </div>
-      <p class="bulk-hint">Checks the latest posts of every account in the database and shows which of the commenter accounts left a comment there. Runs in this browser through the <b>IG Worker Checker</b> extension (<code>D:\IG-WORKER-CHECKER</code>), using the Instagram account you are logged into in this browser; no password is entered anywhere. Keep this tab open while it runs.</p>
+      <p class="bulk-hint">Checks the latest posts of every account in the database and shows which of the commenter accounts left a comment there. Runs in this browser through the <b>IG Worker Checker</b> extension (install it from the "IG plugin" tab), using the Instagram account you are logged into in this browser; no password is entered anywhere. Keep this tab open while it runs.</p>
       <div class="igc-lists">
         <label class="category-field">
           <span>Commenter accounts <span id="igc-authors-count" class="tp-total"></span></span>
@@ -161,6 +162,29 @@ import Base from '@/layouts/Base.astro';
         </table>
       </div>
       <pre id="igc-log" class="igc-log"></pre>
+    </div>
+    </div>
+
+    <div data-panel="igplugin" hidden>
+    <div class="glass-card import-card">
+      <div class="targets-header">
+        <h2>IG Worker Checker (Chrome extension)</h2>
+        <span id="igp-badge" class="ofa-badge">...</span>
+      </div>
+      <p class="bulk-hint">Checks whether worker accounts follow and commented on a list of Instagram accounts. Works in Chrome with any Instagram account logged in; it never asks for a password. It also powers the "IG comments" tab.</p>
+      <p class="import-status" id="igp-status">Latest version: <b>1.1.0</b>.</p>
+      <div class="import-actions">
+        <a class="import-btn" href="/downloads/ig-worker-checker.zip" download style="text-decoration:none;">Download plugin (.zip)</a>
+        <button id="igp-open-check-btn" class="import-btn export-btn">Open "IG comments"</button>
+      </div>
+      <ol class="igp-steps">
+        <li>Download the zip and unpack it (right click, "Extract all"). Keep the folder: Chrome loads the plugin from it.</li>
+        <li>Open <code>chrome://extensions</code> in Chrome and switch on "Developer mode" (top right).</li>
+        <li>Click "Load unpacked" and choose the unpacked <code>ig-worker-checker</code> folder.</li>
+        <li>Log in to instagram.com in this Chrome with any account.</li>
+        <li>Reload this page: the badge above turns green.</li>
+      </ol>
+      <p class="bulk-hint">Standalone use: click the plugin icon in the Chrome toolbar, it opens its own window with the worker check (follows + comments). To update: download the new zip, replace the files in the same folder and press the reload arrow on the plugin card in <code>chrome://extensions</code>.</p>
     </div>
     </div>
 
@@ -657,6 +681,7 @@ import Base from '@/layouts/Base.astro';
   .igc-comment { font-size: 0.8rem; color: var(--fg-muted); }
   .igc-log { margin: 1rem 0 0; max-height: 200px; overflow: auto; font-size: 0.75rem; background: var(--bg-subtle); padding: 0.5rem; border-radius: 8px; white-space: pre-wrap; }
   .igc-log:empty { display: none; }
+  .igp-steps { margin: 1rem 0; padding-left: 1.25rem; font-size: 0.9rem; line-height: 1.7; }
   .category-field textarea,
   .category-field select {
     font: inherit;
@@ -1828,7 +1853,7 @@ import Base from '@/layouts/Base.astro';
       pollCbs().catch(() => {});
       loadCbr().catch(() => {});
     }
-    if (name === 'igcomments') igcPing();
+    if (name === 'igcomments' || name === 'igplugin') igcPing();
     if (name === 'tonplace' && !tonplaceLoaded) {
       tonplaceLoaded = true;
       loadTonplace();
@@ -3048,6 +3073,10 @@ import Base from '@/layouts/Base.astro';
   const igcSummaryEl = document.getElementById('igc-summary');
   const igcLogEl = document.getElementById('igc-log');
   const IGC_KEY = 'igc_state';
+  const IGP_LATEST = '1.1.0';
+  const igpBadgeEl = document.getElementById('igp-badge');
+  const igpStatusEl = document.getElementById('igp-status');
+  document.getElementById('igp-open-check-btn').addEventListener('click', () => showTab('igcomments'));
   let igcExtVersion = null;
   let igcRunning = false;
   let igcResults = {}; // username -> result from the extension, plus the commenter list it was checked against
@@ -3157,6 +3186,9 @@ import Base from '@/layouts/Base.astro';
       igcExtVersion = ev.version;
       igcBadgeEl.textContent = `Extension v${ev.version}`;
       igcBadgeEl.classList.add('is-online');
+      igpBadgeEl.textContent = `Installed v${ev.version}`;
+      igpBadgeEl.classList.add('is-online');
+      if (ev.version !== IGP_LATEST) igpStatusEl.innerHTML = `Latest version: <b>${IGP_LATEST}</b>. Installed v${ev.version}: download the zip again and reload the plugin.`;
       if (!igcRunning) {
         igcStartBtn.disabled = false;
         if (/not found/.test(igcStatusEl.textContent)) igcStatusEl.textContent = 'Idle.';
@@ -3192,8 +3224,10 @@ import Base from '@/layouts/Base.astro';
       if (igcExtVersion) return;
       igcBadgeEl.textContent = 'Extension not found';
       igcBadgeEl.classList.remove('is-online');
+      igpBadgeEl.textContent = 'Not installed';
+      igpBadgeEl.classList.remove('is-online');
       igcStartBtn.disabled = true;
-      igcStatusEl.textContent = 'Extension not found: install IG Worker Checker (chrome://extensions, Developer mode, Load unpacked, folder D:\\IG-WORKER-CHECKER) and reload this page.';
+      igcStatusEl.textContent = 'Extension not found: install it from the "IG plugin" tab and reload this page.';
     }, 1500);
   }
 
