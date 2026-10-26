@@ -648,6 +648,7 @@ import Base from '@/layouts/Base.astro';
 
   .admin-tabs {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.25rem;
     border-bottom: 1px solid var(--bg-subtle);
     margin-bottom: 1.5rem;
@@ -1015,7 +1016,7 @@ import Base from '@/layouts/Base.astro';
   const API_BASE = 'https://worker-cabinet-production.up.railway.app';
   const token = localStorage.getItem('cabinet_token');
   if (!token) {
-    window.location.href = '/cabinet/login';
+    window.location.href = '/cabinet/login?next=' + encodeURIComponent('/cabinet/admin' + window.location.hash);
   }
 
   const deniedEl = document.getElementById('denied');
@@ -1023,7 +1024,7 @@ import Base from '@/layouts/Base.astro';
 
   document.getElementById('logout-btn').addEventListener('click', () => {
     localStorage.removeItem('cabinet_token');
-    window.location.href = '/cabinet/login';
+    window.location.href = '/cabinet/login?next=' + encodeURIComponent('/cabinet/admin' + window.location.hash);
   });
 
   async function authedFetch(path, options = {}) {
@@ -1033,7 +1034,7 @@ import Base from '@/layouts/Base.astro';
     });
     if (res.status === 401) {
       localStorage.removeItem('cabinet_token');
-      window.location.href = '/cabinet/login';
+      window.location.href = '/cabinet/login?next=' + encodeURIComponent('/cabinet/admin' + window.location.hash);
       throw new Error('Session expired');
     }
     return res;

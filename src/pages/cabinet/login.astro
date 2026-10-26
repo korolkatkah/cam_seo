@@ -127,7 +127,8 @@ import Base from '@/layouts/Base.astro';
       }
       const data = await res.json();
       localStorage.setItem('cabinet_token', data.access_token);
-      window.location.href = '/cabinet';
+      const next = new URLSearchParams(window.location.search).get('next') || '';
+      window.location.href = /^\/cabinet(\/[\w\-\/]*)?(#[\w\-]*)?$/.test(next) ? next : '/cabinet';
     } catch (err) {
       errorEl.textContent = err instanceof Error ? err.message : 'Login failed';
       errorEl.hidden = false;

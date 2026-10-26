@@ -12,7 +12,10 @@ import Base from '@/layouts/Base.astro';
 <div class="cabinet-wrap container">
   <div class="cabinet-header">
     <h1>My Tasks</h1>
-    <button id="logout-btn" class="ghost-btn">Log out</button>
+    <div style="display:flex;gap:0.5rem;align-items:center;">
+      <a id="admin-link" href="/cabinet/admin" class="ghost-btn" style="text-decoration:none;" hidden>Admin panel</a>
+      <button id="logout-btn" class="ghost-btn">Log out</button>
+    </div>
   </div>
 
   <p id="empty-state" hidden>No tasks assigned yet.</p>
@@ -179,6 +182,12 @@ import Base from '@/layouts/Base.astro';
     }
     return res;
   }
+
+  // Admins land here after login; give them a way into the admin panel.
+  authedFetch('/auth/me')
+    .then((r) => (r.ok ? r.json() : null))
+    .then((me) => { if (me && me.is_admin) (document.getElementById('admin-link') as HTMLAnchorElement).hidden = false; })
+    .catch(() => {});
 
   function renderTask(task: Task) {
     const node = template.content.cloneNode(true) as DocumentFragment;
