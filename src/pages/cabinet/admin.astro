@@ -182,7 +182,7 @@ import Base from '@/layouts/Base.astro';
     <div data-panel="cbonline" hidden>
     <div class="glass-card import-card">
       <h2>Add models</h2>
-      <p class="bulk-hint">The server checks the Chaturbate affiliate API every few minutes, records when each model on this list goes live and goes offline, and sends a Telegram message when she goes live. Only the online rooms of the chosen gender are read, so pick the right one. One per line: username, @username, or a chaturbate.com / chaturfier.com link.</p>
+      <p class="bulk-hint">Every minute the server checks each model on this list (one small request per model), records when she goes live and goes offline, and sends a Telegram message when she goes live. One per line: username, @username, or a chaturbate.com / chaturfier.com link.</p>
       <form id="cbo-form" class="link-form">
         <label>
           Usernames
@@ -191,15 +191,6 @@ import Base from '@/layouts/Base.astro';
         <label>
           Note (optional)
           <input type="text" id="cbo-note" maxlength="255" autocomplete="off" />
-        </label>
-        <label>
-          Gender
-          <select id="cbo-gender">
-            <option value="f">Female</option>
-            <option value="m">Male</option>
-            <option value="c">Couple</option>
-            <option value="t">Trans</option>
-          </select>
         </label>
         <button type="submit">Add</button>
       </form>
@@ -3406,9 +3397,8 @@ import Base from '@/layouts/Base.astro';
     }).join('');
 
     const parts = [];
-    if (!s.configured) parts.push('CB_WM is not set on the server: polling is off.');
     if (!s.telegram) parts.push('Telegram bot is not set: no alerts.');
-    if (s.last_poll_at) parts.push(`Last check ${new Date(s.last_poll_at).toLocaleTimeString()}${s.rooms_online ? ` (${s.rooms_online} rooms online, ${s.seconds}s)` : ''}.`);
+    if (s.last_poll_at) parts.push(`Last check ${new Date(s.last_poll_at).toLocaleTimeString()} (${s.seconds}s).`);
     if (s.last_error) parts.push(`Error: ${s.last_error}`);
     if (s.next_poll_at) parts.push(`Next ${new Date(s.next_poll_at).toLocaleTimeString()}.`);
     cboStatusEl.textContent = parts.join(' ') || `Checked every ${s.poll_minutes} min.`;
@@ -3450,7 +3440,7 @@ import Base from '@/layouts/Base.astro';
     const res = await authedFetch('/admin/cbtracker/watch', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ usernames: document.getElementById('cbo-names').value, note: document.getElementById('cbo-note').value || null, gender: document.getElementById('cbo-gender').value }),
+      body: JSON.stringify({ usernames: document.getElementById('cbo-names').value, note: document.getElementById('cbo-note').value || null }),
     });
     if (!res.ok) {
       cboErrorEl.textContent = await igcError(res);
