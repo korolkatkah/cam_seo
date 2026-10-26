@@ -24,6 +24,7 @@ import Base from '@/layouts/Base.astro';
       <button class="admin-tab" role="tab" data-tab="onlyfans" aria-selected="false">OnlyFans</button>
       <button class="admin-tab" role="tab" data-tab="chaturbate" aria-selected="false">Chaturbate</button>
       <button class="admin-tab" role="tab" data-tab="igcomments" aria-selected="false">IG comments</button>
+      <button class="admin-tab" role="tab" data-tab="cbonline" aria-selected="false">CB online</button>
     </div>
 
     <div data-panel="main">
@@ -175,6 +176,49 @@ import Base from '@/layouts/Base.astro';
         </table>
       </div>
       <pre id="igc-log" class="igc-log"></pre>
+    </div>
+    </div>
+
+    <div data-panel="cbonline" hidden>
+    <div class="glass-card import-card">
+      <h2>Add models</h2>
+      <p class="bulk-hint">The server checks the Chaturbate affiliate API every few minutes and records when each model on this list goes live and goes offline. One per line: username, @username, or a chaturbate.com / chaturfier.com link.</p>
+      <form id="cbo-form" class="link-form">
+        <label>
+          Usernames
+          <textarea id="cbo-names" rows="3" required spellcheck="false" placeholder="sapphirevelour&#10;https://chaturbate.com/another_model/"></textarea>
+        </label>
+        <label>
+          Note (optional)
+          <input type="text" id="cbo-note" maxlength="255" autocomplete="off" />
+        </label>
+        <button type="submit">Add</button>
+      </form>
+      <p id="cbo-error" class="cabinet-error" hidden></p>
+    </div>
+
+    <div class="glass-card import-card">
+      <div class="targets-header">
+        <h2>Watchlist <span id="cbo-total" class="tp-total"></span></h2>
+        <button id="cbo-poll-btn" class="ghost-btn">Check now</button>
+      </div>
+      <p class="import-status" id="cbo-status" role="status" aria-live="polite">Loading...</p>
+      <div class="targets-table-wrap">
+        <table class="targets-table">
+          <thead><tr><th>Model</th><th>Status</th><th>Live for</th><th class="num-h">Viewers</th><th>Last seen</th><th class="num-h">Sessions 7d</th><th class="num-h">Hours 7d</th><th>Note</th><th></th></tr></thead>
+          <tbody id="cbo-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="glass-card import-card" id="cbo-history" hidden>
+      <h2>Broadcasts of <span id="cbo-history-name"></span>, last 30 days</h2>
+      <div class="targets-table-wrap">
+        <table class="targets-table">
+          <thead><tr><th>Started</th><th>Ended</th><th>Duration</th><th class="num-h">Peak viewers</th></tr></thead>
+          <tbody id="cbo-history-body"></tbody>
+        </table>
+      </div>
     </div>
     </div>
 
@@ -353,6 +397,7 @@ import Base from '@/layouts/Base.astro';
       <div class="glass-card import-card">
         <h2>Chaturbate account</h2>
         <p class="bulk-hint">Messages are sent from your Chaturbate account (it needs Supporter status: most models only accept DMs from Supporters). Open chaturbate.com in a browser where you are logged in, press F12, go to Network, reload the page, click the first request to chaturbate.com and copy the whole <code>Cookie</code> value from Request Headers. Only <code>sessionid</code> and <code>csrftoken</code> are kept. Paste a fresh one when it says the session expired.</p>
+        <p class="bulk-hint">Proxy (optional): every request of this account (session check, mailing, auto-reply) goes through it. Use a proxy in the country you log in from in the browser, so Chaturbate sees the same place. Formats: <code>host:port</code>, <code>host:port:user:pass</code>, <code>user:pass@host:port</code>, or with a type in front: <code>http://</code>, <code>socks5://</code>. Leave Cookie empty to change only the proxy; leave Proxy empty to keep the saved one.</p>
         <p class="import-status" id="cbs-session-status">Loading...</p>
         <form id="cbs-session-form" class="link-form">
           <label>
@@ -365,12 +410,11 @@ import Base from '@/layouts/Base.astro';
           </label>
           <label>
             Proxy (optional)
-            <input type="password" id="cbs-proxy" autocomplete="off" spellcheck="false" placeholder="host:port:user:pass  or  socks5://user:pass@host:port" />
+            <input type="text" id="cbs-proxy" autocomplete="off" spellcheck="false" placeholder="host:port:user:pass  or  socks5://user:pass@host:port" />
           </label>
           <button type="submit">Save</button>
-          <button type="button" id="cbs-proxy-remove" class="ghost-btn" hidden>Remove proxy</button>
         </form>
-        <p class="bulk-hint">Every request of this account (session check, mailing, auto-reply) goes through the proxy. Use the proxy of the country you log in from in the browser, so Chaturbate sees the same place. Formats: <code>host:port</code>, <code>host:port:user:pass</code>, <code>user:pass@host:port</code>, or with a type in front: <code>http://</code>, <code>socks5://</code>. Leave Cookie empty to change only the proxy; leave Proxy empty to keep the saved one.</p>
+        <button type="button" id="cbs-proxy-remove" class="ghost-btn" hidden>Remove proxy</button>
         <p id="cbs-session-error" class="cabinet-error" hidden></p>
       </div>
 
@@ -1850,6 +1894,7 @@ import Base from '@/layouts/Base.astro';
       loadCbr().catch(() => {});
     }
     if (name === 'igcomments') loadIgComments();
+    if (name === 'cbonline') cboLoad().catch(() => {});
     if (name === 'tonplace' && !tonplaceLoaded) {
       tonplaceLoaded = true;
       loadTonplace();
@@ -3307,6 +3352,112 @@ import Base from '@/layouts/Base.astro';
   [igcAuthorsEl, igcTargetsEl, igcPostsEl, igcPagesEl, igcDelayMinEl, igcDelayMaxEl].forEach((el) => el.addEventListener('change', igcSaveInputs));
   igcLoadInputs();
   igcCounts();
+
+  // --- CB online: watchlist of Chaturbate models, polled by the backend via the affiliate API ---
+
+  const cboPanelEl = document.querySelector('[data-panel="cbonline"]');
+  const cboBodyEl = document.getElementById('cbo-body');
+  const cboStatusEl = document.getElementById('cbo-status');
+  const cboErrorEl = document.getElementById('cbo-error');
+  const cboHistoryEl = document.getElementById('cbo-history');
+  let cboTimer = null;
+
+  function cboDuration(ms) {
+    const m = Math.max(0, Math.round(ms / 60000));
+    return `${Math.floor(m / 60)}:${String(m % 60).padStart(2, '0')}`;
+  }
+
+  function cboAgo(iso) {
+    if (!iso) return '-';
+    const m = Math.round((Date.now() - new Date(iso)) / 60000);
+    if (m < 60) return `${m} min ago`;
+    if (m < 48 * 60) return `${Math.round(m / 60)} h ago`;
+    return new Date(iso).toLocaleDateString();
+  }
+
+  function cboRender(s) {
+    const live = s.watch.filter((w) => w.online).length;
+    document.getElementById('cbo-total').textContent = `${live} live of ${s.watch.length}`;
+    cboBodyEl.innerHTML = s.watch.map((w) => {
+      const u = igcEsc(w.username);
+      const status = w.online
+        ? `<span class="igc-yes">${igcEsc(w.current_show || 'online')}</span>`
+        : '<span class="igc-no">offline</span>';
+      return `<tr title="${igcEsc(w.subject || '')}">
+        <td><a href="https://chaturbate.com/${u}/" target="_blank" rel="noopener">${u}</a></td>
+        <td>${status}</td>
+        <td>${w.online_since ? cboDuration(Date.now() - new Date(w.online_since)) : '-'}</td>
+        <td class="num">${w.online ? w.viewers ?? 0 : '-'}</td>
+        <td>${w.online ? 'now' : cboAgo(w.last_seen_at)}</td>
+        <td class="num">${w.sessions_7d}</td>
+        <td class="num">${w.hours_7d}</td>
+        <td>${igcEsc(w.note || '')}</td>
+        <td><button class="ghost-btn" data-cbo-history="${u}">History</button> <button class="ghost-btn" data-cbo-remove="${u}">Remove</button></td>
+      </tr>`;
+    }).join('');
+
+    const parts = [];
+    if (!s.configured) parts.push('CB_WM is not set on the server: polling is off.');
+    if (s.last_poll_at) parts.push(`Last check ${new Date(s.last_poll_at).toLocaleTimeString()}${s.rooms_online ? ` (${s.rooms_online} rooms online, ${s.seconds}s)` : ''}.`);
+    if (s.last_error) parts.push(`Error: ${s.last_error}`);
+    if (s.next_poll_at) parts.push(`Next ${new Date(s.next_poll_at).toLocaleTimeString()}.`);
+    cboStatusEl.textContent = parts.join(' ') || `Checked every ${s.poll_minutes} min.`;
+  }
+
+  async function cboLoad() {
+    clearTimeout(cboTimer);
+    const res = await authedFetch('/admin/cbtracker');
+    if (res.ok) cboRender(await res.json());
+    if (!cboPanelEl.hidden) cboTimer = setTimeout(() => cboLoad().catch(() => {}), 60000);
+  }
+
+  async function cboHistory(username) {
+    const res = await authedFetch(`/admin/cbtracker/sessions/${encodeURIComponent(username)}?days=30`);
+    if (!res.ok) return;
+    const rows = await res.json();
+    document.getElementById('cbo-history-name').textContent = username;
+    document.getElementById('cbo-history-body').innerHTML = rows.length ? rows.map((r) => `<tr>
+      <td>${new Date(r.started_at).toLocaleString()}</td>
+      <td>${r.ended_at ? new Date(r.ended_at).toLocaleString() : 'live'}</td>
+      <td>${cboDuration(new Date(r.ended_at || Date.now()) - new Date(r.started_at))}</td>
+      <td class="num">${r.peak_viewers}</td></tr>`).join('') : '<tr><td colspan="4">No broadcasts recorded yet.</td></tr>';
+    cboHistoryEl.hidden = false;
+    cboHistoryEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  cboBodyEl.addEventListener('click', async (e) => {
+    const hist = e.target.closest('[data-cbo-history]');
+    if (hist) { cboHistory(hist.dataset.cboHistory).catch(() => {}); return; }
+    const rm = e.target.closest('[data-cbo-remove]');
+    if (!rm || !confirm(`Remove ${rm.dataset.cboRemove} and her broadcast history?`)) return;
+    await authedFetch(`/admin/cbtracker/watch/${encodeURIComponent(rm.dataset.cboRemove)}`, { method: 'DELETE' });
+    cboLoad().catch(() => {});
+  });
+
+  document.getElementById('cbo-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    cboErrorEl.hidden = true;
+    const res = await authedFetch('/admin/cbtracker/watch', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ usernames: document.getElementById('cbo-names').value, note: document.getElementById('cbo-note').value || null }),
+    });
+    if (!res.ok) {
+      cboErrorEl.textContent = await igcError(res);
+      cboErrorEl.hidden = false;
+      return;
+    }
+    const r = await res.json();
+    document.getElementById('cbo-names').value = '';
+    cboStatusEl.textContent = `Added ${r.added}${r.already ? `, ${r.already} already on the list` : ''}.`;
+    cboLoad().catch(() => {});
+  });
+
+  document.getElementById('cbo-poll-btn').addEventListener('click', async () => {
+    const res = await authedFetch('/admin/cbtracker/poll', { method: 'POST' });
+    cboStatusEl.textContent = res.ok ? 'Checking... the table refreshes in a few seconds.' : `Error: ${await igcError(res)}`;
+    if (res.ok) setTimeout(() => cboLoad().catch(() => {}), 15000);
+  });
 
   async function init() {
     try {
