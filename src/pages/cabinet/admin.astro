@@ -2976,7 +2976,8 @@ import Base from '@/layouts/Base.astro';
     } else if (r && r.status === 'ok') {
       const when = a.last_checked_at ? new Date(a.last_checked_at).toLocaleTimeString() : '';
       const err = r.errors ? `, ${r.errors} failed (${r.last_error})` : '';
-      last = ` Last ${r.full_scan ? 'full inbox check' : 'check'} ${when}: ${r.incoming} new answer(s) from mailed profiles, ${r.replied} replied${err}.`;
+      const hid = r.hidden ? `, ${r.hidden} hidden by ton.place (same text sent too often: turn on ChatGPT randomization)` : '';
+      last = ` Last ${r.full_scan ? 'full inbox check' : 'check'} ${when}: ${r.incoming} new answer(s) from mailed profiles, ${r.replied} replied${err}${hid}.`;
     }
     const head = a.enabled
       ? `On, checks every ${a.check_every_minutes} min${a.next_check_at ? `, next at ${new Date(a.next_check_at).toLocaleTimeString()}` : ''}.`
