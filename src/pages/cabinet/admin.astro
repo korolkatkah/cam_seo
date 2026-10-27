@@ -25,6 +25,7 @@ import Base from '@/layouts/Base.astro';
       <button class="admin-tab" role="tab" data-tab="chaturbate" aria-selected="false">Chaturbate</button>
       <button class="admin-tab" role="tab" data-tab="igcomments" aria-selected="false">IG comments</button>
       <button class="admin-tab" role="tab" data-tab="cbonline" aria-selected="false">CB online</button>
+      <button class="admin-tab" role="tab" data-tab="cbtraffic" aria-selected="false">CB traffic</button>
     </div>
 
     <div data-panel="main">
@@ -217,6 +218,88 @@ import Base from '@/layouts/Base.astro';
         <table class="targets-table">
           <thead><tr><th>Started</th><th>Ended</th><th>Duration</th><th class="num-h">Peak viewers</th></tr></thead>
           <tbody id="cbo-history-body"></tbody>
+        </table>
+      </div>
+    </div>
+    </div>
+
+    <div data-panel="cbtraffic" hidden>
+    <div class="glass-card import-card">
+      <h2>Traffic link</h2>
+      <p class="bulk-hint">Send all traffic to this link. Each click goes to a pool model who is in a public show right now (status from the CB online check, every 10 minutes), as your affiliate link with <code>track</code> = source, so Chaturbate's affiliate stats show signups and revenue per source. Add <code>?s=source</code> and optionally <code>&amp;sub1=</code>, <code>&amp;sub2=</code>, <code>&amp;sub3=</code> (letters, digits, <code>_ . -</code>).</p>
+      <p><code id="cbt-go">https://www.ewohub.com/go?s=tg</code> <button id="cbt-copy" class="ghost-btn" type="button">Copy</button></p>
+      <form id="cbt-settings" class="link-form">
+        <label>
+          Your Chaturbate affiliate link (any, with tour= and campaign=)
+          <input type="url" id="cbt-aff" autocomplete="off" spellcheck="false" placeholder="https://chaturbate.com/in/?tour=...&amp;campaign=...&amp;track=default" />
+        </label>
+        <label>
+          How to split clicks between live models
+          <select id="cbt-mode">
+            <option value="equal">Equally</option>
+            <option value="weight">By weight (weight 3 gets 3x the clicks of weight 1)</option>
+            <option value="priority">By priority (lowest number first; others only when she is not public)</option>
+          </select>
+        </label>
+        <label>
+          Fallback URL when no pool model is public (empty = Chaturbate home page with your affiliate link)
+          <input type="url" id="cbt-fallback" autocomplete="off" spellcheck="false" placeholder="https://..." />
+        </label>
+        <button type="submit">Save</button>
+      </form>
+      <p id="cbt-settings-msg" class="import-status" role="status" aria-live="polite"></p>
+    </div>
+
+    <div class="glass-card import-card">
+      <div class="targets-header">
+        <h2>Pool <span id="cbt-live" class="tp-total"></span></h2>
+      </div>
+      <form id="cbt-add" class="link-form">
+        <label>
+          Add models (one per line: username, @username or chaturbate.com link)
+          <textarea id="cbt-names" rows="3" required spellcheck="false" placeholder="sapphirevelour&#10;https://chaturbate.com/another_model/"></textarea>
+        </label>
+        <button type="submit">Add to pool</button>
+      </form>
+      <p id="cbt-pool-msg" class="import-status" role="status" aria-live="polite"></p>
+      <div class="targets-table-wrap">
+        <table class="targets-table">
+          <thead><tr><th>In pool</th><th>Model</th><th>Status</th><th class="num-h">Viewers</th><th class="num-h">Weight</th><th class="num-h">Priority</th><th class="num-h">Gets now</th></tr></thead>
+          <tbody id="cbt-pool"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="glass-card import-card">
+      <div class="targets-header">
+        <h2>Report</h2>
+        <span>
+          <select id="cbt-by">
+            <option value="src">Source</option><option value="model">Model</option><option value="country">Country</option>
+            <option value="device">Device</option><option value="os">OS</option><option value="browser">Browser / app</option>
+            <option value="referer">Referrer</option><option value="sub1">sub1</option><option value="sub2">sub2</option>
+            <option value="sub3">sub3</option><option value="day">Day</option><option value="hour">Hour</option>
+          </select>
+          <select id="cbt-days"><option value="1">Today + yesterday</option><option value="7" selected>7 days</option><option value="30">30 days</option><option value="90">90 days</option></select>
+          <input type="text" id="cbt-src" placeholder="filter: source" size="12" />
+        </span>
+      </div>
+      <p class="import-status" id="cbt-total"></p>
+      <div class="targets-table-wrap">
+        <table class="targets-table">
+          <thead><tr><th id="cbt-key-h">Source</th><th class="num-h">Clicks</th><th class="num-h">Unique</th><th class="num-h">Unique %</th><th class="num-h">To fallback</th><th class="num-h">Bots</th></tr></thead>
+          <tbody id="cbt-report"></tbody>
+        </table>
+      </div>
+      <p class="bulk-hint">Bots (link previews, crawlers) are counted apart and not in clicks. Unique = first click of that IP + browser in a UTC day. Signups and revenue per source: Chaturbate affiliate stats, filtered by track.</p>
+    </div>
+
+    <div class="glass-card import-card">
+      <h2>Last clicks</h2>
+      <div class="targets-table-wrap">
+        <table class="targets-table">
+          <thead><tr><th>Time</th><th>Source</th><th>sub1</th><th>Model</th><th>Country</th><th>Device</th><th>Browser</th><th>Referrer</th><th></th></tr></thead>
+          <tbody id="cbt-clicks"></tbody>
         </table>
       </div>
     </div>
@@ -1904,6 +1987,7 @@ import Base from '@/layouts/Base.astro';
     }
     if (name === 'igcomments') loadIgComments();
     if (name === 'cbonline') cboLoad().catch(() => {});
+    if (name === 'cbtraffic') cbtLoad().catch(() => {});
     if (name === 'tonplace' && !tonplaceLoaded) {
       tonplaceLoaded = true;
       loadTonplace();
@@ -3538,6 +3622,126 @@ import Base from '@/layouts/Base.astro';
     cboStatusEl.textContent = res.ok ? 'Checking... the table refreshes in a few seconds.' : `Error: ${await igcError(res)}`;
     if (res.ok) setTimeout(() => cboLoad().catch(() => {}), 15000);
   });
+
+  // --- CB traffic: /go link that splits clicks between pool models in a public show ---
+
+  const cbtPanelEl = document.querySelector('[data-panel="cbtraffic"]');
+  const cbtPoolEl = document.getElementById('cbt-pool');
+  let cbtTimer = null;
+
+  async function cbtSend(path, method, body) {
+    const res = await authedFetch(path, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    return res.ok ? null : await igcError(res);
+  }
+
+  function cbtRender(s) {
+    if (document.activeElement?.closest('#cbt-settings') == null) {
+      document.getElementById('cbt-aff').value = s.aff_link;
+      document.getElementById('cbt-mode').value = s.mode;
+      document.getElementById('cbt-fallback').value = s.fallback_url;
+    }
+    document.getElementById('cbt-settings-msg').textContent = (s.aff_ok ? '' : 'Affiliate link is not set: clicks go to rooms without your affiliate code. ')
+      + `Nobody public: clicks go to ${s.fallback_effective}`;
+    const inPool = s.pool.filter((p) => p.in_pool).length;
+    document.getElementById('cbt-live').textContent = `${s.live_now} public now of ${inPool}`;
+    if (document.activeElement?.closest('#cbt-pool')) return;
+    cbtPoolEl.innerHTML = s.pool.length ? s.pool.map((p) => {
+      const u = igcEsc(p.username);
+      const cls = p.show === 'public' ? 'igc-yes' : 'igc-no';
+      return `<tr>
+        <td><input type="checkbox" data-cbt-u="${u}" data-cbt-f="in_pool" ${p.in_pool ? 'checked' : ''} /></td>
+        <td><a href="https://chaturbate.com/${u}/" target="_blank" rel="noopener">${u}</a></td>
+        <td><span class="${cls}">${igcEsc(p.show)}</span></td>
+        <td class="num">${p.viewers ?? '-'}</td>
+        <td class="num"><input type="number" min="0" max="1000" style="width:4.5em" value="${p.weight}" data-cbt-u="${u}" data-cbt-f="weight" /></td>
+        <td class="num"><input type="number" min="0" max="1000" style="width:4.5em" value="${p.priority}" data-cbt-u="${u}" data-cbt-f="priority" /></td>
+        <td class="num">${p.in_pool && p.share ? `${p.share}%` : '-'}</td>
+      </tr>`;
+    }).join('') : '<tr><td colspan="7">No models yet. Add them above.</td></tr>';
+  }
+
+  async function cbtReport() {
+    const by = document.getElementById('cbt-by').value;
+    const days = document.getElementById('cbt-days').value;
+    const src = document.getElementById('cbt-src').value.trim();
+    const res = await authedFetch(`/admin/cbrouter/report?by=${by}&days=${days}${src ? `&src=${encodeURIComponent(src)}` : ''}`);
+    if (!res.ok) return;
+    const r = await res.json();
+    const pct = (a, b) => (b ? `${Math.round((100 * a) / b)}%` : '-');
+    document.getElementById('cbt-key-h').textContent = document.getElementById('cbt-by').selectedOptions[0].textContent
+      + (by === 'day' || by === 'hour' ? ` (${r.timezone})` : '');
+    const t = r.total;
+    document.getElementById('cbt-total').textContent = `Total: ${t.clicks} clicks, ${t.uniques} unique (${pct(t.uniques, t.clicks)}), ${t.fallback} to fallback, ${t.bots} bots.`;
+    document.getElementById('cbt-report').innerHTML = r.rows.length ? r.rows.map((x) => `<tr>
+      <td>${igcEsc(x.key)}</td><td class="num">${x.clicks}</td><td class="num">${x.uniques}</td>
+      <td class="num">${pct(x.uniques, x.clicks)}</td><td class="num">${x.fallback}</td><td class="num">${x.bots}</td></tr>`).join('')
+      : '<tr><td colspan="6">No clicks yet.</td></tr>';
+  }
+
+  async function cbtClicks() {
+    const res = await authedFetch('/admin/cbrouter/clicks?limit=50');
+    if (!res.ok) return;
+    const rows = await res.json();
+    document.getElementById('cbt-clicks').innerHTML = rows.length ? rows.map((c) => `<tr>
+      <td>${new Date(c.at).toLocaleString()}</td><td>${igcEsc(c.src || '-')}</td><td>${igcEsc(c.sub1 || '')}</td>
+      <td>${igcEsc(c.model || 'fallback')}</td><td>${igcEsc(c.country || '-')}</td><td>${igcEsc(`${c.device} / ${c.os}`)}</td>
+      <td>${igcEsc(c.browser || '')}</td><td>${igcEsc(c.referer || '')}</td>
+      <td>${c.bot ? 'bot' : c.unique ? 'unique' : 'repeat'}</td></tr>`).join('') : '<tr><td colspan="9">No clicks yet.</td></tr>';
+  }
+
+  async function cbtLoad() {
+    clearTimeout(cbtTimer);
+    const res = await authedFetch('/admin/cbrouter');
+    if (res.ok) cbtRender(await res.json());
+    await Promise.all([cbtReport(), cbtClicks()]).catch(() => {});
+    if (!cbtPanelEl.hidden) cbtTimer = setTimeout(() => cbtLoad().catch(() => {}), 60000);
+  }
+
+  document.getElementById('cbt-copy').addEventListener('click', () => {
+    navigator.clipboard?.writeText(document.getElementById('cbt-go').textContent).catch(() => {});
+  });
+
+  document.getElementById('cbt-settings').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const msg = document.getElementById('cbt-settings-msg');
+    const err = await cbtSend('/admin/cbrouter/settings', 'PUT', {
+      aff_link: document.getElementById('cbt-aff').value,
+      mode: document.getElementById('cbt-mode').value,
+      fallback_url: document.getElementById('cbt-fallback').value,
+    });
+    document.activeElement?.blur();
+    if (err) { msg.textContent = `Error: ${err}`; return; }
+    await cbtLoad().catch(() => {});
+    msg.textContent = `Saved. ${msg.textContent}`;
+  });
+
+  document.getElementById('cbt-add').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const msg = document.getElementById('cbt-pool-msg');
+    const res = await authedFetch('/admin/cbrouter/pool', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ usernames: document.getElementById('cbt-names').value }),
+    });
+    if (!res.ok) { msg.textContent = `Error: ${await igcError(res)}`; return; }
+    const r = await res.json();
+    document.getElementById('cbt-names').value = '';
+    msg.textContent = `Added ${r.added}. Checking their rooms now, status shows in a few seconds.`;
+    setTimeout(() => cbtLoad().catch(() => {}), 15000);
+    cbtLoad().catch(() => {});
+  });
+
+  cbtPoolEl.addEventListener('change', async (e) => {
+    const el = e.target.closest('[data-cbt-f]');
+    if (!el) return;
+    const f = el.dataset.cbtF;
+    const v = f === 'in_pool' ? el.checked : Math.max(0, Math.min(1000, parseInt(el.value, 10) || 0));
+    const err = await cbtSend(`/admin/cbrouter/pool/${encodeURIComponent(el.dataset.cbtU)}`, 'PATCH', { [f]: v });
+    document.getElementById('cbt-pool-msg').textContent = err ? `Error: ${err}` : `Saved ${el.dataset.cbtU}.`;
+    el.blur();
+    cbtLoad().catch(() => {});
+  });
+
+  ['cbt-by', 'cbt-days', 'cbt-src'].forEach((id) => document.getElementById(id).addEventListener('change', () => cbtReport().catch(() => {})));
 
   async function init() {
     try {
