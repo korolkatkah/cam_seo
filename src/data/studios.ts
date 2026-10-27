@@ -34,6 +34,14 @@ export interface Studio {
   blurb: Record<string, string>;
   about: Record<string, string>;
   facts?: StudioFacts;
+  article?: StudioArticleSection[]; // optional long-form review, rendered on the mini-page
+  extraFaq?: { q: Record<string, string>; a: Record<string, string> }[];
+}
+
+export interface StudioArticleSection {
+  h2: Record<string, string>;
+  p: Record<string, string>[];
+  list?: Record<string, string>[];
 }
 
 export type CountryKey = 'romania' | 'ukraine' | 'spain' | 'russia' | 'usa' | 'germany' | 'france';
@@ -222,6 +230,163 @@ export const studioDirectory: CountryEntry[] = [
           phone: '+40 739 411 765',
           email: 'bellemodels99@gmail.com',
         },
+      },
+      {
+        slug: 'glow-models',
+        name: 'Glow Models',
+        city: 'Bucharest',
+        website: 'https://glowmodels.ro',
+        blurb: {
+          en: 'Boutique videochat studio in Sector 4, Bucharest, built around private "Glow Rooms", hands-on training and 24/7 support.',
+          ro: 'Studio videochat boutique în Sectorul 4 din București, construit în jurul camerelor private „Glow Rooms”, al trainingului practic și al suportului 24/7.',
+          ru: 'Бутик-студия видеочата в 4-м секторе Бухареста: приватные «Glow Rooms», практическое обучение и поддержка 24/7.',
+        },
+        about: {
+          en: 'Glow Models is a videochat studio on Strada Cuza Vodă in Sector 4, Bucharest. It presents itself as a partnership rather than just a place to stream: a small dedicated team, private rooms, professional training and 24/7 support, with more than 200 successful collaborations behind it.',
+          ro: 'Glow Models este un studio videochat de pe Strada Cuza Vodă, în Sectorul 4 din București. Se prezintă ca un parteneriat, nu doar ca un loc de streaming: o echipă mică și dedicată, camere private, training profesional și suport 24/7, cu peste 200 de colaborări reușite la activ.',
+          ru: 'Glow Models — студия видеочата на улице Куза Водэ в 4-м секторе Бухареста. Она позиционирует себя как партнёрство, а не просто место для стримов: небольшая команда, приватные комнаты, профессиональное обучение и поддержка 24/7, за плечами более 200 успешных сотрудничеств.',
+        },
+        facts: {
+          locations: ['Bucharest'],
+          perks: ['training', 'support247'],
+          address: 'Strada Cuza Vodă, Sector 4, București',
+          phone: '+40 746 171 211 (WhatsApp)',
+          email: 'contact@glowmodels.ro',
+          hours: '24/7',
+        },
+        article: [
+          {
+            h2: { en: 'Who Glow Models are', ro: 'Cine sunt Glow Models', ru: 'Кто такие Glow Models' },
+            p: [
+              {
+                en: 'Glow Models describes itself as "the seriousness of a top studio with the warmth of a dedicated team". The studio is based in Bucharest, in Sector 4 near Strada Cuza Vodă, a central and easy-to-reach part of the city. Instead of competing on size, it focuses on a compact team that knows every model personally and on a small number of well-equipped rooms.',
+                ro: 'Glow Models se descrie drept „seriozitatea unui studio de top, căldura unei echipe dedicate”. Studioul se află în București, în Sectorul 4, lângă Strada Cuza Vodă, o zonă centrală și ușor accesibilă. În loc să concureze prin mărime, pune accent pe o echipă compactă care cunoaște personal fiecare model și pe un număr mic de camere bine echipate.',
+                ru: 'Glow Models описывает себя как «серьёзность топ-студии и тепло преданной команды». Студия находится в Бухаресте, в 4-м секторе рядом с улицей Куза Водэ — это центральный и удобный по транспорту район. Вместо того чтобы конкурировать размером, студия делает ставку на небольшую команду, которая лично знает каждую модель, и на несколько хорошо оборудованных комнат.',
+              },
+              {
+                en: 'According to the studio, its mission is to raise the standards of the videochat industry through professionalism and discretion, and to give women a safe, encouraging environment where they can reach their full potential. Personal and professional growth of every model is part of the stated goal, not only earnings.',
+                ro: 'Potrivit studioului, misiunea sa este să ridice standardele industriei videochat prin profesionalism și discreție și să ofere femeilor un mediu sigur și încurajator în care să își atingă potențialul maxim. Dezvoltarea personală și profesională a fiecărui model face parte din obiectivul declarat, nu doar câștigurile.',
+                ru: 'По словам студии, её миссия — поднять стандарты индустрии видеочата за счёт профессионализма и конфиденциальности и дать девушкам безопасную, поддерживающую среду, где они могут раскрыть свой потенциал. Личный и профессиональный рост каждой модели — часть заявленной цели, а не только заработок.',
+              },
+            ],
+          },
+          {
+            h2: { en: 'The team behind the studio', ro: 'Echipa din spatele studioului', ru: 'Команда студии' },
+            p: [
+              {
+                en: 'Unlike many studios that hide behind a logo, Glow Models introduces its team by name on its website. Each person has a clear role, so a new model knows from day one who to turn to for scheduling, training, promotion or a technical problem.',
+                ro: 'Spre deosebire de multe studiouri care se ascund în spatele unui logo, Glow Models își prezintă echipa pe nume pe site. Fiecare persoană are un rol clar, astfel încât un model nou știe din prima zi la cine să apeleze pentru program, training, promovare sau o problemă tehnică.',
+                ru: 'В отличие от многих студий, которые прячутся за логотипом, Glow Models представляет команду по именам прямо на сайте. У каждого человека своя роль, поэтому новая модель с первого дня знает, к кому идти с вопросами по графику, обучению, продвижению или технике.',
+              },
+            ],
+            list: [
+              { en: 'Oana — Studio Manager', ro: 'Oana — Studio Manager', ru: 'Оана — менеджер студии' },
+              { en: 'Corina — Head Trainer', ro: 'Corina — Head Trainer', ru: 'Корина — главный тренер' },
+              { en: 'Octavia — Marketing & PR', ro: 'Octavia — Marketing & PR', ru: 'Октавия — маркетинг и PR' },
+              { en: 'Tavi — Trainer', ro: 'Tavi — Trainer', ru: 'Тави — тренер' },
+              { en: 'Andrei — Trainer & Tech', ro: 'Andrei — Trainer & Tech', ru: 'Андрей — тренер и техническая поддержка' },
+            ],
+          },
+          {
+            h2: { en: 'Glow Rooms: where models work', ro: 'Glow Rooms: unde lucrează modelele', ru: 'Glow Rooms: где работают модели' },
+            p: [
+              {
+                en: 'The studio calls its workspaces "Glow Rooms". Each room is private and designed so the model can focus on her show without distractions: dedicated lighting, a styled set and the equipment needed for HD streaming. The studio stresses discretion: every room is meant to guarantee privacy and an environment where a model can perform at her best.',
+                ro: 'Studioul își numește spațiile de lucru „Glow Rooms”. Fiecare cameră este privată și gândită astfel încât modelul să se concentreze pe show fără distrageri: iluminare dedicată, un decor amenajat și echipamentul necesar pentru streaming HD. Studioul pune accent pe discreție: fiecare cameră trebuie să garanteze intimitatea și un mediu în care modelul să dea tot ce are mai bun.',
+                ru: 'Рабочие пространства студия называет «Glow Rooms». Каждая комната приватная и устроена так, чтобы модель могла сосредоточиться на шоу без отвлечений: свой свет, оформленный интерьер и оборудование для HD-трансляций. Студия делает акцент на конфиденциальности: каждая комната должна гарантировать приватность и условия, в которых модель покажет лучший результат.',
+              },
+              {
+                en: 'For models this matters more than it seems. A good room means a better picture, more viewers staying in the stream and higher conversion into tips and private shows, without the model having to buy and set up her own equipment.',
+                ro: 'Pentru modele, acest lucru contează mai mult decât pare. O cameră bună înseamnă o imagine mai bună, mai mulți spectatori care rămân pe stream și o conversie mai mare în tips și show-uri private, fără ca modelul să își cumpere și să își configureze singur echipamentul.',
+                ru: 'Для модели это важнее, чем кажется. Хорошая комната — это лучшая картинка, больше зрителей, которые остаются в эфире, и выше конверсия в чаевые и приваты, при этом не нужно покупать и настраивать технику самой.',
+              },
+            ],
+          },
+          {
+            h2: { en: 'Benefits for Glow models', ro: 'Beneficii pentru modelele Glow', ru: 'Что получают модели Glow' },
+            p: [
+              {
+                en: 'The studio lists five core benefits on its website. Exact percentages and bonus rules are not published, so ask for them in writing at the first meeting.',
+                ro: 'Studioul enumeră pe site cinci beneficii principale. Procentele exacte și regulile bonusurilor nu sunt publicate, așa că cere-le în scris la prima întâlnire.',
+                ru: 'На сайте студия перечисляет пять основных преимуществ. Точные проценты и правила бонусов не опубликованы — уточни их письменно на первой встрече.',
+              },
+            ],
+            list: [
+              { en: 'Motivating percentages — a revenue share designed to grow with results', ro: 'Procente motivante — un procent care crește odată cu rezultatele', ru: 'Мотивирующие проценты — доля, которая растёт вместе с результатом' },
+              { en: 'Professional training — from first stream to advanced show techniques', ro: 'Training profesional — de la primul stream la tehnici avansate de show', ru: 'Профессиональное обучение — от первого эфира до продвинутых техник шоу' },
+              { en: 'Flexibility and understanding — a schedule that fits around your life', ro: 'Flexibilitate și înțelegere — un program care se potrivește vieții tale', ru: 'Гибкость и понимание — график под твою жизнь' },
+              { en: 'Dedicated 24/7 support — someone to call at any hour of any shift', ro: 'Suport dedicat 24/7 — cineva la care poți apela în orice tură', ru: 'Поддержка 24/7 — есть к кому обратиться в любую смену' },
+              { en: 'Prizes and bonuses — extra rewards for performance', ro: 'Premii și bonusuri — recompense suplimentare pentru performanță', ru: 'Призы и бонусы — дополнительные награды за результат' },
+            ],
+          },
+          {
+            h2: { en: 'Skills you build at Glow', ro: 'Ce abilități dezvolți la Glow', ru: 'Какие навыки развивает Glow' },
+            p: [
+              {
+                en: 'Glow Models puts unusual weight on personal development. The studio says models grow not only their income but also skills that stay with them outside the industry: control over their own time, self-confidence, perseverance and discipline, a growth mindset, financial independence, emotional intelligence and communication skills.',
+                ro: 'Glow Models pune un accent neobișnuit pe dezvoltarea personală. Studioul spune că modelele își dezvoltă nu doar veniturile, ci și abilități care rămân cu ele și în afara industriei: controlul asupra propriului timp, încrederea în sine, perseverența și disciplina, mindset-ul de succes, independența financiară, inteligența emoțională și abilitățile de comunicare.',
+                ru: 'Glow Models делает необычно большой акцент на личном развитии. Студия говорит, что модели растят не только доход, но и навыки, которые остаются с ними и вне индустрии: контроль над своим временем, уверенность в себе, упорство и дисциплину, мышление роста, финансовую независимость, эмоциональный интеллект и навыки общения.',
+              },
+              {
+                en: 'In practice, communication and emotional intelligence are exactly what separate high earners on cam sites from average ones: regulars come back to a model who remembers them, reads the room and keeps the conversation going.',
+                ro: 'În practică, comunicarea și inteligența emoțională sunt exact ce le separă pe modelele cu câștiguri mari de cele medii pe site-urile cam: clienții fideli revin la un model care îi ține minte, simte atmosfera și menține conversația.',
+                ru: 'На практике именно общение и эмоциональный интеллект отличают топ-моделей на вебкам-сайтах от средних: постоянные зрители возвращаются к той, кто их помнит, чувствует настроение комнаты и умеет поддерживать разговор.',
+              },
+            ],
+          },
+          {
+            h2: { en: 'What models say', ro: 'Ce spun modelele', ru: 'Что говорят модели' },
+            p: [
+              {
+                en: 'The testimonials on the studio website focus on atmosphere rather than numbers. One model, Ana M., writes that at Glow she found "not just a career, but a family", and that the professionalism and support helped her reach her financial goals and grow personally. As with any studio, treat testimonials on the studio’s own site as marketing and ask to speak with a current model before you sign.',
+                ro: 'Testimonialele de pe site-ul studioului se concentrează pe atmosferă, nu pe cifre. O modelă, Ana M., scrie că la Glow a găsit „nu doar o carieră, ci și o familie” și că profesionalismul și suportul au ajutat-o să își atingă obiectivele financiare și să se dezvolte personal. Ca la orice studio, tratează testimonialele de pe site-ul propriu ca marketing și cere să vorbești cu un model actual înainte să semnezi.',
+                ru: 'Отзывы на сайте студии говорят скорее об атмосфере, чем о цифрах. Модель Ана М. пишет, что в Glow нашла «не просто карьеру, а семью», а профессионализм и поддержка помогли ей достичь финансовых целей и вырасти лично. Как и с любой студией, воспринимай отзывы на её собственном сайте как маркетинг и попроси пообщаться с действующей моделью до подписания.',
+              },
+            ],
+          },
+          {
+            h2: { en: 'How to apply', ro: 'Cum aplici', ru: 'Как подать заявку' },
+            p: [
+              {
+                en: 'Applying is simple. On glowmodels.ro you leave your name and phone number and the team calls you back shortly; the studio stresses there is no obligation, just a conversation about the opportunities. You can also write directly on WhatsApp at +40 746 171 211 or email contact@glowmodels.ro. Experience is not required: training is part of the offer.',
+                ro: 'Aplicarea este simplă. Pe glowmodels.ro îți lași numele și numărul de telefon, iar echipa te sună în scurt timp; studioul subliniază că nu există nicio obligație, doar o discuție despre oportunități. Poți scrie și direct pe WhatsApp la +40 746 171 211 sau pe e-mail la contact@glowmodels.ro. Experiența nu este obligatorie: trainingul face parte din ofertă.',
+                ru: 'Подать заявку просто. На glowmodels.ro оставляешь имя и номер телефона, и команда скоро перезванивает; студия подчёркивает, что это ни к чему не обязывает — просто разговор о возможностях. Можно также написать напрямую в WhatsApp на +40 746 171 211 или на почту contact@glowmodels.ro. Опыт не обязателен: обучение входит в предложение.',
+              },
+            ],
+          },
+          {
+            h2: { en: 'What to ask before you sign', ro: 'Ce să întrebi înainte să semnezi', ru: 'Что уточнить до подписания' },
+            p: [
+              {
+                en: 'Glow Models makes a strong first impression, but the website does not publish the details that matter most for your income. Clarify these points at the first meeting and get them in writing:',
+                ro: 'Glow Models lasă o primă impresie bună, dar site-ul nu publică detaliile care contează cel mai mult pentru venitul tău. Clarifică aceste puncte la prima întâlnire și cere-le în scris:',
+                ru: 'Glow Models производит хорошее первое впечатление, но на сайте нет деталей, которые сильнее всего влияют на доход. Уточни эти пункты на первой встрече и попроси зафиксировать их письменно:',
+              },
+            ],
+            list: [
+              { en: 'Your exact percentage and how it grows', ro: 'Procentul tău exact și cum crește', ru: 'Твой точный процент и как он растёт' },
+              { en: 'Payout schedule and method', ro: 'Când și cum se fac plățile', ru: 'Как часто и каким способом выплаты' },
+              { en: 'Type of contract and how to end it', ro: 'Tipul de contract și cum îl poți încheia', ru: 'Тип договора и как его расторгнуть' },
+              { en: 'Which platforms you will stream on', ro: 'Pe ce platforme vei transmite', ru: 'На каких площадках будешь работать' },
+              { en: 'Shift options and minimum hours', ro: 'Opțiunile de ture și numărul minim de ore', ru: 'Варианты смен и минимум часов' },
+              { en: 'Geo-blocking and privacy protection', ro: 'Geo-blocarea și protecția datelor', ru: 'Гео-блок и защита данных' },
+            ],
+          },
+        ],
+        extraFaq: [
+          {
+            q: { en: 'Do I need experience to join Glow Models?', ro: 'Am nevoie de experiență pentru a mă alătura Glow Models?', ru: 'Нужен ли опыт, чтобы работать в Glow Models?' },
+            a: { en: 'No. Glow Models offers professional training led by a head trainer and dedicated trainers, so beginners can start from zero.', ro: 'Nu. Glow Models oferă training profesional condus de un head trainer și de traineri dedicați, așa că începătoarele pot porni de la zero.', ru: 'Нет. В Glow Models есть профессиональное обучение с главным тренером и отдельными тренерами, поэтому начать можно с нуля.' },
+          },
+          {
+            q: { en: 'Is working at Glow Models confidential?', ro: 'Este confidențial să lucrezi la Glow Models?', ru: 'Работа в Glow Models конфиденциальна?' },
+            a: { en: 'The studio promises 100% confidentiality and private Glow Rooms. Ask about geo-blocking of your country on each platform as well.', ro: 'Studioul promite confidențialitate 100% și camere private Glow Rooms. Întreabă și de geo-blocarea țării tale pe fiecare platformă.', ru: 'Студия обещает 100% конфиденциальность и приватные комнаты Glow Rooms. Также уточни гео-блок своей страны на каждой площадке.' },
+          },
+          {
+            q: { en: 'How do I contact Glow Models?', ro: 'Cum iau legătura cu Glow Models?', ru: 'Как связаться с Glow Models?' },
+            a: { en: 'Through the form on glowmodels.ro, on WhatsApp at +40 746 171 211 or by email at contact@glowmodels.ro.', ro: 'Prin formularul de pe glowmodels.ro, pe WhatsApp la +40 746 171 211 sau pe e-mail la contact@glowmodels.ro.', ru: 'Через форму на glowmodels.ro, в WhatsApp по номеру +40 746 171 211 или по почте contact@glowmodels.ro.' },
+          },
+        ],
       },
     ],
   },

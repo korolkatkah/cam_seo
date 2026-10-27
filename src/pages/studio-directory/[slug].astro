@@ -56,6 +56,10 @@ if (studio.facts?.payout) {
   });
 }
 
+if (studio.extraFaq) {
+  for (const f of studio.extraFaq) faqItems.push({ q: f.q[lang], a: f.a[lang] });
+}
+
 const address: Record<string, string> = { '@type': 'PostalAddress', addressLocality: studio.city, addressCountry: countryName };
 if (studio.facts?.address) address.streetAddress = studio.facts.address;
 const localBusinessSchema: Record<string, unknown> = {
@@ -167,6 +171,20 @@ const schemaGraph = {
           </div>
         </div>
       )}
+
+      {studio.article && studio.article.map((sec) => (
+        <section style="padding:2rem 0 0;">
+          <h2 style="margin-bottom:1rem;">{sec.h2[lang]}</h2>
+          {sec.p.map((x) => <p style="margin-bottom:1rem;line-height:1.75;">{x[lang]}</p>)}
+          {sec.list && (
+            <div class="checklist">
+              <ul>
+                {sec.list.map((x) => <li style="color:var(--fg);">✓ {x[lang]}</li>)}
+              </ul>
+            </div>
+          )}
+        </section>
+      ))}
 
       {faqItems.length > 0 && (
         <section class="faq-section section">
