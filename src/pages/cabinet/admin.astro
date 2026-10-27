@@ -526,7 +526,7 @@ import Base from '@/layouts/Base.astro';
         <div class="tp-options">
           <label class="category-field">
             How many models
-            <input type="number" id="cbs-limit" min="1" max="500" value="10" />
+            <input type="number" id="cbs-limit" min="1" max="5000" value="10" />
           </label>
           <label class="category-field">
             Pause from, s
@@ -2387,7 +2387,7 @@ import Base from '@/layouts/Base.astro';
     const num = (id, d, lo, hi) => Math.max(lo, Math.min(hi, parseFloat(document.getElementById(id).value) || d));
     return {
       message: document.getElementById('cbs-msg').value.trim(),
-      limit: num('cbs-limit', 10, 1, 500),
+      limit: num('cbs-limit', 10, 1, 5000),
       delay_min: num('cbs-delay-min', 20, 3, 600),
       delay_max: num('cbs-delay-max', 40, 3, 600),
       only_instagram: document.getElementById('cbs-only-ig').checked,
