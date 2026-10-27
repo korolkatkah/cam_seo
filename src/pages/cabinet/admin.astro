@@ -3396,7 +3396,7 @@ import Base from '@/layouts/Base.astro';
     }
     const saved = await res.json();
     igsRender(saved);
-    if (saved.warning) { igsErrorEl.textContent = saved.warning; igsErrorEl.hidden = false; }
+    if (saved.warning) { igsErrorEl.textContent = saved.warning; igsErrorEl.style.whiteSpace = 'pre-wrap'; igsErrorEl.hidden = false; }
   }
 
   async function igsLoad() {
