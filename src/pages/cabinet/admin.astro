@@ -3361,12 +3361,21 @@ import Base from '@/layouts/Base.astro';
 
   const igsProxyEl = document.getElementById('igs-proxy');
   const igsProxyPlaceholder = igsProxyEl.placeholder;
+  const igsCookieEl = document.getElementById('igs-cookie');
+  const IGS_KEY = 'igs_inputs';
+  try {
+    const st = JSON.parse(localStorage.getItem(IGS_KEY) || 'null');
+    if (st) { igsCookieEl.value = st.cookie || ''; igsProxyEl.value = st.proxy || ''; }
+  } catch {}
+  function igsKeepInputs() {
+    try { localStorage.setItem(IGS_KEY, JSON.stringify({ cookie: igsCookieEl.value, proxy: igsProxyEl.value })); } catch {}
+  }
+  [igsCookieEl, igsProxyEl].forEach((el) => el.addEventListener('input', igsKeepInputs));
 
   function igsRender(s) {
     igsStatusEl.textContent = s.configured
       ? `Session saved${s.username ? ` for @${s.username}` : ''}${s.saved_at ? `, ${new Date(s.saved_at).toLocaleString()}` : ''}. Proxy: ${s.proxy || 'none (server IP)'}.`
       : 'No Instagram session saved yet.';
-    igsProxyEl.value = '';
     igsProxyEl.placeholder = s.proxy ? `Saved: ${s.proxy} (type a new one to replace it)` : igsProxyPlaceholder;
     document.getElementById('igs-proxy-remove').hidden = !s.proxy;
   }
@@ -3385,7 +3394,6 @@ import Base from '@/layouts/Base.astro';
       igsLoad().catch(() => {});
       return;
     }
-    document.getElementById('igs-cookie').value = '';
     const saved = await res.json();
     igsRender(saved);
     if (saved.warning) { igsErrorEl.textContent = saved.warning; igsErrorEl.hidden = false; }
@@ -3398,7 +3406,8 @@ import Base from '@/layouts/Base.astro';
 
   document.getElementById('igs-form').addEventListener('submit', (e) => {
     e.preventDefault();
-    igsSave(document.getElementById('igs-cookie').value.trim(), igsProxyEl.value.trim() || null).catch(() => {});
+    igsKeepInputs();
+    igsSave(igsCookieEl.value.trim(), igsProxyEl.value.trim() || null).catch(() => {});
   });
 
   document.getElementById('igs-proxy-remove').addEventListener('click', () => {
@@ -3414,9 +3423,7 @@ import Base from '@/layouts/Base.astro';
       ? `Working: Instagram answered as @${c.username || '?'}${ip}.`
       : `Not working${ip}: ${c.error}${c.session_expired ? ' Paste a fresh cookie.' : ''}`;
     igsErrorEl.hidden = !(c.probe && c.probe.length);
-    igsErrorEl.textContent = c.probe ? 'What Instagram answers to each request:
-' + c.probe.join('
-') : '';
+    igsErrorEl.textContent = c.probe ? ['What Instagram answers to each request:', ...c.probe].join(String.fromCharCode(10)) : '';
     igsErrorEl.style.whiteSpace = 'pre-wrap';
   });
 
