@@ -491,8 +491,7 @@ export const servicesCatalog: CatalogCategory[] = [
         label: { en: 'Getting Started on Chaturbate', de: 'Einstieg bei Chaturbate', es: 'Cómo Empezar en Chaturbate', ro: 'Cum Începi pe Chaturbate', uk: 'Старт на Chaturbate', ru: 'Старт на Chaturbate', fr: 'Débuter sur Chaturbate', pt: 'Começando no Chaturbate' },
         services: [
           { name: 'Aruna Talent', url: 'arunatalent.com', desc: 'Full onboarding — persona setup, privacy/geo-blocking, account setup.' },
-          { name: 'Best Studios', url: 'beststudios.ro', desc: 'Bucharest Chaturbate studio (also in EWO’s directory) offering housing, shifts, training.' },
-          { name: 'Charm Studio', url: 'charmstudio.ro', desc: 'Bucharest studio (also in EWO’s directory), over a decade recruiting and onboarding.' },
+          { name: 'Glow Models', url: 'glowmodels.ro', desc: 'Bucharest videochat studio (also in EWO’s directory) with private rooms, professional training and 24/7 support.' },
           { name: 'CammingWebmasters Agent Program', url: 'cammingwebmasters.com/agent', desc: 'Referral program connecting new models to studios and sites.' },
           { name: 'WeCamGirls Job Board', url: 'wecamgirls.com', desc: 'Lists studio/agency openings that onboard new models.' },
         ],
