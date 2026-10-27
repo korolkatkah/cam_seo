@@ -3386,7 +3386,9 @@ import Base from '@/layouts/Base.astro';
       return;
     }
     document.getElementById('igs-cookie').value = '';
-    igsRender(await res.json());
+    const saved = await res.json();
+    igsRender(saved);
+    if (saved.warning) { igsErrorEl.textContent = saved.warning; igsErrorEl.hidden = false; }
   }
 
   async function igsLoad() {
