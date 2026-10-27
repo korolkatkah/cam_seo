@@ -42,6 +42,9 @@ export interface StudioArticleSection {
   h2: Record<string, string>;
   p: Record<string, string>[];
   list?: Record<string, string>[];
+  images?: { src: string; alt: Record<string, string> }[];
+  buttons?: { href: string; label: Record<string, string> }[];
+  // paragraphs may contain inline <a> links (trusted, written by us)
 }
 
 export type CountryKey = 'romania' | 'ukraine' | 'spain' | 'russia' | 'usa' | 'germany' | 'france';
@@ -257,11 +260,12 @@ export const studioDirectory: CountryEntry[] = [
         article: [
           {
             h2: { en: 'Who Glow Models are', ro: 'Cine sunt Glow Models', ru: 'Кто такие Glow Models' },
+            images: [{ src: '/images/studios/glow-models/glow-models-studio-bucharest.webp', alt: { en: 'Glow Models webcam studio room in Bucharest', ro: 'Cameră a studioului videochat Glow Models din București', ru: 'Комната вебкам-студии Glow Models в Бухаресте' } }],
             p: [
               {
-                en: 'Glow Models describes itself as "the seriousness of a top studio with the warmth of a dedicated team". The studio is based in Bucharest, in Sector 4 near Strada Cuza Vodă, a central and easy-to-reach part of the city. Instead of competing on size, it focuses on a compact team that knows every model personally and on a small number of well-equipped rooms.',
-                ro: 'Glow Models se descrie drept „seriozitatea unui studio de top, căldura unei echipe dedicate”. Studioul se află în București, în Sectorul 4, lângă Strada Cuza Vodă, o zonă centrală și ușor accesibilă. În loc să concureze prin mărime, pune accent pe o echipă compactă care cunoaște personal fiecare model și pe un număr mic de camere bine echipate.',
-                ru: 'Glow Models описывает себя как «серьёзность топ-студии и тепло преданной команды». Студия находится в Бухаресте, в 4-м секторе рядом с улицей Куза Водэ — это центральный и удобный по транспорту район. Вместо того чтобы конкурировать размером, студия делает ставку на небольшую команду, которая лично знает каждую модель, и на несколько хорошо оборудованных комнат.',
+                en: '<a href="https://glowmodels.ro" target="_blank" rel="noopener" style="color:var(--fg);font-weight:700;text-decoration:underline;text-underline-offset:3px;">Glow Models</a> describes itself as "the seriousness of a top studio with the warmth of a dedicated team". The studio is based in Bucharest, in Sector 4 near Strada Cuza Vodă, a central and easy-to-reach part of the city. Instead of competing on size, it focuses on a compact team that knows every model personally and on a small number of well-equipped rooms.',
+                ro: '<a href="https://glowmodels.ro" target="_blank" rel="noopener" style="color:var(--fg);font-weight:700;text-decoration:underline;text-underline-offset:3px;">Glow Models</a> se descrie drept „seriozitatea unui studio de top, căldura unei echipe dedicate”. Studioul se află în București, în Sectorul 4, lângă Strada Cuza Vodă, o zonă centrală și ușor accesibilă. În loc să concureze prin mărime, pune accent pe o echipă compactă care cunoaște personal fiecare model și pe un număr mic de camere bine echipate.',
+                ru: '<a href="https://glowmodels.ro" target="_blank" rel="noopener" style="color:var(--fg);font-weight:700;text-decoration:underline;text-underline-offset:3px;">Glow Models</a> описывает себя как «серьёзность топ-студии и тепло преданной команды». Студия находится в Бухаресте, в 4-м секторе рядом с улицей Куза Водэ — это центральный и удобный по транспорту район. Вместо того чтобы конкурировать размером, студия делает ставку на небольшую команду, которая лично знает каждую модель, и на несколько хорошо оборудованных комнат.',
               },
               {
                 en: 'According to the studio, its mission is to raise the standards of the videochat industry through professionalism and discretion, and to give women a safe, encouraging environment where they can reach their full potential. Personal and professional growth of every model is part of the stated goal, not only earnings.',
@@ -289,6 +293,14 @@ export const studioDirectory: CountryEntry[] = [
           },
           {
             h2: { en: 'Glow Rooms: where models work', ro: 'Glow Rooms: unde lucrează modelele', ru: 'Glow Rooms: где работают модели' },
+            images: [
+              { src: '/images/studios/glow-models/glow-room-navy.webp', alt: { en: 'Glow Room with a navy velvet bed', ro: 'Glow Room cu pat din catifea bleumarin', ru: 'Glow Room с тёмно-синей бархатной кроватью' } },
+              { src: '/images/studios/glow-models/glow-room-red.webp', alt: { en: 'Glow Room with red bedding and a portrait', ro: 'Glow Room cu lenjerie roșie și tablou', ru: 'Glow Room с красным покрывалом и портретом' } },
+              { src: '/images/studios/glow-models/glow-room-beige.webp', alt: { en: 'Beige Glow Room with soft headboard', ro: 'Glow Room bej cu tăblie tapițată', ru: 'Бежевая Glow Room с мягким изголовьем' } },
+              { src: '/images/studios/glow-models/glow-room-red-velvet.webp', alt: { en: 'Glow Room with burgundy bedding', ro: 'Glow Room cu lenjerie vișinie', ru: 'Glow Room с бордовым покрывалом' } },
+              { src: '/images/studios/glow-models/glow-room-green.webp', alt: { en: 'Glow Room with green velvet wall', ro: 'Glow Room cu perete din catifea verde', ru: 'Glow Room с зелёной бархатной стеной' } },
+              { src: '/images/studios/glow-models/glow-room-led.webp', alt: { en: 'Bright Glow Room with LED lighting', ro: 'Glow Room luminoasă cu iluminare LED', ru: 'Светлая Glow Room с LED-подсветкой' } },
+            ],
             p: [
               {
                 en: 'The studio calls its workspaces "Glow Rooms". Each room is private and designed so the model can focus on her show without distractions: dedicated lighting, a styled set and the equipment needed for HD streaming. The studio stresses discretion: every room is meant to guarantee privacy and an environment where a model can perform at her best.',
@@ -304,6 +316,7 @@ export const studioDirectory: CountryEntry[] = [
           },
           {
             h2: { en: 'Benefits for Glow models', ro: 'Beneficii pentru modelele Glow', ru: 'Что получают модели Glow' },
+            images: [{ src: '/images/studios/glow-models/glow-models-lounge.webp', alt: { en: 'Glow Models lounge and kitchen area', ro: 'Zona de relaxare și bucătăria Glow Models', ru: 'Зона отдыха и кухня Glow Models' } }, { src: '/images/studios/glow-models/glow-room-camera.webp', alt: { en: 'Professional streaming camera in a Glow Room', ro: 'Cameră profesională de streaming într-o Glow Room', ru: 'Профессиональная камера для стримов в Glow Room' } }],
             p: [
               {
                 en: 'The studio lists five core benefits on its website. Exact percentages and bonus rules are not published, so ask for them in writing at the first meeting.',
@@ -346,11 +359,16 @@ export const studioDirectory: CountryEntry[] = [
           },
           {
             h2: { en: 'How to apply', ro: 'Cum aplici', ru: 'Как подать заявку' },
+            buttons: [
+              { href: 'https://glowmodels.ro', label: { en: 'Visit glowmodels.ro →', ro: 'Intră pe glowmodels.ro →', ru: 'Перейти на glowmodels.ro →' } },
+              { href: 'https://wa.me/40746171211', label: { en: 'Message on WhatsApp', ro: 'Scrie pe WhatsApp', ru: 'Написать в WhatsApp' } },
+              { href: 'mailto:contact@glowmodels.ro', label: { en: 'Send an email', ro: 'Trimite un e-mail', ru: 'Написать на почту' } },
+            ],
             p: [
               {
-                en: 'Applying is simple. On glowmodels.ro you leave your name and phone number and the team calls you back shortly; the studio stresses there is no obligation, just a conversation about the opportunities. You can also write directly on WhatsApp at +40 746 171 211 or email contact@glowmodels.ro. Experience is not required: training is part of the offer.',
-                ro: 'Aplicarea este simplă. Pe glowmodels.ro îți lași numele și numărul de telefon, iar echipa te sună în scurt timp; studioul subliniază că nu există nicio obligație, doar o discuție despre oportunități. Poți scrie și direct pe WhatsApp la +40 746 171 211 sau pe e-mail la contact@glowmodels.ro. Experiența nu este obligatorie: trainingul face parte din ofertă.',
-                ru: 'Подать заявку просто. На glowmodels.ro оставляешь имя и номер телефона, и команда скоро перезванивает; студия подчёркивает, что это ни к чему не обязывает — просто разговор о возможностях. Можно также написать напрямую в WhatsApp на +40 746 171 211 или на почту contact@glowmodels.ro. Опыт не обязателен: обучение входит в предложение.',
+                en: 'Applying is simple. On <a href="https://glowmodels.ro" target="_blank" rel="noopener" style="color:var(--fg);font-weight:700;text-decoration:underline;text-underline-offset:3px;">glowmodels.ro</a> you leave your name and phone number and the team calls you back shortly; the studio stresses there is no obligation, just a conversation about the opportunities. You can also write directly on <a href="https://wa.me/40746171211" target="_blank" rel="noopener" style="color:var(--fg);font-weight:700;text-decoration:underline;text-underline-offset:3px;">WhatsApp +40 746 171 211</a> or email <a href="mailto:contact@glowmodels.ro" target="_blank" rel="noopener" style="color:var(--fg);font-weight:700;text-decoration:underline;text-underline-offset:3px;">contact@glowmodels.ro</a>. Experience is not required: training is part of the offer.',
+                ro: 'Aplicarea este simplă. Pe <a href="https://glowmodels.ro" target="_blank" rel="noopener" style="color:var(--fg);font-weight:700;text-decoration:underline;text-underline-offset:3px;">glowmodels.ro</a> îți lași numele și numărul de telefon, iar echipa te sună în scurt timp; studioul subliniază că nu există nicio obligație, doar o discuție despre oportunități. Poți scrie și direct pe <a href="https://wa.me/40746171211" target="_blank" rel="noopener" style="color:var(--fg);font-weight:700;text-decoration:underline;text-underline-offset:3px;">WhatsApp +40 746 171 211</a> sau pe e-mail la <a href="mailto:contact@glowmodels.ro" target="_blank" rel="noopener" style="color:var(--fg);font-weight:700;text-decoration:underline;text-underline-offset:3px;">contact@glowmodels.ro</a>. Experiența nu este obligatorie: trainingul face parte din ofertă.',
+                ru: 'Подать заявку просто. На <a href="https://glowmodels.ro" target="_blank" rel="noopener" style="color:var(--fg);font-weight:700;text-decoration:underline;text-underline-offset:3px;">glowmodels.ro</a> оставляешь имя и номер телефона, и команда скоро перезванивает; студия подчёркивает, что это ни к чему не обязывает — просто разговор о возможностях. Можно также написать напрямую в <a href="https://wa.me/40746171211" target="_blank" rel="noopener" style="color:var(--fg);font-weight:700;text-decoration:underline;text-underline-offset:3px;">WhatsApp +40 746 171 211</a> или на почту <a href="mailto:contact@glowmodels.ro" target="_blank" rel="noopener" style="color:var(--fg);font-weight:700;text-decoration:underline;text-underline-offset:3px;">contact@glowmodels.ro</a>. Опыт не обязателен: обучение входит в предложение.',
               },
             ],
           },

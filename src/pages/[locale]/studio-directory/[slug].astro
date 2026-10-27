@@ -188,8 +188,8 @@ const schemaGraph = {
                 <div style="font-size:.9rem;color:var(--fg-muted);line-height:2;margin-bottom:1.5rem;">
                   {studio.facts.locations && studio.facts.locations.length > 1 && <div>{studio.facts.locations.join(', ')}</div>}
                   {studio.facts.address && <div><strong style="color:var(--fg);">{factLabels.address[lang]}:</strong> {studio.facts.address}</div>}
-                  {studio.facts.phone && <div><strong style="color:var(--fg);">{factLabels.phone[lang]}:</strong> {studio.facts.phone}</div>}
-                  {studio.facts.email && <div><strong style="color:var(--fg);">{factLabels.email[lang]}:</strong> {studio.facts.email}</div>}
+                  {studio.facts.phone && <div><strong style="color:var(--fg);">{factLabels.phone[lang]}:</strong> <a href={/whatsapp/i.test(studio.facts.phone) ? `https://wa.me/${studio.facts.phone.replace(/\D/g, '')}` : `tel:+${studio.facts.phone.replace(/\D/g, '')}`} target="_blank" rel="noopener" style="color:var(--fg);text-decoration:underline;">{studio.facts.phone}</a></div>}
+                  {studio.facts.email && <div><strong style="color:var(--fg);">{factLabels.email[lang]}:</strong> <a href={`mailto:${studio.facts.email}`} style="color:var(--fg);text-decoration:underline;">{studio.facts.email}</a></div>}
                   {studio.facts.hours && <div><strong style="color:var(--fg);">{factLabels.hours[lang]}:</strong> {studio.facts.hours}</div>}
                   {studio.facts.payout && <div><strong style="color:var(--fg);">{factLabels.payout[lang]}:</strong> {payoutLabels[studio.facts.payout][lang]}</div>}
                 </div>
@@ -218,7 +218,21 @@ const schemaGraph = {
       {studio.article && studio.article.map((sec) => (
         <section style="padding:2rem 0 0;">
           <h2 style="margin-bottom:1rem;">{sec.h2[lang]}</h2>
-          {sec.p.map((x) => <p style="margin-bottom:1rem;line-height:1.75;">{x[lang]}</p>)}
+          {sec.p.map((x) => <p style="margin-bottom:1rem;line-height:1.75;" set:html={x[lang]} />)}
+          {sec.images && (
+            <div style={sec.images.length === 1 ? 'margin:1.25rem 0;' : 'display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:.75rem;margin:1.25rem 0;'}>
+              {sec.images.map((im) => (
+                <img src={im.src} alt={im.alt[lang]} width="1200" height="800" loading="lazy" style="width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;border-radius:16px;display:block;" />
+              ))}
+            </div>
+          )}
+          {sec.buttons && (
+            <div style="display:flex;flex-wrap:wrap;gap:.75rem;margin:1.25rem 0;">
+              {sec.buttons.map((b, i) => (
+                <a href={b.href} target="_blank" rel="noopener" class={i === 0 ? 'btn btn-primary' : 'btn btn-ghost'}>{b.label[lang]}</a>
+              ))}
+            </div>
+          )}
           {sec.list && (
             <div class="checklist">
               <ul>
