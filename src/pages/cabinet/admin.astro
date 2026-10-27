@@ -114,14 +114,20 @@ import Base from '@/layouts/Base.astro';
     <div class="glass-card import-card">
       <h2>Instagram account for checks</h2>
       <p class="bulk-hint">Instagram hides comments from logged-out visitors, so the server reads posts as a logged-in Instagram account. Use a spare account, not your main one: Instagram may ask it for a security check. Open instagram.com in a browser where that account is logged in, press F12, go to Network, reload the page, click the first request to instagram.com and copy the whole <code>Cookie</code> value from Request Headers. Only <code>sessionid</code>, <code>csrftoken</code> and <code>ds_user_id</code> are kept; no password is needed. Paste a fresh one when the check says the session expired.</p>
+      <p class="bulk-hint">Proxy: Instagram usually answers 429 to the server's data-center IP (Netherlands), so add a residential or mobile proxy in the country the account logs in from. Formats: <code>host:port</code>, <code>host:port:user:pass</code>, <code>user:pass@host:port</code>, or with a type in front: <code>http://</code>, <code>socks5://</code>. Leave Cookie empty to change only the proxy; leave Proxy empty to keep the saved one.</p>
       <p class="import-status" id="igs-status">Loading...</p>
       <form id="igs-form" class="link-form">
         <label>
           Cookie
-          <input type="password" id="igs-cookie" required autocomplete="off" spellcheck="false" placeholder="csrftoken=...; ds_user_id=...; sessionid=..." />
+          <input type="password" id="igs-cookie" autocomplete="off" spellcheck="false" placeholder="csrftoken=...; ds_user_id=...; sessionid=..." />
+        </label>
+        <label>
+          Proxy
+          <input type="text" id="igs-proxy" autocomplete="off" spellcheck="false" placeholder="host:port:user:pass  or  socks5://user:pass@host:port" />
         </label>
         <button type="submit">Save</button>
         <button type="button" id="igs-check-btn" class="ghost-btn">Check session</button>
+        <button type="button" id="igs-proxy-remove" class="ghost-btn" hidden>Remove proxy</button>
       </form>
       <p id="igs-error" class="cabinet-error" hidden></p>
     </div>
@@ -3353,25 +3359,25 @@ import Base from '@/layouts/Base.astro';
 
   // --- session ---
 
+  const igsProxyEl = document.getElementById('igs-proxy');
+  const igsProxyPlaceholder = igsProxyEl.placeholder;
+
   function igsRender(s) {
     igsStatusEl.textContent = s.configured
-      ? `Session saved${s.username ? ` for @${s.username}` : ''}${s.saved_at ? `, ${new Date(s.saved_at).toLocaleString()}` : ''}.`
+      ? `Session saved${s.username ? ` for @${s.username}` : ''}${s.saved_at ? `, ${new Date(s.saved_at).toLocaleString()}` : ''}. Proxy: ${s.proxy || 'none (server IP)'}.`
       : 'No Instagram session saved yet.';
+    igsProxyEl.value = '';
+    igsProxyEl.placeholder = s.proxy ? `Saved: ${s.proxy} (type a new one to replace it)` : igsProxyPlaceholder;
+    document.getElementById('igs-proxy-remove').hidden = !s.proxy;
   }
 
-  async function igsLoad() {
-    const res = await authedFetch('/admin/igcomments/session');
-    if (res.ok) igsRender(await res.json());
-  }
-
-  document.getElementById('igs-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
+  async function igsSave(cookie, proxy) {
     igsErrorEl.hidden = true;
     igsStatusEl.textContent = 'Saving and checking with Instagram...';
     const res = await authedFetch('/admin/igcomments/session', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ cookie: document.getElementById('igs-cookie').value }),
+      body: JSON.stringify({ cookie, proxy }),
     });
     if (!res.ok) {
       igsErrorEl.textContent = await igcError(res);
@@ -3381,15 +3387,30 @@ import Base from '@/layouts/Base.astro';
     }
     document.getElementById('igs-cookie').value = '';
     igsRender(await res.json());
+  }
+
+  async function igsLoad() {
+    const res = await authedFetch('/admin/igcomments/session');
+    if (res.ok) igsRender(await res.json());
+  }
+
+  document.getElementById('igs-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    igsSave(document.getElementById('igs-cookie').value.trim(), igsProxyEl.value.trim() || null).catch(() => {});
+  });
+
+  document.getElementById('igs-proxy-remove').addEventListener('click', () => {
+    if (confirm('Remove the proxy? Instagram requests will go from the server IP.')) igsSave('', '').catch(() => {});
   });
 
   document.getElementById('igs-check-btn').addEventListener('click', async () => {
     igsStatusEl.textContent = 'Checking with Instagram...';
     const res = await authedFetch('/admin/igcomments/session/check');
     const c = res.ok ? await res.json() : { ok: false, error: await igcError(res) };
+    const ip = c.ip ? ` (IP Instagram sees: ${c.ip})` : '';
     igsStatusEl.textContent = c.ok
-      ? `Working: Instagram answered as @${c.username || '?'}.`
-      : `Not working: ${c.error}${c.session_expired ? ' Paste a fresh cookie.' : ''}`;
+      ? `Working: Instagram answered as @${c.username || '?'}${ip}.`
+      : `Not working${ip}: ${c.error}${c.session_expired ? ' Paste a fresh cookie.' : ''}`;
   });
 
   // --- check ---
