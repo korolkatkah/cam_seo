@@ -3413,6 +3413,11 @@ import Base from '@/layouts/Base.astro';
     igsStatusEl.textContent = c.ok
       ? `Working: Instagram answered as @${c.username || '?'}${ip}.`
       : `Not working${ip}: ${c.error}${c.session_expired ? ' Paste a fresh cookie.' : ''}`;
+    igsErrorEl.hidden = !(c.probe && c.probe.length);
+    igsErrorEl.textContent = c.probe ? 'What Instagram answers to each request:
+' + c.probe.join('
+') : '';
+    igsErrorEl.style.whiteSpace = 'pre-wrap';
   });
 
   // --- check ---
