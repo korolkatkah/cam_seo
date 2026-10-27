@@ -23,7 +23,7 @@
     { "source": "/", "has": [{ "type": "header", "key": "accept-language", "value": "^ru" }], "destination": "/ru", "permanent": false }
   ],
   "rewrites": [
-    { "source": "/go", "destination": "https://worker-cabinet-production.up.railway.app/public/cb/go" }
+    { "source": "/go", "destination": "/api/go" }
   ],
   "headers": [
     { "source": "/data/model-widgets.json", "headers": [{ "key": "Access-Control-Allow-Origin", "value": "*" }, { "key": "Cache-Control", "value": "public, max-age=300" }] }
