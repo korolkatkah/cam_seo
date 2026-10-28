@@ -2825,7 +2825,8 @@ import Base from '@/layouts/Base.astro';
     } else if (r) {
       const when = s.last_finished_at ? new Date(s.last_finished_at).toLocaleString() : '';
       const head = r.error ? `Stopped with error: ${r.error}` : r.stopped ? 'Stopped' : 'Done';
-      const skip = r.skipped ? `, ${r.skipped} skipped (already messaged)` : '';
+      const skip = (r.skipped ? `, ${r.skipped} skipped (already messaged)` : '')
+        + (r.hidden ? `, ${r.hidden} hidden by ton.place (counted as failed, "Retry failed ones" sends them again)` : '');
       const ai = r.randomize ? (r.ai_failed ? ` ChatGPT failed ${r.ai_failed} time(s), original text sent: ${r.last_ai_error}` : ' Randomized with ChatGPT.') : '';
       tpSendStatus.textContent = `${head} ${when}: ${r.sent} sent, ${r.errors} failed${skip} of ${r.total}.${ai}`;
     } else {
