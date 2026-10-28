@@ -3557,7 +3557,7 @@ import Base from '@/layouts/Base.astro';
     for (const r of run.results || []) {
       const done = igcCommented(r);
       lines.push([
-        r.username, done.join(' '), authors.filter((a) => !done.includes(a)).join(' '),
+        r.username, done.join(' '), r.error || !r.posts_checked ? '' : authors.filter((a) => !done.includes(a)).join(' '),
         [...new Set((r.comments || []).map((c) => `https://www.instagram.com/p/${c.shortcode}/`))].join(' '),
         (r.comments || []).map((c) => `@${c.author}: ${c.text}`).join(' | '), r.status || '', r.checked_at || '',
       ].map(q).join(';'));
