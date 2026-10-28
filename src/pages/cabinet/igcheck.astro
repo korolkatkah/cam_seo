@@ -202,7 +202,10 @@ const title = 'Instagram comments check';
         stopBtn.disabled = !s.running || s.stopping;
         $('progress').hidden = !s.running;
         $('progress-fill').style.width = Math.round(((s.done || 0) / Math.max(1, s.total || 1)) * 100) + '%';
-        if (s.running) {
+        if (s.busy) {
+          startBtn.disabled = true;
+          statusEl.textContent = 'The server is busy with another check. The button comes back when it ends.';
+        } else if (s.running) {
           statusEl.textContent = s.stopping ? 'Stopping...' : 'Checking' + (s.current ? ' @' + s.current : '') + ' (' + s.done + ' of ' + s.total + ' done)...';
         } else if (s.error) {
           statusEl.textContent = 'Error: ' + s.error;
@@ -220,7 +223,7 @@ const title = 'Instagram comments check';
         if (!res.ok) { statusEl.textContent = 'Server error: ' + (await errorText(res)); return; }
         var s = await res.json();
         render(s);
-        if (s.running) pollTimer = setTimeout(function () { poll().catch(function () {}); }, 3000);
+        if (s.running || s.busy) pollTimer = setTimeout(function () { poll().catch(function () {}); }, s.busy ? 15000 : 3000);
       }
 
       startBtn.addEventListener('click', async function () {

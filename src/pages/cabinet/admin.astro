@@ -180,19 +180,24 @@ import Base from '@/layouts/Base.astro';
       <div class="import-actions">
         <button id="igc-start-btn" class="import-btn">Check comments</button>
         <button id="igc-stop-btn" class="import-btn export-btn stop-btn" disabled>Stop</button>
-        <button id="igc-csv-btn" class="import-btn export-btn" disabled>Download CSV</button>
       </div>
+      <pre id="igc-log" class="igc-log"></pre>
     </div>
 
     <div class="glass-card import-card">
       <h2>Results <span id="igc-summary" class="tp-total"></span></h2>
+      <p class="bulk-hint">Final results of the checks a worker ran on the worker page (newest first). Your own checks from this tab show only in the log above.</p>
+      <div class="import-actions">
+        <select id="igr-run" aria-label="Worker check"><option value="">Loading...</option></select>
+        <button id="igc-csv-btn" class="import-btn export-btn" disabled>Download CSV</button>
+        <button id="igr-refresh" class="import-btn export-btn">Refresh</button>
+      </div>
       <div class="targets-table-wrap">
         <table class="targets-table">
           <thead><tr><th>#</th><th>Account</th><th>Commented</th><th>Missing</th><th>Status</th></tr></thead>
           <tbody id="igc-body"></tbody>
         </table>
       </div>
-      <pre id="igc-log" class="igc-log"></pre>
     </div>
     </div>
 
@@ -3460,7 +3465,8 @@ import Base from '@/layouts/Base.astro';
     return [...new Set((r.comments || []).map((c) => c.author))];
   }
 
-  function igcRender(s) {
+  // Results table: one finished (or still running) worker check from the history.
+  function igrRender(s) {
     igcLast = s;
     const authors = s.authors || [];
     const results = s.results || [];
@@ -3487,6 +3493,11 @@ import Base from '@/layouts/Base.astro';
       ? `checked ${results.length} of ${s.total} · by all commenters: ${all} · by some: ${some} · none: ${none}`
       : '';
     igcCsvBtn.disabled = !results.length;
+  }
+
+  // The current check (this tab or the worker page): status, progress and log.
+  function igcRender(s) {
+    const results = s.results || [];
     igcLogEl.textContent = (s.log || []).join('\n');
 
     igcStartBtn.disabled = s.running;
@@ -3511,7 +3522,40 @@ import Base from '@/layouts/Base.astro';
     const s = await res.json();
     igcRender(s);
     if (s.running) igcPollTimer = setTimeout(() => igcPoll().catch(() => {}), 3000);
+    // A worker check just finished or is running: refresh the worker results.
+    if (s.source === 'worker' && (s.running || igrWasRunning)) igrLoad().catch(() => {});
+    igrWasRunning = s.running && s.source === 'worker';
   }
+
+  // --- worker results (history of checks started on the worker page) ---
+
+  const igrRunEl = document.getElementById('igr-run');
+  let igrWasRunning = false;
+
+  async function igrShow(id) {
+    if (!id) { igrRender({ authors: [], results: [], total: 0 }); return; }
+    const res = await authedFetch(`/admin/igcomments/history/${id}`);
+    if (res.ok) igrRender(await res.json());
+  }
+
+  async function igrLoad() {
+    const res = await authedFetch('/admin/igcomments/history');
+    if (!res.ok) return;
+    const runs = (await res.json()).filter((r) => r.source === 'worker');
+    const keep = igrRunEl.value;
+    igrRunEl.innerHTML = runs.length
+      ? runs.map((r) => {
+        const when = r.started_at ? new Date(r.started_at).toLocaleString() : '';
+        const state = r.finished_at ? (r.error ? 'error' : r.stopped ? 'stopped' : 'done') : 'running';
+        return `<option value="${r.id}">${igcEsc(when)} · ${r.checked} of ${r.total} · ${state} · ${igcEsc(r.authors.map((a) => '@' + a).join(' '))}</option>`;
+      }).join('')
+      : '<option value="">No worker checks yet</option>';
+    if (keep && runs.some((r) => String(r.id) === keep)) igrRunEl.value = keep;
+    await igrShow(igrRunEl.value);
+  }
+
+  igrRunEl.addEventListener('change', () => igrShow(igrRunEl.value).catch(() => {}));
+  document.getElementById('igr-refresh').addEventListener('click', () => igrLoad().catch(() => {}));
 
   igcStartBtn.addEventListener('click', async () => {
     const authors = igcParse(igcAuthorsEl.value);
@@ -3573,6 +3617,7 @@ import Base from '@/layouts/Base.astro';
     igsLoad().catch(() => {});
     igcPoll().catch(() => {});
     iglLoad().catch(() => {});
+    igrLoad().catch(() => {});
   }
 
   // --- worker link (open page /cabinet/igcheck?key=...) ---
