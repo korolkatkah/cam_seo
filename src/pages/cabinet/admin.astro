@@ -133,6 +133,16 @@ import Base from '@/layouts/Base.astro';
     </div>
 
     <div class="glass-card import-card">
+      <h2>Worker link</h2>
+      <p class="bulk-hint">An open page with the same comments check, for a worker: no login, no access to the rest of the admin. It uses the Instagram session saved above and shares the run and results with this tab (one check at a time). Anyone with the link can run checks: "New link" makes the old one stop working.</p>
+      <div class="link-form">
+        <input type="text" id="igl-url" readonly value="Loading..." />
+        <button type="button" id="igl-copy">Copy</button>
+        <button type="button" id="igl-new" class="ghost-btn">New link</button>
+      </div>
+    </div>
+
+    <div class="glass-card import-card">
       <h2>Instagram comments check</h2>
       <p class="bulk-hint">The server opens the latest posts of every account in the database and shows which of the commenter accounts left a comment there. It runs on the server: you can close this tab and come back for the results (they are kept until the next run or a server restart).</p>
       <div class="igc-lists">
@@ -3562,7 +3572,31 @@ import Base from '@/layouts/Base.astro';
     igcLoaded = true;
     igsLoad().catch(() => {});
     igcPoll().catch(() => {});
+    iglLoad().catch(() => {});
   }
+
+  // --- worker link (open page /cabinet/igcheck?key=...) ---
+
+  const iglUrlEl = document.getElementById('igl-url');
+  function iglShow(key) {
+    iglUrlEl.value = `${location.origin}/cabinet/igcheck?key=${encodeURIComponent(key)}`;
+  }
+  async function iglLoad() {
+    const res = await authedFetch('/admin/igcomments/public-link');
+    if (res.ok) iglShow((await res.json()).key);
+    else iglUrlEl.value = await igcError(res);
+  }
+  document.getElementById('igl-copy').addEventListener('click', async () => {
+    const btn = document.getElementById('igl-copy');
+    try { await navigator.clipboard.writeText(iglUrlEl.value); } catch { iglUrlEl.select(); document.execCommand('copy'); }
+    btn.textContent = 'Copied';
+    setTimeout(() => { btn.textContent = 'Copy'; }, 1500);
+  });
+  document.getElementById('igl-new').addEventListener('click', async () => {
+    if (!confirm('Make a new link? The old one stops working for whoever has it.')) return;
+    const res = await authedFetch('/admin/igcomments/public-link/new', { method: 'POST' });
+    if (res.ok) iglShow((await res.json()).key);
+  });
 
   [igcAuthorsEl, igcTargetsEl].forEach((el) => el.addEventListener('input', igcCounts));
   [igcAuthorsEl, igcTargetsEl, igcPostsEl, igcPagesEl, igcDelayMinEl, igcDelayMaxEl].forEach((el) => el.addEventListener('change', igcSaveInputs));

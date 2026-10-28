@@ -1,0 +1,289 @@
+---
+// Worker page for the Instagram comments check: same check as the admin "IG comments" tab, no login.
+// Opened by a secret link from the admin (/cabinet/igcheck?key=...); the key is checked by the backend.
+const title = 'Instagram comments check';
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="referrer" content="no-referrer" />
+  <title>{title} | EWO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #fafaf8; --bg-raised: #ffffff; --bg-subtle: #f0f0ee;
+      --fg: #0a0a0a; --fg-muted: rgba(10,10,10,.68); --fg-faint: rgba(10,10,10,.48);
+      --line: rgba(10,10,10,.12); --yes: #1e6b34; --no: #b42318;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.55 'Nunito', system-ui, sans-serif; }
+    main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px; }
+    h1, h2 { font-family: 'Josefin Sans', system-ui, sans-serif; margin: 0 0 .5rem; }
+    h1 { font-size: 1.6rem; }
+    h2 { font-size: 1.2rem; }
+    .card { background: var(--bg-raised); border: 1px solid var(--line); border-radius: 14px; padding: 20px; margin-bottom: 16px; }
+    .hint { color: var(--fg-muted); margin: 0 0 1rem; }
+    .lists { display: grid; grid-template-columns: 1fr 2fr; gap: 1rem; }
+    @media (max-width: 700px) { .lists { grid-template-columns: 1fr; } }
+    label { display: flex; flex-direction: column; gap: .3rem; font-weight: 600; font-size: .9rem; }
+    .count { color: var(--fg-faint); font-weight: 400; }
+    textarea, input { font: inherit; border: 1px solid var(--line); border-radius: 8px; padding: .5rem .6rem; background: #fff; color: var(--fg); width: 100%; }
+    textarea { font-family: ui-monospace, Consolas, monospace; font-size: .85rem; min-height: 9rem; resize: vertical; }
+    .options { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem; }
+    .options label { width: 150px; }
+    .status { margin: 1rem 0 .5rem; color: var(--fg-muted); }
+    .progress { height: 6px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; margin-bottom: 1rem; }
+    .progress__fill { height: 100%; width: 0; background: var(--fg); transition: width .3s; }
+    .actions { display: flex; flex-wrap: wrap; gap: .5rem; }
+    button { font: inherit; font-weight: 700; border-radius: 10px; padding: .6rem 1.2rem; cursor: pointer; border: 1px solid var(--fg); background: var(--fg); color: #fff; }
+    button.ghost { background: transparent; color: var(--fg); }
+    button:disabled { opacity: .45; cursor: default; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+    th, td { text-align: left; vertical-align: top; padding: .5rem; border-bottom: 1px solid var(--line); }
+    th { font-weight: 700; color: var(--fg-muted); }
+    a { color: var(--fg); }
+    .yes { color: var(--yes); font-weight: 700; }
+    .no { color: var(--no); font-weight: 700; }
+    .comment { font-size: .8rem; color: var(--fg-muted); }
+    .log { margin: 1rem 0 0; max-height: 200px; overflow: auto; font-size: .75rem; background: var(--bg-subtle); padding: .5rem; border-radius: 8px; white-space: pre-wrap; }
+    .log:empty { display: none; }
+    .error { color: var(--no); font-weight: 600; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Instagram comments check</h1>
+    <p class="hint">Paste the commenter accounts and the accounts to check. The server opens the latest posts of every account and shows which commenters left a comment there. It runs on the server: you can close this tab and come back for the results.</p>
+    <p id="key-error" class="error" hidden></p>
+
+    <div class="card">
+      <div class="lists">
+        <label>
+          <span>Commenter accounts <span id="authors-count" class="count"></span></span>
+          <textarea id="authors" rows="6" spellcheck="false" placeholder="@worker_one&#10;worker_two&#10;https://www.instagram.com/worker_three/"></textarea>
+        </label>
+        <label>
+          <span>Accounts to check <span id="targets-count" class="count"></span></span>
+          <textarea id="targets" rows="6" spellcheck="false" placeholder="One per line: username, @username or profile link"></textarea>
+        </label>
+      </div>
+      <div class="options">
+        <label>Posts per account <input type="number" id="posts" min="1" max="12" value="3" /></label>
+        <label>Comment pages per post <input type="number" id="pages" min="1" max="20" value="3" /></label>
+        <label>Delay from, sec <input type="number" id="delay-min" min="0.5" max="60" step="0.5" value="2" /></label>
+        <label>Delay to, sec <input type="number" id="delay-max" min="0.5" max="120" step="0.5" value="4" /></label>
+      </div>
+      <p class="status" id="status" role="status" aria-live="polite">Loading...</p>
+      <div class="progress" id="progress" hidden><div class="progress__fill" id="progress-fill"></div></div>
+      <div class="actions">
+        <button id="start-btn">Check comments</button>
+        <button id="stop-btn" class="ghost" disabled>Stop</button>
+        <button id="csv-btn" class="ghost" disabled>Download CSV</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Results <span id="summary" class="count"></span></h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>#</th><th>Account</th><th>Commented</th><th>Missing</th><th>Status</th></tr></thead>
+          <tbody id="body"></tbody>
+        </table>
+      </div>
+      <pre id="log" class="log"></pre>
+    </div>
+  </main>
+
+  <script is:inline>
+    (function () {
+      var API = 'https://worker-cabinet-production.up.railway.app/public/igcheck';
+      var KEY = new URLSearchParams(location.search).get('key') || '';
+      var STORE = 'igcheck_inputs';
+      var $ = function (id) { return document.getElementById(id); };
+      var authorsEl = $('authors'), targetsEl = $('targets'), postsEl = $('posts'), pagesEl = $('pages');
+      var delayMinEl = $('delay-min'), delayMaxEl = $('delay-max'), statusEl = $('status');
+      var startBtn = $('start-btn'), stopBtn = $('stop-btn'), csvBtn = $('csv-btn');
+      var pollTimer = null, last = null;
+
+      function parse(text) {
+        var out = [];
+        String(text || '').split(/[\r\n,;\t ]+/).forEach(function (raw) {
+          var s = raw.trim();
+          var m = s.match(/instagram\.com\/([^/?#\s]+)/i);
+          if (m) s = m[1];
+          s = s.replace(/^@/, '').toLowerCase();
+          if (/^[a-z0-9._]{1,30}$/.test(s) && out.indexOf(s) < 0) out.push(s);
+        });
+        return out;
+      }
+      function esc(s) {
+        return String(s).replace(/[&<>"']/g, function (c) {
+          return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+        });
+      }
+      function counts() {
+        $('authors-count').textContent = '(' + parse(authorsEl.value).length + ')';
+        $('targets-count').textContent = '(' + parse(targetsEl.value).length + ')';
+      }
+      function save() {
+        try {
+          localStorage.setItem(STORE, JSON.stringify({ authors: authorsEl.value, targets: targetsEl.value,
+            posts: postsEl.value, pages: pagesEl.value, delayMin: delayMinEl.value, delayMax: delayMaxEl.value }));
+        } catch (e) {}
+      }
+      function load() {
+        try {
+          var st = JSON.parse(localStorage.getItem(STORE) || 'null');
+          if (!st) return;
+          authorsEl.value = st.authors || ''; targetsEl.value = st.targets || '';
+          postsEl.value = st.posts || 3; pagesEl.value = st.pages || 3;
+          delayMinEl.value = st.delayMin || 2; delayMaxEl.value = st.delayMax || 4;
+        } catch (e) {}
+      }
+      function call(path, opts) {
+        return fetch(API + path + '?key=' + encodeURIComponent(KEY), opts || {});
+      }
+      async function errorText(res) {
+        try {
+          var j = await res.json();
+          return typeof j.detail === 'string' ? j.detail : JSON.stringify(j.detail || j);
+        } catch (e) { return 'HTTP ' + res.status; }
+      }
+      function badKey(msg) {
+        $('key-error').textContent = msg;
+        $('key-error').hidden = false;
+        startBtn.disabled = true; stopBtn.disabled = true;
+        statusEl.textContent = '';
+      }
+      function commented(r) {
+        var seen = [];
+        (r.comments || []).forEach(function (c) { if (seen.indexOf(c.author) < 0) seen.push(c.author); });
+        return seen;
+      }
+
+      function render(s) {
+        last = s;
+        var authors = s.authors || [], results = s.results || [];
+        $('body').innerHTML = results.map(function (r, i) {
+          var u = esc(r.username), done = commented(r);
+          var missing = authors.filter(function (a) { return done.indexOf(a) < 0; });
+          var com = done.length
+            ? done.map(function (a) { return '<div class="yes">@' + esc(a) + '</div>'; }).join('') +
+              (r.comments || []).map(function (c) {
+                return '<div class="comment">@' + esc(c.author) + ' on <a href="https://www.instagram.com/p/' + esc(c.shortcode) +
+                  '/" target="_blank" rel="noopener">post</a>: ' + esc(c.text) + '</div>';
+              }).join('')
+            : '<span class="no">none</span>';
+          var miss = r.error || !r.posts_checked ? '-' : missing.length
+            ? missing.map(function (a) { return '<div class="no">@' + esc(a) + '</div>'; }).join('')
+            : '<span class="yes">none</span>';
+          return '<tr><td>' + (i + 1) + '</td><td><a href="https://www.instagram.com/' + u + '/" target="_blank" rel="noopener">@' + u +
+            '</a></td><td>' + com + '</td><td>' + miss + '</td><td>' + esc(r.status || '') + '</td></tr>';
+        }).join('');
+
+        var all = 0, some = 0, none = 0;
+        results.forEach(function (r) {
+          var n = commented(r).length;
+          if (n && n >= authors.length) all++; else if (n) some++; else none++;
+        });
+        $('summary').textContent = results.length
+          ? 'checked ' + results.length + ' of ' + s.total + ' · by all commenters: ' + all + ' · by some: ' + some + ' · none: ' + none
+          : '';
+        csvBtn.disabled = !results.length;
+        $('log').textContent = (s.log || []).join('\n');
+        startBtn.disabled = s.running;
+        stopBtn.disabled = !s.running || s.stopping;
+        $('progress').hidden = !s.running;
+        $('progress-fill').style.width = Math.round(((s.done || 0) / Math.max(1, s.total || 1)) * 100) + '%';
+        if (s.running) {
+          statusEl.textContent = s.stopping ? 'Stopping...' : 'Checking' + (s.current ? ' @' + s.current : '') + ' (' + s.done + ' of ' + s.total + ' done)...';
+        } else if (s.error) {
+          statusEl.textContent = 'Error: ' + s.error;
+        } else if (s.finished_at) {
+          statusEl.textContent = 'Finished ' + new Date(s.finished_at).toLocaleString() + ': ' + results.length + ' of ' + s.total + ' checked.';
+        } else {
+          statusEl.textContent = 'Idle.';
+        }
+      }
+
+      async function poll() {
+        clearTimeout(pollTimer);
+        var res = await call('/status');
+        if (res.status === 403) { badKey(await errorText(res)); return; }
+        if (!res.ok) { statusEl.textContent = 'Server error: ' + (await errorText(res)); return; }
+        var s = await res.json();
+        render(s);
+        if (s.running) pollTimer = setTimeout(function () { poll().catch(function () {}); }, 3000);
+      }
+
+      startBtn.addEventListener('click', async function () {
+        var authors = parse(authorsEl.value);
+        var targets = parse(targetsEl.value).filter(function (u) { return authors.indexOf(u) < 0; });
+        if (!authors.length) { statusEl.textContent = 'Add at least one commenter account.'; return; }
+        if (!targets.length) { statusEl.textContent = 'The list of accounts to check is empty.'; return; }
+        save();
+        startBtn.disabled = true;
+        statusEl.textContent = 'Starting: ' + targets.length + ' account(s)...';
+        var res = await call('/run', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            authors: authors.join('\n'), targets: targets.join('\n'),
+            posts: Number(postsEl.value) || 3, comment_pages: Number(pagesEl.value) || 3,
+            delay_min: Number(delayMinEl.value) || 2, delay_max: Number(delayMaxEl.value) || 4,
+          }),
+        });
+        if (res.status === 403) { badKey(await errorText(res)); return; }
+        if (!res.ok) { startBtn.disabled = false; statusEl.textContent = 'Error: ' + (await errorText(res)); return; }
+        render(await res.json());
+        poll().catch(function () {});
+      });
+
+      stopBtn.addEventListener('click', async function () {
+        stopBtn.disabled = true;
+        var res = await call('/stop', { method: 'POST' });
+        if (res.ok) render(await res.json());
+        poll().catch(function () {});
+      });
+
+      csvBtn.addEventListener('click', function () {
+        if (!last) return;
+        var authors = last.authors || [];
+        var q = function (s) { return '"' + String(s).replace(/"/g, '""') + '"'; };
+        var lines = [['account', 'commented by', 'missing', 'posts', 'comments', 'status', 'checked at'].map(q).join(';')];
+        (last.results || []).forEach(function (r) {
+          var done = commented(r), posts = [];
+          (r.comments || []).forEach(function (c) {
+            var p = 'https://www.instagram.com/p/' + c.shortcode + '/';
+            if (posts.indexOf(p) < 0) posts.push(p);
+          });
+          lines.push([r.username, done.join(' '), authors.filter(function (a) { return done.indexOf(a) < 0; }).join(' '),
+            posts.join(' '), (r.comments || []).map(function (c) { return '@' + c.author + ': ' + c.text; }).join(' | '),
+            r.status || '', r.checked_at || ''].map(q).join(';'));
+        });
+        var blob = new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'ig-comments-' + new Date().toISOString().slice(0, 10) + '.csv';
+        a.click();
+        setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+      });
+
+      [authorsEl, targetsEl].forEach(function (el) { el.addEventListener('input', function () { counts(); save(); }); });
+      [postsEl, pagesEl, delayMinEl, delayMaxEl].forEach(function (el) { el.addEventListener('change', save); });
+
+      load();
+      counts();
+      if (!KEY) badKey('This page needs the link with a key from the admin.');
+      else poll().catch(function () { statusEl.textContent = 'Could not reach the server.'; });
+    })();
+  </script>
+</body>
+</html>
