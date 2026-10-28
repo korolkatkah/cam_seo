@@ -185,17 +185,12 @@ import Base from '@/layouts/Base.astro';
     </div>
 
     <div class="glass-card import-card">
-      <h2>Results <span id="igc-summary" class="tp-total"></span></h2>
-      <p class="bulk-hint">Final results of the checks a worker ran on the worker page (newest first). Your own checks from this tab show only in the log above.</p>
-      <div class="import-actions">
-        <select id="igr-run" aria-label="Worker check"><option value="">Loading...</option></select>
-        <button id="igc-csv-btn" class="import-btn export-btn" disabled>Download CSV</button>
-        <button id="igr-refresh" class="import-btn export-btn">Refresh</button>
-      </div>
+      <h2>Results <button id="igr-refresh" class="ghost-btn">Refresh</button></h2>
+      <p class="bulk-hint">One line per check a worker ran on the worker page, newest first: is there a comment from one of the commenter accounts. Your own checks from this tab show only in the log above.</p>
       <div class="targets-table-wrap">
         <table class="targets-table">
-          <thead><tr><th>#</th><th>Account</th><th>Commented</th><th>Missing</th><th>Status</th></tr></thead>
-          <tbody id="igc-body"></tbody>
+          <thead><tr><th>Date and time</th><th>Comment</th><th>Accounts</th><th>Commenters</th><th>Status</th><th></th></tr></thead>
+          <tbody id="igr-body"><tr><td colspan="6">Loading...</td></tr></tbody>
         </table>
       </div>
     </div>
@@ -3328,14 +3323,10 @@ import Base from '@/layouts/Base.astro';
   const igcProgressFillEl = document.getElementById('igc-progress-fill');
   const igcStartBtn = document.getElementById('igc-start-btn');
   const igcStopBtn = document.getElementById('igc-stop-btn');
-  const igcCsvBtn = document.getElementById('igc-csv-btn');
-  const igcBodyEl = document.getElementById('igc-body');
-  const igcSummaryEl = document.getElementById('igc-summary');
   const igcLogEl = document.getElementById('igc-log');
   const IGC_KEY = 'igc_inputs';
   let igcLoaded = false;
   let igcPollTimer = null;
-  let igcLast = null;
 
   function igcParse(text) {
     const out = [];
@@ -3465,36 +3456,6 @@ import Base from '@/layouts/Base.astro';
     return [...new Set((r.comments || []).map((c) => c.author))];
   }
 
-  // Results table: one finished (or still running) worker check from the history.
-  function igrRender(s) {
-    igcLast = s;
-    const authors = s.authors || [];
-    const results = s.results || [];
-    igcBodyEl.innerHTML = results.map((r, i) => {
-      const u = igcEsc(r.username);
-      const done = igcCommented(r);
-      const missing = authors.filter((a) => !done.includes(a));
-      const commented = done.length
-        ? done.map((a) => `<div class="igc-yes">@${igcEsc(a)}</div>`).join('') + (r.comments || []).map((c) =>
-          `<div class="igc-comment">@${igcEsc(c.author)} on <a href="https://www.instagram.com/p/${igcEsc(c.shortcode)}/" target="_blank" rel="noopener">post</a>: ${igcEsc(c.text)}</div>`).join('')
-        : '<span class="igc-no">none</span>';
-      const miss = r.error || !r.posts_checked ? '-' : missing.length ? missing.map((a) => `<div class="igc-no">@${igcEsc(a)}</div>`).join('') : '<span class="igc-yes">none</span>';
-      return `<tr><td>${i + 1}</td><td><a href="https://www.instagram.com/${u}/" target="_blank" rel="noopener">@${u}</a></td><td>${commented}</td><td>${miss}</td><td>${igcEsc(r.status || '')}</td></tr>`;
-    }).join('');
-
-    let all = 0, some = 0, none = 0;
-    results.forEach((r) => {
-      const n = igcCommented(r).length;
-      if (n && n >= authors.length) all++;
-      else if (n) some++;
-      else none++;
-    });
-    igcSummaryEl.textContent = results.length
-      ? `checked ${results.length} of ${s.total} · by all commenters: ${all} · by some: ${some} · none: ${none}`
-      : '';
-    igcCsvBtn.disabled = !results.length;
-  }
-
   // The current check (this tab or the worker page): status, progress and log.
   function igcRender(s) {
     const results = s.results || [];
@@ -3529,33 +3490,32 @@ import Base from '@/layouts/Base.astro';
 
   // --- worker results (history of checks started on the worker page) ---
 
-  const igrRunEl = document.getElementById('igr-run');
+  const igrBodyEl = document.getElementById('igr-body');
   let igrWasRunning = false;
-
-  async function igrShow(id) {
-    if (!id) { igrRender({ authors: [], results: [], total: 0 }); return; }
-    const res = await authedFetch(`/admin/igcomments/history/${id}`);
-    if (res.ok) igrRender(await res.json());
-  }
 
   async function igrLoad() {
     const res = await authedFetch('/admin/igcomments/history');
     if (!res.ok) return;
     const runs = (await res.json()).filter((r) => r.source === 'worker');
-    const keep = igrRunEl.value;
-    igrRunEl.innerHTML = runs.length
-      ? runs.map((r) => {
-        const when = r.started_at ? new Date(r.started_at).toLocaleString() : '';
-        const state = r.finished_at ? (r.error ? 'error' : r.stopped ? 'stopped' : 'done') : 'running';
-        return `<option value="${r.id}">${igcEsc(when)} · ${r.checked} of ${r.total} · ${state} · ${igcEsc(r.authors.map((a) => '@' + a).join(' '))}</option>`;
-      }).join('')
-      : '<option value="">No worker checks yet</option>';
-    if (keep && runs.some((r) => String(r.id) === keep)) igrRunEl.value = keep;
-    await igrShow(igrRunEl.value);
+    igrBodyEl.innerHTML = runs.length ? runs.map((r) => {
+      const when = r.started_at ? new Date(r.started_at).toLocaleString() : '';
+      const state = r.finished_at ? (r.error ? `error: ${igcEsc(r.error)}` : r.stopped ? 'stopped' : 'done') : 'running';
+      const found = r.by_all + r.by_some;
+      const comment = found ? `<span class="igc-yes">Yes (${found})</span>` : (r.finished_at ? '<span class="igc-no">No</span>' : '...');
+      return `<tr><td>${igcEsc(when)}</td><td>${comment}</td><td>${r.checked} of ${r.total}</td>`
+        + `<td>${igcEsc(r.authors.map((a) => '@' + a).join(' '))}</td><td>${state}</td>`
+        + `<td><button type="button" class="ghost-btn" data-igr-csv="${r.id}">CSV</button></td></tr>`;
+    }).join('') : '<tr><td colspan="6">No worker checks yet.</td></tr>';
   }
 
-  igrRunEl.addEventListener('change', () => igrShow(igrRunEl.value).catch(() => {}));
+  igrBodyEl.addEventListener('click', async (e) => {
+    const id = e.target.closest('[data-igr-csv]')?.dataset.igrCsv;
+    if (!id) return;
+    const res = await authedFetch(`/admin/igcomments/history/${id}`);
+    if (res.ok) igcDownloadCsv(await res.json());
+  });
   document.getElementById('igr-refresh').addEventListener('click', () => igrLoad().catch(() => {}));
+
 
   igcStartBtn.addEventListener('click', async () => {
     const authors = igcParse(igcAuthorsEl.value);
@@ -3590,12 +3550,11 @@ import Base from '@/layouts/Base.astro';
     igcPoll().catch(() => {});
   });
 
-  igcCsvBtn.addEventListener('click', () => {
-    if (!igcLast) return;
-    const authors = igcLast.authors || [];
+  function igcDownloadCsv(run) {
+    const authors = run.authors || [];
     const q = (s) => `"${String(s).replace(/"/g, '""')}"`;
     const lines = [['account', 'commented by', 'missing', 'posts', 'comments', 'status', 'checked at'].map(q).join(';')];
-    for (const r of igcLast.results || []) {
+    for (const r of run.results || []) {
       const done = igcCommented(r);
       lines.push([
         r.username, done.join(' '), authors.filter((a) => !done.includes(a)).join(' '),
@@ -3609,7 +3568,7 @@ import Base from '@/layouts/Base.astro';
     a.download = `ig-comments-${new Date().toISOString().slice(0, 10)}.csv`;
     a.click();
     setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-  });
+  }
 
   function loadIgComments() {
     if (igcLoaded) return;
