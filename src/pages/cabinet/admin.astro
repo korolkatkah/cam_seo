@@ -2988,12 +2988,21 @@ import Base from '@/layouts/Base.astro';
   const tpAutoOn = document.getElementById('tp-auto-on');
   const tpAutoDaily = document.getElementById('tp-auto-daily');
   const tpAutoStatus = document.getElementById('tp-auto-status');
+  let tpAutoSynced = false;
 
   function renderTpAuto(a) {
     tpAutoOn.checked = a.enabled;
     tpAutoDaily.value = String(a.daily_limit);
     if (a.enabled) {
-      if (a.message && !tpMsg.value.trim()) tpMsg.value = a.message;
+      if (!tpAutoSynced && tpMsg.value.trim() && tpMsg.value.trim() !== (a.message || '').trim()) {
+        // The text on screen is newer than the one auto-mailing saved: it is what gets sent from now on.
+        tpAutoSynced = true;
+        saveTpAuto();
+        return;
+      }
+      tpAutoSynced = true;
+      // Auto-mailing sends the saved text: show it (unless it is being edited right now).
+      if (a.message && document.activeElement !== tpMsg) tpMsg.value = a.message;
       tpRandomize.checked = !!a.randomize;
       tpAutoStatus.textContent = `On. Sent today ${a.sent_today} of ${a.daily_limit}, ${a.waiting} new profile(s) waiting. Checks every ${a.check_every_minutes} min.`;
     } else {
@@ -3041,6 +3050,13 @@ import Base from '@/layouts/Base.astro';
   });
   tpAutoDaily.addEventListener('change', () => { if (tpAutoOn.checked) saveTpAuto(); });
   tpRandomize.addEventListener('change', () => { if (tpAutoOn.checked) saveTpAuto(); });
+  // An edited message goes to auto-mailing too (it used to keep the text it was turned on with).
+  let tpAutoMsgTimer;
+  tpMsg.addEventListener('input', () => {
+    if (!tpAutoOn.checked) return;
+    clearTimeout(tpAutoMsgTimer);
+    tpAutoMsgTimer = setTimeout(() => { if (tpMsg.value.trim()) saveTpAuto(); }, 1200);
+  });
 
   // Auto-reply
 
