@@ -738,6 +738,43 @@ import Base from '@/layouts/Base.astro';
       </div>
 
       <div class="glass-card import-card">
+        <h2>AI scout (test)</h2>
+        <p class="bulk-hint">ChatGPT keeps up the conversation like a live scout: answers what she writes, asks about her, gives the ewomodels.com link when she is interested. It hands the dialog to a person (Telegram message, then it stops writing there) when she is ready, asks about money or a contract, asks for a human or whether it is a bot (it never claims to be human), or says she is under 18. Test only: it writes to the profile ids below and nobody else. The mailing and the auto-reply above are not affected.</p>
+        <label class="category-field">
+          Scout instructions
+          <textarea id="tps-prompt" rows="12" maxlength="8000"></textarea>
+        </label>
+        <div class="import-actions">
+          <button id="tps-default-btn" class="ghost-btn" type="button">Restore default instructions</button>
+        </div>
+
+        <h3 class="tps-sub">Sandbox: talk to it here (nothing is sent to ton.place)</h3>
+        <div id="tps-chat" class="tps-chat"><p class="tps-empty">Write as the model would, starting from the first mailing message or anything else.</p></div>
+        <div class="link-form">
+          <input type="text" id="tps-input" autocomplete="off" placeholder="Her message, e.g.: а что за агентство?" />
+          <button type="button" id="tps-send-btn">Send as her</button>
+          <button type="button" id="tps-clear-btn" class="ghost-btn">Clear</button>
+        </div>
+        <p class="import-status" id="tps-sandbox-status"></p>
+
+        <h3 class="tps-sub">Test on ton.place</h3>
+        <label class="category-field">
+          Test profile ids (your own second account, a friend who agreed to test): one per line, ton.place/id<b>123</b> or just 123
+          <textarea id="tps-ids" rows="3" spellcheck="false" placeholder="3891265"></textarea>
+        </label>
+        <p class="import-status" id="tps-status" role="status" aria-live="polite">Loading...</p>
+        <div class="import-actions">
+          <button id="tps-save-btn" class="import-btn export-btn">Save</button>
+          <button id="tps-check-btn" class="import-btn">Check test dialogs now</button>
+        </div>
+        <div class="tp-auto">
+          <label class="tp-switch"><input type="checkbox" id="tps-on" role="switch" /> <span>Test mode on: check the test dialogs every 3 minutes and answer</span></label>
+        </div>
+        <div id="tps-dialogs"></div>
+        <pre id="tps-log" class="igc-log"></pre>
+      </div>
+
+      <div class="glass-card import-card">
         <h2>Google Sheet <span id="tp-total" class="tp-total"></span></h2>
         <p class="bulk-hint">All parsed profiles live in the "tonplace" sheet, updated once a day at 00:00 (Kyiv) and when you press the button below; each run is logged in the "tonplace_report" sheet. To keep someone out of the mailing, write anything in their "message" cell.</p>
         <div class="tp-sheet">
@@ -830,6 +867,14 @@ import Base from '@/layouts/Base.astro';
   .igc-comment { font-size: 0.8rem; color: var(--fg-muted); }
   .igc-log { margin: 1rem 0 0; max-height: 200px; overflow: auto; font-size: 0.75rem; background: var(--bg-subtle); padding: 0.5rem; border-radius: 8px; white-space: pre-wrap; }
   .igc-log:empty { display: none; }
+  .tps-sub { font-size: 1rem; margin: 1.5rem 0 0.5rem; }
+  .tps-chat { border: 1px solid var(--border, rgba(10,10,10,.12)); border-radius: 10px; padding: 0.75rem; max-height: 360px; overflow: auto; margin-bottom: 0.5rem; background: var(--bg-subtle); }
+  .tps-msg { max-width: 80%; padding: 0.45rem 0.7rem; border-radius: 10px; margin: 0.3rem 0; white-space: pre-wrap; font-size: 0.9rem; }
+  .tps-her { background: #fff; margin-right: auto; }
+  .tps-us { background: #0a0a0a; color: #fff; margin-left: auto; }
+  .tps-handoff { font-size: 0.8rem; color: #b42318; text-align: right; }
+  .tps-empty { color: var(--fg-muted); margin: 0; font-size: 0.9rem; }
+  #tps-prompt { font-size: 0.85rem; }
   .category-field textarea,
   .category-field select {
     font: inherit;
@@ -3295,7 +3340,131 @@ import Base from '@/layouts/Base.astro';
     }
   });
 
+  // --- AI scout (test) ---
+
+  const tpsPrompt = document.getElementById('tps-prompt');
+  const tpsIds = document.getElementById('tps-ids');
+  const tpsOn = document.getElementById('tps-on');
+  const tpsStatus = document.getElementById('tps-status');
+  const tpsChat = document.getElementById('tps-chat');
+  const tpsInput = document.getElementById('tps-input');
+  const tpsSandboxStatus = document.getElementById('tps-sandbox-status');
+  let tpsDefault = '';
+  let tpsDialog = [];
+
+  function tpsEsc(t) {
+    return String(t).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+
+  function tpsParseIds(text) {
+    const out = [];
+    for (const m of String(text || '').matchAll(/(?:id|im)?(\d{2,12})/g)) {
+      const n = Number(m[1]);
+      if (!out.includes(n)) out.push(n);
+    }
+    return out;
+  }
+
+  function renderTps(s) {
+    tpsDefault = s.default_prompt || '';
+    if (document.activeElement !== tpsPrompt) tpsPrompt.value = s.prompt || tpsDefault;
+    if (document.activeElement !== tpsIds) tpsIds.value = (s.test_ids || []).join('\n');
+    tpsOn.checked = !!s.enabled;
+    tpsStatus.textContent = !s.ai_configured
+      ? 'OPENAI_API_KEY is not set on the server.'
+      : s.enabled
+        ? `On: test dialogs are checked every ${s.check_every_minutes} min.`
+        : 'Off. The sandbox above works anyway.';
+    const state = s.state || {};
+    const rows = (s.test_ids || []).map((id) => {
+      const st = state[String(id)] || {};
+      const handed = st.handed_off
+        ? `handed off to a person: ${tpsEsc(st.handed_off)} <button type="button" class="ghost-btn" data-tps-reset="${id}">Let it write again</button>`
+        : 'scout is talking';
+      return `<div class="bulk-hint"><a href="https://ton.place/im${id}" target="_blank" rel="noopener">im${id}</a>: ${handed}</div>`;
+    });
+    document.getElementById('tps-dialogs').innerHTML = rows.join('');
+    document.getElementById('tps-log').textContent = (s.log || []).join('\n');
+  }
+
+  async function loadTps() {
+    const res = await authedFetch('/admin/tonplace/scout');
+    if (res.ok) renderTps(await res.json());
+  }
+
+  async function saveTps(enabled) {
+    const res = await authedFetch('/admin/tonplace/scout', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ enabled, prompt: tpsPrompt.value.trim(), test_ids: tpsParseIds(tpsIds.value) }),
+    });
+    if (res.ok) { renderTps(await res.json()); return true; }
+    tpsStatus.textContent = await readError(res);
+    return false;
+  }
+
+  function renderTpsChat() {
+    tpsChat.innerHTML = tpsDialog.length
+      ? tpsDialog.map((m) => `<div class="tps-msg ${m.from === 'her' ? 'tps-her' : 'tps-us'}">${tpsEsc(m.text)}</div>`
+        + (m.handoff ? `<div class="tps-handoff">handoff to a person: ${tpsEsc(m.reason || '')}</div>` : '')).join('')
+      : '<p class="tps-empty">Write as the model would, starting from the first mailing message or anything else.</p>';
+    tpsChat.scrollTop = tpsChat.scrollHeight;
+  }
+
+  async function tpsSend() {
+    const text = tpsInput.value.trim();
+    if (!text) return;
+    tpsDialog.push({ from: 'her', text });
+    tpsInput.value = '';
+    renderTpsChat();
+    tpsSandboxStatus.textContent = 'The scout is writing...';
+    const res = await authedFetch('/admin/tonplace/scout/simulate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ dialog: tpsDialog.map(({ from, text: t }) => ({ from, text: t })), prompt: tpsPrompt.value.trim() }),
+    });
+    if (!res.ok) { tpsSandboxStatus.textContent = await readError(res); return; }
+    const a = await res.json();
+    tpsDialog.push({ from: 'us', text: a.reply, handoff: a.handoff, reason: a.reason });
+    tpsSandboxStatus.textContent = '';
+    renderTpsChat();
+  }
+
+  document.getElementById('tps-send-btn').addEventListener('click', () => tpsSend().catch(() => {}));
+  tpsInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); tpsSend().catch(() => {}); } });
+  document.getElementById('tps-clear-btn').addEventListener('click', () => { tpsDialog = []; tpsSandboxStatus.textContent = ''; renderTpsChat(); });
+  document.getElementById('tps-default-btn').addEventListener('click', () => {
+    if (confirm('Replace the instructions with the default ones? Press Save to keep them.')) tpsPrompt.value = tpsDefault;
+  });
+  document.getElementById('tps-save-btn').addEventListener('click', () => saveTps(tpsOn.checked).catch(() => {}));
+  tpsOn.addEventListener('change', async () => {
+    if (tpsOn.checked && !tpsParseIds(tpsIds.value).length) {
+      tpsOn.checked = false;
+      tpsStatus.textContent = 'Add at least one test profile id first.';
+      return;
+    }
+    if (!(await saveTps(tpsOn.checked).catch(() => false))) tpsOn.checked = !tpsOn.checked;
+  });
+  document.getElementById('tps-check-btn').addEventListener('click', async () => {
+    tpsStatus.textContent = 'Checking the test dialogs...';
+    const res = await authedFetch('/admin/tonplace/scout/check', { method: 'POST' });
+    if (!res.ok) { tpsStatus.textContent = await readError(res); return; }
+    const s = await res.json();
+    renderTps(s);
+    const r = s.result || {};
+    tpsStatus.textContent = r.status === 'ok' ? `Checked: answered ${r.answered}, handed off ${r.handed_off}.` : `Checked: ${r.status}.`;
+  });
+  document.getElementById('tps-dialogs').addEventListener('click', async (e) => {
+    const id = e.target.closest('[data-tps-reset]')?.dataset.tpsReset;
+    if (!id || !confirm('Let the scout write in this dialog again? It answers her last message on the next check.')) return;
+    const res = await authedFetch('/admin/tonplace/scout/reset', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ profile_id: Number(id) }),
+    });
+    if (res.ok) renderTps(await res.json());
+  });
+
   function loadTonplace() {
+    loadTps().catch(() => {});
     loadTpTg().catch(() => {});
     loadTpSched().catch(() => {});
     loadTpAuto().catch(() => {});
