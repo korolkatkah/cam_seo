@@ -6,6 +6,7 @@ export interface CatalogService {
   url: string; // display domain, not a live outbound link — verify before linking
   desc: string; // factual, not translated — same convention as untranslated "facts" in studios.ts
   flag?: 'warn' | 'thin';
+  page?: string; // internal EWO review page path (en, no locale prefix), e.g. '/telephort-cloud-phones'
 }
 
 export type Badge = 'ok' | 'thin' | 'warn' | 'none';
@@ -40,15 +41,16 @@ export const uiLabels: Record<Locale, {
   visitLabel: string;
   flagWarn: string;
   flagThin: string;
+  reviewLabel: string;
 }> = {
-  en: { categories: 'Categories', skipTitle: 'Utility pages with no matching service', skipDesc: 'Technical/navigation pages on the source site — not topical, so no service category applies.', legendOk: 'well covered', legendThin: 'thin coverage', legendWarn: 'contains grey-market entries', legendNone: 'no service applies', visitLabel: 'Visit', flagWarn: 'caution', flagThin: 'unverified' },
-  de: { categories: 'Kategorien', skipTitle: 'Funktionsseiten ohne passenden Dienst', skipDesc: 'Technische/navigatorische Seiten der Quellwebsite — nicht thematisch, daher keine Dienstkategorie zutreffend.', legendOk: 'gut abgedeckt', legendThin: 'wenig Abdeckung', legendWarn: 'enthält Graumarkt-Einträge', legendNone: 'kein Dienst zutreffend', visitLabel: 'Besuchen', flagWarn: 'Vorsicht', flagThin: 'unbestätigt' },
-  es: { categories: 'Categorías', skipTitle: 'Páginas utilitarias sin servicio aplicable', skipDesc: 'Páginas técnicas/de navegación del sitio de origen — no temáticas, así que no aplica ninguna categoría de servicio.', legendOk: 'buena cobertura', legendThin: 'cobertura limitada', legendWarn: 'incluye entradas de mercado gris', legendNone: 'no aplica servicio', visitLabel: 'Visitar', flagWarn: 'precaución', flagThin: 'sin verificar' },
-  ro: { categories: 'Categorii', skipTitle: 'Pagini utilitare fără serviciu corespunzător', skipDesc: 'Pagini tehnice/de navigare de pe site-ul sursă — netematice, deci nu se aplică nicio categorie de servicii.', legendOk: 'acoperire bună', legendThin: 'acoperire redusă', legendWarn: 'conține intrări de piață gri', legendNone: 'niciun serviciu aplicabil', visitLabel: 'Vizitează', flagWarn: 'atenție', flagThin: 'neverificat' },
-  uk: { categories: 'Категорії', skipTitle: 'Службові сторінки без відповідного сервісу', skipDesc: 'Технічні/навігаційні сторінки вихідного сайту — не тематичні, тому категорія сервісу не застосовується.', legendOk: 'добре покрито', legendThin: 'слабке покриття', legendWarn: 'є сірі сервіси', legendNone: 'сервіс не застосовується', visitLabel: 'Перейти', flagWarn: 'обережно', flagThin: 'не підтверджено' },
-  ru: { categories: 'Категории', skipTitle: 'Служебные страницы без подходящего сервиса', skipDesc: 'Технические/навигационные страницы исходного сайта — не тематические, поэтому категория сервиса не применяется.', legendOk: 'хорошо покрыто', legendThin: 'слабое покрытие', legendWarn: 'есть серые сервисы', legendNone: 'сервис не применим', visitLabel: 'Перейти', flagWarn: 'осторожно', flagThin: 'не подтверждено' },
-  fr: { categories: 'Catégories', skipTitle: 'Pages utilitaires sans service correspondant', skipDesc: 'Pages techniques/de navigation du site source — non thématiques, aucune catégorie de service ne s’applique.', legendOk: 'bien couvert', legendThin: 'couverture faible', legendWarn: 'contient des entrées de marché gris', legendNone: 'aucun service applicable', visitLabel: 'Visiter', flagWarn: 'prudence', flagThin: 'non vérifié' },
-  pt: { categories: 'Categorias', skipTitle: 'Páginas utilitárias sem serviço correspondente', skipDesc: 'Páginas técnicas/de navegação do site de origem — não temáticas, portanto nenhuma categoria de serviço se aplica.', legendOk: 'boa cobertura', legendThin: 'cobertura fraca', legendWarn: 'inclui entradas de mercado cinza', legendNone: 'nenhum serviço aplicável', visitLabel: 'Visitar', flagWarn: 'cuidado', flagThin: 'não verificado' },
+  en: { categories: 'Categories', skipTitle: 'Utility pages with no matching service', skipDesc: 'Technical/navigation pages on the source site — not topical, so no service category applies.', legendOk: 'well covered', legendThin: 'thin coverage', legendWarn: 'contains grey-market entries', legendNone: 'no service applies', visitLabel: 'Visit', flagWarn: 'caution', flagThin: 'unverified', reviewLabel: 'EWO review →' },
+  de: { categories: 'Kategorien', skipTitle: 'Funktionsseiten ohne passenden Dienst', skipDesc: 'Technische/navigatorische Seiten der Quellwebsite — nicht thematisch, daher keine Dienstkategorie zutreffend.', legendOk: 'gut abgedeckt', legendThin: 'wenig Abdeckung', legendWarn: 'enthält Graumarkt-Einträge', legendNone: 'kein Dienst zutreffend', visitLabel: 'Besuchen', flagWarn: 'Vorsicht', flagThin: 'unbestätigt', reviewLabel: 'EWO-Review →' },
+  es: { categories: 'Categorías', skipTitle: 'Páginas utilitarias sin servicio aplicable', skipDesc: 'Páginas técnicas/de navegación del sitio de origen — no temáticas, así que no aplica ninguna categoría de servicio.', legendOk: 'buena cobertura', legendThin: 'cobertura limitada', legendWarn: 'incluye entradas de mercado gris', legendNone: 'no aplica servicio', visitLabel: 'Visitar', flagWarn: 'precaución', flagThin: 'sin verificar', reviewLabel: 'Reseña EWO →' },
+  ro: { categories: 'Categorii', skipTitle: 'Pagini utilitare fără serviciu corespunzător', skipDesc: 'Pagini tehnice/de navigare de pe site-ul sursă — netematice, deci nu se aplică nicio categorie de servicii.', legendOk: 'acoperire bună', legendThin: 'acoperire redusă', legendWarn: 'conține intrări de piață gri', legendNone: 'niciun serviciu aplicabil', visitLabel: 'Vizitează', flagWarn: 'atenție', flagThin: 'neverificat', reviewLabel: 'Recenzie EWO →' },
+  uk: { categories: 'Категорії', skipTitle: 'Службові сторінки без відповідного сервісу', skipDesc: 'Технічні/навігаційні сторінки вихідного сайту — не тематичні, тому категорія сервісу не застосовується.', legendOk: 'добре покрито', legendThin: 'слабке покриття', legendWarn: 'є сірі сервіси', legendNone: 'сервіс не застосовується', visitLabel: 'Перейти', flagWarn: 'обережно', flagThin: 'не підтверджено', reviewLabel: 'Огляд EWO →' },
+  ru: { categories: 'Категории', skipTitle: 'Служебные страницы без подходящего сервиса', skipDesc: 'Технические/навигационные страницы исходного сайта — не тематические, поэтому категория сервиса не применяется.', legendOk: 'хорошо покрыто', legendThin: 'слабое покрытие', legendWarn: 'есть серые сервисы', legendNone: 'сервис не применим', visitLabel: 'Перейти', flagWarn: 'осторожно', flagThin: 'не подтверждено', reviewLabel: 'Обзор EWO →' },
+  fr: { categories: 'Catégories', skipTitle: 'Pages utilitaires sans service correspondant', skipDesc: 'Pages techniques/de navigation du site source — non thématiques, aucune catégorie de service ne s’applique.', legendOk: 'bien couvert', legendThin: 'couverture faible', legendWarn: 'contient des entrées de marché gris', legendNone: 'aucun service applicable', visitLabel: 'Visiter', flagWarn: 'prudence', flagThin: 'non vérifié', reviewLabel: 'Avis EWO →' },
+  pt: { categories: 'Categorias', skipTitle: 'Páginas utilitárias sem serviço correspondente', skipDesc: 'Páginas técnicas/de navegação do site de origem — não temáticas, portanto nenhuma categoria de serviço se aplica.', legendOk: 'boa cobertura', legendThin: 'cobertura fraca', legendWarn: 'inclui entradas de mercado cinza', legendNone: 'nenhum serviço aplicável', visitLabel: 'Visitar', flagWarn: 'cuidado', flagThin: 'não verificado', reviewLabel: 'Análise EWO →' },
 };
 
 export const servicesCatalog: CatalogCategory[] = [
@@ -322,6 +324,24 @@ export const servicesCatalog: CatalogCategory[] = [
           { name: 'Later', url: 'later.com', desc: 'Content calendar and scheduler across IG/TikTok/Pinterest/FB/YouTube.' },
           { name: 'Quso.ai (ex-Vidyo.ai)', url: 'quso.ai', desc: 'AI cuts long video into shorts and auto-publishes with captions.' },
           { name: 'Metricool', url: 'metricool.com', desc: 'Scheduling and analytics for multi-network short-video posting.' },
+        ],
+      },
+      {
+        slug: 'cloud-phones-for-accounts',
+        badge: 'thin',
+        note: {
+          en: 'Only one cloud-phone service is listed so far, and its capabilities are the vendor’s own claims. A separate device does not make an account compliant with platform rules.',
+          de: 'Bisher ist nur ein Cloud-Phone-Dienst gelistet, und dessen Funktionen sind Angaben des Anbieters. Ein separates Gerät macht ein Konto nicht regelkonform.',
+          es: 'Por ahora solo hay un servicio de teléfonos en la nube, y sus capacidades son afirmaciones del propio proveedor. Un dispositivo separado no hace que una cuenta cumpla las reglas de la plataforma.',
+          ro: 'Deocamdată este listat un singur serviciu de telefoane cloud, iar capabilitățile lui sunt afirmații ale furnizorului. Un dispozitiv separat nu face un cont conform cu regulile platformei.',
+          uk: 'Поки що вказано лише один сервіс хмарних телефонів, а його можливості — це заяви самого вендора. Окремий пристрій не робить акаунт відповідним правилам платформи.',
+          ru: 'Пока указан только один сервис облачных телефонов, а его возможности — заявления самого вендора. Отдельное устройство не делает аккаунт соответствующим правилам платформы.',
+          fr: 'Un seul service de téléphones cloud est listé pour l’instant, et ses capacités sont les déclarations du fournisseur. Un appareil séparé ne rend pas un compte conforme aux règles de la plateforme.',
+          pt: 'Por enquanto só há um serviço de telefones na nuvem listado, e suas capacidades são afirmações do próprio fornecedor. Um dispositivo separado não torna uma conta compatível com as regras da plataforma.',
+        },
+        label: { en: 'Cloud Phones for Accounts', de: 'Cloud-Phones für Konten', es: 'Teléfonos en la Nube para Cuentas', ro: 'Telefoane Cloud pentru Conturi', uk: 'Хмарні телефони під акаунти', ru: 'Облачные телефоны под аккаунты', fr: 'Téléphones Cloud pour Comptes', pt: 'Telefones na Nuvem para Contas' },
+        services: [
+          { name: 'Telephort', url: 'demo.telephort.app', page: '/telephort-cloud-phones', desc: 'One isolated cloud Android phone per account, opened in a browser tab, with its own IMEI, geo and network; ADB and MCP/AI-agent control.' },
         ],
       },
     ],

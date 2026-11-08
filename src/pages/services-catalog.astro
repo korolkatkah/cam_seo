@@ -5,6 +5,7 @@ const site = 'https://www.ewohub.com';
 const slug = 'services-catalog';
 const lang = 'en';
 const ui = uiLabels[lang];
+const prefix = '';
 
 const badgeColor: Record<string, string> = {
   ok: '#3f7d52',
@@ -83,6 +84,9 @@ const badgeColor: Record<string, string> = {
                         <span style="font-family:monospace;font-size:.78rem;color:var(--fg-faint);word-break:break-all;">{svc.url}</span>
                       ) : (
                         <a href={svc.url.startsWith('http') ? svc.url : `https://${svc.url}`} target="_blank" rel="noopener noreferrer nofollow" style="font-family:monospace;font-size:.78rem;color:var(--fg-faint);word-break:break-all;text-decoration:underline;text-underline-offset:2px;">{svc.url}</a>
+                      )}
+                      {svc.page && (
+                        <div><a href={`${prefix}${svc.page}`} style="font-size:.78rem;font-weight:700;">{ui.reviewLabel}</a></div>
                       )}
                     </div>
                     <div style="color:var(--fg-muted);font-size:.92rem;">{svc.desc}</div>
