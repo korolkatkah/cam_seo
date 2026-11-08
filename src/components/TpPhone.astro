@@ -1,0 +1,80 @@
+---
+// Abstract cloud-phone mockup (CSS only, no third-party screenshots).
+interface Props {
+  kind?: 'feed' | 'chat' | 'map';
+  label?: string;
+  small?: boolean;
+}
+const { kind = 'feed', label, small = false } = Astro.props;
+---
+<div class:list={['tp-phone', { 'tp-phone--sm': small }]} role="img" aria-label={label ?? 'Cloud phone'}>
+  <div class="tp-phone__bar"><span>14:06</span><span class="tp-phone__icons"><i></i><i></i><i></i></span></div>
+  <div class="tp-phone__screen">
+    {kind === 'feed' && (
+      <>
+        <div class="tp-ui-head"><b></b><em></em></div>
+        <div class="tp-ui-stories"><i></i><i></i><i></i><i></i></div>
+        <div class="tp-ui-post"></div>
+        <div class="tp-ui-line"></div><div class="tp-ui-line tp-ui-line--s"></div>
+      </>
+    )}
+    {kind === 'chat' && (
+      <>
+        <div class="tp-ui-head"><b></b><em></em></div>
+        {[0, 1, 2, 3, 4].map(() => (
+          <div class="tp-ui-row"><i></i><span><u></u><u class="s"></u></span></div>
+        ))}
+        <div class="tp-ui-fab"></div>
+      </>
+    )}
+    {kind === 'map' && (
+      <>
+        <div class="tp-ui-head"><b></b><em></em></div>
+        <div class="tp-ui-map"><i class="p1"></i><i class="p2"></i><i class="p3"></i><s></s></div>
+        <div class="tp-ui-line"></div><div class="tp-ui-line tp-ui-line--s"></div>
+      </>
+    )}
+  </div>
+  <div class="tp-phone__nav"><span>◀</span><span>●</span><span>■</span></div>
+</div>
+
+<style>
+  .tp-phone {
+    width: 150px; aspect-ratio: 9 / 18.2; border-radius: 22px; background: #0a0a0c;
+    border: 3px solid #2b2b31; display: flex; flex-direction: column; overflow: hidden;
+    box-shadow: 0 24px 40px -14px rgba(0,0,0,.65), 0 0 0 1px rgba(255,255,255,.05);
+    flex-shrink: 0;
+  }
+  .tp-phone--sm { width: 92px; border-radius: 15px; border-width: 2px; }
+  .tp-phone__bar {
+    display: flex; justify-content: space-between; align-items: center; padding: 4px 9px 2px;
+    font: 600 7px ui-monospace, Menlo, Consolas, monospace; color: #b9b9b9; background: #fff;
+  }
+  .tp-phone__bar span { color: #555; }
+  .tp-phone__icons { display: flex; gap: 2px; }
+  .tp-phone__icons i { width: 5px; height: 5px; border-radius: 50%; background: #888; display: block; }
+  .tp-phone__screen { flex: 1; background: #fff; padding: 5px 7px; display: flex; flex-direction: column; gap: 5px; overflow: hidden; position: relative; }
+  .tp-phone__nav { display: flex; justify-content: space-around; padding: 4px 0 5px; background: #fff; font-size: 6px; color: #777; }
+  .tp-ui-head { display: flex; justify-content: space-between; align-items: center; }
+  .tp-ui-head b { width: 38%; height: 7px; border-radius: 4px; background: #1d1d1f; }
+  .tp-ui-head em { width: 9px; height: 9px; border-radius: 50%; background: #ed4956; }
+  .tp-ui-stories { display: flex; gap: 5px; }
+  .tp-ui-stories i { width: 19px; height: 19px; border-radius: 50%; border: 2px solid transparent; background: linear-gradient(#fff,#fff) padding-box, linear-gradient(45deg,#f9a03f,#e1306c,#833ab4) border-box; display: block; }
+  .tp-ui-stories i:first-child { background: #e6e6e8; border-color: #e6e6e8; }
+  .tp-ui-post { flex: 1; min-height: 40px; border-radius: 5px; background: linear-gradient(180deg,#8ec5ff 0%,#cfe6ff 55%,#7b8a6a 56%,#4e5a41 100%); position: relative; }
+  .tp-ui-post::after { content: ''; position: absolute; left: 38%; top: 30%; width: 24%; aspect-ratio: 1; border-radius: 50%; background: #f1c84b; box-shadow: 0 0 0 3px rgba(255,255,255,.35); }
+  .tp-ui-line { height: 5px; border-radius: 3px; background: #e4e4e7; }
+  .tp-ui-line--s { width: 60%; }
+  .tp-ui-row { display: flex; align-items: center; gap: 6px; }
+  .tp-ui-row i { width: 16px; height: 16px; border-radius: 50%; background: linear-gradient(135deg,#d7dde6,#aab4c2); flex-shrink: 0; display: block; }
+  .tp-ui-row span { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+  .tp-ui-row u { height: 4px; border-radius: 3px; background: #dcdce0; display: block; text-decoration: none; }
+  .tp-ui-row u.s { width: 55%; background: #ececef; }
+  .tp-ui-fab { position: absolute; right: 8px; bottom: 7px; width: 17px; height: 17px; border-radius: 50%; background: #2aa5ff; }
+  .tp-ui-map { flex: 1; min-height: 52px; border-radius: 5px; background:
+      linear-gradient(90deg, rgba(0,0,0,.05) 1px, transparent 1px) 0 0 / 14px 14px,
+      linear-gradient(rgba(0,0,0,.05) 1px, transparent 1px) 0 0 / 14px 14px, #dfe9df; position: relative; }
+  .tp-ui-map i { position: absolute; width: 8px; height: 8px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: #e8683b; }
+  .tp-ui-map i.p1 { left: 22%; top: 28%; } .tp-ui-map i.p2 { left: 60%; top: 48%; background: #2a7bd6; } .tp-ui-map i.p3 { left: 38%; top: 66%; }
+  .tp-ui-map s { position: absolute; left: 26%; top: 34%; width: 38%; height: 30%; border-top: 1.5px dashed #6b7a6b; border-right: 1.5px dashed #6b7a6b; border-radius: 0 8px 0 0; }
+</style>

@@ -1,0 +1,288 @@
+---
+import Base from '@/layouts/Base.astro';
+import TpPhone from '@/components/TpPhone.astro';
+import { tpText, type TpLang } from '@/data/telephort';
+
+interface Props { lang: TpLang }
+const { lang } = Astro.props;
+const t = tpText[lang];
+const site = 'https://www.ewohub.com';
+const slug = 'telephort-cloud-phones';
+const tg = 'https://t.me/ewo_agency';
+const tgLink = `<a href="${tg}" target="_blank" rel="noopener noreferrer">t.me/ewo_agency</a>`;
+
+const sceneKinds = ['feed', 'chat', 'map'] as const;
+const accts = ['@acct_1', '@acct_2', '@acct_3', '@acct_4'];
+const geos = ['DE', 'US', 'UA', 'RO'];
+const specs: string[][] = [
+  ['IMEI    35•• •••• ••4182', 'Android ID  9f3a••••c1', 'MAC    0A:••:••:••:7E'],
+  ['geo     52.5°N 13.4°E', 'IP      own per phone', 'tz      Europe/Berlin'],
+  ['GPS  ·  motion  ·  Wi-Fi', 'Bluetooth  ·  cell towers', 'reported like a phone on a street'],
+  ['phone #01  →  @acct_1', 'phone #02  →  @acct_2', 'phone #03  →  @acct_3'],
+];
+const caseKinds = ['feed', 'map'] as const;
+---
+<Base
+  title={t.title}
+  description={t.description}
+  lang={lang}
+  hreflang={[
+    { lang: 'en', url: `${site}/${slug}` },
+    { lang: 'ro', url: `${site}/ro/${slug}` },
+    { lang: 'ru', url: `${site}/ru/${slug}` },
+  ]}
+>
+
+  <section class="art-hero">
+    <div class="art-orb art-orb--1"></div>
+    <div class="art-orb art-orb--2"></div>
+    <div class="art-grid"></div>
+    <div class="art-hero__inner container">
+      <div class="art-meta">
+        <span class="art-tag">{t.tagA}</span>
+        <span class="art-tag art-tag--blue">{t.tagB}</span>
+      </div>
+      <h1 class="art-title"><span class="art-grad">{t.h1Grad}</span>{t.h1Rest}</h1>
+      <p class="art-lead">{t.lead}</p>
+    </div>
+  </section>
+
+  <div class="art-body container">
+    <div class="art-layout">
+      <aside class="art-toc">
+        <p class="art-toc__title">{t.tocTitle}</p>
+        <ol class="art-toc__list">
+          {t.toc.map((label, i) => (
+            <li><a href={i === t.toc.length - 1 ? '#faq' : `#sec-${i + 1}`}>{label}</a></li>
+          ))}
+        </ol>
+        <a href="#cta" class="art-toc__cta">{t.tocCta}</a>
+      </aside>
+
+      <main class="art-main">
+
+      <p class="art-intro">{t.intro}</p>
+      <p class="card-date" style="margin:0 0 1.5rem;">{t.byline} <a href="https://demo.telephort.app/" target="_blank" rel="noopener noreferrer nofollow">demo.telephort.app</a></p>
+
+      <!-- Hero scene -->
+      <div class="tp-panel tp-scene">
+        <div class="tp-eyebrow">{t.scene.eyebrow}</div>
+        <div class="tp-scene__row">
+          {t.scene.phones.map((p, i) => (
+            <div class="tp-scene__item">
+              <TpPhone kind={sceneKinds[i]} label={p.acct} />
+              <span class="tp-chip tp-chip--amber">{p.acct}</span>
+              <div class="tp-spec"><b>{t.scene.geoLabel}</b> {p.geo}</div>
+              <div class="tp-spec"><b>IMEI</b> {['35•• ••• 4182', '86•• ••• 0937', '49•• ••• 7715'][i]}</div>
+            </div>
+          ))}
+        </div>
+        <p class="tp-note">{t.scene.note}</p>
+      </div>
+
+      <div class="highlight-box" style="margin-top:1.5rem;"><p><strong>{t.callout.strong}</strong> {t.callout.text} <a href={tg} target="_blank" rel="noopener noreferrer">{t.callout.link}</a></p></div>
+
+      <!-- 1 -->
+      <section class="section" id="sec-1">
+        <h2>{t.s1.h}</h2>
+        <div class="glass-card" style="margin-top:1.25rem;">
+          <p>{t.s1.p1}</p>
+          <p style="margin-bottom:0;">{t.s1.p2}</p>
+        </div>
+        <div class="tp-stats">
+          {t.s1.stats.map((s) => (
+            <div class="tp-panel tp-stat"><div class="tp-stat__v">{s.v}</div><div class="tp-stat__k">{s.k}</div></div>
+          ))}
+        </div>
+      </section>
+
+      <!-- 2 -->
+      <section class="section" id="sec-2">
+        <h2>{t.s2.h}</h2>
+        <div class="glass-card" style="margin-top:1.25rem;">
+          <p>{t.s2.p1}</p>
+          <p style="margin-bottom:0;">{t.s2.p2}</p>
+        </div>
+
+        <div class="tp-vs">
+          <div class="tp-panel tp-vs__col tp-vs__col--bad">
+            <div class="tp-eyebrow">{t.s2.bad.eyebrow}</div>
+            <div class="tp-vs__chips">{accts.map((a) => <span class="tp-chip">{a}</span>)}</div>
+            <svg class="tp-vs__fan" viewBox="0 0 240 44" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M30 0 L120 44 M90 0 L120 44 M150 0 L120 44 M210 0 L120 44" />
+            </svg>
+            <div class="tp-vs__device">{t.s2.bad.device}</div>
+            <p class="tp-vs__cap">{t.s2.bad.p}</p>
+          </div>
+          <div class="tp-panel tp-vs__col tp-vs__col--good">
+            <div class="tp-eyebrow tp-eyebrow--teal">{t.s2.good.eyebrow}</div>
+            <div class="tp-vs__pairs">
+              {accts.map((a, i) => (
+                <div class="tp-vs__pair">
+                  <span class="tp-chip">{a}</span>
+                  <i class="tp-vs__link"></i>
+                  <span class="tp-vs__mini"><em>{geos[i]}</em></span>
+                </div>
+              ))}
+            </div>
+            <p class="tp-vs__cap">{t.s2.good.p}</p>
+          </div>
+        </div>
+
+        <div class="tp-panel tp-cmp">
+          <div class="tp-eyebrow">{t.s2.cmp.eyebrow}</div>
+          <div class="tp-cmp__head">
+            <span></span>
+            <span class="tp-cmp__a">{t.s2.cmp.colA}</span>
+            <span class="tp-cmp__b">{t.s2.cmp.colB}</span>
+          </div>
+          {t.s2.cmp.rows.map((r) => (
+            <div class="tp-cmp__row">
+              <span class="tp-cmp__k">{r.k}</span>
+              <span class="tp-cmp__a" data-label={t.s2.cmp.colA}>{r.a}</span>
+              <span class="tp-cmp__b" data-label={t.s2.cmp.colB}>{r.b}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- 3 -->
+      <section class="section" id="sec-3">
+        <h2>{t.s3.h}</h2>
+        <div class="tp-attrs">
+          {t.s3.items.map((it, i) => (
+            <div class="tp-panel tp-attr">
+              <div class="tp-eyebrow">{String(i + 1).padStart(2, '0')} · {it.tag}</div>
+              <h3>{it.h}</h3>
+              <p>{it.p}</p>
+              <pre class="tp-code">{specs[i].join('\n')}</pre>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- 4 -->
+      <section class="section" id="sec-4">
+        <h2>{t.s4.h}</h2>
+        <div class="tp-cases">
+          {t.s4.cases.map((c, i) => (
+            <div class="tp-panel tp-case">
+              <TpPhone kind={caseKinds[i]} small label={c.tag} />
+              <div class="tp-case__body">
+                <div class="tp-eyebrow">{c.tag}</div>
+                <h3>{c.h}</h3>
+                <p>{c.p}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div class="highlight-box highlight-box--warning" style="margin-top:1.25rem;"><p><strong>{t.s4.warnStrong}</strong> {t.s4.warn}</p></div>
+      </section>
+
+      <!-- 5 -->
+      <section class="section" id="sec-5">
+        <h2>{t.s5.h}</h2>
+        <div class="glass-card" style="margin-top:1.25rem;">
+          <p style="margin-bottom:0;">{t.s5.p1}</p>
+        </div>
+        <div class="tp-panel tp-term">
+          <div class="tp-eyebrow">{t.s5.agentEyebrow}</div>
+          <div class="tp-term__prompt"><span>&gt;</span> {t.s5.prompt}</div>
+          <ul class="tp-term__steps">
+            {t.s5.steps.map((s, i) => (
+              <li class={i === t.s5.steps.length - 1 ? 'is-done' : ''}><i>{i === t.s5.steps.length - 1 ? '✓' : '→'}</i>{s}</li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="glass-card" style="margin-top:1.25rem;">
+          <p style="margin-bottom:0;">{t.s5.p2}</p>
+        </div>
+        <div class="tp-panel tp-sync">
+          <div class="tp-eyebrow">{t.s5.syncEyebrow}</div>
+          <div class="tp-sync__row">
+            <div class="tp-sync__main">
+              <TpPhone kind="feed" small label={t.s5.syncMain} />
+              <span class="tp-chip tp-chip--amber">{t.s5.syncMain}</span>
+            </div>
+            <div class="tp-sync__wave" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="tp-sync__copies">
+              {(['feed', 'feed', 'feed'] as const).map(() => (
+                <div class="tp-sync__copy">
+                  <TpPhone kind="feed" small label={t.s5.syncCopy} />
+                </div>
+              ))}
+              <span class="tp-chip tp-chip--teal">{t.s5.syncCopy}</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6 -->
+      <section class="section" id="sec-6">
+        <h2>{t.s6.h}</h2>
+        <div class="two-col-box">
+          <div class="two-col-box__item two-col-box__item--good">
+            <p class="two-col-box__label">{t.s6.goodLabel}</p>
+            <p>{t.s6.good}</p>
+          </div>
+          <div class="two-col-box__item two-col-box__item--bad">
+            <p class="two-col-box__label">{t.s6.badLabel}</p>
+            <p>{t.s6.bad}</p>
+          </div>
+        </div>
+        <p style="margin-top:1.25rem;">{t.s6.after}</p>
+      </section>
+
+      <!-- 7 -->
+      <section class="section" id="sec-7">
+        <h2>{t.s7.h}</h2>
+        <div class="glass-card" style="margin-top:1.25rem;">
+          <p>{t.s7.p1}</p>
+          <p style="margin-bottom:0;"><a href={tg} target="_blank" rel="noopener noreferrer">{t.s7.link}</a></p>
+        </div>
+      </section>
+
+      <section class="faq-section section" id="faq">
+        <h2>{t.faq.h}</h2>
+        {t.faq.items.map((f) => (
+          <div class="faq-item">
+            <button class="faq-chevron" aria-expanded="false">
+              <span>{f.q}</span>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="faq-body"><p set:html={f.a.replace('{tg}', tgLink)} /></div>
+          </div>
+        ))}
+      </section>
+
+      <section id="cta" class="art-cta section">
+        <div class="art-cta__orb"></div>
+        <div class="art-cta__inner">
+          <span class="art-cta__badge">{t.cta.badge}</span>
+          <h2>{t.cta.h}</h2>
+          <p>{t.cta.p}</p>
+          <div class="art-cta__actions">
+            <a href={tg} target="_blank" rel="noopener noreferrer" class="art-cta__btn art-cta__btn--primary">{t.cta.primary}</a>
+            <a href={t.related.items[0].href} class="art-cta__btn art-cta__btn--ghost">{t.cta.ghost}</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>{t.related.h}</h2>
+        <div class="related-grid">
+          {t.related.items.map((r) => (
+            <a href={r.href} class="related-card">
+              <span class="related-card__icon">{r.icon}</span>
+              <span>{r.t}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      </main>
+    </div>
+  </div>
+
+</Base>
