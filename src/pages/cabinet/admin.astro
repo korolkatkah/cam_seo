@@ -710,6 +710,7 @@ import Base from '@/layouts/Base.astro';
       <div class="glass-card import-card">
         <h2>Auto-reply</h2>
         <p class="bulk-hint">When someone the mailing wrote to answers, they get this second message once. Inbox is checked every 5 minutes; profiles marked by hand in the sheet are skipped.</p>
+        <p class="tp-paused" id="tp-reply-paused" hidden>Paused: the AI scout answers everyone from the mailing now, so this auto-reply sends nothing. It starts again by itself when you turn off "Answer everyone from the mailing" in the AI scout block.</p>
         <label class="category-field">
           Reply message
           <textarea id="tp-reply-msg" rows="4" maxlength="4000" placeholder="Thanks for the answer! ..."></textarea>
@@ -877,6 +878,8 @@ import Base from '@/layouts/Base.astro';
   .igc-log { margin: 1rem 0 0; max-height: 200px; overflow: auto; font-size: 0.75rem; background: var(--bg-subtle); padding: 0.5rem; border-radius: 8px; white-space: pre-wrap; }
   .igc-log:empty { display: none; }
   .tps-sub { font-size: 1rem; margin: 1.5rem 0 0.5rem; }
+  .tp-paused { margin: 0.75rem 0 1rem; padding: 0.75rem 1rem; border-radius: 10px; border: 1px solid #d9a400; background: #fff7d6; color: #5c4600; font-weight: 600; }
+  .tp-paused[hidden] { display: none; }
   .tps-chat { border: 1px solid var(--border, rgba(10,10,10,.12)); border-radius: 10px; padding: 0.75rem; max-height: 360px; overflow: auto; margin-bottom: 0.5rem; background: var(--bg-subtle); }
   .tps-msg { max-width: 80%; padding: 0.45rem 0.7rem; border-radius: 10px; margin: 0.3rem 0; white-space: pre-wrap; font-size: 0.9rem; }
   .tps-her { background: #fff; margin-right: auto; }
@@ -3382,6 +3385,7 @@ import Base from '@/layouts/Base.astro';
     if (document.activeElement !== tpsIds) tpsIds.value = (s.test_ids || []).join('\n');
     tpsOn.checked = !!s.enabled;
     tpsAll.checked = !!s.all_mailed;
+    document.getElementById('tp-reply-paused').hidden = !(s.enabled && s.all_mailed);
     const c = s.counts || {};
     tpsStatus.textContent = !s.ai_configured
       ? 'OPENAI_API_KEY is not set on the server.'
