@@ -768,8 +768,17 @@ import Base from '@/layouts/Base.astro';
           <button id="tps-check-btn" class="import-btn">Check test dialogs now</button>
         </div>
         <div class="tp-auto">
-          <label class="tp-switch"><input type="checkbox" id="tps-on" role="switch" /> <span>Test mode on: check the test dialogs every 3 minutes and answer</span></label>
+          <label class="tp-switch"><input type="checkbox" id="tps-on" role="switch" /> <span>Scout on: check new messages every 3 minutes and answer</span></label>
+          <label class="tp-switch"><input type="checkbox" id="tps-all" role="switch" /> <span>Answer everyone from the mailing (not only the test ids). The one-off auto-reply above then stays silent.</span></label>
         </div>
+        <h3 class="tps-sub">Ask the silent ones</h3>
+        <p class="bulk-hint">One scout message (does she like our terms, what matters to her) to everyone mailed in the last N days who never answered. Runs on the server, 40-70 s between messages, each profile once.</p>
+        <div class="link-form">
+          <input type="number" id="tps-fu-days" min="1" max="30" value="4" style="max-width:6rem" />
+          <button type="button" id="tps-fu-btn">Ask the silent ones</button>
+          <button type="button" id="tps-fu-stop" class="ghost-btn">Stop</button>
+        </div>
+        <p class="import-status" id="tps-fu-status"></p>
         <div id="tps-dialogs"></div>
         <pre id="tps-log" class="igc-log"></pre>
       </div>
@@ -3345,6 +3354,8 @@ import Base from '@/layouts/Base.astro';
   const tpsPrompt = document.getElementById('tps-prompt');
   const tpsIds = document.getElementById('tps-ids');
   const tpsOn = document.getElementById('tps-on');
+  const tpsAll = document.getElementById('tps-all');
+  let tpsFuTimer = null;
   const tpsStatus = document.getElementById('tps-status');
   const tpsChat = document.getElementById('tps-chat');
   const tpsInput = document.getElementById('tps-input');
@@ -3370,13 +3381,30 @@ import Base from '@/layouts/Base.astro';
     if (document.activeElement !== tpsPrompt) tpsPrompt.value = s.prompt || tpsDefault;
     if (document.activeElement !== tpsIds) tpsIds.value = (s.test_ids || []).join('\n');
     tpsOn.checked = !!s.enabled;
+    tpsAll.checked = !!s.all_mailed;
+    const c = s.counts || {};
     tpsStatus.textContent = !s.ai_configured
       ? 'OPENAI_API_KEY is not set on the server.'
       : s.enabled
-        ? `On: test dialogs are checked every ${s.check_every_minutes} min.`
+        ? `On: ${s.all_mailed ? 'everyone from the mailing' : 'test dialogs'}, checked every ${s.check_every_minutes} min. `
+          + `Dialogs: ${c.dialogs || 0}, asked: ${c.followed_up || 0}, handed off: ${c.handed_off || 0}, blocked us: ${c.blocked || 0}.`
         : 'Off. The sandbox above works anyway.';
+    const fu = s.followup || {};
+    const fuStatus = document.getElementById('tps-fu-status');
+    if (fu.running) {
+      const p = fu.progress || {};
+      fuStatus.textContent = `Running: ${p.done || 0} / ${p.total || '?'}, sent ${p.sent || 0}, hidden ${p.hidden || 0}, skipped ${p.skipped || 0}, errors ${p.errors || 0}.`;
+      clearTimeout(tpsFuTimer);
+      tpsFuTimer = setTimeout(() => loadTps().catch(() => {}), 15000);
+    } else if (fu.last_result) {
+      const r = fu.last_result;
+      fuStatus.textContent = r.error
+        ? `Last run: ${r.error}`
+        : `Last run (${r.days} d): sent ${r.sent} of ${r.candidates}, hidden ${r.hidden}, skipped ${r.skipped}, errors ${r.errors}${r.stopped ? ', stopped' : ''}.`;
+    }
     const state = s.state || {};
-    const rows = (s.test_ids || []).map((id) => {
+    const ids = [...new Set([...(s.test_ids || []), ...Object.keys(s.state || {}).map(Number)])];
+    const rows = ids.map((id) => {
       const st = state[String(id)] || {};
       const handed = st.handed_off
         ? `handed off to a person: ${tpsEsc(st.handed_off)} <button type="button" class="ghost-btn" data-tps-reset="${id}">Let it write again</button>`
@@ -3396,7 +3424,7 @@ import Base from '@/layouts/Base.astro';
     const res = await authedFetch('/admin/tonplace/scout', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ enabled, prompt: tpsPrompt.value.trim(), test_ids: tpsParseIds(tpsIds.value) }),
+      body: JSON.stringify({ enabled, all_mailed: tpsAll.checked, prompt: tpsPrompt.value.trim(), test_ids: tpsParseIds(tpsIds.value) }),
     });
     if (res.ok) { renderTps(await res.json()); return true; }
     tpsStatus.textContent = await readError(res);
@@ -3437,8 +3465,28 @@ import Base from '@/layouts/Base.astro';
     if (confirm('Replace the instructions with the default ones? Press Save to keep them.')) tpsPrompt.value = tpsDefault;
   });
   document.getElementById('tps-save-btn').addEventListener('click', () => saveTps(tpsOn.checked).catch(() => {}));
+  tpsAll.addEventListener('change', async () => {
+    if (tpsAll.checked && !confirm('The scout will answer everyone the mailing wrote to, and the one-off auto-reply stops. Go on?')) {
+      tpsAll.checked = false;
+      return;
+    }
+    if (!(await saveTps(tpsOn.checked).catch(() => false))) tpsAll.checked = !tpsAll.checked;
+  });
+  document.getElementById('tps-fu-btn').addEventListener('click', async () => {
+    const days = Number(document.getElementById('tps-fu-days').value) || 4;
+    if (!confirm(`Write to everyone mailed in the last ${days} days who never answered?`)) return;
+    const res = await authedFetch('/admin/tonplace/scout/followup', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ days }),
+    });
+    if (!res.ok) { document.getElementById('tps-fu-status').textContent = await readError(res); return; }
+    renderTps(await res.json());
+  });
+  document.getElementById('tps-fu-stop').addEventListener('click', async () => {
+    const res = await authedFetch('/admin/tonplace/scout/followup/stop', { method: 'POST' });
+    if (res.ok) renderTps(await res.json());
+  });
   tpsOn.addEventListener('change', async () => {
-    if (tpsOn.checked && !tpsParseIds(tpsIds.value).length) {
+    if (tpsOn.checked && !tpsAll.checked && !tpsParseIds(tpsIds.value).length) {
       tpsOn.checked = false;
       tpsStatus.textContent = 'Add at least one test profile id first.';
       return;
