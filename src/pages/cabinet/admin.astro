@@ -546,6 +546,13 @@ import Base from '@/layouts/Base.astro';
             Pause to, s
             <input type="number" id="cbs-delay-max" min="3" max="600" value="40" />
           </label>
+          <label class="category-field">
+            Who first
+            <select id="cbs-order">
+              <option value="recent">Seen online most recently</option>
+              <option value="fewest_followers">Fewest followers</option>
+            </select>
+          </label>
           <label class="tp-check"><input type="checkbox" id="cbs-only-ig" /> Only models with Instagram</label>
           <label class="tp-check"><input type="checkbox" id="cbs-retry" /> Retry failed ones</label>
           <label class="tp-check"><input type="checkbox" id="cbs-randomize" /> Randomize with ChatGPT: every model gets a reworded copy, always in English, addressed to her as a woman</label>
@@ -2439,6 +2446,7 @@ import Base from '@/layouts/Base.astro';
     document.getElementById('cbs-only-ig').checked = !!d.only_instagram;
     document.getElementById('cbs-retry').checked = !!d.retry_errors;
     document.getElementById('cbs-randomize').checked = !!d.randomize;
+    document.getElementById('cbs-order').value = d.order === 'fewest_followers' ? 'fewest_followers' : 'recent';
   }
 
   function saveCbsDraft() {
@@ -2455,7 +2463,7 @@ import Base from '@/layouts/Base.astro';
 
   ['cbs-msg', 'cbs-limit', 'cbs-delay-min', 'cbs-delay-max'].forEach((id) =>
     document.getElementById(id).addEventListener('input', saveCbsDraft));
-  ['cbs-only-ig', 'cbs-retry', 'cbs-randomize'].forEach((id) =>
+  ['cbs-only-ig', 'cbs-retry', 'cbs-randomize', 'cbs-order'].forEach((id) =>
     document.getElementById(id).addEventListener('change', saveCbsDraft));
 
   async function pollCbs() {
@@ -2484,6 +2492,7 @@ import Base from '@/layouts/Base.astro';
       only_instagram: document.getElementById('cbs-only-ig').checked,
       retry_errors: document.getElementById('cbs-retry').checked,
       randomize: document.getElementById('cbs-randomize').checked,
+      order: document.getElementById('cbs-order').value,
     };
   }
 
