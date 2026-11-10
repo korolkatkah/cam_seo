@@ -588,6 +588,26 @@ import Base from '@/layouts/Base.astro';
       </div>
 
       <div class="glass-card import-card">
+        <h2>AI scout (test)</h2>
+        <p class="bulk-hint">The same AI scout as on ton.place (same instructions and the same examples it learned from your Telegram answers), in Chaturbate DMs, always in English. Test only: it writes to the models below and nobody else; the auto-reply above stays out of their threads. Handoffs and her later messages come to the Telegram bot with an «Ответить ей» button.</p>
+        <label class="category-field">
+          Test models (Chaturbate usernames, one per line)
+          <textarea id="cbsc-names" rows="3" spellcheck="false" placeholder="mvrka"></textarea>
+        </label>
+        <p class="import-status" id="cbsc-status" role="status" aria-live="polite">Loading...</p>
+        <div class="import-actions">
+          <button id="cbsc-save-btn" class="import-btn export-btn">Save</button>
+          <button id="cbsc-check-btn" class="import-btn">Check their threads now</button>
+          <button id="cbsc-start-btn" class="import-btn export-btn">Write first to the silent ones</button>
+        </div>
+        <div class="tp-auto">
+          <label class="tp-switch"><input type="checkbox" id="cbsc-on" role="switch" /> <span>Test mode on: check these threads every 3 minutes and answer</span></label>
+        </div>
+        <div id="cbsc-dialogs"></div>
+        <pre id="cbsc-log" class="igc-log"></pre>
+      </div>
+
+      <div class="glass-card import-card">
         <h2>Google Sheet <span id="cb-total" class="tp-total"></span></h2>
         <p class="bulk-hint">After the online list, the parser opens the public bio of every new model and looks for her Instagram: a free Instagram link in her socials, or "IG: name" / an instagram.com link in her bio or room title. Paid Instagram links hide the name and are skipped. Each bio is re-read after 14 days.</p>
         <p class="bulk-hint">Saved to its own Drive file <b>instagram_cb.xlsx</b> (Stripchat accounts stay in instagram_strip.xlsx). It opens on the <b>chaturbate_instagram</b> sheet (only models with an Instagram, one row per account, most followed first); the <b>chaturbate</b> sheet lists all models. Updated during a run (at most once a minute) and right after it ends. The server can't create that file itself: until an empty instagram_cb.xlsx is uploaded into the Drive folder, the two sheets are written into instagram_strip.xlsx, and they move to instagram_cb.xlsx by themselves once it is there.</p>
@@ -742,12 +762,15 @@ import Base from '@/layouts/Base.astro';
         <h2>AI scout (test)</h2>
         <p class="bulk-hint">ChatGPT keeps up the conversation like a live scout: answers what she writes, asks about her, gives the ewomodels.com link when she is interested. It hands the dialog to a person (Telegram message, then it stops writing there) when she is ready, asks about money or a contract, asks for a human or whether it is a bot (it never claims to be human), or says she is under 18. Test only: it writes to the profile ids below and nobody else. The mailing and the auto-reply above are not affected.</p>
         <label class="category-field">
-          Scout instructions
+          Scout instructions (one AI scout for every site: ton.place, Chaturbate)
           <textarea id="tps-prompt" rows="12" maxlength="8000"></textarea>
         </label>
         <div class="import-actions">
           <button id="tps-default-btn" class="ghost-btn" type="button">Restore default instructions</button>
         </div>
+        <h3 class="tps-sub">What it learned <span id="tps-ex-count" class="tp-total"></span></h3>
+        <p class="bulk-hint">Every answer you send from the Telegram bot after a handoff is kept here (her message and your answer), and the newest ones go into the scout's instructions on every site. Delete an example if you do not want the scout to answer like that.</p>
+        <div id="tps-examples"></div>
 
         <h3 class="tps-sub">Sandbox: talk to it here (nothing is sent to ton.place)</h3>
         <div id="tps-chat" class="tps-chat"><p class="tps-empty">Write as the model would, starting from the first mailing message or anything else.</p></div>
@@ -2053,6 +2076,7 @@ import Base from '@/layouts/Base.astro';
       loadCbsSession().catch(() => {});
       pollCbs().catch(() => {});
       loadCbr().catch(() => {});
+      loadCbsc().catch(() => {});
     }
     if (name === 'igcomments') loadIgComments();
     if (name === 'cbonline') cboLoad().catch(() => {});
@@ -3365,7 +3389,22 @@ import Base from '@/layouts/Base.astro';
     return String(t).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   }
 
+  function renderTpsExamples(ex) {
+    document.getElementById('tps-ex-count').textContent = `(${(ex || []).length})`;
+    document.getElementById('tps-examples').innerHTML = (ex || []).length
+      ? ex.map((e, i) => `<div class="bulk-hint">${e.site === 'chaturbate' ? 'Chaturbate' : 'ton.place'}: она «${tpsEsc(e.her)}» → ты «${tpsEsc(e.reply)}» <button type="button" class="ghost-btn" data-tps-ex="${i}">Delete</button></div>`).join('')
+      : '<p class="bulk-hint">Nothing yet: answer a handed-off dialog from the Telegram bot.</p>';
+  }
+
+  document.getElementById('tps-examples').addEventListener('click', async (e) => {
+    const i = e.target.closest('[data-tps-ex]')?.dataset.tpsEx;
+    if (i === undefined || !confirm('Delete this example? The scout stops learning from it.')) return;
+    const res = await authedFetch(`/admin/scout/examples/${i}`, { method: 'DELETE' });
+    if (res.ok) renderTpsExamples((await res.json()).examples);
+  });
+
   function renderTps(s) {
+    renderTpsExamples(s.examples);
     tpsDefault = s.default_prompt || '';
     if (document.activeElement !== tpsPrompt) tpsPrompt.value = s.prompt || tpsDefault;
     tpsOn.checked = !!s.enabled;
@@ -3498,6 +3537,95 @@ import Base from '@/layouts/Base.astro';
       method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ profile_id: Number(id) }),
     });
     if (res.ok) renderTps(await res.json());
+  });
+
+  // --- Chaturbate AI scout (test) ---
+
+  const cbscNames = document.getElementById('cbsc-names');
+  const cbscOn = document.getElementById('cbsc-on');
+  const cbscStatus = document.getElementById('cbsc-status');
+
+  function cbscParse(text) {
+    const out = [];
+    for (let n of String(text || '').split(/[\s,;]+/)) {
+      const m = n.match(/chaturbate\.com\/(?:messages\/)?([A-Za-z0-9_]+)/i);
+      n = (m ? m[1] : n).replace(/^@/, '').toLowerCase();
+      if (/^[a-z0-9_]{2,40}$/.test(n) && !out.includes(n)) out.push(n);
+    }
+    return out;
+  }
+
+  function renderCbsc(s) {
+    if (document.activeElement !== cbscNames) cbscNames.value = (s.test_usernames || []).join('\n');
+    cbscOn.checked = !!s.enabled;
+    cbscStatus.textContent = !s.ai_configured
+      ? 'OPENAI_API_KEY is not set on the server.'
+      : s.enabled ? `On: ${(s.test_usernames || []).length} test model(s), checked every ${s.check_every_minutes} min.` : 'Off.';
+    const state = s.state || {};
+    document.getElementById('cbsc-dialogs').innerHTML = (s.test_usernames || []).map((n) => {
+      const st = state[n] || {};
+      const what = st.blocked ? 'blocked us' : st.handed_off
+        ? `handed off to a person: ${tpsEsc(st.handed_off)} <button type="button" class="ghost-btn" data-cbsc-reset="${tpsEsc(n)}">Let it write again</button>`
+        : st.followed_up ? 'scout wrote first, waiting for her' : 'scout is talking';
+      return `<div class="bulk-hint"><a href="https://chaturbate.com/messages/${tpsEsc(n)}/" target="_blank" rel="noopener">${tpsEsc(n)}</a>: ${what}</div>`;
+    }).join('');
+    document.getElementById('cbsc-log').textContent = (s.log || []).join('\n');
+  }
+
+  async function loadCbsc() {
+    const res = await authedFetch('/admin/chaturbate/scout');
+    if (res.ok) renderCbsc(await res.json());
+  }
+
+  async function saveCbsc(enabled) {
+    const res = await authedFetch('/admin/chaturbate/scout', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ enabled, test_usernames: cbscParse(cbscNames.value) }),
+    });
+    if (res.ok) { renderCbsc(await res.json()); return true; }
+    cbscStatus.textContent = await readError(res);
+    return false;
+  }
+
+  document.getElementById('cbsc-save-btn').addEventListener('click', () => saveCbsc(cbscOn.checked).catch(() => {}));
+  cbscOn.addEventListener('change', async () => {
+    if (cbscOn.checked && !cbscParse(cbscNames.value).length) {
+      cbscOn.checked = false;
+      cbscStatus.textContent = 'Add at least one test model first.';
+      return;
+    }
+    if (!(await saveCbsc(cbscOn.checked).catch(() => false))) cbscOn.checked = !cbscOn.checked;
+  });
+  document.getElementById('cbsc-check-btn').addEventListener('click', async () => {
+    cbscStatus.textContent = 'Checking their threads...';
+    const res = await authedFetch('/admin/chaturbate/scout/check', { method: 'POST' });
+    if (!res.ok) { cbscStatus.textContent = await readError(res); return; }
+    const s = await res.json();
+    renderCbsc(s);
+    const r = s.result || {};
+    cbscStatus.textContent = r.status === 'ok' ? `Checked: answered ${r.answered}, handed off ${r.handed_off}.` : `Checked: ${r.status}.`;
+  });
+  document.getElementById('cbsc-start-btn').addEventListener('click', async () => {
+    const names = cbscParse(cbscNames.value);
+    if (!names.length || !confirm(`Write first to the test models who have not answered yet (${names.length} listed)? These are real models.`)) return;
+    cbscStatus.textContent = 'Writing...';
+    const res = await authedFetch('/admin/chaturbate/scout/start', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ usernames: names.slice(0, 10) }),
+    });
+    if (!res.ok) { cbscStatus.textContent = await readError(res); return; }
+    const s = await res.json();
+    renderCbsc(s);
+    const ok = (s.started || []).filter((x) => !x.error).length;
+    cbscStatus.textContent = `Wrote first to ${ok}; skipped: ${(s.started || []).filter((x) => x.error).map((x) => `${x.username} (${x.error})`).join(', ') || 'none'}.`;
+  });
+  document.getElementById('cbsc-dialogs').addEventListener('click', async (e) => {
+    const n = e.target.closest('[data-cbsc-reset]')?.dataset.cbscReset;
+    if (!n || !confirm('Let the scout write in this thread again?')) return;
+    const res = await authedFetch('/admin/chaturbate/scout/reset', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: n }),
+    });
+    if (res.ok) renderCbsc(await res.json());
   });
 
   function loadTonplace() {
