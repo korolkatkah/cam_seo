@@ -585,6 +585,7 @@ import Base from '@/layouts/Base.astro';
         <div class="tp-auto">
           <label class="tp-switch"><input type="checkbox" id="cbr-on" role="switch" /> <span>Auto mode: check the inbox every 5 minutes and reply</span></label>
         </div>
+        <p class="bulk-hint" id="cbr-paused" hidden>Paused: the AI scout below answers everyone from the mailing.</p>
       </div>
 
       <div class="glass-card import-card">
@@ -601,7 +602,10 @@ import Base from '@/layouts/Base.astro';
           <button id="cbsc-start-btn" class="import-btn export-btn">Write first to the silent ones</button>
         </div>
         <div class="tp-auto">
-          <label class="tp-switch"><input type="checkbox" id="cbsc-on" role="switch" /> <span>Test mode on: check these threads every 3 minutes and answer</span></label>
+          <label class="tp-switch"><input type="checkbox" id="cbsc-on" role="switch" /> <span>Scout on: check the threads every 3 minutes and answer</span></label>
+        </div>
+        <div class="tp-auto">
+          <label class="tp-switch"><input type="checkbox" id="cbsc-all" role="switch" /> <span>Answer everyone from the mailing who writes back (the auto-reply above then stays silent)</span></label>
         </div>
         <div id="cbsc-dialogs"></div>
         <pre id="cbsc-log" class="igc-log"></pre>
@@ -3544,6 +3548,7 @@ import Base from '@/layouts/Base.astro';
   const cbscNames = document.getElementById('cbsc-names');
   const cbscOn = document.getElementById('cbsc-on');
   const cbscStatus = document.getElementById('cbsc-status');
+  const cbscAll = document.getElementById('cbsc-all');
 
   function cbscParse(text) {
     const out = [];
@@ -3558,9 +3563,15 @@ import Base from '@/layouts/Base.astro';
   function renderCbsc(s) {
     if (document.activeElement !== cbscNames) cbscNames.value = (s.test_usernames || []).join('\n');
     cbscOn.checked = !!s.enabled;
+    cbscAll.checked = !!s.all_mailed;
+    document.getElementById('cbr-paused').hidden = !(s.enabled && s.all_mailed);
+    const c = s.counts || {};
     cbscStatus.textContent = !s.ai_configured
       ? 'OPENAI_API_KEY is not set on the server.'
-      : s.enabled ? `On: ${(s.test_usernames || []).length} test model(s), checked every ${s.check_every_minutes} min.` : 'Off.';
+      : s.enabled
+        ? `On: ${s.all_mailed ? 'everyone from the mailing' : 'only the test models'}${(s.test_usernames || []).length ? ` + ${s.test_usernames.length} test model(s)` : ''}, checked every ${s.check_every_minutes} min. `
+          + `Threads: ${c.dialogs || 0}, handed off: ${c.handed_off || 0}, blocked us: ${c.blocked || 0}, a person talks there: ${c.ignored || 0}.`
+        : 'Off.';
     const state = s.state || {};
     document.getElementById('cbsc-dialogs').innerHTML = (s.test_usernames || []).map((n) => {
       const st = state[n] || {};
@@ -3581,7 +3592,7 @@ import Base from '@/layouts/Base.astro';
     const res = await authedFetch('/admin/chaturbate/scout', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ enabled, test_usernames: cbscParse(cbscNames.value) }),
+      body: JSON.stringify({ enabled, test_usernames: cbscParse(cbscNames.value), all_mailed: cbscAll.checked }),
     });
     if (res.ok) { renderCbsc(await res.json()); return true; }
     cbscStatus.textContent = await readError(res);
@@ -3589,10 +3600,17 @@ import Base from '@/layouts/Base.astro';
   }
 
   document.getElementById('cbsc-save-btn').addEventListener('click', () => saveCbsc(cbscOn.checked).catch(() => {}));
+  cbscAll.addEventListener('change', async () => {
+    if (cbscAll.checked && !confirm('Let the AI scout answer every model from the mailing who writes back? The one-off auto-reply stops while this is on.')) {
+      cbscAll.checked = false;
+      return;
+    }
+    if (!(await saveCbsc(cbscOn.checked).catch(() => false))) cbscAll.checked = !cbscAll.checked;
+  });
   cbscOn.addEventListener('change', async () => {
-    if (cbscOn.checked && !cbscParse(cbscNames.value).length) {
+    if (cbscOn.checked && !cbscAll.checked && !cbscParse(cbscNames.value).length) {
       cbscOn.checked = false;
-      cbscStatus.textContent = 'Add at least one test model first.';
+      cbscStatus.textContent = 'Add a test model or turn on "Answer everyone from the mailing" first.';
       return;
     }
     if (!(await saveCbsc(cbscOn.checked).catch(() => false))) cbscOn.checked = !cbscOn.checked;
