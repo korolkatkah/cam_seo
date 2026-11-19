@@ -1,31 +1,31 @@
 {
-  "generated_at": "2026-11-19T15:01:12Z",
+  "generated_at": "2026-11-19T16:01:10Z",
   "gender": "f",
   "hours_covered": 24.0,
   "snapshots": 100,
-  "rooms_seen": 9688,
+  "rooms_seen": 9717,
   "preliminary": false,
   "live": {
-    "generated_at": "2026-11-19T15:01:08Z",
-    "rooms_online": 729,
-    "rooms_public": 655,
-    "pct_private": 10.2
+    "generated_at": "2026-11-19T16:01:05Z",
+    "rooms_online": 736,
+    "rooms_public": 642,
+    "pct_private": 12.8
   },
   "trending_tags": [
     {
       "tag": "lingerie",
-      "avg_users_recent": 11640,
-      "growth_pct": 18336.5
-    },
-    {
-      "tag": "ohmibod",
-      "avg_users_recent": 5900,
-      "growth_pct": 2456.8
+      "avg_users_recent": 10834,
+      "growth_pct": 16844.0
     },
     {
       "tag": "pawg",
-      "avg_users_recent": 2684,
-      "growth_pct": 2184.7
+      "avg_users_recent": 2878,
+      "growth_pct": 2384.8
+    },
+    {
+      "tag": "office",
+      "avg_users_recent": 2194,
+      "growth_pct": 1644.8
     }
   ],
   "best_hours_utc": [
@@ -91,11 +91,11 @@
     },
     {
       "hour": 15,
-      "score": 72
+      "score": 70
     },
     {
       "hour": 16,
-      "score": 77
+      "score": 76
     },
     {
       "hour": 17,
@@ -129,12 +129,22 @@
   "top_tags": [
     {
       "tag": "yoga",
-      "avg_users": 13689,
+      "avg_users": 12601,
+      "rooms": 6
+    },
+    {
+      "tag": "brazilian",
+      "avg_users": 10114,
+      "rooms": 5
+    },
+    {
+      "tag": "strip",
+      "avg_users": 9718,
       "rooms": 7
     },
     {
       "tag": "hush",
-      "avg_users": 8225,
+      "avg_users": 8764,
       "rooms": 6
     },
     {
@@ -148,54 +158,39 @@
       "rooms": 7
     },
     {
-      "tag": "strip",
-      "avg_users": 5424,
-      "rooms": 6
+      "tag": "couple",
+      "avg_users": 4427,
+      "rooms": 23
     },
     {
       "tag": "hot",
-      "avg_users": 3476,
+      "avg_users": 3373,
       "rooms": 21
     },
     {
-      "tag": "lingerie",
-      "avg_users": 3388,
-      "rooms": 23
-    },
-    {
-      "tag": "couple",
-      "avg_users": 3374,
-      "rooms": 23
-    },
-    {
       "tag": "sensual",
-      "avg_users": 3338,
+      "avg_users": 3227,
       "rooms": 51
     },
     {
+      "tag": "lingerie",
+      "avg_users": 3219,
+      "rooms": 23
+    },
+    {
       "tag": "flexible",
-      "avg_users": 3108,
-      "rooms": 63
+      "avg_users": 3118,
+      "rooms": 62
     },
     {
       "tag": "dance",
-      "avg_users": 2785,
-      "rooms": 64
-    },
-    {
-      "tag": "lesbian",
-      "avg_users": 2565,
-      "rooms": 58
+      "avg_users": 2909,
+      "rooms": 65
     },
     {
       "tag": "doggy",
-      "avg_users": 2480,
+      "avg_users": 2481,
       "rooms": 11
-    },
-    {
-      "tag": "ohmibod",
-      "avg_users": 2478,
-      "rooms": 13
     },
     {
       "tag": "innocent",
@@ -203,19 +198,34 @@
       "rooms": 5
     },
     {
+      "tag": "ohmibod",
+      "avg_users": 2451,
+      "rooms": 14
+    },
+    {
       "tag": "creamy",
-      "avg_users": 2332,
+      "avg_users": 2422,
       "rooms": 22
     },
     {
+      "tag": "lesbian",
+      "avg_users": 2134,
+      "rooms": 58
+    },
+    {
       "tag": "girlnextdoor",
-      "avg_users": 2153,
+      "avg_users": 2134,
       "rooms": 15
     },
     {
-      "tag": "tits",
-      "avg_users": 2120,
-      "rooms": 45
+      "tag": "domi",
+      "avg_users": 1760,
+      "rooms": 85
+    },
+    {
+      "tag": "hentai",
+      "avg_users": 1706,
+      "rooms": 7
     },
     {
       "tag": "pussyplay",
@@ -223,59 +233,49 @@
       "rooms": 10
     },
     {
-      "tag": "hentai",
-      "avg_users": 1612,
-      "rooms": 7
-    },
-    {
-      "tag": "domi",
-      "avg_users": 1525,
-      "rooms": 86
+      "tag": "tits",
+      "avg_users": 1351,
+      "rooms": 47
     },
     {
       "tag": "bigbooty",
-      "avg_users": 1268,
+      "avg_users": 1257,
       "rooms": 16
     },
     {
       "tag": "erotic",
-      "avg_users": 1256,
-      "rooms": 85
+      "avg_users": 1240,
+      "rooms": 91
     },
     {
       "tag": "british",
-      "avg_users": 1213,
+      "avg_users": 1215,
       "rooms": 76
     },
     {
-      "tag": "smile",
-      "avg_users": 1164,
-      "rooms": 33
+      "tag": "blonde",
+      "avg_users": 1185,
+      "rooms": 656
     },
     {
-      "tag": "blonde",
-      "avg_users": 1161,
-      "rooms": 649
+      "tag": "cumshow",
+      "avg_users": 1176,
+      "rooms": 34
     },
     {
       "tag": "cute",
-      "avg_users": 1112,
-      "rooms": 572
+      "avg_users": 1166,
+      "rooms": 571
     },
     {
       "tag": "fit",
-      "avg_users": 1060,
-      "rooms": 164
+      "avg_users": 1041,
+      "rooms": 167
     },
     {
       "tag": "cosplay",
-      "avg_users": 1020,
-      "rooms": 126
-    },
-    {
-      "tag": "pussy",
-      "avg_users": 962,
-      "rooms": 116
+      "avg_users": 981,
+      "rooms": 129
     }
   ],
   "top_titles": [
@@ -292,7 +292,7 @@
       "subject": "Shena_nomy's room"
     },
     {
-      "avg_users": 7350,
+      "avg_users": 7345,
       "subject": "ClassicTicket:  FAN CLUB ONLY PLAY with MYSELF  join fan club and tip 260 to join. Tip 2222 tokens to get your ticket.  "
     },
     {
@@ -308,40 +308,40 @@
       "subject": "💦 𝑫𝒓𝒐𝒑𝒔 𝒐𝒇 𝒑𝒍𝒆𝒂𝒔𝒖𝒓𝒆 𝒘𝒊𝒕𝒉  31 - 81 - 151 - 555 - 1001 💦 - Goal: HARD ANAL #squirt #latina #asian #anal #teen"
     },
     {
+      "avg_users": 6115,
+      "subject": "GOAL: try to squirt again lol no promises yay! #new"
+    },
+    {
       "avg_users": 5767,
       "subject": "Hi, I'm Chloe♡  - Goal: 💌Fishnet stockings #bigboobs #erotic #sensual #fit"
+    },
+    {
+      "avg_users": 5731,
+      "subject": "soon SQUIRT left 🎯 ✧ #lovense #bigboobs #cute #bigass #squirt"
     },
     {
       "avg_users": 5557,
       "subject": "good girls have secrets 👀 ✧ Goal: lotion hand bra » [ 901 tks left ] ✧ #new #bigtits #bigass #shy #cute"
     },
     {
-      "avg_users": 5452,
+      "avg_users": 5463,
       "subject": "18 and new here #new #teen #18"
-    },
-    {
-      "avg_users": 5450,
-      "subject": "All goals reached ⚬ Triple sexy lesbian show ❤️‍🔥💥 #lesbian #natural #bigass #lovense #brazilian"
     },
     {
       "avg_users": 5423,
       "subject": "curious? come closerrr #new #young #usa"
     },
     {
-      "avg_users": 5232,
-      "subject": "GOAL: 💦💖squirt/CUM💓👉Squirt [1563 tokens remaining] ✅ #blonde #anal #bigboobs #cum #squirt try my Fav 111💖222💖333💖444💖555"
+      "avg_users": 5309,
+      "subject": "GOAL: 💦💖Squirt Orgasm💚,👉squirt/ CUM [2541 tokens remaining] ✅ #blonde #anal #bigboobs #cum #squirt try my Fav 111💖222💖33"
     },
     {
       "avg_users": 5227,
       "subject": "IF YOU TALK IN YOUR SLEEP DON'T MENTION MY NAME. #natural #hush #tease #domi #british"
     },
     {
-      "avg_users": 4914,
-      "subject": "GOAL: try to squirt again lol no promises yay! #new"
-    },
-    {
-      "avg_users": 4767,
-      "subject": "soon SQUIRT left 🎯 ✧ #lovense #bigboobs #cute #bigass #squirt"
+      "avg_users": 5212,
+      "subject": "💦 Lets play!💦 GOAL -  VERY BIG SQUIRT POV! Do you want to see it...?   ///PVT IS OPEN! /// Lets have some fan and playfu"
     },
     {
       "avg_users": 4738,
@@ -356,20 +356,20 @@
       "subject": "💗 Goal: please me — 9634 tokens left 💗"
     },
     {
-      "avg_users": 4502,
-      "subject": "After Class stream! #18 #new #teen #gymgirl"
-    },
-    {
       "avg_users": 4481,
       "subject": "fingering until i cum as a slut 💪 KURWA Cherry SLUT in here💪 lovense work ! 200 is fav pattern 🥳... call me Cherry :) #1"
     },
     {
-      "avg_users": 4356,
-      "subject": "GOAL: take off my pants [350 tokens remaining] yo #18 #anal #bigboobs #teen #blonde"
+      "avg_users": 4281,
+      "subject": "Welcome to my room! - Goal: Help me Cum (Control Domi 10 min) [192 tokens left] #18 #blonde #teen #daddysgirl #lovense"
     },
     {
-      "avg_users": 4187,
-      "subject": "Welcome to my room! - Goal: Naked Sexy Dance [849 tokens left] #18 #blonde #teen #daddysgirl #lovense"
+      "avg_users": 4228,
+      "subject": "All goals reached ⚬ Triple sexy lesbian show ❤️‍🔥💥 #lesbian #natural #bigass #lovense #brazilian"
+    },
+    {
+      "avg_users": 4194,
+      "subject": "GOAL: hot blowjob [346 tokens remaining] yo #18 #anal #bigboobs #teen #blonde"
     },
     {
       "avg_users": 4183,
@@ -384,20 +384,16 @@
       "subject": "LOOKING FOR FUN 💦🙈 TEASE 😺 UNDER PANTIES!  [1118 tokens left] #blonde #young #new #18 #natural"
     },
     {
-      "avg_users": 4118,
-      "subject": "Your new favorite girl 💗 #new #blonde #young #natural #18"
-    },
-    {
-      "avg_users": 4091,
-      "subject": "💦 Lets play!💦 GOAL -  VERY BIG SQUIRT POV! Do you want to see it...?   ///PVT IS OPEN! /// Lets have some fan and playfu"
-    },
-    {
       "avg_users": 4059,
       "subject": "Goal: Squirt! » [ 1722 tks left ] 🔥 #teen #18 #petite #lovense #squirt"
     },
     {
       "avg_users": 3806,
       "subject": "⭐ Squirt in the garden,. !⭐ 🤩 😈🔥🔥  - Multi-Goal :  shh  #bigboobs #squirt #milf #mature #latina"
+    },
+    {
+      "avg_users": 3801,
+      "subject": "💖 Soft & Sweet Vibes  🌸 77/111 ♥  #asian #teen #squirt #bigboobs #young -- Current Goal: DOUBLE TOY PLAY at 2222 tokens "
     },
     {
       "avg_users": 3787,
@@ -408,12 +404,28 @@
       "subject": "Goal reached!  Thanks to all tippers! #young #petite #new #hot #lovense"
     },
     {
+      "avg_users": 3771,
+      "subject": "After Class stream! #18 #new #teen #gymgirl"
+    },
+    {
+      "avg_users": 3685,
+      "subject": "Your new favorite girl 💗 #new #blonde #young #natural #18"
+    },
+    {
+      "avg_users": 3658,
+      "subject": "GOAL: Hannah lick Beatrice ass [1129 tokens remaining] Fav 222,444,666,888. Make me cum, and I'll make you cum, Daddy! #"
+    },
+    {
       "avg_users": 3540,
       "subject": "Current Goal: cum squirt at 3500 tokens -- #squirt #bigass #smalltits #anal #pawg #babyface #cute #feet [1081 tokens to "
     },
     {
-      "avg_users": 3442,
+      "avg_users": 3441,
       "subject": "We’re getting closer to my goal! 😍 Every tip gets me one step closer… who’s going to help me reach it? 💕🔥"
+    },
+    {
+      "avg_users": 3431,
+      "subject": "[1685 tokens to goal] -- Current Goal:  Frontal Torso Ride once countdown reaches zero -- Next Goal: Ass Teasing & Buttp"
     },
     {
       "avg_users": 3406,
@@ -426,10 +438,6 @@
     {
       "avg_users": 3374,
       "subject": "#squirt=1600⭐Pvt open⭐Tip 169 to spin=instant 100% prize⭐Mega package=1111⭐ #new vids #bigboobs #anal #daddy #cosplay in"
-    },
-    {
-      "avg_users": 3359,
-      "subject": "GOAL: Hannah lick Beatrice ass [1801 tokens remaining] Fav 222,444,666,888. Make me cum, and I'll make you cum, Daddy! #"
     },
     {
       "avg_users": 3358,
@@ -468,99 +476,83 @@
       "subject": "ᴀᴛ ɢᴏᴀʟ 𝗟𝗢𝗪𝗘𝗥 𝗠𝗬 𝗣𝗔𝗡𝗧𝗜𝗘𝗦 𝗧𝗢 𝗣𝗨𝗧 𝗗𝗢𝗠𝗜 𝗢𝗡 𝗠𝗬 𝗖𝗟𝗜𝗧【𝟵𝟬𝟳 ᴛᴋ ʟᴇꜰᴛ】 we say today's little friday😅 #bigboobs 🌸 #blowjob 🌸 #new 🌸"
     },
     {
-      "avg_users": 2740,
-      "subject": "🌴"
-    },
-    {
-      "avg_users": 2629,
-      "subject": "Will SHOW ALL off , when I'll feel good enough #squirt #ohmibod #young #pantyhose #inwardly18"
-    },
-    {
-      "avg_users": 2629,
-      "subject": "XL dildo ride, lets go hard! [1183 tokens left] #lovense #squirt #bigboobs #hairy #anal"
+      "avg_users": 2876,
+      "subject": "boner #curvy #bigtits #bigboobs #lovense"
     }
   ],
   "economy": {
-    "goal_median": 663,
-    "goal_p25": 317,
-    "goal_p75": 1242,
-    "goal_samples": 2812,
+    "goal_median": 665,
+    "goal_p25": 308,
+    "goal_p75": 1223,
+    "goal_samples": 2816,
     "top_patterns": [
       {
         "value": 111,
-        "count": 94
+        "count": 95
       },
       {
         "value": 222,
-        "count": 87
+        "count": 92
       },
       {
         "value": 100,
-        "count": 72
+        "count": 73
       },
       {
         "value": 333,
-        "count": 66
+        "count": 65
       },
       {
         "value": 55,
-        "count": 47
+        "count": 48
       },
       {
         "value": 99,
-        "count": 44
+        "count": 42
       },
       {
         "value": 25,
-        "count": 38
+        "count": 39
       },
       {
         "value": 38,
-        "count": 37
+        "count": 38
       },
       {
         "value": 200,
-        "count": 34
-      },
-      {
-        "value": 77,
-        "count": 31
-      },
-      {
-        "value": 15,
-        "count": 29
+        "count": 35
       },
       {
         "value": 88,
-        "count": 28
+        "count": 30
       },
       {
-        "value": 160,
-        "count": 27
+        "value": 77,
+        "count": 30
       },
       {
         "value": 33,
         "count": 27
       },
       {
-        "value": 444,
-        "count": 26
-      },
-      {
-        "value": 50,
-        "count": 26
-      },
-      {
-        "value": 66,
-        "count": 26
-      },
-      {
         "value": 101,
+        "count": 27
+      },
+      {
+        "value": 22,
+        "count": 27
+      },
+      {
+        "value": 15,
         "count": 26
       },
       {
-        "value": 11,
-        "count": 26
+        "value": 160,
+        "count": 25
+      },
+      {
+        "value": 444,
+        "count": 25
       },
       {
         "value": 44,
@@ -571,12 +563,24 @@
         "count": 24
       },
       {
-        "value": 22,
+        "value": 50,
         "count": 23
       },
       {
+        "value": 11,
+        "count": 23
+      },
+      {
+        "value": 66,
+        "count": 22
+      },
+      {
+        "value": 199,
+        "count": 20
+      },
+      {
         "value": 120,
-        "count": 18
+        "count": 19
       },
       {
         "value": 10,
@@ -587,8 +591,8 @@
         "count": 17
       },
       {
-        "value": 199,
-        "count": 16
+        "value": 30,
+        "count": 17
       },
       {
         "value": 1111,
@@ -599,15 +603,11 @@
         "count": 15
       },
       {
-        "value": 80,
+        "value": 155,
         "count": 15
       },
       {
-        "value": 98,
-        "count": 15
-      },
-      {
-        "value": 30,
+        "value": 20,
         "count": 15
       },
       {
@@ -615,51 +615,47 @@
         "count": 14
       },
       {
-        "value": 40,
-        "count": 14
-      },
-      {
-        "value": 95,
-        "count": 14
-      },
-      {
-        "value": 155,
-        "count": 14
-      },
-      {
         "value": 49,
         "count": 14
       },
       {
-        "value": 20,
+        "value": 23,
         "count": 14
       },
       {
+        "value": 64,
+        "count": 13
+      },
+      {
+        "value": 98,
+        "count": 13
+      },
+      {
+        "value": 95,
+        "count": 13
+      },
+      {
+        "value": 80,
+        "count": 13
+      },
+      {
         "value": 666,
-        "count": 13
-      },
-      {
-        "value": 1000,
-        "count": 13
-      },
-      {
-        "value": 150,
-        "count": 13
-      },
-      {
-        "value": 123,
-        "count": 13
-      },
-      {
-        "value": 23,
-        "count": 13
-      },
-      {
-        "value": 114,
         "count": 12
       },
       {
-        "value": 37,
+        "value": 299,
+        "count": 12
+      },
+      {
+        "value": 1000,
+        "count": 12
+      },
+      {
+        "value": 500,
+        "count": 12
+      },
+      {
+        "value": 75,
         "count": 12
       },
       {
@@ -667,15 +663,15 @@
         "count": 12
       },
       {
-        "value": 48,
-        "count": 12
-      },
-      {
-        "value": 500,
+        "value": 166,
         "count": 11
       },
       {
-        "value": 16,
+        "value": 150,
+        "count": 11
+      },
+      {
+        "value": 58,
         "count": 11
       },
       {
@@ -683,31 +679,35 @@
         "count": 11
       },
       {
+        "value": 61,
+        "count": 11
+      },
+      {
+        "value": 43,
+        "count": 11
+      },
+      {
         "value": 47,
         "count": 11
       },
       {
-        "value": 144,
+        "value": 123,
         "count": 11
       },
       {
-        "value": 299,
+        "value": 37,
+        "count": 11
+      },
+      {
+        "value": 60,
+        "count": 11
+      },
+      {
+        "value": 777,
         "count": 10
       },
       {
-        "value": 166,
-        "count": 10
-      },
-      {
-        "value": 45,
-        "count": 10
-      },
-      {
-        "value": 43,
-        "count": 10
-      },
-      {
-        "value": 105,
+        "value": 13,
         "count": 10
       },
       {
@@ -715,15 +715,15 @@
         "count": 10
       },
       {
+        "value": 89,
+        "count": 10
+      },
+      {
+        "value": 48,
+        "count": 10
+      },
+      {
         "value": 54,
-        "count": 10
-      },
-      {
-        "value": 122,
-        "count": 10
-      },
-      {
-        "value": 21,
         "count": 10
       },
       {
@@ -731,35 +731,63 @@
         "count": 10
       },
       {
-        "value": 350,
+        "value": 16,
+        "count": 10
+      },
+      {
+        "value": 119,
         "count": 9
       },
       {
-        "value": 777,
+        "value": 145,
         "count": 9
       },
       {
-        "value": 107,
+        "value": 45,
         "count": 9
       },
       {
-        "value": 58,
+        "value": 102,
         "count": 9
       },
       {
-        "value": 75,
+        "value": 105,
         "count": 9
       },
       {
-        "value": 72,
+        "value": 97,
         "count": 9
       },
       {
-        "value": 64,
+        "value": 17,
         "count": 9
       },
       {
-        "value": 61,
+        "value": 81,
+        "count": 9
+      },
+      {
+        "value": 114,
+        "count": 9
+      },
+      {
+        "value": 255,
+        "count": 9
+      },
+      {
+        "value": 122,
+        "count": 9
+      },
+      {
+        "value": 40,
+        "count": 9
+      },
+      {
+        "value": 67,
+        "count": 9
+      },
+      {
+        "value": 28,
         "count": 9
       },
       {
@@ -767,11 +795,7 @@
         "count": 9
       },
       {
-        "value": 60,
-        "count": 9
-      },
-      {
-        "value": 87,
+        "value": 144,
         "count": 9
       },
       {
@@ -779,7 +803,7 @@
         "count": 9
       },
       {
-        "value": 145,
+        "value": 350,
         "count": 8
       },
       {
@@ -787,15 +811,15 @@
         "count": 8
       },
       {
-        "value": 159,
+        "value": 70,
+        "count": 8
+      },
+      {
+        "value": 79,
         "count": 8
       },
       {
         "value": 400,
-        "count": 8
-      },
-      {
-        "value": 89,
         "count": 8
       },
       {
@@ -811,27 +835,15 @@
         "count": 8
       },
       {
+        "value": 42,
+        "count": 8
+      },
+      {
         "value": 32,
         "count": 8
       },
       {
-        "value": 250,
-        "count": 8
-      },
-      {
-        "value": 133,
-        "count": 8
-      },
-      {
-        "value": 85,
-        "count": 8
-      },
-      {
-        "value": 17,
-        "count": 8
-      },
-      {
-        "value": 14,
+        "value": 221,
         "count": 8
       },
       {
@@ -839,27 +851,27 @@
         "count": 8
       },
       {
-        "value": 28,
+        "value": 21,
         "count": 8
+      },
+      {
+        "value": 125,
+        "count": 8
+      },
+      {
+        "value": 192,
+        "count": 7
       },
       {
         "value": 888,
         "count": 7
       },
       {
-        "value": 119,
+        "value": 180,
         "count": 7
       },
       {
-        "value": 67,
-        "count": 7
-      },
-      {
-        "value": 311,
-        "count": 7
-      },
-      {
-        "value": 102,
+        "value": 277,
         "count": 7
       },
       {
@@ -867,35 +879,55 @@
         "count": 7
       },
       {
+        "value": 107,
+        "count": 7
+      },
+      {
         "value": 249,
         "count": 7
       },
       {
-        "value": 13,
+        "value": 250,
         "count": 7
       },
       {
-        "value": 96,
+        "value": 34,
         "count": 7
       },
       {
-        "value": 97,
+        "value": 153,
         "count": 7
       },
       {
-        "value": 149,
+        "value": 72,
         "count": 7
       },
       {
-        "value": 255,
+        "value": 110,
         "count": 7
       },
       {
-        "value": 18,
+        "value": 29,
+        "count": 7
+      },
+      {
+        "value": 159,
+        "count": 7
+      },
+      {
+        "value": 51,
         "count": 7
       },
       {
         "value": 31,
+        "count": 7
+      },
+      {
+        "value": 87,
+        "count": 7
+      },
+      {
+        "value": 85,
         "count": 7
       },
       {
@@ -907,10 +939,6 @@
         "count": 6
       },
       {
-        "value": 112,
-        "count": 6
-      },
-      {
         "value": 194,
         "count": 6
       },
@@ -919,35 +947,35 @@
         "count": 6
       },
       {
-        "value": 153,
+        "value": 189,
         "count": 6
       },
       {
-        "value": 188,
+        "value": 96,
         "count": 6
       },
       {
-        "value": 277,
+        "value": 133,
         "count": 6
       },
       {
-        "value": 34,
+        "value": 127,
         "count": 6
       },
       {
-        "value": 246,
+        "value": 196,
         "count": 6
       },
       {
-        "value": 378,
+        "value": 140,
         "count": 6
       },
       {
-        "value": 125,
+        "value": 149,
         "count": 6
       },
       {
-        "value": 83,
+        "value": 134,
         "count": 6
       },
       {
@@ -955,35 +983,15 @@
         "count": 6
       },
       {
-        "value": 36,
+        "value": 164,
         "count": 6
       },
       {
-        "value": 39,
+        "value": 169,
         "count": 6
       },
       {
-        "value": 29,
-        "count": 6
-      },
-      {
-        "value": 110,
-        "count": 6
-      },
-      {
-        "value": 51,
-        "count": 6
-      },
-      {
-        "value": 63,
-        "count": 6
-      },
-      {
-        "value": 79,
-        "count": 6
-      },
-      {
-        "value": 278,
+        "value": 52,
         "count": 6
       },
       {
@@ -991,11 +999,19 @@
         "count": 6
       },
       {
+        "value": 143,
+        "count": 6
+      },
+      {
         "value": 82,
         "count": 6
       },
       {
-        "value": 52,
+        "value": 14,
+        "count": 6
+      },
+      {
+        "value": 18,
         "count": 6
       },
       {
@@ -1007,39 +1023,35 @@
         "count": 6
       },
       {
-        "value": 59,
-        "count": 5
-      },
-      {
         "value": 501,
         "count": 5
       },
       {
-        "value": 180,
+        "value": 24,
         "count": 5
       },
       {
-        "value": 94,
+        "value": 242,
         "count": 5
       },
       {
-        "value": 291,
+        "value": 112,
         "count": 5
       },
       {
-        "value": 164,
+        "value": 36,
         "count": 5
       },
       {
-        "value": 147,
+        "value": 46,
         "count": 5
       },
       {
-        "value": 230,
+        "value": 229,
         "count": 5
       },
       {
-        "value": 315,
+        "value": 265,
         "count": 5
       },
       {
@@ -1047,11 +1059,11 @@
         "count": 5
       },
       {
-        "value": 42,
+        "value": 165,
         "count": 5
       },
       {
-        "value": 41,
+        "value": 248,
         "count": 5
       },
       {
@@ -1059,15 +1071,7 @@
         "count": 5
       },
       {
-        "value": 399,
-        "count": 5
-      },
-      {
-        "value": 135,
-        "count": 5
-      },
-      {
-        "value": 221,
+        "value": 12,
         "count": 5
       },
       {
@@ -1075,7 +1079,7 @@
         "count": 5
       },
       {
-        "value": 184,
+        "value": 330,
         "count": 5
       },
       {
@@ -1083,23 +1087,23 @@
         "count": 5
       },
       {
+        "value": 57,
+        "count": 5
+      },
+      {
+        "value": 197,
+        "count": 5
+      },
+      {
+        "value": 86,
+        "count": 5
+      },
+      {
         "value": 204,
         "count": 5
       },
       {
-        "value": 151,
-        "count": 5
-      },
-      {
-        "value": 53,
-        "count": 5
-      },
-      {
-        "value": 12,
-        "count": 5
-      },
-      {
-        "value": 143,
+        "value": 63,
         "count": 5
       },
       {
@@ -1107,11 +1111,15 @@
         "count": 5
       },
       {
-        "value": 219,
+        "value": 278,
         "count": 5
       },
       {
-        "value": 187,
+        "value": 172,
+        "count": 5
+      },
+      {
+        "value": 201,
         "count": 5
       },
       {
@@ -1123,40 +1131,12 @@
         "count": 5
       },
       {
-        "value": 317,
-        "count": 5
-      },
-      {
-        "value": 165,
-        "count": 5
-      },
-      {
-        "value": 70,
-        "count": 5
-      },
-      {
-        "value": 81,
-        "count": 5
-      },
-      {
-        "value": 130,
-        "count": 5
-      },
-      {
-        "value": 57,
-        "count": 5
-      },
-      {
         "value": 91,
         "count": 5
       },
       {
-        "value": 269,
-        "count": 5
-      },
-      {
-        "value": 178,
-        "count": 5
+        "value": 346,
+        "count": 4
       },
       {
         "value": 283,
@@ -1167,27 +1147,19 @@
         "count": 4
       },
       {
-        "value": 321,
-        "count": 4
-      },
-      {
         "value": 550,
         "count": 4
       },
       {
-        "value": 387,
+        "value": 94,
         "count": 4
       },
       {
-        "value": 24,
+        "value": 290,
         "count": 4
       },
       {
-        "value": 328,
-        "count": 4
-      },
-      {
-        "value": 211,
+        "value": 223,
         "count": 4
       },
       {
@@ -1195,15 +1167,15 @@
         "count": 4
       },
       {
-        "value": 242,
-        "count": 4
-      },
-      {
-        "value": 128,
+        "value": 310,
         "count": 4
       },
       {
         "value": 309,
+        "count": 4
+      },
+      {
+        "value": 230,
         "count": 4
       },
       {
@@ -1215,11 +1187,23 @@
         "count": 4
       },
       {
+        "value": 220,
+        "count": 4
+      },
+      {
         "value": 210,
         "count": 4
       },
       {
-        "value": 229,
+        "value": 41,
+        "count": 4
+      },
+      {
+        "value": 170,
+        "count": 4
+      },
+      {
+        "value": 147,
         "count": 4
       },
       {
@@ -1227,11 +1211,55 @@
         "count": 4
       },
       {
-        "value": 196,
+        "value": 315,
         "count": 4
       },
       {
-        "value": 141,
+        "value": 231,
+        "count": 4
+      },
+      {
+        "value": 246,
+        "count": 4
+      },
+      {
+        "value": 68,
+        "count": 4
+      },
+      {
+        "value": 138,
+        "count": 4
+      },
+      {
+        "value": 378,
+        "count": 4
+      },
+      {
+        "value": 399,
+        "count": 4
+      },
+      {
+        "value": 83,
+        "count": 4
+      },
+      {
+        "value": 113,
+        "count": 4
+      },
+      {
+        "value": 184,
+        "count": 4
+      },
+      {
+        "value": 39,
+        "count": 4
+      },
+      {
+        "value": 257,
+        "count": 4
+      },
+      {
+        "value": 129,
         "count": 4
       },
       {
@@ -1239,23 +1267,11 @@
         "count": 4
       },
       {
-        "value": 361,
+        "value": 345,
         "count": 4
       },
       {
-        "value": 127,
-        "count": 4
-      },
-      {
-        "value": 216,
-        "count": 4
-      },
-      {
-        "value": 308,
-        "count": 4
-      },
-      {
-        "value": 379,
+        "value": 151,
         "count": 4
       },
       {
@@ -1263,27 +1279,51 @@
         "count": 4
       },
       {
-        "value": 172,
+        "value": 65,
         "count": 4
       },
       {
-        "value": 56,
+        "value": 53,
         "count": 4
       },
       {
-        "value": 265,
+        "value": 126,
         "count": 4
       },
       {
-        "value": 201,
+        "value": 161,
         "count": 4
       },
       {
-        "value": 177,
+        "value": 297,
         "count": 4
       },
       {
-        "value": 140,
+        "value": 393,
+        "count": 4
+      },
+      {
+        "value": 207,
+        "count": 4
+      },
+      {
+        "value": 219,
+        "count": 4
+      },
+      {
+        "value": 73,
+        "count": 4
+      },
+      {
+        "value": 188,
+        "count": 4
+      },
+      {
+        "value": 317,
+        "count": 4
+      },
+      {
+        "value": 187,
         "count": 4
       },
       {
@@ -1291,7 +1331,7 @@
         "count": 4
       },
       {
-        "value": 189,
+        "value": 276,
         "count": 4
       },
       {
@@ -1299,19 +1339,19 @@
         "count": 4
       },
       {
-        "value": 235,
+        "value": 269,
         "count": 4
       },
       {
-        "value": 192,
+        "value": 178,
         "count": 4
       },
       {
-        "value": 86,
+        "value": 135,
         "count": 4
       },
       {
-        "value": 207,
+        "value": 103,
         "count": 4
       },
       {
@@ -1323,7 +1363,15 @@
         "count": 3
       },
       {
-        "value": 206,
+        "value": 352,
+        "count": 3
+      },
+      {
+        "value": 387,
+        "count": 3
+      },
+      {
+        "value": 311,
         "count": 3
       },
       {
@@ -1331,23 +1379,15 @@
         "count": 3
       },
       {
-        "value": 290,
+        "value": 213,
         "count": 3
       },
       {
-        "value": 310,
+        "value": 211,
         "count": 3
       },
       {
-        "value": 171,
-        "count": 3
-      },
-      {
-        "value": 168,
-        "count": 3
-      },
-      {
-        "value": 220,
+        "value": 128,
         "count": 3
       },
       {
@@ -1355,23 +1395,7 @@
         "count": 3
       },
       {
-        "value": 131,
-        "count": 3
-      },
-      {
-        "value": 346,
-        "count": 3
-      },
-      {
-        "value": 170,
-        "count": 3
-      },
-      {
-        "value": 231,
-        "count": 3
-      },
-      {
-        "value": 366,
+        "value": 341,
         "count": 3
       },
       {
@@ -1379,11 +1403,15 @@
         "count": 3
       },
       {
-        "value": 68,
+        "value": 377,
         "count": 3
       },
       {
-        "value": 226,
+        "value": 264,
+        "count": 3
+      },
+      {
+        "value": 208,
         "count": 3
       },
       {
@@ -1391,15 +1419,15 @@
         "count": 3
       },
       {
-        "value": 228,
+        "value": 226,
         "count": 3
       },
       {
-        "value": 113,
+        "value": 141,
         "count": 3
       },
       {
-        "value": 239,
+        "value": 397,
         "count": 3
       },
       {
@@ -1415,11 +1443,19 @@
         "count": 3
       },
       {
-        "value": 223,
+        "value": 185,
         "count": 3
       },
       {
-        "value": 129,
+        "value": 324,
+        "count": 3
+      },
+      {
+        "value": 359,
+        "count": 3
+      },
+      {
+        "value": 251,
         "count": 3
       },
       {
@@ -1431,15 +1467,11 @@
         "count": 3
       },
       {
-        "value": 65,
+        "value": 379,
         "count": 3
       },
       {
-        "value": 257,
-        "count": 3
-      },
-      {
-        "value": 297,
+        "value": 56,
         "count": 3
       },
       {
@@ -1447,15 +1479,7 @@
         "count": 3
       },
       {
-        "value": 73,
-        "count": 3
-      },
-      {
-        "value": 391,
-        "count": 3
-      },
-      {
-        "value": 197,
+        "value": 308,
         "count": 3
       },
       {
@@ -1463,27 +1487,23 @@
         "count": 3
       },
       {
-        "value": 198,
-        "count": 3
-      },
-      {
-        "value": 134,
-        "count": 3
-      },
-      {
         "value": 154,
         "count": 3
       },
       {
-        "value": 251,
+        "value": 209,
         "count": 3
       },
       {
-        "value": 248,
+        "value": 291,
         "count": 3
       },
       {
-        "value": 345,
+        "value": 298,
+        "count": 3
+      },
+      {
+        "value": 174,
         "count": 3
       },
       {
@@ -1491,11 +1511,7 @@
         "count": 3
       },
       {
-        "value": 324,
-        "count": 3
-      },
-      {
-        "value": 280,
+        "value": 361,
         "count": 3
       },
       {
@@ -1503,11 +1519,7 @@
         "count": 3
       },
       {
-        "value": 332,
-        "count": 3
-      },
-      {
-        "value": 126,
+        "value": 235,
         "count": 3
       },
       {
@@ -1515,15 +1527,11 @@
         "count": 3
       },
       {
-        "value": 393,
+        "value": 59,
         "count": 3
       },
       {
-        "value": 169,
-        "count": 3
-      },
-      {
-        "value": 330,
+        "value": 176,
         "count": 3
       },
       {
@@ -1531,23 +1539,23 @@
         "count": 3
       },
       {
-        "value": 103,
+        "value": 294,
         "count": 3
       },
       {
-        "value": 74,
+        "value": 130,
         "count": 3
+      },
+      {
+        "value": 281,
+        "count": 2
       },
       {
         "value": 5000,
         "count": 2
       },
       {
-        "value": 352,
-        "count": 2
-      },
-      {
-        "value": 243,
+        "value": 388,
         "count": 2
       },
       {
@@ -1555,11 +1563,15 @@
         "count": 2
       },
       {
-        "value": 203,
+        "value": 191,
         "count": 2
       },
       {
-        "value": 213,
+        "value": 328,
+        "count": 2
+      },
+      {
+        "value": 203,
         "count": 2
       },
       {
@@ -1571,11 +1583,11 @@
         "count": 2
       },
       {
-        "value": 368,
+        "value": 343,
         "count": 2
       },
       {
-        "value": 224,
+        "value": 368,
         "count": 2
       },
       {
@@ -1583,7 +1595,27 @@
         "count": 2
       },
       {
+        "value": 385,
+        "count": 2
+      },
+      {
+        "value": 206,
+        "count": 2
+      },
+      {
+        "value": 131,
+        "count": 2
+      },
+      {
         "value": 316,
+        "count": 2
+      },
+      {
+        "value": 275,
+        "count": 2
+      },
+      {
+        "value": 171,
         "count": 2
       },
       {
@@ -1591,35 +1623,11 @@
         "count": 2
       },
       {
-        "value": 377,
+        "value": 382,
         "count": 2
       },
       {
-        "value": 337,
-        "count": 2
-      },
-      {
-        "value": 244,
-        "count": 2
-      },
-      {
-        "value": 260,
-        "count": 2
-      },
-      {
-        "value": 385,
-        "count": 2
-      },
-      {
-        "value": 284,
-        "count": 2
-      },
-      {
-        "value": 397,
-        "count": 2
-      },
-      {
-        "value": 185,
+        "value": 247,
         "count": 2
       },
       {
@@ -1627,15 +1635,11 @@
         "count": 2
       },
       {
-        "value": 325,
+        "value": 216,
         "count": 2
       },
       {
-        "value": 208,
-        "count": 2
-      },
-      {
-        "value": 359,
+        "value": 365,
         "count": 2
       },
       {
@@ -1643,15 +1647,7 @@
         "count": 2
       },
       {
-        "value": 304,
-        "count": 2
-      },
-      {
-        "value": 173,
-        "count": 2
-      },
-      {
-        "value": 375,
+        "value": 366,
         "count": 2
       },
       {
@@ -1663,10 +1659,6 @@
         "count": 2
       },
       {
-        "value": 282,
-        "count": 2
-      },
-      {
         "value": 92,
         "count": 2
       },
@@ -1675,7 +1667,15 @@
         "count": 2
       },
       {
+        "value": 177,
+        "count": 2
+      },
+      {
         "value": 318,
+        "count": 2
+      },
+      {
+        "value": 391,
         "count": 2
       },
       {
@@ -1683,11 +1683,11 @@
         "count": 2
       },
       {
-        "value": 234,
+        "value": 266,
         "count": 2
       },
       {
-        "value": 46,
+        "value": 348,
         "count": 2
       },
       {
@@ -1703,19 +1703,19 @@
         "count": 2
       },
       {
-        "value": 209,
+        "value": 279,
         "count": 2
       },
       {
-        "value": 287,
+        "value": 332,
         "count": 2
       },
       {
-        "value": 298,
+        "value": 312,
         "count": 2
       },
       {
-        "value": 369,
+        "value": 228,
         "count": 2
       },
       {
@@ -1723,19 +1723,19 @@
         "count": 2
       },
       {
-        "value": 174,
+        "value": 696,
         "count": 2
       },
       {
-        "value": 106,
+        "value": 307,
         "count": 2
       },
       {
-        "value": 288,
+        "value": 304,
         "count": 2
       },
       {
-        "value": 382,
+        "value": 280,
         "count": 2
       },
       {
@@ -1747,27 +1747,19 @@
         "count": 2
       },
       {
-        "value": 341,
-        "count": 2
-      },
-      {
-        "value": 161,
-        "count": 2
-      },
-      {
         "value": 351,
         "count": 2
       },
       {
-        "value": 138,
-        "count": 2
-      },
-      {
-        "value": 276,
+        "value": 218,
         "count": 2
       },
       {
         "value": 3333,
+        "count": 2
+      },
+      {
+        "value": 167,
         "count": 2
       },
       {
@@ -1779,15 +1771,7 @@
         "count": 2
       },
       {
-        "value": 314,
-        "count": 2
-      },
-      {
         "value": 323,
-        "count": 2
-      },
-      {
-        "value": 294,
         "count": 2
       },
       {
@@ -1799,7 +1783,23 @@
         "count": 2
       },
       {
-        "value": 256,
+        "value": 321,
+        "count": 2
+      },
+      {
+        "value": 132,
+        "count": 2
+      },
+      {
+        "value": 337,
+        "count": 2
+      },
+      {
+        "value": 137,
+        "count": 2
+      },
+      {
+        "value": 74,
         "count": 2
       },
       {
@@ -1807,20 +1807,16 @@
         "count": 2
       },
       {
-        "value": 245,
+        "value": 256,
         "count": 2
       },
       {
-        "value": 358,
+        "value": 245,
         "count": 2
       },
       {
         "value": 335,
         "count": 2
-      },
-      {
-        "value": 281,
-        "count": 1
       },
       {
         "value": 2500,
@@ -1831,7 +1827,11 @@
         "count": 1
       },
       {
-        "value": 191,
+        "value": 344,
+        "count": 1
+      },
+      {
+        "value": 224,
         "count": 1
       },
       {
@@ -1847,19 +1847,15 @@
         "count": 1
       },
       {
+        "value": 282,
+        "count": 1
+      },
+      {
+        "value": 284,
+        "count": 1
+      },
+      {
         "value": 370,
-        "count": 1
-      },
-      {
-        "value": 268,
-        "count": 1
-      },
-      {
-        "value": 264,
-        "count": 1
-      },
-      {
-        "value": 118,
         "count": 1
       },
       {
@@ -1887,7 +1883,7 @@
         "count": 1
       },
       {
-        "value": 365,
+        "value": 325,
         "count": 1
       },
       {
@@ -1899,7 +1895,7 @@
         "count": 1
       },
       {
-        "value": 395,
+        "value": 258,
         "count": 1
       },
       {
@@ -1907,11 +1903,19 @@
         "count": 1
       },
       {
-        "value": 343,
+        "value": 375,
         "count": 1
       },
       {
-        "value": 388,
+        "value": 395,
+        "count": 1
+      },
+      {
+        "value": 371,
+        "count": 1
+      },
+      {
+        "value": 168,
         "count": 1
       },
       {
@@ -1919,11 +1923,7 @@
         "count": 1
       },
       {
-        "value": 354,
-        "count": 1
-      },
-      {
-        "value": 183,
+        "value": 287,
         "count": 1
       },
       {
@@ -1931,7 +1931,7 @@
         "count": 1
       },
       {
-        "value": 376,
+        "value": 183,
         "count": 1
       },
       {
@@ -1939,15 +1939,19 @@
         "count": 1
       },
       {
+        "value": 106,
+        "count": 1
+      },
+      {
+        "value": 243,
+        "count": 1
+      },
+      {
+        "value": 239,
+        "count": 1
+      },
+      {
         "value": 263,
-        "count": 1
-      },
-      {
-        "value": 696,
-        "count": 1
-      },
-      {
-        "value": 307,
         "count": 1
       },
       {
@@ -1956,6 +1960,10 @@
       },
       {
         "value": 421,
+        "count": 1
+      },
+      {
+        "value": 260,
         "count": 1
       },
       {
@@ -1983,6 +1991,14 @@
         "count": 1
       },
       {
+        "value": 244,
+        "count": 1
+      },
+      {
+        "value": 369,
+        "count": 1
+      },
+      {
         "value": 305,
         "count": 1
       },
@@ -1991,7 +2007,7 @@
         "count": 1
       },
       {
-        "value": 218,
+        "value": 288,
         "count": 1
       },
       {
@@ -1999,11 +2015,11 @@
         "count": 1
       },
       {
-        "value": 176,
+        "value": 4444,
         "count": 1
       },
       {
-        "value": 312,
+        "value": 314,
         "count": 1
       },
       {
@@ -2011,7 +2027,7 @@
         "count": 1
       },
       {
-        "value": 132,
+        "value": 217,
         "count": 1
       },
       {
@@ -2019,11 +2035,7 @@
         "count": 1
       },
       {
-        "value": 167,
-        "count": 1
-      },
-      {
-        "value": 266,
+        "value": 198,
         "count": 1
       },
       {
@@ -2031,31 +2043,15 @@
         "count": 1
       },
       {
-        "value": 348,
-        "count": 1
-      },
-      {
         "value": 334,
         "count": 1
       },
       {
-        "value": 157,
-        "count": 1
-      },
-      {
-        "value": 4444,
+        "value": 313,
         "count": 1
       },
       {
         "value": 322,
-        "count": 1
-      },
-      {
-        "value": 247,
-        "count": 1
-      },
-      {
-        "value": 420,
         "count": 1
       },
       {
@@ -2071,7 +2067,15 @@
         "count": 1
       },
       {
-        "value": 137,
+        "value": 234,
+        "count": 1
+      },
+      {
+        "value": 358,
+        "count": 1
+      },
+      {
+        "value": 173,
         "count": 1
       },
       {
@@ -2079,39 +2083,29 @@
         "count": 1
       },
       {
-        "value": 225,
+        "value": 556,
         "count": 1
       },
       {
-        "value": 556,
+        "value": 454,
         "count": 1
       }
     ],
     "top_goal_prices": [
       {
         "value": 555,
-        "count": 30,
+        "count": 29,
         "example": "Spank ass 10x [719 tokens left] Hey! Naughty & curious..anything can happen if you dare 💕 Pvt ON Snap 555tk (1 hot video"
       },
       {
-        "value": 1000,
-        "count": 26,
-        "example": "naked  #bigboobs #lovense #beauty #squirt [1000 tokens remaining]"
-      },
-      {
-        "value": 999,
-        "count": 25,
-        "example": "New here… but already thinking of ways to misbehave 😜  - Multi Goal: Build the orgasme & cumming 🌊🤩 [999tk each Goal] #t"
-      },
-      {
         "value": 100,
-        "count": 20,
-        "example": "Ultra 300 tks= 100 sec; 500 tks = 200 sec; 38 tks = 15-40 sec ! Make it fun! Private is open! - Goal: Keep me wet [100 t"
+        "count": 23,
+        "example": "Goal: take off my shorts  [100 tokens left] #18 #bigboobs #bigass #teen  #skinny"
       },
       {
-        "value": 500,
-        "count": 19,
-        "example": "ONLY TODAY - First 250 people to tip 500tk get exlusive anal fingering video Gamergirl ! Welcome <3 Tip if you like it -"
+        "value": 1000,
+        "count": 23,
+        "example": "My fav vibes 51, 222 tk, 1000 tk - Multi Goal: lets get pleasure [3 tokens left] #stockings #feet #bigboobs #pantyhose #"
       },
       {
         "value": 111,
@@ -2119,42 +2113,52 @@
         "example": "fingering until i cum as a slut 💪 KURWA Cherry SLUT in here💪 lovense work ! 200 is fav pattern 🥳... call me Cherry :) #1"
       },
       {
-        "value": 333,
-        "count": 18,
-        "example": "GOAL: \" I'M SO HORNY / I like 100 - 200 - 300 - 500 -  1111 - 3333   \" | #bigboobs #pvt #squirt #hairy #anal [333 tokens"
-      },
-      {
         "value": 1111,
-        "count": 17,
+        "count": 18,
         "example": "A little tease and a lot of pleasure, let us see far you want to go💋💦 - Multi Goal: Cumshow [1111tk each Goal] #young  #"
       },
       {
+        "value": 222,
+        "count": 18,
+        "example": "GOAL: Finger in tight pussy [222 tokens remaining] Welcome to my room! #squirt #skinny #blonde #lovense #new #18"
+      },
+      {
+        "value": 999,
+        "count": 17,
+        "example": "New here… but already thinking of ways to misbehave 😜  - Multi Goal: Build the orgasme & cumming 🌊🤩 [999tk each Goal] #t"
+      },
+      {
+        "value": 500,
+        "count": 17,
+        "example": "ONLY TODAY - First 250 people to tip 500tk get exlusive anal fingering video Gamergirl ! Welcome <3 Tip if you like it -"
+      },
+      {
         "value": 2222,
-        "count": 15,
+        "count": 16,
         "example": "ClassicTicket:  FAN CLUB ONLY PLAY with MYSELF  join fan club and tip 260 to join. Tip 2222 tokens to get your ticket.  "
       },
       {
-        "value": 222,
-        "count": 13,
-        "example": "GOAL: Finger in tight pussy [222 tokens remaining] Welcome to my room! #squirt #skinny #blonde #lovense #new #18"
+        "value": 333,
+        "count": 16,
+        "example": "GOAL: \" I'M SO HORNY / I like 100 - 200 - 300 - 500 -  1111 - 3333   \" | #bigboobs #pvt #squirt #hairy #anal [333 tokens"
       }
     ],
     "multi_goal_share": 0.059,
-    "with_goal_share": 0.526,
-    "with_price_share": 0.622
+    "with_goal_share": 0.527,
+    "with_price_share": 0.625
   },
   "recommendation": {
     "tags": [
       "yoga",
+      "brazilian",
+      "strip",
       "hush",
       "19",
       "usa",
-      "strip",
-      "hot",
       "innocent",
       "hentai",
       "doggy",
-      "ohmibod"
+      "couple"
     ],
     "low_competition_tag": "innocent"
   }
